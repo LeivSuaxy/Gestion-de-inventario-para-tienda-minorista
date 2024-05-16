@@ -1,10 +1,10 @@
 .proyectCenteres {
   margin: 30px;
+  color: white;
 }
 
-h1 {
+.encabezados {
   text-align: center;
-  font-size: 60px;
   font: bold 60px Arial, sans-serif;
 }
 
@@ -16,4 +16,14 @@ p {
 .fonter {
   font-size: 40px;
   text-align: justify;
+}
+
+.listhelp {
+  background-color: rgb(36, 39, 41);
+  color: white;
+}
+
+.cardhelp {
+  background-color: #191a1c;
+  color:white;
 }
