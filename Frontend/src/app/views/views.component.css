@@ -23,6 +23,11 @@ p {
   color: white;
 }
 
+.cardhelphead {
+  background-color: rgba(26, 28, 30, 0.36);
+  color:white;
+}
+
 .cardhelp {
   background-color: #191a1c;
   color:white;
