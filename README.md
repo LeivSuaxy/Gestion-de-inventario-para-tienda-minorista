@@ -1,12 +1,12 @@
 # Proyecto final de base de datos.
 
-## Universidad : UCI
+Universidad : UCI
 
-## Integrantes:
+Integrantes:
 
-## LeivSuaxy
+LeivSuaxy
 https://github.com/LeivSuaxy
-## AGR55
+AGR55
 https://github.com/AGR55
 
 ## Descripción del proyecto:
