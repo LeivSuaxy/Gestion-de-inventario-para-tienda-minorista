@@ -1,146 +1,121 @@
 <div class="proyectCenteres">
+  <!-- First item: Presentacion -->
 
-  <!-- ScrollSpy -->
+  <h1 class="encabezados">Bienvenidos al proyecto final de <span style="color: red;">Base de Datos</span></h1>
+  <p class="textfont">Esta pagina web, ha sido creada con el proposito fundamental de darle solucion a la problematica planteada en
+  el proyecto final de la asignatura Base de Datos I.</p>
+  <p class="textfont">El problema a desarrollar fue el numero 2, El objetivo de este proyecto es desarrollar un sistema de reservas
+    para un hotel. La aplicación permitirá a los clientes hacer reservas en línea, a los empleados administrar las
+    reservas y a los gerentes supervisar el funcionamiento del hotel. Los requerimientos para este proyecto son los
+    siguientes: </p>
 
-  <div class="row">
-    <div class="col-4" style="width: 10%;">
-      <nav  id="navbar-example3" class="h-100 flex-column align-items-stretch pe-4 border-end">
-        <nav style="position: fixed" class="nav nav-pills flex-column">
-          <a class="nav-link" href="#item-1">Presentacion</a>
-          <a class="nav-link" href="#item-2">Tecnologias</a>
-          <a class="nav-link" href="#item-3">Integrantes</a>
-        </nav>
-      </nav>
+  <!-- List of objectives -->
+
+  <ul class="list-group">
+    <li class="list-group-item fonter listhelp">Los clientes deben ser capaces de hacer reservas en línea para una o más habitaciones
+      y de cancelar sus reservas.</li>
+    <li class="list-group-item fonter listhelp">Los empleados deben ser capaces de ver todas las reservas, cancelar o modificar
+      reservas, y verificar la disponibilidad de habitaciones.</li>
+    <li class="list-group-item fonter listhelp">Los gerentes deben ser capaces de ver estadísticas y reportes sobre las reservas,
+      las habitaciones y los ingresos del hotel.</li>
+    <li class="list-group-item fonter listhelp">La aplicación debe permitir a los clientes crear una cuenta y autenticarse para
+      acceder a la funcionalidad de la aplicación.</li>
+    <li class="list-group-item fonter listhelp">Cada reserva debe contener información sobre la fecha de entrada, la fecha de salida,
+      el número de huéspedes y las habitaciones reservadas.</li>
+  </ul>
+
+  <hr style="margin-top: 40px"/>
+
+  <!-- Second item: Tecnologias -->
+
+
+  <h2 class="encabezados"><span style="color:greenyellow">Tecnologias</span> usadas en el proyecto</h2>
+  <p class="textfont">Este es un proyecto desarrollado con tecnologías web. Se escogió este modo de desarrollo fundamentalmente para
+    la práctica de habilidades y extensión de conocimientos con vista al futuro del desarrollo de software profesional y comercial.</p>
+  <p class="textfont">Entre las tecnologías que usamos estan: </p>
+
+  <!-- Carta Angular -->
+
+  <div class="card cardhelphead">
+    <h5 class="card-header"><img src="https://skillicons.dev/icons?i=angular" alt="Angular icono"/><span style="font: bold 40px Arial, sans-serif; color:red">ngular</span></h5>
+    <div class="card-body cardhelp">
+      <h5 class="card-title">Tecnología usada en el Frontend de la aplicación</h5>
+      <p class="card-text textfont">Angular es un framework de desarrollo de JavaScript para construir el FrontEnd de aplicaciones
+      web. Tiene una forma de trabajo SPA(Single Page Application) y usa como lenguaje de desarrollo TypeScript.</p>
+      <a href="https://angular.io/" target="_blank" class="btn btn-primary">Ir al sitio oficial</a>
     </div>
+  </div>
 
-    <div class="col-8">
-      <div data-bs-spy="scroll" data-bs-target="#navbar-example3" data-bs-smooth-scroll="true" class="scrollspy-example-2" tabindex="0">
+  <!-- Carta Django -->
 
-        <!-- First item: Presentacion -->
+  <div style="margin-top: 50px" class="card cardhelphead">
+    <h5 class="card-header"><img src="https://skillicons.dev/icons?i=django" alt="Django Icono"/><span style="font: bold 40px Arial, sans-serif; color:darkgreen"> Django</span></h5>
+    <div class="card-body cardhelp">
+      <h5 class="card-title">Tecnología usada en el Backend de la aplicación</h5>
+      <p class="card-text textfont">Django es un framework de desarrollo para Backend de páginas web desarrollado en Python.
+      El código contenido en este apartado será el que tendrá fundamentalmente las consultas SQL para darle solución
+      a la problematica a desarrollar</p>
+      <a href="https://www.djangoproject.com/" target="_blank" class="btn btn-primary">Ir al sitio oficial</a>
+    </div>
+  </div>
 
-        <div id="item-1">
-          <h1 class="encabezados">Bienvenidos al proyecto final de <span style="color: red;">Base de Datos</span></h1>
-          <p class="textfont">Esta pagina web, ha sido creada con el proposito fundamental de darle solucion a la problematica planteada en
-          el proyecto final de la asignatura Base de Datos I.</p>
-          <p class="textfont">El problema a desarrollar fue el numero 2, El objetivo de este proyecto es desarrollar un sistema de reservas
-            para un hotel. La aplicación permitirá a los clientes hacer reservas en línea, a los empleados administrar las
-            reservas y a los gerentes supervisar el funcionamiento del hotel. Los requerimientos para este proyecto son los
-            siguientes: </p>
+  <!-- Carta PostgreSQL -->
 
-          <!-- List of objectives -->
+  <div style="margin-top: 50px" class="card cardhelphead">
+    <h5 class="card-header"><img src="https://skillicons.dev/icons?i=postgres" alt="Django Icono"/><span style="font: bold 40px Arial, sans-serif; color:deepskyblue"> PostgreSQL</span></h5>
+    <div class="card-body cardhelp">
+      <h5 class="card-title">Tecnología usada en el Backend de la aplicación para gestionar las bases de datos</h5>
+      <p class="card-text textfont">PostgreSQL es un gestor de bases de datos relacional orientado a objetos y de código
+      abierto. Es una alternativa robusta y flexible a las bases de datos comerciales como Oracle y SQL server.</p>
+      <a href="https://www.djangoproject.com/" target="_blank" class="btn btn-primary">Ir al sitio oficial</a>
+    </div>
+  </div>
 
-          <ul class="list-group">
-            <li class="list-group-item fonter listhelp">Los clientes deben ser capaces de hacer reservas en línea para una o más habitaciones
-              y de cancelar sus reservas.</li>
-            <li class="list-group-item fonter listhelp">Los empleados deben ser capaces de ver todas las reservas, cancelar o modificar
-              reservas, y verificar la disponibilidad de habitaciones.</li>
-            <li class="list-group-item fonter listhelp">Los gerentes deben ser capaces de ver estadísticas y reportes sobre las reservas,
-              las habitaciones y los ingresos del hotel.</li>
-            <li class="list-group-item fonter listhelp">La aplicación debe permitir a los clientes crear una cuenta y autenticarse para
-              acceder a la funcionalidad de la aplicación.</li>
-            <li class="list-group-item fonter listhelp">Cada reserva debe contener información sobre la fecha de entrada, la fecha de salida,
-              el número de huéspedes y las habitaciones reservadas.</li>
-          </ul>
 
-        </div>
 
-        <hr style="margin-top: 40px"/>
+  <hr style="margin-top: 40px"/>
 
-        <!-- Second item: Tecnologias -->
+  <!-- Third item: Integrantes -->
 
-        <div style="margin-top: 40px" id="item-2">
-          <h2 class="encabezados"><span style="color:greenyellow">Tecnologias</span> usadas en el proyecto</h2>
-          <p class="textfont">Este es un proyecto desarrollado con tecnologías web. Se escogió este modo de desarrollo fundamentalmente para
-            la práctica de habilidades y extensión de conocimientos con vista al futuro del desarrollo de software profesional y comercial.</p>
-          <p class="textfont">Entre las tecnologías que usamos estan: </p>
+  <h4 class="encabezados">Integrantes</h4>
+  <p class="textfont">Este proyecto ha sido desarrollado por: </p>
 
-          <!-- Carta Angular -->
+  <!-- Carta LeivSuaxy -->
 
-          <div class="card cardhelphead">
-            <h5 class="card-header"><img src="https://skillicons.dev/icons?i=angular" alt="Angular icono"/><span style="font: bold 40px Arial, sans-serif; color:red">ngular</span></h5>
-            <div class="card-body cardhelp">
-              <h5 class="card-title">Tecnología usada en el Frontend de la aplicación</h5>
-              <p class="card-text textfont">Angular es un framework de desarrollo de JavaScript para construir el FrontEnd de aplicaciones
-              web. Tiene una forma de trabajo SPA(Single Page Application) y usa como lenguaje de desarrollo TypeScript.</p>
-              <a href="https://angular.io/" target="_blank" class="btn btn-primary">Ir al sitio oficial</a>
-            </div>
-          </div>
-
-          <!-- Carta Django -->
-
-          <div style="margin-top: 50px" class="card cardhelphead">
-            <h5 class="card-header"><img src="https://skillicons.dev/icons?i=django" alt="Django Icono"/><span style="font: bold 40px Arial, sans-serif; color:darkgreen"> Django</span></h5>
-            <div class="card-body cardhelp">
-              <h5 class="card-title">Tecnología usada en el Backend de la aplicación</h5>
-              <p class="card-text textfont">Django es un framework de desarrollo para Backend de páginas web desarrollado en Python.
-              El código contenido en este apartado será el que tendrá fundamentalmente las consultas SQL para darle solución
-              a la problematica a desarrollar</p>
-              <a href="https://www.djangoproject.com/" target="_blank" class="btn btn-primary">Ir al sitio oficial</a>
-            </div>
-          </div>
-
-          <!-- Carta PostgreSQL -->
-
-          <div style="margin-top: 50px" class="card cardhelphead">
-            <h5 class="card-header"><img src="https://skillicons.dev/icons?i=postgres" alt="Django Icono"/><span style="font: bold 40px Arial, sans-serif; color:deepskyblue"> PostgreSQL</span></h5>
-            <div class="card-body cardhelp">
-              <h5 class="card-title">Tecnología usada en el Backend de la aplicación para gestionar las bases de datos</h5>
-              <p class="card-text textfont">PostgreSQL es un gestor de bases de datos relacional orientado a objetos y de código
-              abierto. Es una alternativa robusta y flexible a las bases de datos comerciales como Oracle y SQL server.</p>
-              <a href="https://www.djangoproject.com/" target="_blank" class="btn btn-primary">Ir al sitio oficial</a>
-            </div>
-          </div>
-
-        </div>
-
-        <hr style="margin-top: 40px"/>
-
-        <!-- Third item: Integrantes -->
-
-        <div id="item-3" style="margin-top: 40px">
-          <h4 class="encabezados">Integrantes</h4>
-          <p class="textfont">Este proyecto ha sido desarrollado por: </p>
-
-          <!-- Carta LeivSuaxy -->
-
-          <div class="card mb-3 cardhelp" style="max-width: 540px;">
-            <div class="row g-0">
-              <div class="col-md-4">
-                <a href="https://github.com/LeivSuaxy" target="_blank">
-                  <img src="https://avatars.githubusercontent.com/u/127800936?v=4" class="img-fluid rounded-start" style="height: 100%;" alt="Imagen LeivSuaxy">
-                </a>
-              </div>
-              <div class="col-md-8">
-                <div class="card-body">
-                  <h5 class="card-title"><img src="https://skillicons.dev/icons?i=github" alt="github icon"> LeivSuaxy</h5>
-                  <p class="card-text">I am a student of Computer Science Engineering, at the University of Computer Sciences (UCI) Cuba cu.</p>
-                  <a href="https://github.com/LeivSuaxy" target="_blank">Follow Me</a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Carta AGR55 -->
-
-          <div class="card mb-3 cardhelp" style="max-width: 540px;">
-            <div class="row g-0">
-              <div class="col-md-4">
-                <a href="https://github.com/AGR55" target="_blank">
-                  <img src="https://avatars.githubusercontent.com/u/127813954?v=4" class="img-fluid rounded-start" style="height: 100%" alt="Imagen AGR55">
-                </a>
-              </div>
-              <div class="col-md-8">
-                <div class="card-body">
-                  <h5 class="card-title"><img src="https://skillicons.dev/icons?i=github" alt="github icon"> AGR55</h5>
-                  <p class="card-text">¡Welcome to my GitHub profile! I'm a developer passionate about technology, software
-                    and mathematics. Here you will find information about me, my skills, projects and more.</p>
-                  <a href="https://github.com/AGR55" target="_blank">Follow Me</a>
-                </div>
-              </div>
-            </div>
-          </div>
+  <div class="card mb-3 cardhelp" style="max-width: 540px;">
+    <div class="row g-0">
+      <div class="col-md-4">
+        <a href="https://github.com/LeivSuaxy" target="_blank">
+          <img src="https://avatars.githubusercontent.com/u/127800936?v=4" class="img-fluid rounded-start" style="height: 100%;" alt="Imagen LeivSuaxy">
+        </a>
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title"><img src="https://skillicons.dev/icons?i=github" alt="github icon"> LeivSuaxy</h5>
+          <p class="card-text">I am a student of Computer Science Engineering, at the University of Computer Sciences (UCI) Cuba cu.</p>
+          <a href="https://github.com/LeivSuaxy" target="_blank">Follow Me</a>
         </div>
       </div>
     </div>
   </div>
-</div>
+
+  <!-- Carta AGR55 -->
+
+  <div class="card mb-3 cardhelp" style="max-width: 540px;">
+    <div class="row g-0">
+      <div class="col-md-4">
+        <a href="https://github.com/AGR55" target="_blank">
+          <img src="https://avatars.githubusercontent.com/u/127813954?v=4" class="img-fluid rounded-start" style="height: 100%" alt="Imagen AGR55">
+        </a>
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title"><img src="https://skillicons.dev/icons?i=github" alt="github icon"> AGR55</h5>
+          <p class="card-text">¡Welcome to my GitHub profile! I'm a developer passionate about technology, software
+            and mathematics. Here you will find information about me, my skills, projects and more.</p>
+          <a href="https://github.com/AGR55" target="_blank">Follow Me</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
