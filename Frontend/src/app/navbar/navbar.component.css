@@ -1,0 +1,36 @@
+.proyectNav {
+  background-color: #b9b9b9;
+  border: none;
+  width: 100%;
+  height: 100px;
+  text-align: left;
+  display: flex;
+  box-shadow: black 0 0 15px;
+}
+
+.proyectNavButton{
+  background-color: #b9b9b9;
+  border: none;
+  border-radius: 20px;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 40px;
+  margin: 4px 10px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.25s;
+}
+
+.proyectNavButton:hover{
+  background-color: #000000;
+  color: white;
+  box-shadow: black 0 0 5px;
+}
+
+.proyectNavButton:active{
+  background-color: white;
+  color: black;
+  box-shadow: black 0 0 5px;
+}

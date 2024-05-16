@@ -1,0 +1,19 @@
+.proyectCenteres {
+  margin: 30px;
+}
+
+h1 {
+  text-align: center;
+  font-size: 60px;
+  font: bold 60px Arial, sans-serif;
+}
+
+p {
+  font-size: 40px;
+  text-align: justify;
+}
+
+.fonter {
+  font-size: 40px;
+  text-align: justify;
+}

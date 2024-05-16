@@ -1,0 +1,23 @@
+.proyectAside {
+  position: static;
+  top: initial;
+  bottom: 0;
+  border-radius: 12px;
+  padding: 30px;
+  margin-top: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
+  box-shadow: black 0 0 15px;
+  border: rgba(0, 0, 0, 0.41) 5px solid;
+  display: inline-block;
+  text-align: center;
+  background-color: #b9b9b9;
+  width: 20%;
+  height: 100%;
+}
+
+.proyectText {
+  font-size: 20px;
+  font-weight: bold;
+  color: #000000;
+}
