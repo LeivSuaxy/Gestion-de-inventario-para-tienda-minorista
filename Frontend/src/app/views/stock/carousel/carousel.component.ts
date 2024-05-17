@@ -1,20 +1,21 @@
 import { Component } from '@angular/core';
-import {NgForOf} from "@angular/common";
+import {NgForOf, NgOptimizedImage} from "@angular/common";
 
 @Component({
   selector: 'app-carousel',
   standalone: true,
   imports: [
-    NgForOf
+    NgForOf,
+    NgOptimizedImage
   ],
   templateUrl: './carousel.component.html',
-  styleUrl: './carousel.component.css'
+  styleUrls: ['./carousel.component.css']
 })
 export class CarouselComponent {
   imagesURLs : string[] = [
-    'Frontend/src/app/views/stock/carousel/img/First.jpeg',
-    './img/Second.jpeg',
-    './img/R.jpeg',
+    '../../../../assets/img/First.jpeg',
+    '../../../../assets/img/Second.jpeg',
+    '../../../../assets/img/R.jpeg',
   ]
 
 }
