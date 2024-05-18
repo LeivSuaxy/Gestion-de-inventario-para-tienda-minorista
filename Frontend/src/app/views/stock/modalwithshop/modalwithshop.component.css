@@ -1,0 +1,36 @@
+.proyectNavButton{
+  background-color: #60686b;
+  border: none;
+  border-radius: 20px;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 40px;
+  margin: 4px 10px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.25s;
+}
+
+.proyectNavButton:hover{
+  background-color: #000000;
+  color: white;
+  box-shadow: black 0 0 5px;
+}
+
+.proyectNavButton:active{
+  background-color: white;
+  color: black;
+  box-shadow: black 0 0 5px;
+}
+
+.cardhelphead {
+  background-color: rgba(26, 28, 30, 0.36);
+  color:white;
+}
+
+.cardhelp {
+  background-color: #191a1c;
+  color:white;
+}
