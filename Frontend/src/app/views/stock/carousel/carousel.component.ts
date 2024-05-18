@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
-import {NgForOf, NgOptimizedImage} from "@angular/common";
+import {NgForOf, NgIf, NgOptimizedImage} from "@angular/common";
 
 @Component({
   selector: 'app-carousel',
   standalone: true,
   imports: [
     NgForOf,
-    NgOptimizedImage
+    NgOptimizedImage,
+    NgIf
   ],
   templateUrl: './carousel.component.html',
   styleUrls: ['./carousel.component.css']
@@ -17,5 +18,14 @@ export class CarouselComponent {
     '../../../../assets/img/Second.jpeg',
     '../../../../assets/img/R.jpeg',
   ]
+
+  slidesNumbers : string[];
+
+  constructor() {
+    this.slidesNumbers = [];
+    for (let i = 0; i < this.imagesURLs.length; i++) {
+      this.slidesNumbers.push(i.toString());
+    }
+  }
 
 }

@@ -1,1 +1,9 @@
-<p>stockcards works!</p>
+<div class="card backCard" style="width: 18rem;">
+  <img [src]="venta.imagen" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">{{venta.titulo}}</h5>
+    <h6 class="card-text" style="color:green">{{venta.precio}} $</h6>
+    <p class="card-text">{{venta.descripcion}}</p>
+    <a href="#" class="btn btn-success">Comprar</a>
+  </div>
+</div>
