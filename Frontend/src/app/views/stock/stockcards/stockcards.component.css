@@ -2,3 +2,8 @@
   background-color: #191a1c;
   color: white;
 }
+
+.transitionbutton {
+  transition: background-color 0.5s;
+}
+

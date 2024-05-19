@@ -1,9 +1,18 @@
-<div class="card backCard" style="width: 18rem;">
-  <img [src]="venta.imagen" class="card-img-top" alt="...">
-  <div class="card-body">
-    <h5 class="card-title">{{venta.titulo}}</h5>
-    <h6 class="card-text" style="color:green">{{venta.precio}} $</h6>
-    <p class="card-text">{{venta.descripcion}}</p>
-    <a type="button" class="btn btn-success" (click)="addToCart(venta)">Comprar</a>
+<div class="card mb-3 backCard" style="max-width: 80%;">
+  <div class="row g-0">
+    <div class="col-md-4">
+      <img [src]="venta.imagen" class="img-fluid rounded-start" alt="...">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">{{venta.titulo}}</h5>
+        <p class="card-text">{{venta.descripcion}}</p>
+        <p style="color: green; font: bold 35px Arial">{{venta.precio}}$</p>
+        <p class="card-text"> Cantidad disponible: {{venta.cantidadStock}}</p>
+      </div>
+    </div>
   </div>
+  <a type="button" class="btn btn-success" style="position: absolute; bottom: 10px; right: 10px"  (click)="setadded(venta)">
+    Adicionar al carrito
+  </a>
 </div>
