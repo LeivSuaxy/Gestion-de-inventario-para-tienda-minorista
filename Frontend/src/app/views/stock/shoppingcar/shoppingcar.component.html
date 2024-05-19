@@ -1,7 +1,18 @@
 <div>
-    <ol class="list-group list-group-numbered">
-      <ng-container *ngFor="let list of ventas">
-        <li class="list-group-item listhelp">{{list.titulo}} {{list.precio}}</li>
-      </ng-container>
-    </ol>
+    <ng-container *ngIf="ventas.length != 0; else Noventas">
+      <ol class="list-group list-group-numbered">
+        <ng-container *ngFor="let list of ventas">
+          <li class="list-group-item listhelp">{{list.titulo}} <span style="color: green">{{list.precio}}$</span>
+           <a class="btn btn-sm btn-success">+</a> <a class="btn btn-sm btn-success">-</a></li>
+        </ng-container>
+      </ol>
+      <hr/>
+      <p class="total">Total: {{preciototal}}$</p>
+    </ng-container>
+
+
+
+    <ng-template #Noventas>
+      <p> Aun no has comprado ningún elemento. Visita el stock para que compres algo. </p>
+    </ng-template>
 </div>

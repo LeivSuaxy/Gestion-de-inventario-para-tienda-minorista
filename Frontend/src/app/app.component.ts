@@ -6,10 +6,14 @@ import {ViewsComponent} from "./views/views.component";
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NavbarComponent, SidebarComponent, ViewsComponent],
+  imports: [RouterOutlet,
+    NavbarComponent,
+    SidebarComponent,
+    ViewsComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'probando';
+  title = 'MyWeb';
+
 }

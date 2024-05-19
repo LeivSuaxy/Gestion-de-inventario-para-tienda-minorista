@@ -6,13 +6,24 @@ import { Venta } from './stock.component';
 })
 export class CartService {
   cart: Venta[] = [];
+  preciototal: number = 0;
 
   addToCart(product: Venta) {
-    this.cart.push(product);
+    if(!this.cart.includes(product)) this.cart.push(product);
+    this.preciototal = 0;
+    for (let i = 0; i < this.cart.length; i++) {
+      this.preciototal += this.cart[i].precio;
+    }
+
+    alert(this.preciototal);
   }
 
   getCart() {
     return this.cart;
+  }
+
+  getPrecioTotal() {
+    return this.preciototal;
   }
 
   clearCart() {

@@ -1,4 +1,10 @@
 .listhelp {
   background-color: rgb(36, 39, 41);
+  font: bold 25px Arial;
   color: white;
+}
+
+.total {
+  font: bold 35px Arial;
+  color: green;
 }
