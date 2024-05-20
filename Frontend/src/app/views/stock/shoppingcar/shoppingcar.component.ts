@@ -15,11 +15,8 @@ import {NgForOf, NgIf} from "@angular/common";
 })
 export class ShoppingcarComponent {
   ventas: Venta[] = []
-  preciototal: number;
-  constructor(private cartService: CartService) {
+  constructor(protected cartService: CartService) {
     this.ventas = this.cartService.getCart();
-    this.preciototal = this.cartService.getPrecioTotal();
-
   }
 
 
