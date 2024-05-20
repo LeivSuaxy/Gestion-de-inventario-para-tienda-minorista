@@ -14,8 +14,6 @@ export class CartService {
     for (let i = 0; i < this.cart.length; i++) {
       this.preciototal += this.cart[i].precio;
     }
-
-    alert(this.preciototal);
   }
 
   getCart() {
