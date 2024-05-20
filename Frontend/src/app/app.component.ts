@@ -15,5 +15,4 @@ import {ViewsComponent} from "./views/views.component";
 })
 export class AppComponent {
   title = 'MyWeb';
-
 }
