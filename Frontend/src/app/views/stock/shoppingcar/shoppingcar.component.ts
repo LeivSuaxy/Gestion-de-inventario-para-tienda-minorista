@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {CartService} from "../cartservice.service";
-import {Venta} from "../stock.component";
+import {Venta} from "../cartservice.service";
 import {NgForOf, NgIf} from "@angular/common";
 
 @Component({
@@ -16,6 +16,10 @@ import {NgForOf, NgIf} from "@angular/common";
 export class ShoppingcarComponent {
   ventas: Venta[] = []
   constructor(protected cartService: CartService) {
+    this.ventas = this.cartService.getCart();
+  }
+
+  ngOnInit(){
     this.ventas = this.cartService.getCart();
   }
 
