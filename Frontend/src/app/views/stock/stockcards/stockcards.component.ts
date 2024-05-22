@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {Venta} from "../stock.component";
+import { Venta} from "../cartservice.service";
 import {CartService} from "../cartservice.service";
 import {NgIf} from "@angular/common";
 
@@ -23,8 +23,17 @@ export class StockcardsComponent {
     console.log(venta.titulo + ' added to cart')
   }
 
+  removeFromCart(venta: Venta) {
+    this.cartService.removeFromCart(venta.id);
+  }
+
+
   setadded(venta: Venta){
     this.addToCart(venta)
     this.added = !this.added;
+  }
+
+  isAdded(venta: Venta): boolean{
+    return this.cartService.isInCar(venta);
   }
 }

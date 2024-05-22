@@ -1,16 +1,16 @@
 <div>
-    <ng-container *ngIf="ventas.length != 0; else Noventas">
+    <ng-container *ngIf="ventas.length != 0; then Ventas else Noventas"/>
+
+    <ng-template #Ventas>
       <ol class="list-group list-group-numbered">
-        <ng-container *ngFor="let list of ventas">
+        <ng-container *ngFor="let list of cartService.cart">
           <li class="list-group-item listhelp">{{list.titulo}} <span class="lista-precios">{{list.precio}}$</span>
            <a class="btn btn-sm btn-success">+</a> <a class="btn btn-sm btn-success">-</a></li>
         </ng-container>
       </ol>
       <hr/>
       <p class="total">Total: {{cartService.preciototal}}$</p>
-    </ng-container>
-
-
+    </ng-template>
 
     <ng-template #Noventas>
       <p> Aun no has comprado ningún elemento. Visita el stock para que compres algo. </p>

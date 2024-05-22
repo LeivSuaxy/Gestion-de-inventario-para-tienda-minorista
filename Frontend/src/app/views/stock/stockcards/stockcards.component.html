@@ -12,7 +12,16 @@
       </div>
     </div>
   </div>
-  <a type="button" class="btn btn-success" style="position: absolute; bottom: 10px; right: 10px"  (click)="setadded(venta)">
-    Adicionar al carrito
-  </a>
+  <ng-container *ngIf="!isAdded(venta); then positive else negative"/>
 </div>
+
+<ng-template #positive>
+  <a type="button" class="btn btn-success" style="position: absolute; bottom: 10px; right: 10px"  (click)="setadded(venta)">
+      Adicionar al carrito
+    </a>
+</ng-template>
+<ng-template #negative>
+  <a type="button" class="btn btn-danger" style="position: absolute; bottom: 10px; right: 10px" (click)="removeFromCart(venta)">
+      Eliminar del carrito
+  </a>
+</ng-template>
