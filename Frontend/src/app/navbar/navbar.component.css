@@ -34,3 +34,11 @@
   color: black;
   box-shadow: black 0 0 5px;
 }
+
+.login {
+  margin: 4px 5px 4px auto;
+  width: 8%;
+  border-radius: 20px;
+  font-size: 20px;
+  color: greenyellow;
+}

@@ -34,3 +34,9 @@
   background-color: #191a1c;
   color:white;
 }
+
+.cart {
+  width: 45px;
+  height: 45px;
+  vertical-align: middle;
+}

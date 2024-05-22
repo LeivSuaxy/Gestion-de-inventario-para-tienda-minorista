@@ -36,3 +36,82 @@
   background-color: #191a1c;
   color:white;
 }
+
+.span-encabezados {
+  color: red;
+}
+
+.lista {
+  background-image: linear-gradient(to right, #334, #333);
+}
+
+.linea {
+  margin-top: 3.7%
+}
+
+.titulo-tech {
+  color:greenyellow;
+}
+
+.img-angular {
+  vertical-align: middle;
+}
+
+.angular {
+  font: bold 40px Arial, sans-serif;
+  color:red;
+  vertical-align: middle;
+  margin-left: 3px;
+}
+
+.card-django {
+  margin-top: 4.6%;
+}
+
+.django {
+  font: bold 40px Arial, sans-serif;
+  color:darkgreen;
+  vertical-align: middle;
+}
+
+.img-django {
+  vertical-align: middle;
+}
+
+.postgre {
+  margin-top: 4.6%;
+}
+
+.img-postgre {
+  vertical-align: middle;
+}
+
+.postgre {
+  font: bold 40px Arial, sans-serif;
+  color:deepskyblue;
+  vertical-align: middle;
+}
+
+.card-git {
+  max-width: 70%;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  background-image: linear-gradient(to bottom,black, #333);
+  border-radius: 0 10px 10px 0;
+}
+
+.img-git {
+  height: auto;
+}
+
+.ico-git {
+  margin-right: 5px;
+  font-family: JetBrains Mono;
+}
+
+.btn-git {
+  text-decoration: none;
+  color: white;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}

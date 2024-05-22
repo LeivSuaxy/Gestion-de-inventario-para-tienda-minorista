@@ -2,7 +2,7 @@
     <ng-container *ngIf="ventas.length != 0; else Noventas">
       <ol class="list-group list-group-numbered">
         <ng-container *ngFor="let list of ventas">
-          <li class="list-group-item listhelp">{{list.titulo}} <span style="color: green">{{list.precio}}$</span>
+          <li class="list-group-item listhelp">{{list.titulo}} <span class="lista-precios">{{list.precio}}$</span>
            <a class="btn btn-sm btn-success">+</a> <a class="btn btn-sm btn-success">-</a></li>
         </ng-container>
       </ol>
