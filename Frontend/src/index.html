@@ -6,8 +6,29 @@
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <style>
+    ::-webkit-scrollbar {
+      width: 1.5vh;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: rgb(36, 39, 41);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background-color: rgba(255, 0, 0, 0.589);
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      padding: auto 3px auto 3px;
+      border-radius: 0;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: red;
+    }
+  </style>
 </head>
-<body style="background-color: rgb(36, 39, 41);">
+<body style="background-color: rgb(36, 39, 41); font-family: Quicksand;">
   <app-root></app-root>
 </body>
 </html>

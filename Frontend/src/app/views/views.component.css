@@ -7,14 +7,15 @@
 
 .encabezados {
   text-align: center;
-  font: bold 60px Arial, sans-serif;
+  font-weight: bold;
+  font-size: 9vh;
   margin-bottom: 30px;
   text-shadow: 2px 2px 4px #000000;
 }
 
 .textfont {
-  font-size: 40px;
-  text-align: justify;
+  font-size: 5vh;
+  text-align: left;
 }
 
 .fonter {
@@ -23,8 +24,9 @@
 }
 
 .listhelp {
-  background-color: rgb(36, 39, 41);
+  background-image: linear-gradient(to right, #334, #333);
   color: white;
+  font-size: 5vh;
 }
 
 .cardhelphead {
@@ -41,10 +43,6 @@
   color: red;
 }
 
-.lista {
-  background-image: linear-gradient(to right, #334, #333);
-}
-
 .linea {
   margin-top: 3.7%
 }
@@ -58,7 +56,8 @@
 }
 
 .angular {
-  font: bold 40px Arial, sans-serif;
+  font-weight: bold;
+  font-size: 5.5vh;
   color:red;
   vertical-align: middle;
   margin-left: 3px;
@@ -69,7 +68,8 @@
 }
 
 .django {
-  font: bold 40px Arial, sans-serif;
+  font-weight: bold;
+  font-size: 5.5vh;
   color:darkgreen;
   vertical-align: middle;
 }
@@ -87,7 +87,8 @@
 }
 
 .postgre {
-  font: bold 40px Arial, sans-serif;
+  font-weight: bold;
+  font-size: 5.5vh;
   color:deepskyblue;
   vertical-align: middle;
 }
@@ -104,7 +105,7 @@
 }
 
 .ico-git {
-  margin-right: 5px;
+  margin-left: 5px;
   font-family: JetBrains Mono;
 }
 

@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import {RouterLink, RouterLinkActive, RouterOutlet} from "@angular/router";
 import {CommonModule, NgOptimizedImage} from "@angular/common";
-import {routes} from "../app.routes";
 import {ModalwithshopComponent} from "../views/stock/modalwithshop/modalwithshop.component";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-navbar',
@@ -19,5 +19,5 @@ import {ModalwithshopComponent} from "../views/stock/modalwithshop/modalwithshop
   styleUrl: './navbar.component.css',
 })
 export class NavbarComponent {
-
+  constructor(public router: Router) { }
 }

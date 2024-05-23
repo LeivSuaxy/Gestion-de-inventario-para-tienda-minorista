@@ -1,28 +1,26 @@
 .proyectNavButton{
-  background-color: #60686b;
+  background-color: rgb(36, 39, 41);
   border: none;
-  border-radius: 20px;
   color: white;
-  padding: 15px 32px;
+  padding: auto;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 40px;
-  margin: 4px 10px;
+  font-size: 4vh;
   cursor: pointer;
   transition: background-color 0.3s, color 0.25s;
+  width: 18vh;
+  height: 10vh;
 }
 
 .proyectNavButton:hover{
   background-color: #000000;
-  color: white;
-  box-shadow: black 0 0 5px;
+  fill: gold;
 }
 
 .proyectNavButton:active{
   background-color: white;
   color: black;
-  box-shadow: black 0 0 5px;
 }
 
 .cardhelphead {
@@ -36,7 +34,7 @@
 }
 
 .cart {
-  width: 45px;
-  height: 45px;
+  width: 4.5vh;
+  height: 4.5vh;
   vertical-align: middle;
 }

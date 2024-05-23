@@ -17,3 +17,9 @@
   font: bold 35px Arial;
 }
 
+.boton {
+  position: absolute;
+  bottom: 10px;
+  right: 10px
+}
+
