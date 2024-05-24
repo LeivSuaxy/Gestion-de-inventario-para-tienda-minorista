@@ -8,18 +8,18 @@
 }
 
 .card-ventas {
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 1vh 2vh 0 rgba(0,0,0,0.2);
   max-width: 80%;
 }
 
 .precio {
   color: green;
-  font: bold 35px Arial;
+  font: bold 4vh Arial;
 }
 
 .boton {
   position: absolute;
-  bottom: 10px;
-  right: 10px
+  bottom: 1vh;
+  right: 1vh;
 }
 
