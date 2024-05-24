@@ -24,9 +24,14 @@
 }
 
 .listhelp {
-  background-image: linear-gradient(to right, #334, #333);
+  background-color: #33333371;
   color: white;
   font-size: 5vh;
+  border: 1px solid rgba(255, 255, 255, 0.300);
+}
+
+.list {
+  border: 1px solid rgba(255, 255, 255, 0.300);
 }
 
 .cardhelphead {
@@ -53,14 +58,23 @@
 
 .img-angular {
   vertical-align: middle;
+  border-radius: 10px;
+  box-shadow: 2px 2px 4px #000000bd;
 }
 
 .angular {
   font-weight: bold;
   font-size: 5.5vh;
+  text-shadow: 2px 2px 4px #000000bd;
   color:red;
   vertical-align: middle;
   margin-left: 3px;
+}
+
+.boton-angular {
+  color:red;
+  background-color: #33333371;
+  border: none;
 }
 
 .card-django {
@@ -70,12 +84,21 @@
 .django {
   font-weight: bold;
   font-size: 5.5vh;
+  text-shadow: 2px 2px 4px #000000bd;
   color:darkgreen;
   vertical-align: middle;
 }
 
 .img-django {
   vertical-align: middle;
+  border-radius: 10px;
+  box-shadow: 2px 2px 4px #000000bd;
+}
+
+.boton-django {
+  color:darkgreen;
+  background-color: #33333371;
+  border: none;
 }
 
 .card-postgre {
@@ -84,24 +107,34 @@
 
 .img-postgre {
   vertical-align: middle;
+  border-radius: 10px;
+  box-shadow: 2px 2px 4px #000000bd;
 }
 
 .postgre {
   font-weight: bold;
   font-size: 5.5vh;
+  text-shadow: 2px 2px 4px #000000bd;
   color:deepskyblue;
   vertical-align: middle;
+}
+
+.boton-postgre {
+  color:deepskyblue;
+  background-color: #33333371;
+  border: none;
 }
 
 .card-git {
   max-width: 70%;
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
   background-image: linear-gradient(to bottom,black, #333);
-  border-radius: 0 10px 10px 0;
+  border-radius: 10px 10px 10px 10px;
 }
 
 .img-git {
   height: auto;
+  border-radius: 10px 0 0 10px;
 }
 
 .ico-git {
@@ -113,6 +146,11 @@
   text-decoration: none;
   color: white;
   position: absolute;
-  bottom: 10px;
-  right: 10px;
+  bottom: 1.5vh;
+  right: 1.5vh;
+}
+
+.boton {
+  background-color: #33333371;
+  border: none;
 }

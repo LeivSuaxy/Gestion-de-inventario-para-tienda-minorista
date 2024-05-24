@@ -1,14 +1,32 @@
 .listhelp {
   background-color: rgb(36, 39, 41);
-  font: bold 25px Arial;
+  font-weight: bold;
+  font-size: 25px;
   color: white;
 }
 
 .total {
-  font: bold 35px Arial;
+  font-weight: bold;
+  font-size: 3.5vh;
   color: green;
 }
 
 .lista-precios {
   color: green
+}
+
+.mas {
+  margin-left: 0.7vh;
+  width: 4.6vh;
+  align-items: center;
+  align-content: center;
+  border-radius: 50%;
+}
+
+.menos {
+  margin-left: 1.2vh;
+  width: 4.6vh;
+  align-items: center;
+  align-content: center;
+  border-radius: 50%;
 }

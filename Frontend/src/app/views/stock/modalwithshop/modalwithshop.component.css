@@ -38,3 +38,8 @@
   height: 4.5vh;
   vertical-align: middle;
 }
+
+.close {
+  background-color: transparent;
+  border: none;
+}
