@@ -1,14 +1,16 @@
 <div class="card mb-3 backCard card-ventas">
   <div class="row g-0">
     <div class="col-md-4">
-      <img [src]="venta.imagen" class="img-fluid rounded-start" alt="...">
+      <ng-container *ngIf="venta.image == null; else foto">
+        <img src="../../../../assets/img/nophoto.jpeg" class="img-fluid rounded-start" alt="{{venta.name}}"/>
+      </ng-container>
     </div>
     <div class="col-md-8">
       <div class="card-body">
-        <h5 class="card-title">{{venta.titulo}}</h5>
-        <p class="card-text">{{venta.descripcion}}</p>
-        <p class="precio">{{venta.precio}}$</p>
-        <p class="card-text"> Cantidad disponible: {{venta.cantidadStock}}</p>
+        <h5 class="card-title">{{venta.name}}</h5>
+        <p class="card-text">{{venta.description}}</p>
+        <p class="precio">{{venta.price}}$</p>
+        <p class="card-text"> Cantidad disponible: {{venta.stock}}</p>
       </div>
     </div>
   </div>
@@ -24,4 +26,8 @@
   <a type="button" class="btn btn-danger boton" (click)="removeFromCart(venta)">
       Eliminar del carrito
   </a>
+</ng-template>
+
+<ng-template #foto>
+  <img [src]="venta.image" class="img-fluid rounded-start" alt="..."/>
 </ng-template>

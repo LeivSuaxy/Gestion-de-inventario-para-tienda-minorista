@@ -4,7 +4,7 @@
     <ng-template #Ventas>
       <ol class="list-group list-group-numbered">
         <ng-container *ngFor="let list of cartService.cart">
-          <li class="list-group-item listhelp">{{list.titulo}} <span class="lista-precios">{{list.precio}}$</span>
+          <li class="list-group-item listhelp">{{list.name}} <span class="lista-precios">{{list.price}}$</span>
             <a class="btn btn-sm btn-success menos">-</a> <a class="btn btn-sm btn-success mas">+</a> </li>
         </ng-container>
       </ol>
