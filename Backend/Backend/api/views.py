@@ -7,4 +7,3 @@ from rest_framework import viewsets
 class StockElementViewSet(viewsets.ModelViewSet):
     queryset = StockElement.objects.all()
     serializer_class = StockElementSerializer
-
