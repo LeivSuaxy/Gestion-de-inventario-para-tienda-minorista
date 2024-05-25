@@ -1,3 +1,7 @@
 Frontend/node_modules/
 Frontend/.angular/
 Backend/Backend/api/migrations
+node_modules/
+Frontend/src/.idea/
+Frontend/src/.vscode/
+Frontend/src/api/migrations/
