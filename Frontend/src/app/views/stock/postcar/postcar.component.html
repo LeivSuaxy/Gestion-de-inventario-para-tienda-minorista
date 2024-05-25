@@ -1,20 +1,5 @@
 <form action="POST" class="postcar" enctype="multipart/form-data">
-  <div>
-    <p>Textos:</p>
-    <p>{{id}}</p>
-    <p>{{name}}</p>
-    <p>{{price}}</p>
-    <p>{{stock}}</p>
-    <p>{{description}}</p>
-
-
-  </div>
-
   <div class="postcar-inter">
-    <div class="mb-3">
-      <label for="IDForm" class="form-label">ID: </label>
-      <input [(ngModel)]="id" [ngModelOptions]="{standalone: true}" type="text" class="form-control" id="IDform" placeholder="ID">
-    </div>
     <div class="mb-3">
       <label for="nombreForm" class="form-label">Nombre: </label>
       <input type="text" class="form-control" id="nombreForm" placeholder="Nombe del Articulo" [(ngModel)]="name" [ngModelOptions]="{standalone: true}">

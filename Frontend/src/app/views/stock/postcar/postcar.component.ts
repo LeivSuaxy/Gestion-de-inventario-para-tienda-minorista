@@ -13,7 +13,6 @@ import {HttpClient, HttpClientModule} from "@angular/common/http";
   styleUrl: './postcar.component.css'
 })
 export class PostcarComponent {
-  id? : number;
   name? : string;
   price? : number;
   description? : string;
@@ -26,7 +25,6 @@ export class PostcarComponent {
   posMethod(): void {
     let url = 'http://localhost:8000/api/stockelement/';
     const formData = new FormData();
-    formData.append('id', this.id?.toString() ?? '');
     formData.append('image', this.image? this.image : '');
     formData.append('name', this.name?.toString() ?? '');
     formData.append('price', this.price?.toString() ?? '');
@@ -43,7 +41,7 @@ export class PostcarComponent {
     const target = event.target as HTMLInputElement;
     if (target && target.files && target.files.length > 0) {
       this.image = target.files[0];
-      alert(this.image.type)
+      //alert(this.image.type)
     }
   }
 
