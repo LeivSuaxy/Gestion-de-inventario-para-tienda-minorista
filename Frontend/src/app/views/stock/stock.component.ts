@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {CarouselComponent} from "./carousel/carousel.component";
 import {StockcardsComponent} from "./stockcards/stockcards.component";
-import {NgForOf, NgIf, NgOptimizedImage} from "@angular/common";
+import {NgForOf, NgIf} from "@angular/common";
 import {ShoppingcarComponent} from "./shoppingcar/shoppingcar.component";
 import {ModalwithshopComponent} from "./modalwithshop/modalwithshop.component";
 import {CartService, Venta} from "./cartservice.service";
