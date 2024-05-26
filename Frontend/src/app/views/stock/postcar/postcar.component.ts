@@ -34,7 +34,15 @@ export class PostcarComponent {
     fetch(url, {
       method: 'POST',
       body: formData
+    }).then(() => {
+      this.name = undefined;
+      this.price = undefined;
+      this.description = undefined;
+      this.image = undefined;
+      this.stock = undefined;
     });
+
+
   }
 
   onFileSelected(event: Event) {

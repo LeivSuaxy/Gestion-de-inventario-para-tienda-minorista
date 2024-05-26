@@ -5,3 +5,4 @@ node_modules/
 Frontend/src/.idea/
 Frontend/src/.vscode/
 Frontend/src/api/migrations/
+Backend/media/
