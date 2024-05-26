@@ -9,7 +9,7 @@ import math
 
 # Create your views here.
 class TenItemsPaginator(PageNumberPagination):
-    page_size: int = 10
+    page_size: int = 5
 
 
 class StockElementViewSet(viewsets.ModelViewSet):

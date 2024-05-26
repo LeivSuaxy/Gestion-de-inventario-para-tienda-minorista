@@ -68,11 +68,13 @@ export class StockComponent {
   }
 
   next(){
+    window.scrollTo({top: 0, behavior: 'smooth'});
     this.apiurl = this.apiurlnext;
     this.apicall();
   }
 
   prev() {
+    window.scrollTo({top: 0, behavior: 'smooth'});
     this.apiurl = this.apiurlprev;
     this.apicall();
   }
