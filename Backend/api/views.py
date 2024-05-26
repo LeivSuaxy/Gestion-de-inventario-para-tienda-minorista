@@ -3,15 +3,15 @@ from .serializer import StockElementSerializer
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from rest_framework.pagination import PageNumberPagination
+import math
 
 
 # Create your views here.
+class TenItemsPaginator(PageNumberPagination):
+    page_size: int = 10
+
+
 class StockElementViewSet(viewsets.ModelViewSet):
     queryset = StockElement.objects.all()
     serializer_class = StockElementSerializer
-
-
-@api_view(['GET'])
-def count_elements(request):
-    count: int = StockElement.objects.count()
-    return Response({'count': count})

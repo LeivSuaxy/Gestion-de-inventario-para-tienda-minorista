@@ -1,5 +1,4 @@
 <app-carousel></app-carousel>
-
 <div>
   <div class="container text-dark sombreado">
     <div class="row align-items-start">
@@ -10,7 +9,17 @@
         <hr style="background-color: white; color: whitesmoke">
       </ng-container>
     </div>
+    <input *ngIf="[(apiurlprev != null)]" type="button" value="Previous" class="btn btn-success" (click)="prev()"/>
+    <input *ngIf="[(apiurlnext != null)]" type="button" value="Next" class="btn btn-success" (click)="next()"/>
+    <div style="color: white">
+    <p>Logs: </p>
+    <p>Previus {{apiurlprev}}</p>
+    <p>Here {{apiurl}}</p>
+    <p>Next {{apiurlnext}}</p>
+      </div>
   </div>
+
+
 </div>
 
 <button routerLink="/stockadd" routerLinkActive="active" ariaCurrentWhenActive="page">ADD</button>
