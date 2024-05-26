@@ -5,3 +5,6 @@ node_modules/
 Frontend/src/.idea/
 Frontend/src/.vscode/
 Frontend/src/api/migrations/
+Backend/Backend/Backend/settings.py
+Backend/Backend/Backend/__pycache__
+Backend/Backend/api/__pycache__
