@@ -2,23 +2,23 @@
   <div class="postcar-inter">
     <div class="mb-3">
       <label for="nombreForm" class="form-label">Nombre: </label>
-      <input type="text" class="form-control" id="nombreForm" placeholder="Nombe del Articulo" [(ngModel)]="name" [ngModelOptions]="{standalone: true}">
+      <input type="text" class="form-control postcar-bars" id="nombreForm" placeholder="Nombe del Articulo" [(ngModel)]="name" [ngModelOptions]="{standalone: true}">
     </div>
     <div class="mb-3">
       <label for="precioForm" class="form-label">Precio: </label>
-      <input type="text" class="form-control" id="precioForm" placeholder="Precio del articulo" [(ngModel)]="price" [ngModelOptions]="{standalone: true}">
+      <input type="text" class="form-control postcar-bars" id="precioForm" placeholder="Precio del articulo" [(ngModel)]="price" [ngModelOptions]="{standalone: true}">
     </div>
     <div class="mb-3">
       <label for="imageForm" class="form-label">Imagen: </label>
-      <input class="form-control" type="file" id="imageForm" (change)="onFileSelected($event)">
+      <input class="form-control postcar-bars" type="file" id="imageForm" (change)="onFileSelected($event)">
     </div>
     <div class="mb-3">
       <label for="stockForm" class="form-label">Stock: </label>
-      <input type="text" class="form-control" id="stockForm" placeholder="Precio del articulo" [(ngModel)]="stock" [ngModelOptions]="{standalone: true}">
+      <input type="text" class="form-control postcar-bars" id="stockForm" placeholder="Cantidad de Stock" [(ngModel)]="stock" [ngModelOptions]="{standalone: true}">
     </div>
     <div class="mb-3">
       <label for="DescripcionArea" class="form-label">Descripción: </label>
-      <textarea class="form-control" id="DescripcionArea" rows="3" [(ngModel)]="description" [ngModelOptions]="{standalone: true}"></textarea>
+      <textarea class="form-control postcar-bars" id="DescripcionArea" rows="3" [(ngModel)]="description" [ngModelOptions]="{standalone: true}"></textarea>
     </div>
     <div style="text-align: center;">
       <a class="btn btn-success" (click)="posMethod()">Confirm</a>

@@ -5,4 +5,4 @@ from .models import StockElement
 class StockElementSerializer(serializers.ModelSerializer):
     class Meta:
         model = StockElement
-        fields = ['image', 'name', 'price', 'description', 'stock']
+        fields = ['id', 'image', 'name', 'price', 'description', 'stock']
