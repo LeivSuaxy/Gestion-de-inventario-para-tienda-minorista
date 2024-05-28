@@ -1,10 +1,13 @@
 Frontend/node_modules/
 Frontend/.angular/
-Backend/Backend/api/migrations
+Backend/api/migrations
+Backend/api/__pycache__
+Backend/Backend/api/__pycache__
 node_modules/
 Frontend/src/.idea/
 Frontend/src/.vscode/
 Frontend/src/api/migrations/
-Backend/Backend/Backend/settings.py
+Backend/Backend/settings.py
+Backend/Backend/__pycache__
+Backend/media/stock
 Backend/Backend/Backend/__pycache__
-Backend/Backend/api/__pycache__
