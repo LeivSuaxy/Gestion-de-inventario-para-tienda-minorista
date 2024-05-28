@@ -11,3 +11,6 @@ Backend/Backend/settings.py
 Backend/Backend/__pycache__
 Backend/media/stock
 Backend/Backend/Backend/__pycache__
+Backend/Backend/api/__pycache__
+/Backend/media/
+/Backend/Backend/settings.py/
