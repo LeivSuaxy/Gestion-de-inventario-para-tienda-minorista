@@ -1,12 +1,20 @@
 <div class="formulario">
-  <form class="proyectForm">
+  <form class="proyectForm" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
     <div class="mb-3">
-    <label for="exampleFormControlInput1" class="form-label">Email address</label>
-    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
-  </div>
-  <div class="mb-3">
-    <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
-    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-  </div>
+      <label for="name" class="form-label">Nombre</label>
+      <input type="text" class="form-control" id="name" formControlName="name" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="password" class="form-label">Contraseña</label>
+      <input type="password" class="form-control" id="password" formControlName="password" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="confirm_password" class="form-label">Confirmar Contraseña</label>
+      <input type="password" class="form-control" id="confirm_password" formControlName="confirmpassword" required>
+    </div>
+
+    <input type="submit" [disabled]="!registerForm.valid" class="btn btn-success" value="Crear">
   </form>
 </div>

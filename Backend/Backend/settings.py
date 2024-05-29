@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'api',
     'corsheaders',
+    "login.apps.LoginConfig"
 ]
 
 MIDDLEWARE = [
