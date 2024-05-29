@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'api',
     'corsheaders',
+    "login.apps.LoginConfig"
 ]
 
 MIDDLEWARE = [
@@ -89,7 +90,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'SBD',
         'USER': 'postgres',
-        'PASSWORD': 'adrgr03a',
+        'PASSWORD': 'password',
         'HOST': 'localhost',
         'PORT': '5432',
     }
