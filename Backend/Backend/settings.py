@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'api',
     'corsheaders',
-    "login.apps.LoginConfig"
+    "login",
 ]
 
 MIDDLEWARE = [
@@ -88,7 +88,7 @@ WSGI_APPLICATION = 'Backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'SBD',
+        'NAME': 'postgres',
         'USER': 'postgres',
         'PASSWORD': 'ADRGR03A',
         'HOST': 'localhost',

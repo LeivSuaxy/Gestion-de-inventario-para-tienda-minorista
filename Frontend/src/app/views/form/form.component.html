@@ -2,7 +2,7 @@
   <form class="proyectForm" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
     <div class="mb-3">
       <label for="name" class="form-label">Nombre</label>
-      <input type="text" class="form-control" id="name" formControlName="name" required>
+      <input type="text" class="form-control" id="name" formControlName="username" required>
     </div>
 
     <div class="mb-3">
@@ -15,6 +15,16 @@
       <input type="password" class="form-control" id="confirm_password" formControlName="confirmpassword" required>
     </div>
 
+    <ng-container *ngIf="!isCorrect; then alert"/>
+
     <input type="submit" [disabled]="!registerForm.valid" class="btn btn-success" value="Crear">
+
+
   </form>
 </div>
+
+<ng-template #alert>
+  <div class="alert alert-danger" role="alert">
+    Las contraseñas no coinciden.
+  </div>
+</ng-template>
