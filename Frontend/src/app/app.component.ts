@@ -12,5 +12,4 @@ import {ViewsComponent} from "./views/views.component";
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'MyWeb';
 }
