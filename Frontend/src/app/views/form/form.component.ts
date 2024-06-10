@@ -3,6 +3,7 @@ import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {NgIf} from "@angular/common";
 import {Router, RouterLink} from '@angular/router';
 import {HttpClient, HttpClientModule} from "@angular/common/http";
+import {LogintokenService} from "../../logintoken.service";
 
 @Component({
   selector: 'app-form',
@@ -19,23 +20,18 @@ export class FormComponent {
       password: new FormControl(''),
   });
 
-  constructor(private http: HttpClient,private router: Router) { }
+  constructor(private http: HttpClient,private router: Router, private login:LogintokenService) { }
 
   loginAccount():void {
-    console.log(this.loginForm.value);
+    const username = this.loginForm.value.username;
+    const password = this.loginForm.value.password;
 
-    const account = {
-      username: this.loginForm.value.username,
-      password: this.loginForm.value.password
-    };
-
-
-    this.http.post('http://localhost:8000/api/auth/register/', account).subscribe(
-      response => {
-        console.log('Succes', response)
-        this.router.navigate(['/main']);
-      },
-      error => console.error('Error', error)
-    );
+    if(username && password) {
+      this.login.loginAPI(username, password).then(r => {
+        console.log('Success');
+      });
+    } else {
+      console.log('Error making login');
+    }
   }
 }
