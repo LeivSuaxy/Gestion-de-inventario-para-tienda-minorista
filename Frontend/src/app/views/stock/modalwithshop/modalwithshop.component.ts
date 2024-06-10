@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {ShoppingcarComponent} from "../shoppingcar/shoppingcar.component";
-import {CartService} from "../cartservice.service";
-import {HttpClient, HttpClientModule} from "@angular/common/http";
+import {CartService, Venta} from "../cartservice.service";
+import {HttpClientModule} from "@angular/common/http";
 
 @Component({
   selector: 'app-modalwithshop',
@@ -14,6 +14,12 @@ import {HttpClient, HttpClientModule} from "@angular/common/http";
   styleUrl: './modalwithshop.component.css'
 })
 export class ModalwithshopComponent {
-  constructor() {
+  constructor(private service: CartService) { }
+
+
+  sendTo(){
+    let carList: Venta[] = this.service.getCart();
+
+
   }
 }
