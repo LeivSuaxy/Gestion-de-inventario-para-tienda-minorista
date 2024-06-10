@@ -1,0 +1,5 @@
+### POST request to example server
+POST http://localhost:8000/api/token/refresh/
+
+### POST request to get Token
+POST http://localhost:8000/api/token/

@@ -1,5 +1,5 @@
 <div class="formulario">
-  <form class="proyectForm" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  <form class="proyectForm" [formGroup]="loginForm" (ngSubmit)="loginAccount()">
     <div class="mb-3">
       <label for="name" class="form-label">Nombre</label>
       <input type="text" class="form-control" id="name" formControlName="username" required>
@@ -10,21 +10,8 @@
       <input type="password" class="form-control" id="password" formControlName="password" required>
     </div>
 
-    <div class="mb-3">
-      <label for="confirm_password" class="form-label">Confirmar Contraseña</label>
-      <input type="password" class="form-control" id="confirm_password" formControlName="confirmpassword" required>
-    </div>
+    <p>Si no tienes cuenta <a routerLink="/register">registrate</a></p>
 
-    <ng-container *ngIf="!isCorrect; then alert"/>
-
-    <input type="submit" [disabled]="!registerForm.valid" class="btn btn-success" value="Crear">
-
-
+    <input type="submit" [disabled]="!loginForm.valid" class="btn btn-success" value="Crear">
   </form>
 </div>
-
-<ng-template #alert>
-  <div class="alert alert-danger" role="alert">
-    Las contraseñas no coinciden.
-  </div>
-</ng-template>
