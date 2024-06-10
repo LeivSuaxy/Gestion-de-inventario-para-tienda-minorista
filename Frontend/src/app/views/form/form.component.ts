@@ -14,19 +14,19 @@ import {HttpClient, HttpClientModule} from "@angular/common/http";
 export class FormComponent {
   isCorrect: boolean = true;
 
-  registerForm = new FormGroup({
+  loginForm = new FormGroup({
       username: new FormControl(''),
       password: new FormControl(''),
   });
 
   constructor(private http: HttpClient,private router: Router) { }
 
-  createAccount():void {
-    console.log(this.registerForm.value);
+  loginAccount():void {
+    console.log(this.loginForm.value);
 
     const account = {
-      username: this.registerForm.value.username,
-      password: this.registerForm.value.password
+      username: this.loginForm.value.username,
+      password: this.loginForm.value.password
     };
 
 

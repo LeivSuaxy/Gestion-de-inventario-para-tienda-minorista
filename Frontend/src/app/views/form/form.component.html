@@ -1,5 +1,5 @@
 <div class="formulario">
-  <form class="proyectForm" [formGroup]="registerForm" (ngSubmit)="createAccount()">
+  <form class="proyectForm" [formGroup]="loginForm" (ngSubmit)="loginAccount()">
     <div class="mb-3">
       <label for="name" class="form-label">Nombre</label>
       <input type="text" class="form-control" id="name" formControlName="username" required>
@@ -10,9 +10,8 @@
       <input type="password" class="form-control" id="password" formControlName="password" required>
     </div>
 
-    <p>Si no tienes cuenta <a routerLink="/">registrate</a></p>
+    <p>Si no tienes cuenta <a routerLink="/register">registrate</a></p>
 
-    <input type="submit" [disabled]="!registerForm.valid" class="btn btn-success" value="Crear">
-
+    <input type="submit" [disabled]="!loginForm.valid" class="btn btn-success" value="Crear">
   </form>
 </div>

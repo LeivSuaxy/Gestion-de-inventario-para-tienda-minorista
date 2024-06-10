@@ -19,13 +19,30 @@ import {HttpClient} from "@angular/common/http";
 export class RegistroComponent {
 
 
-  constructor(private hhtp: HttpClient, private router: Router) {
+  constructor(private http: HttpClient, private router: Router) {
   }
 
   registerForm = new FormGroup({
     username: new FormControl(''),
     password: new FormControl(''),
-    confirmpassword: new FormControl('')
-
+    cpassword: new FormControl('')
   });
+
+  createAccount():void {
+    console.log(this.registerForm.value);
+
+    const account = {
+      username: this.registerForm.value.username,
+      password: this.registerForm.value.password
+    };
+
+
+    this.http.post('http://localhost:8000/api/auth/register/', account).subscribe(
+      response => {
+        console.log('Succes', response)
+        this.router.navigate(['/main']);
+      },
+      error => console.error('Error', error)
+    );
+  }
 }
