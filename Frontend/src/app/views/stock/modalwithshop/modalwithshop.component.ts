@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {ShoppingcarComponent} from "../shoppingcar/shoppingcar.component";
 import {CartService, Venta} from "../cartservice.service";
-import {HttpClient, HttpClientModule} from "@angular/common/http";
+import {HttpClientModule} from "@angular/common/http";
 
 @Component({
   selector: 'app-modalwithshop',

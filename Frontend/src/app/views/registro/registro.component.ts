@@ -17,6 +17,7 @@ import {HttpClient} from "@angular/common/http";
   styleUrl: './registro.component.css'
 })
 export class RegistroComponent {
+  isValid : boolean = true;
 
 
   constructor(private http: HttpClient, private router: Router) {
@@ -44,5 +45,16 @@ export class RegistroComponent {
       },
       error => console.error('Error', error)
     );
+  }
+
+  onSubmit(): number {
+    if(this.registerForm.value.password === this.registerForm.value.cpassword) {
+      this.isValid = true;
+      this.createAccount();
+      return 200;
+    } else {
+      this.isValid = false;
+      return 400;
+    }
   }
 }
