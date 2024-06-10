@@ -27,9 +27,7 @@ export class FormComponent {
     const password = this.loginForm.value.password;
 
     if(username && password) {
-      this.login.loginAPI(username, password).then(r => {
-        console.log('Success');
-      });
+      this.login.loginAPI(username, password);
     } else {
       console.log('Error making login');
     }
