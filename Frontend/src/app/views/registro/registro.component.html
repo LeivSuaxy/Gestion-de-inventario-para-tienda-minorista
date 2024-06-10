@@ -1,3 +1,5 @@
+<!-- Formulario de registro -->
+
 <div class="formulario">
   <form class="proyectForm" [formGroup]="registerForm" (ngSubmit)="createAccount()">
     <div class="mb-3">
@@ -15,10 +17,7 @@
       <input type="password" class="form-control" id="confirmPassword" formControlName="cpassword" required>
     </div>
 
-
     <input type="submit" [disabled]="!registerForm.valid" class="btn btn-success" value="Crear">
-
-
   </form>
 </div>
 

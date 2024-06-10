@@ -3,3 +3,6 @@ POST http://localhost:8000/api/token/refresh/
 
 ### POST request to get Token
 POST http://localhost:8000/api/token/
+
+### POST request to send Email
+POST http://localhost:8000/api/send/

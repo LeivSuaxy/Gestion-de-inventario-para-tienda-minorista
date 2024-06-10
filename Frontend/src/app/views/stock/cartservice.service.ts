@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpClientModule} from "@angular/common/http";
-//import { HttpClientModule } from "@angular/common/http";
-//import { Component, OnInit } from "@angular/core";
+
 
 export interface Venta{
   id: number;
@@ -25,14 +23,6 @@ export class CartService {
 
   constructor() {
   }
-  /*tankeFunction(): void {
-    this.http.get('http://localhost:8000/api').subscribe(data => {
-      this.data = data;
-      alert(data)
-    })
-  }*/
-
-
 
   addToCart(product: Venta) {
     if(!this.cart.includes(product)) this.cart.push(product);
@@ -60,7 +50,13 @@ export class CartService {
   }
 
   isInCar(venta: Venta):boolean{
-    return this.cart.includes(venta);
+    for(let i = 0; i < this.cart.length; i++){
+      if(this.cart[i].id == venta.id){
+        return true;
+      }
+    }
+
+    return false;
   }
 
   clearCart() {
