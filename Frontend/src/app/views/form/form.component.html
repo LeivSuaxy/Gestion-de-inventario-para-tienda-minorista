@@ -1,3 +1,5 @@
+<!-- Formulario de login -->
+
 <div class="formulario">
   <form class="proyectForm" [formGroup]="loginForm" (ngSubmit)="loginAccount()">
     <div class="mb-3">
@@ -12,6 +14,6 @@
 
     <p>Si no tienes cuenta <a routerLink="/register">registrate</a></p>
 
-    <input type="submit" [disabled]="!loginForm.valid" class="btn btn-success" value="Crear">
+    <input type="submit" [disabled]="!loginForm.valid" class="btn btn-success" value="Login">
   </form>
 </div>
