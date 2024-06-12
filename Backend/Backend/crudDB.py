@@ -179,5 +179,27 @@ class CrudDB:
         # pagination: desde
         # pagination+5: hasta
         # total: min
-        pass
-    
+        pagination = pagination*5
+        top: int = min(pagination+5, total)
+
+        connection = self.connect_to_db()
+
+        if connection == ResponseType.DATABASE_ERROR.value:
+            return connection
+        else:
+            cursor = connection.cursor()
+
+            cursor.execute(f"SELECT * FROM api_stockelement")
+
+            info = cursor.fetchall()
+            info_real = []
+            for i in range(pagination, top):
+                info_real.append(info[i])
+
+            for i in info_real:
+                print(i)
+
+            cursor.close()
+            connection.close()
+
+            return ResponseType.SUCCESS.value
