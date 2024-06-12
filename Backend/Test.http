@@ -16,7 +16,7 @@ POST http://localhost:8000/api/auth/register/
 content-type: application/json
 
 {
-    "user":"Pedro",
+    "username":"Pedro",
     "password":"123456"
 }
 
