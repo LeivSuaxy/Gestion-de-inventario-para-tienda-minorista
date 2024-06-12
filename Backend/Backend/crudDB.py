@@ -1,7 +1,7 @@
 import psycopg2
 from .settings import DATABASES
 from enum import Enum
-from django.contrib.auth.hashers import make_password
+from django.contrib.auth.hashers import check_password
 
 
 # Aquí se declararán las clases y funciones que se encargarán
@@ -43,7 +43,7 @@ class CrudDB:
 
     # Las funciones se realizarán dependiendo de la tabla que se quiera consultar
     @staticmethod
-    def connect_to_db_test():
+    def connect_to_db():
         conn = None
         try:
             conn = psycopg2.connect(
@@ -60,7 +60,8 @@ class CrudDB:
 
         return conn
 
-    def register_user(self, username: str, password: str):
+    # Function to register users
+    def register_user(self, username: str, password: str) -> int:
         """
         This method is used to register a new user in the database
         :param username: The username of the new user
@@ -72,14 +73,12 @@ class CrudDB:
         """
 
         # Connect to the database
-        connection = self.connect_to_db_test()
+        connection = self.connect_to_db()
 
         # If the connection is unsuccessful, return an error code
         if connection == ResponseType.ERROR.value['code']:
             return ResponseType.ERROR.value['code']
         else:
-            # Hash the password using Django's make_password function
-            password = make_password(password)
             # Create a cursor object to execute SQL commands
             cursor = connection.cursor()
 
@@ -112,8 +111,61 @@ class CrudDB:
                 connection.close()
                 return ResponseType.EXIST.value['code']
 
+    # Function to log in users
+    def log_in_user(self, username: str, password: str) -> int:
+        """
+        This method is used to log in a user.
+
+
+        :param username: The username of the user trying to log.
+        :param password: The password provided by the user.
+        :return: A status code indicating the result of the operation.
+                It returns 200 if the operation is successful,
+                400 if there is an error,
+                or 404 if the user does not exist.
+        """
+
+        # Connect to the database
+        connection = self.connect_to_db()
+
+        # If the connection is unsuccessful, return an error code
+        if connection == ResponseType.ERROR.value['code']:
+            return ResponseType.ERROR.value['code']
+        else:
+            # Create a cursor object to execute SQL commands
+            cursor = connection.cursor()
+
+            # Execute a SQL command to check if a user with the provided username exists in the database
+            cursor.execute(f"SELECT 1 FROM auth_user WHERE username = '{username}'")
+
+            # If the user exists, close the connection and return a code indicating that the user already exists
+            user_exists = cursor.fetchone() is not None
+
+            if not user_exists:
+                # If the user does not exist, close the cursor and the connection and return a code indicating that the
+                # user does not exist
+                cursor.close()
+                connection.close()
+                return ResponseType.NOT_FOUND.value['code']
+            else:
+                # If the user exists, retrieve the hashed password of the user from the database
+                cursor.execute(f"SELECT password FROM auth_user WHERE username = '{username}'")
+                user_password = cursor.fetchone()[0]
+
+                # Use Django's check_password function to compare the provided password with the stored hashed password
+                if check_password(password, user_password):
+                    # If the passwords match, close the cursor and the connection and return a success code
+                    cursor.close()
+                    connection.close()
+                    return ResponseType.SUCCESS.value['code']
+                else:
+                    # If the passwords do not match, close the cursor and the connection and return an error code
+                    cursor.close()
+                    connection.close()
+                    return ResponseType.ERROR.value['code']
+
     def connect_test(self):
-        connection = self.connect_to_db_test()
+        connection = self.connect_to_db()
         print('Conectado, cerrando conexion')
         connection.close()
         return ResponseType.SUCCESS.value['code']
