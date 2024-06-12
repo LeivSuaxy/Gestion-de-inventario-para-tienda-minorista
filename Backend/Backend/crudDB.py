@@ -180,9 +180,4 @@ class CrudDB:
         # pagination+5: hasta
         # total: min
         pass
-
-    def connect_test(self):
-        connection = self.connect_to_db()
-        print('Conectado, cerrando conexion')
-        connection.close()
-        return ResponseType.SUCCESS.value['code']
+    
