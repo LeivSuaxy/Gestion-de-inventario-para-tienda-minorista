@@ -11,18 +11,10 @@ from rest_framework import status
 
 class ResponseType(Enum):
     # Caso que la operacion se realizó con éxito
-    SUCCESS = {
-        'status': 'success',
-        'code': 200,
-        'message': 'Operación realizada con éxito'
-    }
+    SUCCESS = Response({'status': 'Success'}, status.HTTP_200_OK)
 
     # Caso en que haya dado algun error
-    ERROR = {
-        'status': 'error',
-        'code': 400,
-        'message': 'Error en la operacion'
-    }
+    ERROR = Response({'status': 'Error'}, status.HTTP_400_BAD_REQUEST)
 
     # Caso que no se encuentre ningun elemento
     NOT_FOUND = {
@@ -38,7 +30,7 @@ class ResponseType(Enum):
         'message': 'Elemento ya existe'
     }
 
-    DATABASE_ERROR = {Response({'status': 'Error conectando con la base de datos'}, status.HTTP_400_BAD_REQUEST)}
+    DATABASE_ERROR = Response({'status': 'Error conectando con la base de datos'}, status.HTTP_400_BAD_REQUEST)
 
 
 class CrudDB:
@@ -56,11 +48,9 @@ class CrudDB:
                 user=DATABASES['default']['USER'],
                 password=DATABASES['default']['PASSWORD']
             )
-            print('Connected to the database')
-
         except psycopg2.Error as e:
             print(f'Ocurrio un error: {e}')
-            return ResponseType.ERROR.value['code']
+            return ResponseType.DATABASE_ERROR.value
 
         return conn
 
@@ -80,8 +70,8 @@ class CrudDB:
         connection = self.connect_to_db()
 
         # If the connection is unsuccessful, return an error code
-        if connection == ResponseType.ERROR.value['code']:
-            return ResponseType.DATABASE_ERROR.value[0]
+        if connection == ResponseType.DATABASE_ERROR.value:
+            return connection
         else:
             # Create a cursor object to execute SQL commands
             cursor = connection.cursor()
@@ -107,7 +97,7 @@ class CrudDB:
                 connection.close()
 
                 # Return a success code
-                return Response({'status': 'Success'}, status.HTTP_200_OK)
+                return ResponseType.SUCCESS.value
             else:
                 # If the user exists, close the cursor and the connection and return a code indicating that the user
                 # already exists
@@ -134,7 +124,7 @@ class CrudDB:
 
         # If the connection is unsuccessful, return an error code
         if connection == ResponseType.ERROR.value['code']:
-            return ResponseType.DATABASE_ERROR.value[0]
+            return ResponseType.DATABASE_ERROR.value
         else:
             # Create a cursor object to execute SQL commands
             cursor = connection.cursor()
