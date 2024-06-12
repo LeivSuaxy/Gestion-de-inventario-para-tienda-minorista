@@ -29,5 +29,8 @@ content-type: application/json
   "password": "123456"
 }
 
+### POST request to login user
+POST http://localhost:8000/api/auth/test/
+
 ### Request to GitHub API TEST
 GET https://api.github.com/users/LeivSuaxy
