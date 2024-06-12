@@ -5,6 +5,7 @@ import { HttpClient, HttpClientModule } from "@angular/common/http";
 @Injectable({
   providedIn: 'root',
   useClass: HttpClientModule,
+
 })
 export class LogintokenService {
 

@@ -1,3 +1,4 @@
+
 ### POST request to example server
 POST http://localhost:8000/api/token/refresh/
 
@@ -9,3 +10,15 @@ POST http://localhost:8000/api/send/
 
 ### GET request to get Token
 GET http://localhost:8000/api/token/
+
+### POST request to get Token
+POST http://localhost:8000/api/auth/register/
+content-type: application/json
+
+{
+    "user":"Pedro",
+    "password":"123456"
+}
+
+### Request to GitHub API TEST
+GET https://api.github.com/users/LeivSuaxy
