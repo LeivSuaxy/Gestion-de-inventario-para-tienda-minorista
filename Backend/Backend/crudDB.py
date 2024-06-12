@@ -176,7 +176,7 @@ class CrudDB:
             cursor.close()
             connection.close()
 
-            return Response({'status': 'Success', 'amout': count}, status.HTTP_200_OK)
+            return Response({'status': 'Success', 'amount': count}, status.HTTP_200_OK)
 
     # Function to get elements from stock
     def get_elements_stock(self, pagination: int):
