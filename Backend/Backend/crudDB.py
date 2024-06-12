@@ -2,6 +2,8 @@ import psycopg2
 from .settings import DATABASES
 from enum import Enum
 from django.contrib.auth.hashers import check_password
+from rest_framework.response import Response
+from rest_framework import status
 
 
 # Aquí se declararán las clases y funciones que se encargarán
@@ -36,6 +38,8 @@ class ResponseType(Enum):
         'message': 'Elemento ya existe'
     }
 
+    DATABASE_ERROR = {Response({'status': 'Error conectando con la base de datos'}, status.HTTP_400_BAD_REQUEST)}
+
 
 class CrudDB:
     def __init__(self):
@@ -61,7 +65,7 @@ class CrudDB:
         return conn
 
     # Function to register users
-    def register_user(self, username: str, password: str) -> int:
+    def register_user(self, username: str, password: str) -> Response:
         """
         This method is used to register a new user in the database
         :param username: The username of the new user
@@ -77,7 +81,7 @@ class CrudDB:
 
         # If the connection is unsuccessful, return an error code
         if connection == ResponseType.ERROR.value['code']:
-            return ResponseType.ERROR.value['code']
+            return ResponseType.DATABASE_ERROR.value[0]
         else:
             # Create a cursor object to execute SQL commands
             cursor = connection.cursor()
@@ -103,16 +107,16 @@ class CrudDB:
                 connection.close()
 
                 # Return a success code
-                return ResponseType.SUCCESS.value['code']
+                return Response({'status': 'Success'}, status.HTTP_200_OK)
             else:
                 # If the user exists, close the cursor and the connection and return a code indicating that the user
                 # already exists
                 cursor.close()
                 connection.close()
-                return ResponseType.EXIST.value['code']
+                return Response({'status': 'Ya existe un usuario con este nombre'}, status.HTTP_409_CONFLICT)
 
     # Function to log in users
-    def log_in_user(self, username: str, password: str) -> int:
+    def log_in_user(self, username: str, password: str) -> Response:
         """
         This method is used to log in a user.
 
@@ -130,7 +134,7 @@ class CrudDB:
 
         # If the connection is unsuccessful, return an error code
         if connection == ResponseType.ERROR.value['code']:
-            return ResponseType.ERROR.value['code']
+            return ResponseType.DATABASE_ERROR.value[0]
         else:
             # Create a cursor object to execute SQL commands
             cursor = connection.cursor()
@@ -146,7 +150,7 @@ class CrudDB:
                 # user does not exist
                 cursor.close()
                 connection.close()
-                return ResponseType.NOT_FOUND.value['code']
+                return Response({'status': 'El usuario no existe'}, status.HTTP_404_NOT_FOUND)
             else:
                 # If the user exists, retrieve the hashed password of the user from the database
                 cursor.execute(f"SELECT password FROM auth_user WHERE username = '{username}'")
@@ -157,12 +161,36 @@ class CrudDB:
                     # If the passwords match, close the cursor and the connection and return a success code
                     cursor.close()
                     connection.close()
-                    return ResponseType.SUCCESS.value['code']
+                    return Response({'status': 'Success'}, status.HTTP_200_OK)
                 else:
                     # If the passwords do not match, close the cursor and the connection and return an error code
                     cursor.close()
                     connection.close()
-                    return ResponseType.ERROR.value['code']
+                    return Response({'status': 'Incorrect password'}, status.HTTP_400_BAD_REQUEST)
+
+    # Function to get amount of elements from stock
+    def get_amount_elements_stock(self) -> Response:
+
+        # Connect to database
+        connection = self.connect_to_db()
+
+        if connection == ResponseType.ERROR.value['code']:
+            return Response({'status': 'Error conectando con la base de datos'}, status.HTTP_400_BAD_REQUEST)
+        else:
+            cursor = connection.cursor()
+
+            cursor.execute("SELECT COUNT(*) FROM api_stockelement")
+
+            count = cursor.fetchone()[0]
+
+            cursor.close()
+            connection.close()
+
+            return Response({'status': 'Success', 'amout': count}, status.HTTP_200_OK)
+
+    # Function to get elements from stock
+    def get_elements_stock(self, pagination: int):
+        pass
 
     def connect_test(self):
         connection = self.connect_to_db()

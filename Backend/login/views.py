@@ -34,17 +34,9 @@ def register(request):
         return Response({'error': 'Please provide both username and password'}, status.HTTP_400_BAD_REQUEST)
 
     # Call the register_user method of the CrudDB instance with the username and password
-    response = db.register_user(username=username, password=password)
+    response: Response = db.register_user(username=username, password=password)
 
-    # If the registration is successful, return a 200 status
-    if response == 200:
-        return Response({'status': 'Success'}, status.HTTP_200_OK)
-    # If the user already exists, return a 409 status
-    elif response == 409:
-        return Response({'status': 'This user already exists'}, status.HTTP_409_CONFLICT)
-    # If there is any other error, return a 400 error
-    else:
-        return Response({'status': 'Error'}, status.HTTP_400_BAD_REQUEST)
+    return response
 
 
 # Login endpoint
@@ -76,17 +68,9 @@ def login(request):
         return Response({'error': 'Please provide both username and password'}, status.HTTP_400_BAD_REQUEST)
 
     # Call the log_in_user method of the CrudDB instance with the username and password
-    response = db.log_in_user(username=username, password=password)
+    response: Response = db.log_in_user(username=username, password=password)
 
-    # If the login is successful, return a 200 status
-    if response == 200:
-        return Response({'success': 'The user was founded'}, status.HTTP_200_OK)
-    # If the user does not exist, return a 409 status
-    elif response == 409:
-        return Response({'not_found': "Please provide a username that's exists"}, status.HTTP_409_CONFLICT)
-    # If the password does not match the stored password for the user, return a 400 error
-    else:
-        return Response({'error': 'The password is wrong'}, status.HTTP_400_BAD_REQUEST)
+    return response
 
 
 @api_view(['POST'])
