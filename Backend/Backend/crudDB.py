@@ -17,20 +17,16 @@ class ResponseType(Enum):
     ERROR = Response({'status': 'Error'}, status.HTTP_400_BAD_REQUEST)
 
     # Caso que no se encuentre ningun elemento
-    NOT_FOUND = {
-        'status': 'notfound',
-        'code': 404,
-        'message': 'Elemento no encontrado'
-    }
+    NOT_FOUND = Response({'status': 'Not_found'}, status.HTTP_404_NOT_FOUND)
 
     # Caso que exista ya un elemento
-    EXIST = {
-        'status': 'founded',
-        'code': 409,
-        'message': 'Elemento ya existe'
-    }
+    EXIST = Response({'status': 'founded'}, status.HTTP_409_CONFLICT)
 
+    # Caso en que exista un error interno en la base de datos
     DATABASE_ERROR = Response({'status': 'Error conectando con la base de datos'}, status.HTTP_400_BAD_REQUEST)
+
+    # Caso de contraseña mal escrita
+    PASSWORD_INCORRECT = Response({'status': 'Incorrect password'}, status.HTTP_400_BAD_REQUEST)
 
 
 class CrudDB:
@@ -103,7 +99,7 @@ class CrudDB:
                 # already exists
                 cursor.close()
                 connection.close()
-                return Response({'status': 'Ya existe un usuario con este nombre'}, status.HTTP_409_CONFLICT)
+                return ResponseType.EXIST.value
 
     # Function to log in users
     def log_in_user(self, username: str, password: str) -> Response:
@@ -123,8 +119,8 @@ class CrudDB:
         connection = self.connect_to_db()
 
         # If the connection is unsuccessful, return an error code
-        if connection == ResponseType.ERROR.value['code']:
-            return ResponseType.DATABASE_ERROR.value
+        if connection == ResponseType.ERROR.value:
+            return connection
         else:
             # Create a cursor object to execute SQL commands
             cursor = connection.cursor()
@@ -140,7 +136,7 @@ class CrudDB:
                 # user does not exist
                 cursor.close()
                 connection.close()
-                return Response({'status': 'El usuario no existe'}, status.HTTP_404_NOT_FOUND)
+                return ResponseType.NOT_FOUND.value
             else:
                 # If the user exists, retrieve the hashed password of the user from the database
                 cursor.execute(f"SELECT password FROM auth_user WHERE username = '{username}'")
@@ -151,12 +147,12 @@ class CrudDB:
                     # If the passwords match, close the cursor and the connection and return a success code
                     cursor.close()
                     connection.close()
-                    return Response({'status': 'Success'}, status.HTTP_200_OK)
+                    return ResponseType.SUCCESS.value
                 else:
                     # If the passwords do not match, close the cursor and the connection and return an error code
                     cursor.close()
                     connection.close()
-                    return Response({'status': 'Incorrect password'}, status.HTTP_400_BAD_REQUEST)
+                    return ResponseType.PASSWORD_INCORRECT.value
 
     # Function to get amount of elements from stock
     def get_amount_elements_stock(self) -> Response:
@@ -164,8 +160,8 @@ class CrudDB:
         # Connect to database
         connection = self.connect_to_db()
 
-        if connection == ResponseType.ERROR.value['code']:
-            return Response({'status': 'Error conectando con la base de datos'}, status.HTTP_400_BAD_REQUEST)
+        if connection == ResponseType.ERROR.value:
+            return connection
         else:
             cursor = connection.cursor()
 
@@ -179,7 +175,10 @@ class CrudDB:
             return Response({'status': 'Success', 'amount': count}, status.HTTP_200_OK)
 
     # Function to get elements from stock
-    def get_elements_stock(self, pagination: int):
+    def get_elements_stock(self, pagination: int, total: int):
+        # pagination: desde
+        # pagination+5: hasta
+        # total: min
         pass
 
     def connect_test(self):
