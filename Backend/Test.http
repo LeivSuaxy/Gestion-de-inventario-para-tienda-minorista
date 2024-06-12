@@ -11,13 +11,22 @@ POST http://localhost:8000/api/send/
 ### GET request to get Token
 GET http://localhost:8000/api/token/
 
-### POST request to get Token
+### POST request to register an user in the database
 POST http://localhost:8000/api/auth/register/
 content-type: application/json
 
 {
-    "username":"Pedro",
+    "username":"Valerie",
     "password":"123456"
+}
+
+### POST request to login user
+POST http://localhost:8000/api/auth/login/
+content-type: application/json
+
+{
+  "username": "Valeria",
+  "password": "123456"
 }
 
 ### Request to GitHub API TEST
