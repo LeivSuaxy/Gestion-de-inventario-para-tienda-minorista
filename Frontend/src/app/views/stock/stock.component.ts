@@ -4,7 +4,7 @@ import {StockcardsComponent} from "./stockcards/stockcards.component";
 import {NgForOf, NgIf} from "@angular/common";
 import {ShoppingcarComponent} from "./shoppingcar/shoppingcar.component";
 import {ModalwithshopComponent} from "./modalwithshop/modalwithshop.component";
-import {CartService, Venta} from "./cartservice.service";
+import {Venta} from "./cartservice.service";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {RouterLink, RouterLinkActive} from "@angular/router";
 import {PaginationComponent} from "./pagination/pagination.component";
@@ -29,13 +29,13 @@ import {PaginationComponent} from "./pagination/pagination.component";
 export class StockComponent {
   ventas: Venta[] = []
   data: any;
-  counterPage: any;
-  apiurl? = 'http://localhost:8000/api/stockelement/?page=1';
+  counterPage: number = 0;
+  apiurl? = 'http://localhost:8000/api/objects/?page='+this.counterPage;
   apiurlnext? : string;
   apiurlprev? : string;
 
 
-  constructor(service: CartService, private http: HttpClient) {
+  constructor(private http: HttpClient) {
     this.apicall()
   }
 
@@ -43,8 +43,9 @@ export class StockComponent {
     if(this.apiurl != null) {
       this.http.get(this.apiurl).subscribe(data => {
         this.data = data;
-        if (this.data.next != null) this.apiurlnext = this.data.next;
-        if (this.data.previous != null) this.apiurlprev = this.data.previous;
+        this.apiurlnext = `http://localhost:8000/api/objects/?page=${this.counterPage + 1}`;
+        this.apiurlprev = `http://localhost:8000/api/objects/?page=${this.counterPage}`;
+        this.counterPage++;
         this.traslate();
       })
     }
@@ -55,14 +56,14 @@ export class StockComponent {
 
 
 
-    for (let i = 0; i < this.data.results.length; i++) {
+    for (let i = 0; i < this.data.length; i++) {
       this.ventas.push({
-        id: this.data.results[i].id,
-        image: this.data.results[i].image,
-        name: this.data.results[i].name,
-        price: this.data.results[i].price,
-        description: this.data.results[i].description,
-        stock: this.data.results[i].stock
+        id: this.data[i].id,
+        image: this.data[i].image,
+        name: this.data[i].name,
+        price: this.data[i].price,
+        description: this.data[i].description,
+        stock: this.data[i].stock
       })
     }
   }
