@@ -23,7 +23,7 @@ export class PostcarComponent {
   }
 
   posMethod(): void {
-    let url = 'http://localhost:8000/api/stockelement/';
+    let url = 'http://localhost:8000/api/objects/?page=0';
     const formData = new FormData();
     formData.append('image', this.image? this.image : '');
     formData.append('name', this.name?.toString() ?? '');
@@ -32,7 +32,7 @@ export class PostcarComponent {
     formData.append('stock', this.stock?.toString() ?? '');
 
     fetch(url, {
-      method: 'POST',
+      method: 'GET',
       body: formData
     }).then(() => {
       this.name = undefined;

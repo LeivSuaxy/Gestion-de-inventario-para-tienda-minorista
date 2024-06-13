@@ -6,7 +6,7 @@ from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from django.core.mail import send_mail
 from rest_framework.response import Response
-from Backend.crudDB import CrudDB
+from Backend.crudDB import CrudDB, ResponseType
 
 
 # Create your views here.
@@ -33,9 +33,16 @@ class SendEmailView(APIView):
             return Response(serializador.errors, status=400)
 
 
-@api_view(['POST'])
+@api_view(['GET'])
 def get_objects(request):
-    
     db = CrudDB()
+    page = request.GET.get('page', 0)
+    objects = db.get_elements_stock(int(page))
+    return objects
 
-    return Response({})
+
+@api_view(['GET'])
+def get_total_objects(request):
+    db = CrudDB()
+    objects = db.get_amount_elements_stock()
+    return objects

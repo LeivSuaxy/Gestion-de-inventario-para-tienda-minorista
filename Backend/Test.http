@@ -29,8 +29,11 @@ content-type: application/json
   "password": "123456"
 }
 
-### POST request to login user
-POST http://localhost:8000/api/auth/test/
+### GET request to get all objects
+GET http://localhost:8000/api/objects/?page=0
+
+### GET request to get total objects
+GET http://localhost:8000/api/total_objects
 
 ### Request to GitHub API TEST
 GET https://api.github.com/users/LeivSuaxy

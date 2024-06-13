@@ -1,9 +1,13 @@
 import psycopg2
+
+from api.models import StockElement
+from api.serializer import StockElementSerializer
 from .settings import DATABASES
 from enum import Enum
 from django.contrib.auth.hashers import check_password
 from rest_framework.response import Response
 from rest_framework import status
+import json
 
 
 # Aquí se declararán las clases y funciones que se encargarán
@@ -175,27 +179,40 @@ class CrudDB:
             return Response({'status': 'Success', 'amount': count}, status.HTTP_200_OK)
 
     # Function to get elements from stock
-    def get_elements_stock(self, pagination: int, total: int):
-        # pagination: desde
-        # pagination+5: hasta
-        # total: min
-        pagination = pagination*5
+    def get_elements_stock(self, pagination: int) -> Response:
+        if pagination < 0:
+            return ResponseType.ERROR.value
 
-        connection = self.connect_to_db()
+        pagination = pagination * 5
 
-        if connection == ResponseType.DATABASE_ERROR.value:
-            return connection
+        total_objects = self.get_amount_elements_stock().data['amount']
+
+        if pagination < total_objects:
+            query = f"SELECT * FROM api_stockelement LIMIT 5 OFFSET {pagination}"
+            elements = StockElement.objects.raw(query)
+
+            if not elements:
+                return ResponseType.NOT_FOUND.value
+            else:
+                serializer = StockElementSerializer(elements, many=True)
+                return Response(serializer.data, status.HTTP_200_OK)
         else:
-            cursor = connection.cursor()
+            return ResponseType.ERROR.value
 
-            cursor.execute(f"SELECT * FROM api_stockelement LIMIT 5 OFFSET {pagination}")
+    def __get_urls__(self):
+        pass
 
-            info = cursor.fetchall()
+    def get_response_elements(self, pagination: int):
+        if pagination < 0:
+            return ResponseType.ERROR.value
 
-            for i in info:
-                print(i)
+        elements = self.get_amount_elements_stock(pagination)
 
-            cursor.close()
-            connection.close()
+        if elements == ResponseType.ERROR.value:
+            return elements
 
-            return ResponseType.SUCCESS.value
+        urls = self.get_pagination_urls()
+
+
+
+
