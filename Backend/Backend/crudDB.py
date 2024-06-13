@@ -180,7 +180,6 @@ class CrudDB:
         # pagination+5: hasta
         # total: min
         pagination = pagination*5
-        top: int = min(pagination+5, total)
 
         connection = self.connect_to_db()
 
@@ -189,14 +188,11 @@ class CrudDB:
         else:
             cursor = connection.cursor()
 
-            cursor.execute(f"SELECT * FROM api_stockelement")
+            cursor.execute(f"SELECT * FROM api_stockelement LIMIT 5 OFFSET {pagination}")
 
             info = cursor.fetchall()
-            info_real = []
-            for i in range(pagination, top):
-                info_real.append(info[i])
 
-            for i in info_real:
+            for i in info:
                 print(i)
 
             cursor.close()
