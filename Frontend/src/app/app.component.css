@@ -1,5 +1,9 @@
 .router {
   background-color: rgb(36, 39, 41);
   color:white;
-  scroll-behavior: smooth
+  scroll-behavior: smooth;
+}
+
+html {
+  scroll-behavior: smooth;
 }
