@@ -179,10 +179,23 @@ class CrudDB:
         # pagination: desde
         # pagination+5: hasta
         # total: min
-        pass
+        pagination = pagination*5
 
-    def connect_test(self):
         connection = self.connect_to_db()
-        print('Conectado, cerrando conexion')
-        connection.close()
-        return ResponseType.SUCCESS.value['code']
+
+        if connection == ResponseType.DATABASE_ERROR.value:
+            return connection
+        else:
+            cursor = connection.cursor()
+
+            cursor.execute(f"SELECT * FROM api_stockelement LIMIT 5 OFFSET {pagination}")
+
+            info = cursor.fetchall()
+
+            for i in info:
+                print(i)
+
+            cursor.close()
+            connection.close()
+
+            return ResponseType.SUCCESS.value

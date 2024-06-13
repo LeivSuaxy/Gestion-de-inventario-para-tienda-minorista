@@ -76,3 +76,15 @@ def login(request):
 @api_view(['POST'])
 def check(request):
     return Response({})
+
+
+@api_view(['POST'])
+def test(request):
+    db = CrudDB()
+
+    total = db.get_amount_elements_stock()
+    total = total.data['amount']
+    print(f'Total is: {total}')
+    db.get_elements_stock(0, total)
+
+    return Response({})

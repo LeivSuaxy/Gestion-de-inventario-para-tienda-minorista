@@ -3,8 +3,10 @@ from .serializer import StockElementSerializer
 from rest_framework import viewsets
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.views import APIView
+from rest_framework.decorators import api_view
 from django.core.mail import send_mail
 from rest_framework.response import Response
+from Backend.crudDB import CrudDB
 
 
 # Create your views here.
@@ -29,3 +31,11 @@ class SendEmailView(APIView):
             return Response({'status': 'email sent'})
         else:
             return Response(serializador.errors, status=400)
+
+
+@api_view(['POST'])
+def get_objects(request):
+    
+    db = CrudDB()
+
+    return Response({})
