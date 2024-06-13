@@ -85,6 +85,6 @@ def test(request):
     total = db.get_amount_elements_stock()
     total = total.data['amount']
     print(f'Total is: {total}')
-    db.get_elements_stock(2, total)
+    db.get_elements_stock(0, total)
 
     return Response({})
