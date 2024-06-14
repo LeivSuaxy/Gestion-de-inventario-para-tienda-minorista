@@ -37,7 +37,7 @@ class SendEmailView(APIView):
 def get_objects(request):
     db = CrudDB()
     page = request.GET.get('page', 0)
-    objects = db.get_elements_stock(int(page))
+    objects = db.get_response_elements(int(page))
     return objects
 
 

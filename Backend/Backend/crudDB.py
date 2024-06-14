@@ -7,7 +7,7 @@ from enum import Enum
 from django.contrib.auth.hashers import check_password
 from rest_framework.response import Response
 from rest_framework import status
-import json
+import math
 
 
 # Aquí se declararán las clases y funciones que se encargarán
@@ -15,32 +15,32 @@ import json
 
 class ResponseType(Enum):
     # Caso que la operacion se realizó con éxito
-    SUCCESS = Response({'status': 'Success'}, status.HTTP_200_OK)
+    SUCCESS = Response({'status': 'Success'}, status=status.HTTP_200_OK)
 
     # Caso en que haya dado algun error
-    ERROR = Response({'status': 'Error'}, status.HTTP_400_BAD_REQUEST)
+    ERROR = Response({'status': 'Error'}, status=status.HTTP_400_BAD_REQUEST)
 
     # Caso que no se encuentre ningun elemento
-    NOT_FOUND = Response({'status': 'Not_found'}, status.HTTP_404_NOT_FOUND)
+    NOT_FOUND = Response({'status': 'Not_found'}, status=status.HTTP_404_NOT_FOUND)
 
     # Caso que exista ya un elemento
-    EXIST = Response({'status': 'founded'}, status.HTTP_409_CONFLICT)
+    EXIST = Response({'status': 'founded'}, status=status.HTTP_409_CONFLICT)
 
     # Caso en que exista un error interno en la base de datos
-    DATABASE_ERROR = Response({'status': 'Error conectando con la base de datos'}, status.HTTP_400_BAD_REQUEST)
+    DATABASE_ERROR = Response({'status': 'Error conectando con la base de datos'}, status=status.HTTP_400_BAD_REQUEST)
 
     # Caso de contraseña mal escrita
-    PASSWORD_INCORRECT = Response({'status': 'Incorrect password'}, status.HTTP_400_BAD_REQUEST)
+    PASSWORD_INCORRECT = Response({'status': 'Incorrect password'}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class CrudDB:
     def __init__(self):
-        pass
+        self.total_elements_stock = 0
+        self.get_amount_elements_stock()
 
     # Las funciones se realizarán dependiendo de la tabla que se quiera consultar
     @staticmethod
     def connect_to_db():
-        conn = None
         try:
             conn = psycopg2.connect(
                 host=DATABASES['default']['HOST'],
@@ -171,12 +171,12 @@ class CrudDB:
 
             cursor.execute("SELECT COUNT(*) FROM api_stockelement")
 
-            count = cursor.fetchone()[0]
+            self.total_elements_stock = cursor.fetchone()[0]
 
             cursor.close()
             connection.close()
 
-            return Response({'status': 'Success', 'amount': count}, status.HTTP_200_OK)
+            return ResponseType.SUCCESS.value
 
     # Function to get elements from stock
     def get_elements_stock(self, pagination: int) -> Response:
@@ -185,9 +185,9 @@ class CrudDB:
 
         pagination = pagination * 5
 
-        total_objects = self.get_amount_elements_stock().data['amount']
+        self.get_amount_elements_stock()
 
-        if pagination < total_objects:
+        if pagination < self.total_elements_stock:
             query = f"SELECT * FROM api_stockelement LIMIT 5 OFFSET {pagination}"
             elements = StockElement.objects.raw(query)
 
@@ -199,20 +199,46 @@ class CrudDB:
         else:
             return ResponseType.ERROR.value
 
-    def __get_urls__(self):
-        pass
+    def __get_urls__(self, pagination):
+        total_page = math.ceil(self.total_elements_stock / 5)
+
+        if 0 <= pagination <= total_page:
+            if (pagination + 1) >= total_page:
+                next_page = None
+            else:
+                next_page = f'http://localhost:8000/api/objects/?page={pagination + 1}'
+
+            if (pagination - 1) < 0:
+                previous_page = None
+            else:
+                previous_page = f'http://localhost:8000/api/objects/?page={pagination - 1}'
+
+            urls = {
+                'next': next_page,
+                'previous': previous_page
+            }
+
+            return Response(data=urls, status=status.HTTP_200_OK)
+        else:
+            return ResponseType.ERROR.value
 
     def get_response_elements(self, pagination: int):
         if pagination < 0:
             return ResponseType.ERROR.value
 
-        elements = self.get_amount_elements_stock(pagination)
+        elements = self.get_elements_stock(pagination)
 
         if elements == ResponseType.ERROR.value:
             return elements
 
-        urls = self.get_pagination_urls()
+        urls = self.__get_urls__(pagination)
 
+        if urls == ResponseType.ERROR.value:
+            return urls
 
+        data = {
+            'elements': elements.data,
+            'urls': urls.data
+        }
 
-
+        return Response(data=data, status=status.HTTP_200_OK)
