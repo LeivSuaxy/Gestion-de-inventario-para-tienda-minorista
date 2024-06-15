@@ -1,7 +1,7 @@
 import psycopg2
 
 from api.models import Producto
-from api.serializer import StockElementSerializer
+from api.serializer import ProductoSerializer
 from .settings import DATABASES
 from enum import Enum
 from django.contrib.auth.hashers import check_password
@@ -169,7 +169,7 @@ class CrudDB:
         else:
             cursor = connection.cursor()
 
-            cursor.execute("SELECT COUNT(*) FROM api_stockelement")
+            cursor.execute("SELECT COUNT(*) FROM producto")
 
             self.total_elements_stock = cursor.fetchone()[0]
 
@@ -188,13 +188,14 @@ class CrudDB:
         self.get_amount_elements_stock()
 
         if pagination < self.total_elements_stock:
-            query = f"SELECT * FROM api_stockelement LIMIT 5 OFFSET {pagination}"
+            query = ("SELECT id_producto, nombre, precio, descripcion, imagen, categoria, stock"
+                     f" FROM producto LIMIT 5 OFFSET {pagination}")
             elements = Producto.objects.raw(query)
 
             if not elements:
                 return ResponseType.NOT_FOUND.value
             else:
-                serializer = StockElementSerializer(elements, many=True)
+                serializer = ProductoSerializer(elements, many=True)
                 return Response(serializer.data, status.HTTP_200_OK)
         else:
             return ResponseType.ERROR.value
@@ -242,3 +243,11 @@ class CrudDB:
         }
 
         return Response(data=data, status=status.HTTP_200_OK)
+
+    # Inventario CRUD
+
+    def create_inventory(self, name):
+        pass
+
+    def get_inventories(self):
+        pass
