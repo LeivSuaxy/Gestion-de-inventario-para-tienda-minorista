@@ -35,9 +35,7 @@
 }
 
 .active {
-  border-bottom: 2px solid yellow;
-  color: white;
-
+  border-bottom: 2px solid gold !important;
 }
 
 .proyectNavButton:hover{
@@ -51,17 +49,17 @@
 
 .login {
   margin: 0 0 0 auto;
+  background-color: black;
+  color: white;
   width: 8%;
   font-size: 20px;
-  color: greenyellow;
   border: none;
   width: 18vh;
   height: 10vh;
-  transition: background-color 0.3s, color 0.25s;
+  transition: background-color 0.2s, color 0.2s;
   border-radius: 0 10px 10px 0 !important;
 }
 
 .login:hover {
   background-color: #191a1c;
-  color: chartreuse;
 }
