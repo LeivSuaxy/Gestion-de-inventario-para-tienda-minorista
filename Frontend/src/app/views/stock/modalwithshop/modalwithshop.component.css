@@ -1,5 +1,5 @@
 .proyectNavButton{
-  background-color: rgb(36, 39, 41);
+  background-color: black;
   border: none;
   color: white;
   padding: auto;
@@ -14,7 +14,7 @@
 }
 
 .proyectNavButton:hover{
-  background-color: #000000;
+  background-color: #191a1c;
   fill: gold;
 }
 

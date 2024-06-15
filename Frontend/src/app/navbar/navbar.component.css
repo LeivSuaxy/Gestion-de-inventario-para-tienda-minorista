@@ -1,18 +1,21 @@
 .proyectNav {
-  background-color: rgb(36, 39, 41);
-  border: none;
-  width: 100%;
+  background-color: black;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-left: 8%;
+  margin-right: 8%;
   height: max-content;
   text-align: left;
   display: flex;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.582);
+  border: 1px solid rgba(255, 255, 255, 0.300);
   vertical-align: middle;
   position: block;
+  margin-top: 10px;
   margin-bottom: 20px;
 }
 
 .proyectNavButton{
-  background-color: rgb(36, 39, 41);
+  background-color: black;
   border: none;
   color: white;
   width: 18vh;
@@ -27,15 +30,18 @@
   align-items: center;
 }
 
+.primary {
+  border-radius: 10px 0 0 10px !important;
+}
+
 .active {
-  background-color: #000000;
+  border-bottom: 2px solid yellow;
   color: white;
 
 }
 
 .proyectNavButton:hover{
-  background-color: #000000;
-  color: gold;
+  background-color: #191a1c;
 }
 
 .proyectNavButton:active{
@@ -52,10 +58,10 @@
   width: 18vh;
   height: 10vh;
   transition: background-color 0.3s, color 0.25s;
-  border-radius: 0;
+  border-radius: 0 10px 10px 0 !important;
 }
 
 .login:hover {
-  background-color: black;
+  background-color: #191a1c;
   color: chartreuse;
 }
