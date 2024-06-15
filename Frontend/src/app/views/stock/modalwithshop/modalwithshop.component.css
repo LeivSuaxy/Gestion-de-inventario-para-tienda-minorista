@@ -8,7 +8,7 @@
   display: inline-block;
   font-size: 4vh;
   cursor: pointer;
-  transition: background-color 0.3s, color 0.25s;
+  transition: background-color 0.2s, color 0.2s;
   width: 18vh;
   height: 10vh;
 }
@@ -43,3 +43,8 @@
   background-color: transparent;
   border: none;
 }
+
+.center {
+  margin-top: 10vh;
+}
+

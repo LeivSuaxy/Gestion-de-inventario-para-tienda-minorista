@@ -2,12 +2,9 @@
   margin-left: 8%;
   margin-right: 8%;
   color: white;
-  margin-top: 20px;
   margin-bottom: 20px;
   padding-top: 20px;
   padding-bottom: 20px;
-  padding-left: 3%;
-  padding-right: 3%;
   background-color: black;
   border: 1px solid rgba(255, 255, 255, 0.300);
   border-radius: 10px;
@@ -18,12 +15,18 @@
   font-weight: bold;
   font-size: 9vh;
   margin-bottom: 30px;
+  margin-top: 10px;
   text-shadow: 2px 2px 4px #000000;
 }
 
 .textfont {
   font-size: 5vh;
   text-align: left;
+  margin: 0 7vh 1vh 7vh;
+}
+
+.separacion {
+  margin-bottom: 7vh !important;
 }
 
 .fonter {
@@ -38,6 +41,7 @@
   font-size: 5vh;
   border: 1px solid rgba(255, 255, 255, 0.300);
   text-align: left;
+  margin: auto 7vh 0 7vh;
 }
 
 .list {
@@ -85,7 +89,13 @@
 }
 
 .linea {
-  margin-top: 3.7%
+  margin-top: 3.7%;
+  width: 100%;
+}
+
+.raya {
+  border-bottom: 1px solid white;
+  width: 100%;
 }
 
 .titulo-tech {
@@ -102,6 +112,7 @@
   margin-top: 4.6%;
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.300);
+  margin: 1vh 7vh 1vh 7vh;
 }
 
 .img-angular {
@@ -134,6 +145,8 @@
   margin-top: 4.6%; 
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.300);
+
+  margin: 5vh 7vh 5vh 7vh;
 }
 
 .django {
@@ -165,6 +178,7 @@
   margin-top: 4.6%;
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.300);
+  margin: 5vh 7vh 5vh 7vh;
 }
 
 .img-postgre {
@@ -199,6 +213,7 @@
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.300);
   overflow: hidden;
+  margin: 3vh 7vh 3vh 7vh;
 }
 
 .img-git {
@@ -234,4 +249,12 @@
 .card-interior {
   border-radius: 10px;
   border-top: 1px solid rgba(255, 255, 255, 0.300);
+}
+
+.extra {
+  margin: 0 0 2vh 0 !important;
+}
+
+.separar {
+  margin-bottom: 2vh;
 }
