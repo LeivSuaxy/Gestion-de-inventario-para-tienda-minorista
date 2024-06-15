@@ -1,10 +1,9 @@
 .proyectForm {
   display: flex;
+  margin: 7vh auto 7vh auto;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 7vh;
-  margin-bottom: 7vh;
   padding: 2.6vh;
   border: 1px solid #000;
   border-radius: 1.5vh;
@@ -14,5 +13,8 @@
 }
 
 .formulario {
-  text-align: center
+  text-align: center;
+  display: flex;
+  position: relative;
+  margin: auto;
 }

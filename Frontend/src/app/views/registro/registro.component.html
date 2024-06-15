@@ -1,25 +1,26 @@
 <!-- Formulario de registro -->
+<div class="centrar">
+  <div class="formulario">
+    <form class="proyectForm" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <label for="name" class="form-label">Nombre</label>
+        <input type="text" class="form-control campo" id="name" formControlName="username" required>
+      </div>
 
-<div class="formulario">
-  <form class="proyectForm" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-    <div class="mb-3">
-      <label for="name" class="form-label">Nombre</label>
-      <input type="text" class="form-control" id="name" formControlName="username" required>
-    </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Contraseña</label>
+        <input type="password" class="form-control campo" id="password" formControlName="password" required>
+      </div>
 
-    <div class="mb-3">
-      <label for="password" class="form-label">Contraseña</label>
-      <input type="password" class="form-control" id="password" formControlName="password" required>
-    </div>
+      <div class="mb-3">
+        <label for="confirmPassword" class="form-label">Confirmar Constraseña</label>
+        <input type="password" class="form-control campo" id="confirmPassword" formControlName="cpassword" required>
+      </div>
 
-    <div class="mb-3">
-      <label for="confirmPassword" class="form-label">Confirmar Constraseña</label>
-      <input type="password" class="form-control" id="confirmPassword" formControlName="cpassword" required>
-    </div>
-
-    <ng-container *ngIf="!isValid; then alert"/>
-    <input type="submit" [disabled]="!registerForm.valid" class="btn btn-success" value="Crear">
-  </form>
+      <ng-container *ngIf="!isValid; then alert"/>
+      <input type="submit" [disabled]="!registerForm.valid" class="btn btn-success" value="Crear">
+    </form>
+  </div>
 </div>
 
 <ng-template #alert>
