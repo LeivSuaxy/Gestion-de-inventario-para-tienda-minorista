@@ -56,6 +56,12 @@
   color:greenyellow;
 }
 
+.card-angular {
+  margin-top: 4.6%;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.300);
+}
+
 .img-angular {
   vertical-align: middle;
   border-radius: 10px;
@@ -78,7 +84,9 @@
 }
 
 .card-django {
-  margin-top: 4.6%;
+  margin-top: 4.6%; 
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.300);
 }
 
 .django {
@@ -103,6 +111,8 @@
 
 .card-postgre {
   margin-top: 4.6%;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.300);
 }
 
 .img-postgre {
@@ -125,16 +135,25 @@
   border: none;
 }
 
+.boton-postgre:hover {
+  color:deepskyblue;
+  background-color: #33333371;
+  border: none;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
 .card-git {
   max-width: 70%;
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
   background-image: linear-gradient(to bottom,black, #333);
-  border-radius: 10px 10px 10px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.300);
 }
 
 .img-git {
   height: auto;
   border-radius: 10px 0 0 10px;
+  
 }
 
 .ico-git {
@@ -153,4 +172,9 @@
 .boton {
   background-color: #33333371;
   border: none;
+}
+
+.card-interior {
+  border-radius: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.300);
 }
