@@ -1,5 +1,5 @@
 from .models import Producto
-from .serializer import StockElementSerializer
+from .serializer import ProductoSerializer
 from rest_framework import viewsets
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.views import APIView
@@ -12,25 +12,6 @@ from Backend.crudDB import CrudDB, ResponseType
 # Create your views here.
 class TenItemsPaginator(PageNumberPagination):
     page_size: int = 5
-
-
-class StockElementViewSet(viewsets.ModelViewSet):
-    queryset = Producto.objects.all()
-    serializer_class = StockElementSerializer
-
-
-class SendEmailView(APIView):
-    def post(self, request, *args, **kwargs):
-        serializador = StockElementSerializer(data=request.data, many=True)
-        if serializador.is_valid():
-            elements = serializador.validated_data
-
-            email_body = '\n'.join(f'{element["name"]}: {element["price"]}' for element in elements)
-
-            send_mail('Elementos', email_body, '', [''])
-            return Response({'status': 'email sent'})
-        else:
-            return Response(serializador.errors, status=400)
 
 
 @api_view(['GET'])
