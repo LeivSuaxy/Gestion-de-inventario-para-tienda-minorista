@@ -200,7 +200,7 @@ class CrudDB:
         else:
             return ResponseType.ERROR.value
 
-    def __get_urls__(self, pagination):
+    def __get_urls__(self, pagination) -> Response:
         total_page = math.ceil(self.total_elements_stock / 5)
 
         if 0 <= pagination <= total_page:
@@ -223,7 +223,7 @@ class CrudDB:
         else:
             return ResponseType.ERROR.value
 
-    def get_response_elements(self, pagination: int):
+    def get_response_elements(self, pagination: int) -> Response:
         if pagination < 0:
             return ResponseType.ERROR.value
 
@@ -244,10 +244,106 @@ class CrudDB:
 
         return Response(data=data, status=status.HTTP_200_OK)
 
-    # Inventario CRUD
+    # Storage CRUD
+    def create_storage(self, name, location) -> Response:
+        connection = self.connect_to_db()
 
-    def create_inventory(self, name):
-        pass
+        if connection == ResponseType.ERROR.value:
+            return connection
+
+        cursor = connection.cursor()
+
+        check = self.__exist_storage__(name)
+
+        if check == ResponseType.ERROR.value:
+            cursor.close()
+            connection.close()
+            return Response({'error': 'Ya existe el nombre'}, status.HTTP_400_BAD_REQUEST)
+
+        cursor.execute(f"INSERT INTO almacen (nombre, ubicacion) VALUES ('{name}', '{location}')")
+        connection.commit()
+
+        cursor.close()
+        connection.close()
+        print('Insertado en la base de datos!')
+
+        return ResponseType.SUCCESS.value
+
+    def __exist_storage__(self, name) -> Response:
+        connection = self.connect_to_db()
+        cursor = connection.cursor()
+
+        cursor.execute(f"SELECT EXISTS(SELECT 1 FROM almacen WHERE nombre='{name}')")
+
+        exist_storage = cursor.fetchone()[0]
+
+        cursor.close()
+        connection.close()
+
+        if not exist_storage:
+            return ResponseType.SUCCESS.value
+        else:
+            return ResponseType.ERROR.value
+
+    # Inventory CRUD
+    def create_inventory(self, storage_name) -> Response:
+        id_storage = self.__get_storage_id__(storage_name)
+
+        if id_storage == ResponseType.ERROR.value or id_storage == ResponseType.NOT_FOUND.value:
+            return id_storage
+
+        id_storage = id_storage.data.get('id_value')
+
+        print(id_storage)
+
+        connection = self.connect_to_db()
+
+        if connection == ResponseType.ERROR.value:
+            return connection
+
+        cursor = connection.cursor()
+
+        cursor.execute(f"INSERT INTO inventario (id_almacen) VALUES ('{id_storage}')")
+        connection.commit()
+
+        cursor.close()
+        connection.close()
+
+        return ResponseType.SUCCESS.value
+
+    def __get_storage_id__(self, storage_name) -> Response:
+        connection = self.connect_to_db()
+
+        if connection == ResponseType.ERROR.value:
+            return connection
+
+        cursor = connection.cursor()
+
+        cursor.execute(f"SELECT id_almacen FROM almacen WHERE nombre='{storage_name}'")
+
+        id_storage = cursor.fetchone()[0]
+
+        cursor.close()
+        connection.close()
+
+        if not id_storage:
+            return ResponseType.NOT_FOUND.value
+        else:
+            return Response({'id_value': id_storage}, status.HTTP_200_OK)
 
     def get_inventories(self):
         pass
+
+    # Product CRUD
+    def insert_product(self):
+        pass
+
+    def get_product(self):
+        pass
+
+    def update_product(self):
+        pass
+
+    def delete_product(self):
+        pass
+
