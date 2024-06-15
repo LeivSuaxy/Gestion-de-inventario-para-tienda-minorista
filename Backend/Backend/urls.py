@@ -17,18 +17,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from api.views import StockElementViewSet, SendEmailView, get_objects, get_total_objects
+from api.views import get_objects, get_total_objects
 from django.conf.urls.static import static
 from django.conf import settings
 
 router = DefaultRouter()
-router.register(r'stockelement', StockElementViewSet)
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
     path('api/auth/', include('login.urls')),
-    path('api/send/', SendEmailView.as_view(), name='send_email'),
     path('api/objects/', get_objects, name='get_objects'),
     path('api/total_objects/', get_total_objects, name='get_total_objects'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
