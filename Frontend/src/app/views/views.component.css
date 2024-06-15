@@ -90,12 +90,6 @@
 
 .linea {
   margin-top: 3.7%;
-  width: 100%;
-}
-
-.raya {
-  border-bottom: 1px solid white;
-  width: 100%;
 }
 
 .titulo-tech {
@@ -103,7 +97,7 @@
 }
 
 .titulo {
-  border-bottom: 1px solid white;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.300);
   width: fit-content;
   cursor: default;
 }
@@ -141,6 +135,10 @@
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 
+.titulo-angular {
+  color:red;
+}
+
 .card-django {
   margin-top: 4.6%; 
   border-radius: 10px;
@@ -174,6 +172,10 @@
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 
+.titulo-django {
+  color:darkgreen;
+}
+
 .card-postgre {
   margin-top: 4.6%;
   border-radius: 10px;
@@ -204,6 +206,10 @@
 .boton-postgre:hover {
   color:deepskyblue;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.titulo-postgre {
+  color:deepskyblue;
 }
 
 .card-git {
