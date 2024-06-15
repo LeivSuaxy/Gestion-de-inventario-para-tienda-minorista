@@ -335,8 +335,19 @@ class CrudDB:
         pass
 
     # Product CRUD
-    def insert_product(self):
-        pass
+    def insert_product(self, product_data: dict):
+        print(product_data)
+        nombre = product_data.get('nombre')
+        precio = product_data.get('precio')
+        stock = product_data.get('stock')
+        categoria = product_data.get('categoria')
+        imagen = product_data.get('imagen')
+        descripcion = product_data.get('descripcion')
+
+        if not nombre or not precio or not stock or not categoria:
+            return Response({'error': 'Please provide all the required fields'}, status=status.HTTP_400_BAD_REQUEST)
+
+        return ResponseType.SUCCESS.value
 
     def get_product(self):
         pass

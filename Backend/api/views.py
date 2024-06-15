@@ -44,9 +44,34 @@ def insert_storage_in_database(request):
 @api_view(['POST'])
 def insert_inventory_at_database(request):
     storage_name = request.data.get('storage')
-
     if not storage_name:
         return Response({'error': 'Please provide a database name'}, status=status.HTTP_400_BAD_REQUEST)
     db = CrudDB()
     response = db.create_inventory(storage_name)
+    return response
+
+
+@api_view(['POST'])
+def insert_product_in_database(request):
+    """
+    Insert a product in the database
+    JSON {
+            product: {
+                nombre: string,
+                precio: float,
+                stock: int,
+                categoria: string,
+                imagen: string,
+                descripcion: string
+            }
+        }
+    :param request:
+    :return:
+    """
+    print(type(request.data))
+    data: dict = request.data.get('product')
+    if not data:
+        return Response({'error': 'Please provide a product'}, status=status.HTTP_400_BAD_REQUEST)
+    db = CrudDB()
+    response = db.insert_product(data)
     return response
