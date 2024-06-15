@@ -1,8 +1,8 @@
 from rest_framework import serializers
-from .models import StockElement
+from .models import Producto
 
 
 class StockElementSerializer(serializers.ModelSerializer):
     class Meta:
-        model = StockElement
-        fields = ['id', 'image', 'name', 'price', 'description', 'stock']
+        model = Producto
+        fields = ['id_producto', 'nombre', 'precio', 'stock', 'categoria', 'imagen', 'descripcion']
