@@ -1,8 +1,16 @@
 .proyectCenteres {
-  margin-top: 30px;
-  margin-left: 10%;
-  margin-right: 10%;
+  margin-left: 8%;
+  margin-right: 8%;
   color: white;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 3%;
+  padding-right: 3%;
+  background-color: black;
+  border: 1px solid rgba(255, 255, 255, 0.300);
+  border-radius: 10px;
 }
 
 .encabezados {
@@ -84,6 +92,12 @@
   color:greenyellow;
 }
 
+.titulo {
+  border-bottom: 1px solid white;
+  width: fit-content;
+  cursor: default;
+}
+
 .card-angular {
   margin-top: 4.6%;
   border-radius: 10px;
@@ -106,9 +120,14 @@
 }
 
 .boton-angular {
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.300);
+  transition: color 0.2s, box-shadow 0.2s;
+}
+
+.boton-angular:hover {
   color:red;
-  background-color: #33333371;
-  border: none;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 
 .card-django {
@@ -132,9 +151,14 @@
 }
 
 .boton-django {
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.300);
+  transition: color 0.2s, box-shadow 0.2s;
+}
+
+.boton-django:hover {
   color:darkgreen;
-  background-color: #33333371;
-  border: none;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 
 .card-postgre {
@@ -158,15 +182,13 @@
 }
 
 .boton-postgre {
-  color:deepskyblue;
-  background-color: #33333371;
-  border: none;
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.300);
+  transition: color 0.2s, box-shadow 0.2s;
 }
 
 .boton-postgre:hover {
   color:deepskyblue;
-  background-color: #33333371;
-  border: none;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 
@@ -176,12 +198,13 @@
   background-image: linear-gradient(to bottom,black, #333);
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.300);
+  overflow: hidden;
 }
 
 .img-git {
   height: auto;
   border-radius: 10px 0 0 10px;
-  
+  border-right: 1px solid rgba(255, 255, 255, 0.300);
 }
 
 .ico-git {
@@ -198,8 +221,14 @@
 }
 
 .boton {
-  background-color: #33333371;
-  border: none;
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.300);
+  transition: color 0.2s, box-shadow 0.2s;
+}
+
+.boton:hover {
+  color: red;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 
 .card-interior {
