@@ -286,10 +286,16 @@ class CrudDB:
             return ResponseType.ERROR.value
 
     # Inventory CRUD
-    def create_inventory(self, storage_name):
-        pass
+    def create_inventory(self, storage_name) -> Response:
+        id_storage = self.__get_storage_id__(storage_name)
 
-    def __get_storage_id(self, storage_name) -> Response:
+        if id_storage == ResponseType.ERROR.value or id_storage == ResponseType.NOT_FOUND.value:
+            return id_storage
+
+        id_storage = id_storage.data.get('id_value')
+
+        print(id_storage)
+
         connection = self.connect_to_db()
 
         if connection == ResponseType.ERROR.value:
@@ -297,9 +303,28 @@ class CrudDB:
 
         cursor = connection.cursor()
 
-        cursor.execute(f"SELECT id_almacen FROM almacen WHERE nombre={storage_name}")
+        cursor.execute(f"INSERT INTO inventario (id_almacen) VALUES ('{id_storage}')")
+        connection.commit()
+
+        cursor.close()
+        connection.close()
+
+        return ResponseType.SUCCESS.value
+
+    def __get_storage_id__(self, storage_name) -> Response:
+        connection = self.connect_to_db()
+
+        if connection == ResponseType.ERROR.value:
+            return connection
+
+        cursor = connection.cursor()
+
+        cursor.execute(f"SELECT id_almacen FROM almacen WHERE nombre='{storage_name}'")
 
         id_storage = cursor.fetchone()[0]
+
+        cursor.close()
+        connection.close()
 
         if not id_storage:
             return ResponseType.NOT_FOUND.value
@@ -308,3 +333,17 @@ class CrudDB:
 
     def get_inventories(self):
         pass
+
+    # Product CRUD
+    def insert_product(self):
+        pass
+
+    def get_product(self):
+        pass
+
+    def update_product(self):
+        pass
+
+    def delete_product(self):
+        pass
+

@@ -31,20 +31,22 @@ def get_total_objects(request):
 
 
 @api_view(['POST'])
-def insert_storage_at_database(request):
+def insert_storage_in_database(request):
     name = request.data.get('name')
     location = request.data.get('location')
-
-    print(name)
-    print(location)
-
     if not name or not location:
         return Response({'error': 'Please provide both name and location'}, status=status.HTTP_400_BAD_REQUEST)
-
     db = CrudDB()
     response = db.create_storage(name, location)
+    return response
 
-    if response.status_code == 400:
-        return response
 
+@api_view(['POST'])
+def insert_inventory_at_database(request):
+    storage_name = request.data.get('storage')
+
+    if not storage_name:
+        return Response({'error': 'Please provide a database name'}, status=status.HTTP_400_BAD_REQUEST)
+    db = CrudDB()
+    response = db.create_inventory(storage_name)
     return response

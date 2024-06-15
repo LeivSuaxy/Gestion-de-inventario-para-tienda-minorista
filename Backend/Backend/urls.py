@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from api.views import get_objects, get_total_objects, insert_storage_at_database
+from api import views as api_views
 from django.conf.urls.static import static
 from django.conf import settings
 
@@ -28,7 +28,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
     path('api/auth/', include('login.urls')),
-    path('api/objects/', get_objects, name='get_objects'),
-    path('api/insertstorage/', insert_storage_at_database, name='insert_storage'),
-    path('api/total_objects/', get_total_objects, name='get_total_objects'),
+    path('api/objects/', api_views.get_objects, name='get_objects'),
+    path('api/insertstorage/', api_views.insert_storage_in_database, name='insert_storage'),
+    path('api/total_objects/', api_views.get_total_objects, name='get_total_objects'),
+    path('api/insertinventory/', api_views.insert_inventory_at_database, name='insert_inventory'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
