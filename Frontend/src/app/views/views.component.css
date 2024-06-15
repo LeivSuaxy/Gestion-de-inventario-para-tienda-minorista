@@ -24,18 +24,45 @@
 }
 
 .listhelp {
-  background-color: #33333371;
+  background-color: black;
   color: white;
   font-size: 5vh;
   border: 1px solid rgba(255, 255, 255, 0.300);
+  text-align: left;
 }
 
 .list {
-  border: 1px solid rgba(255, 255, 255, 0.300);
+  background-color: black !important;
+  border-radius: 10px 0 0 10px;
+}
+
+.arriba {
+  position: relative;
+  border-right: none;
+}
+
+.abajo {
+  border-top: none;
+  border-right: none;
+}
+
+.centro1 {
+  border-top: none;
+  border-right: none;
+}
+
+.centro2 {
+  border-top: none;
+  border-right: none;
+}
+
+.centro3 {
+  border-top: none;
+  border-right: none;
 }
 
 .cardhelphead {
-  background-color: rgba(26, 28, 30, 0.36);
+  background-color: black;
   color:white;
 }
 
