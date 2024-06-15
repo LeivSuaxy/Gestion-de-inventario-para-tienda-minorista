@@ -1,4 +1,4 @@
-from .models import StockElement
+from .models import Producto
 from .serializer import StockElementSerializer
 from rest_framework import viewsets
 from rest_framework.pagination import PageNumberPagination
@@ -15,7 +15,7 @@ class TenItemsPaginator(PageNumberPagination):
 
 
 class StockElementViewSet(viewsets.ModelViewSet):
-    queryset = StockElement.objects.all()
+    queryset = Producto.objects.all()
     serializer_class = StockElementSerializer
 
 

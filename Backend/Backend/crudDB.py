@@ -1,6 +1,6 @@
 import psycopg2
 
-from api.models import StockElement
+from api.models import Producto
 from api.serializer import StockElementSerializer
 from .settings import DATABASES
 from enum import Enum
@@ -189,7 +189,7 @@ class CrudDB:
 
         if pagination < self.total_elements_stock:
             query = f"SELECT * FROM api_stockelement LIMIT 5 OFFSET {pagination}"
-            elements = StockElement.objects.raw(query)
+            elements = Producto.objects.raw(query)
 
             if not elements:
                 return ResponseType.NOT_FOUND.value
