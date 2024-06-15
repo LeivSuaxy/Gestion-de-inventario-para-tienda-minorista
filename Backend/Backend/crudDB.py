@@ -244,8 +244,48 @@ class CrudDB:
 
         return Response(data=data, status=status.HTTP_200_OK)
 
-    # Inventario CRUD
+    # Storage CRUD
+    def create_storage(self, name, location) -> Response:
+        connection = self.connect_to_db()
 
+        if connection == ResponseType.ERROR.value:
+            return connection
+
+        cursor = connection.cursor()
+
+        check = self.__exist_storage__(name)
+
+        if check == ResponseType.ERROR.value:
+            cursor.close()
+            connection.close()
+            return Response({'error': 'Ya existe el nombre'}, status.HTTP_400_BAD_REQUEST)
+
+        cursor.execute(f"INSERT INTO almacen (nombre, ubicacion) VALUES ('{name}', '{location}')")
+        connection.commit()
+
+        cursor.close()
+        connection.close()
+        print('Insertado en la base de datos!')
+
+        return ResponseType.SUCCESS.value
+
+    def __exist_storage__(self, name) -> Response:
+        connection = self.connect_to_db()
+        cursor = connection.cursor()
+
+        cursor.execute(f"SELECT EXISTS(SELECT 1 FROM almacen WHERE nombre='{name}')")
+
+        exist_storage = cursor.fetchone()[0]
+
+        cursor.close()
+        connection.close()
+
+        if not exist_storage:
+            return ResponseType.SUCCESS.value
+        else:
+            return ResponseType.ERROR.value
+
+    # Inventory CRUD
     def create_inventory(self, name):
         pass
 

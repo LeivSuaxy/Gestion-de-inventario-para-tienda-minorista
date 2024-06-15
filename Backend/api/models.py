@@ -47,12 +47,19 @@ class Empleado(models.Model):
 
 class Inventario(models.Model):
     id_inventario = models.AutoField(primary_key=True)
-    cantidad_stock = models.IntegerField()
-    fecha_entrada = models.DateField()
-    fecha_salida = models.DateField(blank=True, null=True)
+    id_almacen = models.ForeignKey('Almacen', models.DO_NOTHING, db_column='id_almacen')
 
     class Meta:
         db_table = 'inventario'
+
+
+class Almacen(models.Model):
+    id_almacen = models.AutoField(primary_key=True)
+    nombre = models.CharField(max_length=255, unique=True)
+    ubicacion = models.CharField(max_length=255)
+
+    class Meta:
+        db_table = 'almacen'
 
 
 class OrdenCompra(models.Model):
@@ -74,6 +81,8 @@ class Producto(models.Model):
     categoria = models.CharField(max_length=100)
     id_inventario = models.ForeignKey(Inventario, models.DO_NOTHING, db_column='id_inventario', blank=True, null=True)
     stock = models.IntegerField()
+    fecha_entrada = models.DateField()
+    fecha_salida = models.DateField(blank=True, null=True)
 
     class Meta:
         db_table = 'producto'
