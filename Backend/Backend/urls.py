@@ -32,4 +32,5 @@ urlpatterns = [
     path('api/insertstorage/', api_views.insert_storage_in_database, name='insert_storage'),
     path('api/total_objects/', api_views.get_total_objects, name='get_total_objects'),
     path('api/insertinventory/', api_views.insert_inventory_at_database, name='insert_inventory'),
+    path('api/insertproduct/', api_views.insert_product_in_database, name='insert_product'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
