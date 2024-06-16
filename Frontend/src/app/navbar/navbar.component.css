@@ -1,5 +1,5 @@
 .proyectNav {
-  backdrop-filter: blur;
+  backdrop-filter: blur(10px);
   border-radius: 10px;
   overflow: hidden;
   margin-left: 8%;
