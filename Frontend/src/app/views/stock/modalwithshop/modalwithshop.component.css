@@ -24,7 +24,7 @@
 }
 
 .cardhelphead {
-  background-color: rgba(26, 28, 30, 0.36);
+  backdrop-filter: blur(10px);
   color:white;
 }
 

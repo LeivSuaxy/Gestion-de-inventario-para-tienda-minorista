@@ -1,5 +1,5 @@
 .proyectNav {
-  background-color: black;
+  backdrop-filter: blur;
   border-radius: 10px;
   overflow: hidden;
   margin-left: 8%;
@@ -10,7 +10,7 @@
   border: 1px solid rgba(255, 255, 255, 0.300);
   vertical-align: middle;
   position: block;
-  margin-top: 10px;
+  margin-top: 20px;
   margin-bottom: 20px;
 }
 
