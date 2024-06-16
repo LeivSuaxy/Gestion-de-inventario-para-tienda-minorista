@@ -8,6 +8,9 @@ from django.contrib.auth.hashers import check_password
 from rest_framework.response import Response
 from rest_framework import status
 import math
+import os
+from django.core.files.base import ContentFile
+from django.core.files.storage import default_storage
 
 
 # Aquí se declararán las clases y funciones que se encargarán
@@ -335,8 +338,25 @@ class CrudDB:
         pass
 
     # Product CRUD
-    def insert_product(self):
-        pass
+    def insert_product(self, product_data: dict):
+        print(product_data)
+        nombre = product_data.get('nombre')
+        precio = product_data.get('precio')
+        stock = product_data.get('stock')
+        categoria = product_data.get('categoria')
+        id_inventario = product_data.get('inventario')
+        imagen = product_data.get('imagen')
+        descripcion = product_data.get('descripcion')
+
+        if not nombre or not precio or not stock or not categoria or not id_inventario:
+            return Response({'error': 'Please provide all the required fields',
+                             'mandatory_fields': 'nombre, precio, stock, categoria, inventario',
+                             'optional_fields': 'descripcion, imagen'}, status=status.HTTP_400_BAD_REQUEST)
+
+        print(imagen)
+
+
+        return ResponseType.SUCCESS.value
 
     def get_product(self):
         pass
