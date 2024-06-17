@@ -21,18 +21,36 @@
   font: bold 4vh Arial;
 }
 
-.boton {
+.boton-add {
   position: absolute;
   bottom: 1vh;
   right: 1vh;
   border-radius: 10px;
   color: white;
-  border: 1px solid rgba(255, 255, 255, 0.300);
-  transition: color 0.2s;
+  background-color: black;
+  border: 1px solid chartreuse;
+  transition: color 0.2s, background-color 0.2s;
 }
 
-.boton:hover {
-  color: gold;
+.boton-add:hover {
+  color: chartreuse;
+  background-color: #191a1c;
+}
+
+.boton-rm {
+  position: absolute;
+  bottom: 1vh;
+  right: 1vh;
+  border-radius: 10px;
+  color: white;
+  background-color: black;
+  border: 1px solid red;
+  transition: color 0.2s, background-color 0.2s;
+}
+
+.boton-rm:hover {
+  color: red;
+  background-color: #191a1c;
 }
 
 .img-card {
