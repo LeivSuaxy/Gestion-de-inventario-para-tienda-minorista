@@ -1,6 +1,10 @@
 .backCard {
-  background-color: #191a1c;
+  background-color: black;
   color: white;
+  border: 1px solid rgba(255, 255, 255, 0.300);
+  border-radius: 10px !important;
+  overflow-x: hidden;
+  width: 700px;
 }
 
 .transitionbutton {
@@ -21,5 +25,18 @@
   position: absolute;
   bottom: 1vh;
   right: 1vh;
+  border-radius: 10px;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.300);
+  transition: color 0.2s;
+}
+
+.boton:hover {
+  color: gold;
+}
+
+.img-card {
+  border-radius: 10px 0 0 10px !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.300);
 }
 

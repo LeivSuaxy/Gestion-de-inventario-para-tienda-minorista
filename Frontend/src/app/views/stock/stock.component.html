@@ -1,21 +1,32 @@
 <app-carousel></app-carousel>
-<div>
+<div class="stock-cards">
   <div class="container text-dark sombreado">
     <div class="row align-items-start">
       <ng-container *ngFor="let venta of ventas">
         <div class="col columnas">
           <app-stockcards [venta]="venta"></app-stockcards>
         </div>
-        <hr style="background-color: white; color: whitesmoke">
       </ng-container>
     </div>
-    <input *ngIf="[(apiurlprev != null)]" type="button" value="Previous" class="btn btn-success" (click)="prev()"/>
-    <input *ngIf="[(apiurlnext != null)]" type="button" value="Next" class="btn btn-success" (click)="next()"/>
+    <div class="crud-card">
+      <div>
+        <i class="fas fa-pizza-slice"></i>
+        <span class="crud">Productos</span>
+        <i class="fas fa-pizza-slice"></i>
+      </div>
+      <hr class="crud-line">
+      <button routerLink="/stockadd" routerLinkActive="active" class="btn boton-add" ariaCurrentWhenActive="page">Agregar un producto</button>
+      <button routerLink="/stockadd" routerLinkActive="active" class="btn boton-upd" ariaCurrentWhenActive="page">Actualizar un producto</button>
+      <button routerLink="/stockadd" routerLinkActive="active" class="btn boton-rm" ariaCurrentWhenActive="page">Eliminar un producto</button>
+    </div>
+    <input *ngIf="[(apiurlprev != null)]" type="button" value="Anterior" class="btn boton-prev" (click)="prev()"/>
+    <input *ngIf="[(apiurlnext != null)]" type="button" value="Siguiente" class="btn boton-next" (click)="next()"/>
+  
   </div>
 
 
 </div>
 
-<button routerLink="/stockadd" routerLinkActive="active" ariaCurrentWhenActive="page">ADD</button>
+
 
 

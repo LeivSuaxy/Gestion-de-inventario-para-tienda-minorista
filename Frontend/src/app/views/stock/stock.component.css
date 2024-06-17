@@ -1,6 +1,5 @@
 .columnas {
-  margin-top: 2.5vh;
-  margin-bottom: 2.5vh;
+  margin-bottom: 3px !important;
 }
 
 .sombreado {
@@ -10,3 +9,114 @@
 .items {
   box-shadow: 0px 1vh 2vh 0px rgba(0,0,0,0.2);
 }
+
+.stock-cards {
+  margin-left: 8%;
+  margin-right: 8%;
+  border: 1px solid rgba(255,255,255,0.300);
+  padding-bottom: 20px;
+  padding-top: 12px;
+  border-radius: 10px;
+  width: fit-content;
+  background-color: black;
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.boton-prev {
+  color: white;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.300);
+  margin-right: 10px;
+  transition: color 0.2s;
+}
+
+.boton-prev:hover {
+  color: gold;
+}
+
+.boton-next {
+  color: white;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.300);
+  transition: color 0.2s;
+  left: 612px;
+  bottom: auto;
+  position: absolute;
+}
+
+.boton-next:hover {
+  color: gold;
+}
+
+.boton-add {
+  color: white;
+  border-radius: 10px;
+  border: 1px solid rgb(128, 255, 0);
+  transition: color 0.2s, background-color 0.2s;
+  margin-top: 5px;
+  width: 210px;
+}
+
+.boton-add:hover {
+  color: chartreuse;
+  background-color: #191a1c;
+}
+
+.boton-rm {
+  color: white;
+  border: 1px solid red;
+  transition: color 0.2s, background-color 0.2s;
+  width: 210px;
+  margin-top: 10px;
+  border-radius: 10px;
+}
+
+.boton-rm:hover {
+  color: red;
+  background-color: #191a1c;
+}
+
+.boton-upd {
+  color: white;
+  border: 1px solid yellow;
+  transition: color 0.2s, background-color 0.2s;
+  width: 210px;
+  margin-top: 10px;
+  border-radius: 10px;
+}
+
+.boton-upd:hover {
+  color: yellow;
+  background-color: #191a1c;
+}
+
+.crud-card {
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.300);
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 320px;
+}
+
+.crud {
+  color: white;
+  font-size: 40px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.fa-pizza-slice {
+  color: white;
+  font-size: 25px;
+}
+
+.crud-line {
+  background-color: rgba(255,255,255,0.300) !important;
+}
+

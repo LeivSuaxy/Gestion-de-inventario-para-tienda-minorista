@@ -20,11 +20,11 @@ export class StockcardsComponent {
 
   addToCart(venta: Venta) {
     this.cartService.addToCart(venta);
-    console.log(venta.name + ' added to cart')
+    console.log(venta.nombre + ' added to cart')
   }
 
   removeFromCart(venta: Venta) {
-    this.cartService.removeFromCart(venta.id);
+    this.cartService.removeFromCart(venta.id_producto);
   }
 
 

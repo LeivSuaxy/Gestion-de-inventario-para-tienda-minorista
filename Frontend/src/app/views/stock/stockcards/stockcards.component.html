@@ -1,17 +1,17 @@
 <div class="card mb-3 backCard card-ventas">
   <div class="row g-0">
     <div class="col-md-4">
-      <ng-container *ngIf="venta.image == null; else foto">
+      <ng-container *ngIf="venta.imagen == null; else foto">
         <a href="../../../../assets/img/nophoto.jpeg">
-          <img src="../../../../assets/img/nophoto.jpeg" class="img-fluid rounded-start" alt="{{venta.name}}"/>
+          <img src="../../../../assets/img/nophoto.jpeg" class="img-fluid rounded-start img-card" alt="{{venta.nombre}}"/>
         </a>
       </ng-container>
     </div>
     <div class="col-md-8">
       <div class="card-body">
-        <h5 class="card-title">{{venta.name}}</h5>
-        <p class="card-text">{{venta.description}}</p>
-        <p class="precio">{{venta.price}}$</p>
+        <h5 class="card-title">{{venta.nombre}}</h5>
+        <p class="card-text">{{venta.descripcion}}</p>
+        <p class="precio">{{venta.precio}}$</p>
         <p class="card-text"> Cantidad disponible: {{venta.stock}}</p>
       </div>
     </div>
@@ -20,7 +20,7 @@
 </div>
 
 <ng-template #positive>
-  <a type="button" class="btn btn-success boton"  (click)="setadded(venta)">
+  <a type="button" class="btn boton"  (click)="setadded(venta)">
       Adicionar al carrito
     </a>
 </ng-template>
@@ -31,7 +31,7 @@
 </ng-template>
 
 <ng-template #foto>
-  <a href="{{venta.image}}">
-    <img [src]="venta.image" class="img-fluid rounded-start" alt="..."/>
+  <a href="{{venta.imagen}}">
+    <img [src]="venta.imagen" class="img-fluid rounded-start" alt="..."/>
   </a>
 </ng-template>

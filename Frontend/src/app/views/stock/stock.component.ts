@@ -33,40 +33,48 @@ export class StockComponent {
   apiurl? = 'http://localhost:8000/api/objects/?page='+this.counterPage;
   apiurlnext? : string;
   apiurlprev? : string;
+  nombre?: string;
+  id_producto?: number;
+  precio?: number;
+  stock?: number;
+  categoria?: string;
+  descripcion?: string;
+  imagen?: string;
 
 
   constructor(private http: HttpClient) {
-    this.apicall()
+    this.apicall();
   }
+
 
   private apicall(): void{
     if(this.apiurl != null) {
       this.http.get(this.apiurl).subscribe(data => {
         this.data = data;
-        this.apiurlnext = `http://localhost:8000/api/objects/?page=${this.counterPage + 1}`;
-        this.apiurlprev = `http://localhost:8000/api/objects/?page=${this.counterPage}`;
-        this.counterPage++;
+        if (this.data['urls'].next != null) this.apiurlnext = this.data['urls'].next;
+        if (this.data['urls'].previous != null) this.apiurlprev = this.data['urls'].previous;
         this.traslate();
       })
     }
   }
-
+  
   traslate():void {
     this.ventas = [];
 
-
-
-    for (let i = 0; i < this.data.length; i++) {
+    for (let i = 0; i < this.data['elements'].length; i++) {
       this.ventas.push({
-        id: this.data[i].id,
-        image: this.data[i].image,
-        name: this.data[i].name,
-        price: this.data[i].price,
-        description: this.data[i].description,
-        stock: this.data[i].stock
-      })
+        nombre: this.data['elements'][i].nombre,
+        id_producto: this.data['elements'][i].id_producto,
+        precio: this.data['elements'][i].precio,
+        stock: this.data['elements'][i].stock,
+        categoria: this.data['elements'][i].categoria,
+        descripcion: this.data['elements'][i].descripcion,
+        imagen: this.data['elements'][i].imagen
+      });
     }
   }
+
+  
 
   next(){
     new Promise(resolve => {

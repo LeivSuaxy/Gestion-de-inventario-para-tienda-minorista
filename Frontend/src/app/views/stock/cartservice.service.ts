@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 
 
 export interface Venta{
-  id: number;
-  image?: string;
-  name: string;
-  price: number;
-  description: string;
+  id_producto: number;
+  imagen?: string;
+  nombre: string;
+  precio: number;
+  descripcion: string;
   stock: number;
+  categoria: string;
 }
 
 @Injectable({
@@ -28,16 +29,16 @@ export class CartService {
     if(!this.cart.includes(product)) this.cart.push(product);
     this.preciototal = 0;
     for (let i = 0; i < this.cart.length; i++) {
-      this.preciototal += this.cart[i].price;
+      this.preciototal += this.cart[i].precio;
     }
   }
 
   removeFromCart(productid: number) {
-    this.cart = this.cart.filter(product => product.id !== productid);
+    this.cart = this.cart.filter(product => product.id_producto !== productid);
 
     this.preciototal = 0;
     for (let i = 0; i < this.cart.length; i++) {
-      this.preciototal += this.cart[i].price;
+      this.preciototal += this.cart[i].precio;
     }
   }
 
@@ -51,7 +52,7 @@ export class CartService {
 
   isInCar(venta: Venta):boolean{
     for(let i = 0; i < this.cart.length; i++){
-      if(this.cart[i].id == venta.id){
+      if(this.cart[i].id_producto == venta.id_producto){
         return true;
       }
     }
