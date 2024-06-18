@@ -1,8 +1,9 @@
 .listhelp {
-  background-color: rgb(36, 39, 41);
+  background-color: black;
   font-weight: bold;
   font-size: 25px;
   color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
 }
 
 .total {
@@ -20,7 +21,21 @@
   width: 4.6vh;
   align-items: center;
   align-content: center;
-  border-radius: 50%;
+  border-radius: 10px;
+  background-color: transparent;
+  border: 1px solid white;
+  position: absolute;
+  right: 10px;
+  top: 12px;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.mas:hover {
+  border-color: green;
+}
+
+.mas:active {
+  background-color: green;
 }
 
 .menos {
@@ -28,5 +43,23 @@
   width: 4.6vh;
   align-items: center;
   align-content: center;
-  border-radius: 50%;
+  border-radius: 10px;
+  background-color: transparent;
+  border: 1px solid white;
+  position: absolute;
+  right: 45px;
+  top: 12px;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.menos:hover {
+  border-color: red;
+}
+
+.menos:active {
+  background-color: red;
+}
+
+.lista-compras {
+  border: none;
 }

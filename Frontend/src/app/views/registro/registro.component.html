@@ -1,24 +1,29 @@
 <!-- Formulario de registro -->
 <div class="centrar">
   <div class="formulario">
+    <div class="register-title">
+      <i class="fab fa-battle-net"></i>
+      <span class="name-store">EliteStore</span>
+    </div>
     <form class="proyectForm" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-      <div class="register-title">
-        <i class="fab fa-battle-net"></i>
-        <span class="name-store">EliteStore</span>
+      <div class="div-title">
+        <img src="../../../assets/icons/logo/image.png" alt="LL" width="40px" class="icon-logic">
+        <span class="title">LOG1C LEG1ON</span>
       </div>
-      <div class="mb-3">
-        <label for="name" class="form-label">Nombre</label> <br>
-        <input type="text" class="campo" id="name" formControlName="username" required>
+      <div class="div-signin">  
+        <span class="signin">Sign In</span>
       </div>
-
+      <p class="continue">Continuar a EliteStore</p>
       <div class="mb-3">
-        <label for="password" class="form-label">Contraseña</label> <br>
-        <input type="password" class="campo" id="password" formControlName="password" required>
+        <input type="text" class="campo" id="name" placeholder="Username" formControlName="username" required>
       </div>
 
       <div class="mb-3">
-        <label for="confirmPassword" class="form-label">Confirmar Constraseña</label> <br>
-        <input type="password" class="campo" id="confirmPassword" formControlName="cpassword" required>
+        <input type="password" class="campo" id="password" placeholder="Password" formControlName="password" required>
+      </div>
+
+      <div class="mb-3">
+        <input type="password" class="campo password" id="confirmPassword" placeholder="Repeat password" formControlName="cpassword" required>
       </div>
 
       <ng-container *ngIf="!isValid; then alert"/>

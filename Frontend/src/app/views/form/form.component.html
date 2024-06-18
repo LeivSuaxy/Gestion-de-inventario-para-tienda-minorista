@@ -1,19 +1,34 @@
 <!-- Formulario de login -->
 
 <div class="formulario">
-  <form class="proyectForm" [formGroup]="loginForm" (ngSubmit)="loginAccount()">
-    <div class="mb-3">
-      <label for="name" class="form-label">Nombre</label>
-      <input type="text" class="form-control" id="name" formControlName="username" required>
-    </div>
-
-    <div class="mb-3">
-      <label for="password" class="form-label">Contraseña</label>
-      <input type="password" class="form-control" id="password" formControlName="password" required>
-    </div>
-
-    <p>Si no tienes cuenta <a routerLink="/register">registrate</a></p>
-
-    <input type="submit" [disabled]="!loginForm.valid" class="btn btn-success" value="Login">
-  </form>
+  <div class="imagen">
+    <img src="../../../assets/img/bg/stock-modified.png" alt="pixel" width="300px">
+  </div>
+  
+  <div class="div-title-principal">
+    <i class="fab fa-battle-net"></i>
+    <span class="title-store">EliteStore</span>
+  </div>
+  
+    <form class="proyectForm" [formGroup]="loginForm" (ngSubmit)="loginAccount()">
+      <div class="div-title">
+        <img src="../../../assets/icons/logo/image.png" alt="LL" width="40px" class="icon-logic">
+        <span class="title">LOG1C LEG1ON</span>
+      </div>
+      <div class="div-signin">  
+        <span class="signin">Sign In</span>
+      </div>
+      <p class="continue">Continuar a EliteStore</p>
+      <div class="mb-3">
+        <input type="text" class="campo" id="name" placeholder="Username" formControlName="username" required>
+      </div>
+  
+      <div class="mb-3">
+        <input type="password" class="campo password" id="password" placeholder="Password" formControlName="password" required>
+      </div>
+  
+      <p>Do you haven't account? <a routerLink="/register" class="register">Register.</a></p>
+  
+      <input type="submit" [disabled]="!loginForm.valid" class="btn btn-success" value="Login">
+    </form>
 </div>

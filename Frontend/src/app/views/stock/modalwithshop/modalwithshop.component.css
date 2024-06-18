@@ -24,13 +24,14 @@
 }
 
 .cardhelphead {
-  backdrop-filter: blur(10px);
+  background-color: black;
   color:white;
 }
 
 .cardhelp {
-  background-color: #191a1c;
+  background-color: black;
   color:white;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
 }
 
 .cart {
@@ -42,9 +43,24 @@
 .close {
   background-color: transparent;
   border: none;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.close:hover {
+  color: white;
 }
 
 .center {
   margin-top: 10vh;
+}
+
+.btn-primary {
+  background-color: transparent;
+  border-color: dodgerblue;
+  transition: color 0.2s, background-color 0.2s;
+}
+
+.btn-primary:hover {
+  color: dodgerblue;
 }
 

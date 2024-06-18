@@ -2,7 +2,7 @@
     <ng-container *ngIf="ventas.length != 0; then Ventas else Noventas"/>
 
     <ng-template #Ventas>
-      <ol class="list-group list-group-numbered">
+      <ol class="list-group list-group-numbered lista-compras">
         <ng-container *ngFor="let list of cartService.cart">
           <li class="list-group-item listhelp">{{list.nombre}} <span class="lista-precios">{{list.precio}}$</span>
             <a class="btn btn-sm btn-success menos">-</a> <a class="btn btn-sm btn-success mas">+</a> </li>

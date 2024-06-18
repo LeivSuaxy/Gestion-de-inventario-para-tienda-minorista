@@ -29,7 +29,7 @@ export class CartService {
     if(!this.cart.includes(product)) this.cart.push(product);
     this.preciototal = 0;
     for (let i = 0; i < this.cart.length; i++) {
-      this.preciototal += this.cart[i].precio;
+      this.preciototal += Number(this.cart[i].precio);
     }
   }
 
@@ -38,7 +38,7 @@ export class CartService {
 
     this.preciototal = 0;
     for (let i = 0; i < this.cart.length; i++) {
-      this.preciototal += this.cart[i].precio;
+      this.preciototal += Number(this.cart[i].precio);
     }
   }
 
