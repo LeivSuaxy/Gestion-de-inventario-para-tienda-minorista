@@ -1,6 +1,9 @@
 <!-- Formulario de registro -->
-<div class="centrar">
+
   <div class="formulario">
+    <div class="imagen">
+      <img src="../../../assets/img/bg/stock-modified.png" alt="pixel" width="300px">
+    </div>
     <div class="register-title">
       <i class="fab fa-battle-net"></i>
       <span class="name-store">EliteStore</span>
@@ -11,9 +14,9 @@
         <span class="title">LOG1C LEG1ON</span>
       </div>
       <div class="div-signin">  
-        <span class="signin">Sign In</span>
+        <span class="signin">Register</span>
       </div>
-      <p class="continue">Continuar a EliteStore</p>
+      <p class="continue">Continue to EliteStore</p>
       <div class="mb-3">
         <input type="text" class="campo" id="name" placeholder="Username" formControlName="username" required>
       </div>
@@ -26,11 +29,13 @@
         <input type="password" class="campo password" id="confirmPassword" placeholder="Repeat password" formControlName="cpassword" required>
       </div>
 
+      <p>Do you have any account? <a routerLink="/login" class="login-text">Log In.</a></p>
+
       <ng-container *ngIf="!isValid; then alert"/>
-      <input type="submit" [disabled]="!registerForm.valid" class="btn btn-accept register-btn" value="Registrar">
+      <input type="submit" [disabled]="!registerForm.valid" class="btn btn-accept register-btn" value="Register">
     </form>
   </div>
-</div>
+
 
 <ng-template #alert>
   <div class="alert alert-danger" role="alert">

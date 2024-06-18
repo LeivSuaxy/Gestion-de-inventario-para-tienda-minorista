@@ -3,23 +3,22 @@
 }
 
 .stock-cards {
-  margin-left: 8%;
-  margin-right: 8%;
-  border: 1px solid rgba(255,255,255,0.300);
+  margin-left: 7%;
+  margin-right: 6%;
   padding-bottom: 20px;
-  padding-top: 12px;
+  padding-top: 2vh;
   border-radius: 10px;
   width: fit-content;
   background-color: black;
   position: relative;
-  margin-bottom: 20px;
+  margin-bottom: 4vh;
 }
 
 .boton-prev {
   color: white;
   border-radius: 10px;
   border: 1px solid rgba(255,255,255,0.300);
-  margin-right: 10px;
+  margin-right: 2vh;
   transition: color 0.2s, border-color 0.2s;
 }
 
@@ -33,7 +32,7 @@
   border-radius: 10px;
   border: 1px solid rgba(255,255,255,0.300);
   transition: color 0.2s, border-color 0.2s;
-  left: 612px;
+  left: 93.5vh;
   bottom: auto;
   position: absolute;
 }
@@ -49,7 +48,7 @@
   border: 1px solid rgb(128, 255, 0);
   transition: color 0.2s, background-color 0.2s;
   margin-top: 5px;
-  width: 210px;
+  width: 40vh;
 }
 
 .boton-add:hover {
@@ -61,8 +60,8 @@
   color: white;
   border: 1px solid red;
   transition: color 0.2s, background-color 0.2s;
-  width: 210px;
-  margin-top: 10px;
+  width: 40vh;
+  margin-top: 2vh;
   border-radius: 10px;
   margin-bottom: 15px;
 }
@@ -76,8 +75,8 @@
   color: white;
   border: 1px solid yellow;
   transition: color 0.2s, background-color 0.2s;
-  width: 210px;
-  margin-top: 10px;
+  width: 40vh;
+  margin-top: 2vh;
   border-radius: 10px;
 }
 
@@ -90,25 +89,25 @@
   border-radius: 10px;
   border: 1px solid rgba(255,255,255,0.300);
   position: absolute;
-  top: 12px;
-  right: 12px;
+  top: 1.8vh;
+  right: 4vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 320px;
+  width: 50vh;
   background-color: black;
 }
 
 .crud {
   color: white;
-  font-size: 40px;
-  margin-left: 5px;
-  margin-right: 5px;
+  font-size: 6vh;
+  margin-left: 1vh;
+  margin-right: 1vh;
 }
 
 .fa-pizza-slice {
   color: white;
-  font-size: 25px;
+  font-size: 4vh;
 }
 
 .title {

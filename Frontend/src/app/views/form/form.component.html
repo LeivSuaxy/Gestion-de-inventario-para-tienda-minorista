@@ -18,7 +18,7 @@
       <div class="div-signin">  
         <span class="signin">Sign In</span>
       </div>
-      <p class="continue">Continuar a EliteStore</p>
+      <p class="continue">Continue to EliteStore</p>
       <div class="mb-3">
         <input type="text" class="campo" id="name" placeholder="Username" formControlName="username" required>
       </div>
@@ -27,8 +27,8 @@
         <input type="password" class="campo password" id="password" placeholder="Password" formControlName="password" required>
       </div>
   
-      <p>Do you haven't account? <a routerLink="/register" class="register">Register.</a></p>
+      <p>Do you haven't an account? <a routerLink="/register" class="register">Register.</a></p>
   
-      <input type="submit" [disabled]="!loginForm.valid" class="btn btn-success" value="Login">
+      <input type="submit" [disabled]="!loginForm.valid" class="btn btn-accept login-btn" value="Login">
     </form>
 </div>

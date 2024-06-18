@@ -3,8 +3,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 7vh;
-  margin-bottom: 7vh;
+  margin-top: 4vh;
+  margin-bottom: 4vh;
   padding: 2.6vh;
   border-radius: 1.5vh;
   background-color: #f5f5f5;
@@ -100,17 +100,17 @@ input[type="password"]:focus {
 }
 
 .register-title {
-  margin-bottom: 20px;
-  vertical-align: middle;
   color: white;
+  width: fit-content;
 }
 
 .password {
   margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .signin {
-  font-size: 20px;
+  font-size: 25px;
   font-weight: bold;
 }
 
@@ -143,4 +143,22 @@ input[type="password"]:focus {
   vertical-align: text-bottom;
   margin: 5px auto auto 28px;
   font-size: 11px;
+}
+
+.title {
+  font-size: 20px;
+  text-align: left;
+  margin-bottom: 1px solid rgba(255, 255, 255, 0.3) !important;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.imagen {
+  position: absolute;
+  top: 0;
+  left: 15vh;
+}
+
+.login-text {
+  text-decoration: none;
 }
