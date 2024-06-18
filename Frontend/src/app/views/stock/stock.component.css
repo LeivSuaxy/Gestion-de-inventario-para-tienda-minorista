@@ -89,8 +89,8 @@
   border-radius: 10px;
   border: 1px solid rgba(255,255,255,0.300);
   position: absolute;
-  top: 1.8vh;
-  right: 4vh;
+  top: 2.1vh;
+  right: 22px;
   display: flex;
   flex-direction: column;
   align-items: center;
