@@ -55,15 +55,10 @@ def insert_inventory_at_database(request):
 @api_view(['POST'])
 def insert_product_in_database(request):
     data = request.data
-
     if not data:
         return Response({'error': 'Please provide a product'}, status=status.HTTP_400_BAD_REQUEST)
-
     if request.FILES['imagen'] is not None:
         data['imagen'] = ImageFile(request.FILES['imagen'])
-
     db = CrudDB()
-
     response = db.insert_product(data)
-
     return response

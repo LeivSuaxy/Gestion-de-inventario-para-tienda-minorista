@@ -350,9 +350,6 @@ class CrudDB:
 
     # Product CRUD
     def insert_product(self, product_data):
-        print('Entro al metodo')
-        print(type(product_data))
-        print(product_data)
         nombre = product_data['nombre']
         precio = product_data['precio']
         stock = product_data['stock']
@@ -368,7 +365,6 @@ class CrudDB:
 
         # Processing data
         url_imagen = None
-        print(type(imagen))
         if imagen is not None:
             img = Image.open(imagen)
 
