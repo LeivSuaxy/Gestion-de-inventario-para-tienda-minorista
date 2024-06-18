@@ -37,3 +37,21 @@ GET http://localhost:8000/api/total_objects
 
 ### Request to GitHub API TEST
 GET https://api.github.com/users/LeivSuaxy
+
+### POST to insert an object
+POST http://localhost:8000/api/insertproduct/
+content-type: multipart/form-data
+
+{
+  "product": {
+        "nombre": "pepe",
+        "precio": 300,
+        "stock": 30,
+        "categoria": "Carro",
+        "inventario": 1,
+        "descripcion": "Carro de juguete",
+        "imagen":
+  }
+}
+
+

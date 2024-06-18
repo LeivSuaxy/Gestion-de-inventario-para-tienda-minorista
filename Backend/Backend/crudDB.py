@@ -1,4 +1,5 @@
 import psycopg2
+from django.utils.timezone import now
 
 from api.models import Producto
 from api.serializer import ProductoSerializer
@@ -11,6 +12,7 @@ import math
 import os
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
+from Backend import settings
 
 
 # Aquí se declararán las clases y funciones que se encargarán
@@ -186,13 +188,13 @@ class CrudDB:
         if pagination < 0:
             return ResponseType.ERROR.value
 
-        pagination = pagination * 5
+        pagination = pagination * 10
 
         self.get_amount_elements_stock()
 
         if pagination < self.total_elements_stock:
             query = ("SELECT id_producto, nombre, precio, descripcion, imagen, categoria, stock"
-                     f" FROM producto LIMIT 5 OFFSET {pagination}")
+                     f" FROM producto LIMIT 10 OFFSET {pagination}")
             elements = Producto.objects.raw(query)
 
             if not elements:
@@ -338,23 +340,41 @@ class CrudDB:
         pass
 
     # Product CRUD
-    def insert_product(self, product_data: dict):
+    def insert_product(self, product_data):
+        print('Entro al metodo')
+        print(type(product_data))
         print(product_data)
-        nombre = product_data.get('nombre')
-        precio = product_data.get('precio')
-        stock = product_data.get('stock')
-        categoria = product_data.get('categoria')
-        id_inventario = product_data.get('inventario')
-        imagen = product_data.get('imagen')
-        descripcion = product_data.get('descripcion')
+        nombre = product_data['nombre']
+        precio = product_data['precio']
+        stock = product_data['stock']
+        categoria = product_data['categoria']
+        id_inventario = product_data['inventario']
+        imagen = product_data['imagen']
+        descripcion = product_data['descripcion']
 
         if not nombre or not precio or not stock or not categoria or not id_inventario:
             return Response({'error': 'Please provide all the required fields',
                              'mandatory_fields': 'nombre, precio, stock, categoria, inventario',
                              'optional_fields': 'descripcion, imagen'}, status=status.HTTP_400_BAD_REQUEST)
 
-        print(imagen)
+        # Processing data
+        url_imagen = None
+        if imagen is not None:
+            path = default_storage.save('media/' + imagen.name, ContentFile(imagen.read()))
+            url_imagen = os.path.join(settings.MEDIA_URL, path)
 
+        connection = self.connect_to_db()
+        cursor = connection.cursor()
+
+        cursor.execute(f"""
+            INSERT INTO producto (nombre, precio, stock, categoria, id_inventario, descripcion, imagen, fecha_entrada)
+            VALUES ('{nombre}', {precio}, {stock}, '{categoria}', {id_inventario}, '{descripcion}', '{url_imagen}', '{now()}')
+        """)
+
+        connection.commit()
+
+        cursor.close()
+        connection.close()
 
         return ResponseType.SUCCESS.value
 
