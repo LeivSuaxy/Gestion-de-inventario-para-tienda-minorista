@@ -8,6 +8,7 @@ from django.core.mail import send_mail
 from rest_framework.response import Response
 from Backend.crudDB import CrudDB, ResponseType
 from rest_framework import status
+from django.core.files.images import ImageFile
 
 
 # Create your views here.
@@ -53,11 +54,16 @@ def insert_inventory_at_database(request):
 
 @api_view(['POST'])
 def insert_product_in_database(request):
-    print(type(request.data))
-    print(request.data)
-    data: dict = request.data.get('product')
+    data = request.data
+
     if not data:
         return Response({'error': 'Please provide a product'}, status=status.HTTP_400_BAD_REQUEST)
+
+    if request.FILES['imagen'] is not None:
+        data['imagen'] = ImageFile(request.FILES['imagen'])
+
     db = CrudDB()
+
     response = db.insert_product(data)
+
     return response
