@@ -1,4 +1,5 @@
 import psycopg2
+from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.utils.timezone import now
 
 from api.models import Producto
@@ -12,6 +13,9 @@ import math
 import os
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
+from django.core.files.images import ImageFile
+from PIL import Image
+from io import BytesIO
 from Backend import settings
 
 
@@ -197,10 +201,15 @@ class CrudDB:
                      f" FROM producto LIMIT 10 OFFSET {pagination}")
             elements = Producto.objects.raw(query)
 
+            print('imprimiento elementos')
+            print(elements)
+
             if not elements:
                 return ResponseType.NOT_FOUND.value
             else:
                 serializer = ProductoSerializer(elements, many=True)
+                print('imprimiendo serializer')
+                print(serializer.data)
                 return Response(serializer.data, status.HTTP_200_OK)
         else:
             return ResponseType.ERROR.value
@@ -341,9 +350,6 @@ class CrudDB:
 
     # Product CRUD
     def insert_product(self, product_data):
-        print('Entro al metodo')
-        print(type(product_data))
-        print(product_data)
         nombre = product_data['nombre']
         precio = product_data['precio']
         stock = product_data['stock']
@@ -360,8 +366,17 @@ class CrudDB:
         # Processing data
         url_imagen = None
         if imagen is not None:
-            path = default_storage.save('media/' + imagen.name, ContentFile(imagen.read()))
-            url_imagen = os.path.join(settings.MEDIA_URL, path)
+            img = Image.open(imagen)
+
+            if img.width != 1024 and img.height != 1024:
+                img = img.resize((1024, 1024))
+                buffer = BytesIO()
+                img.save(fp=buffer, format='PNG')
+                path = default_storage.save('stock/' + imagen.name, ContentFile(buffer.getvalue()))
+                url_imagen = os.path.join(path)
+            else:
+                path = default_storage.save('stock/' + imagen.name, ContentFile(imagen.read()))
+                url_imagen = os.path.join(path)
 
         connection = self.connect_to_db()
         cursor = connection.cursor()
@@ -386,4 +401,3 @@ class CrudDB:
 
     def delete_product(self):
         pass
-
