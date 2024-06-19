@@ -36,13 +36,6 @@ export class StockComponent {
   apiurl? = 'http://localhost:8000/api/objects/?page='+this.counterPage;
   apiurlnext? : string;
   apiurlprev? : string;
-  nombre?: string;
-  id_producto?: number;
-  precio?: number;
-  stock?: number;
-  categoria?: string;
-  descripcion?: string;
-  imagen?: string;
   load: any;
 
 
@@ -61,7 +54,9 @@ export class StockComponent {
       this.http.get(this.apiurl).subscribe(data => {
         this.data = data;
         if (this.data['urls'].next) this.apiurlnext = this.data['urls'].next;
+        else this.apiurlnext = undefined;
         if (this.data['urls'].previous) this.apiurlprev = this.data['urls'].previous;
+        else this.apiurlprev = undefined;
         this.traslate();
         this.StockService.hide();
       }, error => {

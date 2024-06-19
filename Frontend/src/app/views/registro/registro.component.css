@@ -3,7 +3,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 4vh;
+  margin-top: 1vh;
   margin-bottom: 4vh;
   padding: 2.6vh;
   border-radius: 1.5vh;
@@ -12,7 +12,8 @@
   width: 50%;
   background-color: black;
   color: white;
-  width: 440px;
+  width: 66vh;
+  margin-left: 8vh;
 }
 
 .formulario {
@@ -29,43 +30,38 @@
   border: none !important;
   border-bottom: 1px solid rgba(255, 255, 255, 0.300) !important;
   background-color: black;
-  border-radius: 0px !important;
   color: white;
-  width: 250px;
-  margin-top: 20px;
+  margin-top: 3.5vh;
 }
-
-/*.campo:focus {
-  border-left: 0px !important;
-  border-bottom: 1px solid white !important;
-  border-right: 0px !important;
-  border-top: 0px !important;
-}*/
 
 input[type="text"] {
   border: none;
   outline: none;
-  width: 350px;
+  width: 54vh;
   border-bottom: 1px solid rgba(255, 255, 255, 0.3);
   transition: border-bottom 0.2s ease-in-out, width 0.2s ease-in-out;
 }
 
 input[type="text"]:focus {
   border-bottom: 1px solid white !important;
-  width: 400px;
+  width: 62vh;
 }
 
 input[type="password"] {
   border: none;
   outline: none;
-  width: 350px;
+  width: 54vh;
   border-bottom: 1px solid rgba(255, 255, 255, 0.3);
   transition: border-bottom 0.2s ease-in-out, width 0.2s ease-in-out;
 }
 
 input[type="password"]:focus {
   border-bottom: 1px solid white !important;
-  width: 400px;
+  width: 62vh;
+}
+
+.icon-logic {
+  width: 6vh;
 }
 
 .btn-accept {
@@ -88,15 +84,19 @@ input[type="password"]:focus {
 }
 
 .register-btn {
-  margin-top: 10px;
+  margin-top: 2vh;
 }
 
 .fa-battle-net {
-  font-size: 40px;
+  color: white;
+  font-size: 6vh;
 }
 
-.name-store {
-  font-size: 40px;
+.title-store {
+  font-size: 6vh;
+  text-align: left;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 1);
 }
 
 .register-title {
@@ -105,23 +105,21 @@ input[type="password"]:focus {
 }
 
 .password {
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 3.5vh;
 }
 
 .signin {
-  font-size: 25px;
+  font-size: 4.5vh;
   font-weight: bold;
 }
 
 .div-signin {
   display: flex;
   justify-content: flex-start;
-  margin-bottom: 2vh;
   text-align: left;
   align-items: center;
   vertical-align: text-bottom;
-  margin: 20px auto auto 28px;
+  margin: 4vh auto auto 4vh;
 }
 
 .div-title {
@@ -131,7 +129,7 @@ input[type="password"]:focus {
   text-align: left;
   align-items: center;
   vertical-align: text-bottom;
-  margin: 20px auto auto 20px;
+  margin: 3vh auto auto 3vh;
 }
 
 .continue {
@@ -141,12 +139,12 @@ input[type="password"]:focus {
   text-align: left;
   align-items: center;
   vertical-align: text-bottom;
-  margin: 5px auto auto 28px;
-  font-size: 11px;
+  margin: 0.7vh auto auto 4vh;
+  font-size: 2.1vh;
 }
 
 .title {
-  font-size: 20px;
+  font-size: 3.5vh;
   text-align: left;
   margin-bottom: 1px solid rgba(255, 255, 255, 0.3) !important;
   font-weight: bold;
@@ -161,4 +159,13 @@ input[type="password"]:focus {
 
 .login-text {
   text-decoration: none;
+}
+
+.img-principal {
+  width: 46vh;
+  margin-left: 8vh;
+}
+
+.div-title-principal {
+  margin-top: 2vh;
 }

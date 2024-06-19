@@ -3,7 +3,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 4vh;
+  margin-top: 1vh;
   margin-bottom: 4vh;
   padding: 2.6vh;
   border-radius: 1.5vh;
@@ -12,7 +12,8 @@
   width: 50%;
   background-color: black;
   color: white;
-  width: 440px;
+  width: 66vh;
+  margin-left: 8vh;
 }
 
 .formulario {
@@ -29,40 +30,38 @@
   border: none !important;
   border-bottom: 1px solid rgba(255, 255, 255, 0.300) !important;
   background-color: black;
-  border-radius: 0px !important;
   color: white;
-  width: 250px;
-  margin-top: 20px;
+  margin-top: 3.5vh;
 }
 
 input[type="text"] {
   border: none;
   outline: none;
-  width: 350px;
+  width: 54vh;
   border-bottom: 1px solid rgba(255, 255, 255, 0.3);
   transition: border-bottom 0.2s ease-in-out, width 0.2s ease-in-out;
 }
 
 input[type="text"]:focus {
   border-bottom: 1px solid white !important;
-  width: 400px;
+  width: 62vh;
 }
 
 input[type="password"] {
   border: none;
   outline: none;
-  width: 350px;
+  width: 54vh;
   border-bottom: 1px solid rgba(255, 255, 255, 0.3);
   transition: border-bottom 0.2s ease-in-out, width 0.2s ease-in-out;
 }
 
 input[type="password"]:focus {
   border-bottom: 1px solid white !important;
-  width: 400px;
+  width: 62vh;
 }
 
 .title {
-  font-size: 20px;
+  font-size: 3.5vh;
   text-align: left;
   margin-bottom: 1px solid rgba(255, 255, 255, 0.3) !important;
   font-weight: bold;
@@ -70,7 +69,7 @@ input[type="password"]:focus {
 }
 
 .icon-logic {
-  font-size: 15px;
+  width: 6vh;
 }
 
 .div-title {
@@ -80,31 +79,25 @@ input[type="password"]:focus {
   text-align: left;
   align-items: center;
   vertical-align: text-bottom;
-  margin: 20px auto auto 20px;
-}
-
-.fa-sign-in {
-  font-size: 20px;
-  color: white;
+  margin: 3vh auto auto 3vh;
 }
 
 .password {
-  margin-bottom: 20px;
+  margin-bottom: 3.5vh;
 }
 
 .signin {
-  font-size: 25px;
+  font-size: 4.5vh;
   font-weight: bold;
 }
 
 .div-signin {
   display: flex;
   justify-content: flex-start;
-  margin-bottom: 2vh;
   text-align: left;
   align-items: center;
   vertical-align: text-bottom;
-  margin: 20px auto auto 28px;
+  margin: 4vh auto auto 4vh;
 }
 
 .continue {
@@ -114,8 +107,8 @@ input[type="password"]:focus {
   text-align: left;
   align-items: center;
   vertical-align: text-bottom;
-  margin: 5px auto auto 28px;
-  font-size: 11px;
+  margin: 0.7vh auto auto 4vh;
+  font-size: 2.1vh;
 }
 
 .register {
@@ -129,20 +122,19 @@ input[type="password"]:focus {
 }
 
 .title-store {
-  font-size: 40px;
+  font-size: 6vh;
   text-align: left;
-  margin-bottom: 1px solid rgba(255, 255, 255, 0.3) !important;
   font-weight: bold;
   color: rgba(255, 255, 255, 1);
 }
 
 .fa-battle-net {
   color: white;
-  font-size: 40px;
+  font-size: 6vh;
 }
 
 .login-btn {
-  margin-top: 10px;
+  margin-top: 2vh;
 }
 
 .btn-accept {
@@ -151,4 +143,13 @@ input[type="password"]:focus {
   background-color: black;
   border: 1px solid chartreuse;
   transition: color 0.2s, background-color 0.2s;
+}
+
+.img-principal {
+  width: 46vh;
+  margin-left: 8vh;
+}
+
+.div-title-principal {
+  margin-top: 2vh;
 }
