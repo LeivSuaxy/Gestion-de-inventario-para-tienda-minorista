@@ -1,13 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {CarouselComponent} from "./carousel/carousel.component";
 import {StockcardsComponent} from "./stockcards/stockcards.component";
-import {NgForOf, NgIf} from "@angular/common";
+import {CommonModule, NgForOf, NgIf} from "@angular/common";
 import {ShoppingcarComponent} from "./shoppingcar/shoppingcar.component";
 import {ModalwithshopComponent} from "./modalwithshop/modalwithshop.component";
 import {Venta} from "./cartservice.service";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {RouterLink, RouterLinkActive} from "@angular/router";
 import {PaginationComponent} from "./pagination/pagination.component";
+import {StockService} from "./stock.service";
+
 @Component({
   selector: 'app-stock',
   standalone: true,
@@ -22,6 +24,7 @@ import {PaginationComponent} from "./pagination/pagination.component";
     RouterLinkActive,
     PaginationComponent,
     NgIf,
+    CommonModule
   ],
   templateUrl: './stock.component.html',
   styleUrl: './stock.component.css'
@@ -40,21 +43,31 @@ export class StockComponent {
   categoria?: string;
   descripcion?: string;
   imagen?: string;
+  load: any;
 
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private StockService: StockService) {
+    this.load = this.StockService.loading$;
+  }
+
+  ngOnInit() {
     this.apicall();
   }
 
 
-  private apicall(): void{
-    if(this.apiurl != null) {
+  private apicall(): void {
+    this.StockService.show();
+    if (this.apiurl) {
       this.http.get(this.apiurl).subscribe(data => {
         this.data = data;
-        if (this.data['urls'].next != null) this.apiurlnext = this.data['urls'].next;
-        if (this.data['urls'].previous != null) this.apiurlprev = this.data['urls'].previous;
+        if (this.data['urls'].next) this.apiurlnext = this.data['urls'].next;
+        if (this.data['urls'].previous) this.apiurlprev = this.data['urls'].previous;
         this.traslate();
-      })
+        this.StockService.hide();
+      }, error => {
+        console.error(error);
+        this.StockService.hide();
+      });
     }
   }
   

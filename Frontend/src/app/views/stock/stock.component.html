@@ -1,4 +1,8 @@
 <app-carousel></app-carousel>
+<div *ngIf="load | async" class="overlay">
+  <div class="loader"></div>
+</div>
+
 <div class="stock-cards">
   <div class="container text-dark sombreado">
     <div class="row align-items-start">
