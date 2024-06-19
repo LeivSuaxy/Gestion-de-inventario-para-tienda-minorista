@@ -24,10 +24,10 @@ import {StockService} from "./stock.service";
     RouterLinkActive,
     PaginationComponent,
     NgIf,
-    CommonModule
+    CommonModule,
   ],
   templateUrl: './stock.component.html',
-  styleUrl: './stock.component.css'
+  styleUrl: './stock.component.css',
 })
 export class StockComponent {
   ventas: Venta[] = []
@@ -71,20 +71,16 @@ export class StockComponent {
     }
   }
   
-  traslate():void {
-    this.ventas = [];
-
-    for (let i = 0; i < this.data['elements'].length; i++) {
-      this.ventas.push({
-        nombre: this.data['elements'][i].nombre,
-        id_producto: this.data['elements'][i].id_producto,
-        precio: this.data['elements'][i].precio,
-        stock: this.data['elements'][i].stock,
-        categoria: this.data['elements'][i].categoria,
-        descripcion: this.data['elements'][i].descripcion,
-        imagen: this.data['elements'][i].imagen
-      });
-    }
+  traslate(): void {
+    this.ventas = this.data['elements'].map((element: any) => ({
+      nombre: element.nombre,
+      id_producto: element.id_producto,
+      precio: element.precio,
+      stock: element.stock,
+      categoria: element.categoria,
+      descripcion: element.descripcion,
+      imagen: element.imagen
+    }));
   }
 
   
