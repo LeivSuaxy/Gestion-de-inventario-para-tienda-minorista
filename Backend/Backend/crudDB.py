@@ -4,7 +4,7 @@ from django.utils.timezone import now
 
 from api.models import Producto
 from api.serializer import ProductoSerializer
-from .settings import DATABASES
+from .settings import DATABASES, REST_FRAMEWORK
 from enum import Enum
 from django.contrib.auth.hashers import check_password
 from rest_framework.response import Response
@@ -192,24 +192,21 @@ class CrudDB:
         if pagination < 0:
             return ResponseType.ERROR.value
 
-        pagination = pagination * 10
+        pagination = pagination * REST_FRAMEWORK['PAGE_SIZE']
 
         self.get_amount_elements_stock()
+        # print('Total de elementos en stock: ', self.total_elements_stock)
+        # print(f'Tamagno: {REST_FRAMEWORK["PAGE_SIZE"]}')
 
         if pagination < self.total_elements_stock:
             query = ("SELECT id_producto, nombre, precio, descripcion, imagen, categoria, stock"
-                     f" FROM producto LIMIT 10 OFFSET {pagination}")
+                     f" FROM producto LIMIT {REST_FRAMEWORK['PAGE_SIZE']} OFFSET {pagination}")
             elements = Producto.objects.raw(query)
-
-            print('imprimiento elementos')
-            print(elements)
 
             if not elements:
                 return ResponseType.NOT_FOUND.value
             else:
                 serializer = ProductoSerializer(elements, many=True)
-                print('imprimiendo serializer')
-                print(serializer.data)
                 return Response(serializer.data, status.HTTP_200_OK)
         else:
             return ResponseType.ERROR.value
