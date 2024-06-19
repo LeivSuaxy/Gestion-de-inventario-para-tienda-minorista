@@ -75,12 +75,12 @@
 }
 
 .cardhelphead {
-  background-color: black;
+  background-color: rgb(7, 7, 7);
   color:white;
 }
 
 .cardhelp {
-  background-color: #191a1c;
+  background-color: #000000 !important;
   color:white;
 }
 
