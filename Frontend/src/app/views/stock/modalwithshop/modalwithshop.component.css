@@ -1,5 +1,5 @@
 .proyectNavButton{
-  background-color: black;
+  background-color: #212121;
   border: none;
   color: white;
   padding: auto;
@@ -63,4 +63,3 @@
 .btn-primary:hover {
   color: dodgerblue;
 }
-

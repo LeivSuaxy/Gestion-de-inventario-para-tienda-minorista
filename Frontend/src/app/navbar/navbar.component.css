@@ -1,5 +1,5 @@
 .proyectNav {
-  background-color: black;
+  background-color: #212121;
   border-radius: 10px;
   overflow: hidden;
   margin-left: 8%;
@@ -12,10 +12,11 @@
   position: block;
   margin-top: 20px;
   margin-bottom: 20px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 
 .proyectNavButton{
-  background-color: black;
+  background-color: #212121;
   border: none;
   color: white;
   width: 18vh;
@@ -49,7 +50,7 @@
 
 .login {
   margin: 0 0 0 auto;
-  background-color: black;
+  background-color: #212121;
   color: white;
   width: 8%;
   font-size: 4vh;
