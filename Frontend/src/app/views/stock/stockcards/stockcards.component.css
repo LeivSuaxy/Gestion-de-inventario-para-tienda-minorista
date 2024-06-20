@@ -1,5 +1,5 @@
 .backCard {
-  background-color: black;
+  background-color: #212121;
   color: white;
   border: 1px solid rgba(255, 255, 255, 0.300);
   border-radius: 10px !important;
@@ -27,7 +27,7 @@
   right: 1vh;
   border-radius: 10px;
   color: white;
-  background-color: black;
+  background-color: #212121;
   border: 1px solid chartreuse;
   transition: color 0.2s, background-color 0.2s;
 }

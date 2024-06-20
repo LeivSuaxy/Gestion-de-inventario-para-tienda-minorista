@@ -10,7 +10,7 @@
   background-color: #f5f5f5;
   box-shadow: 0 0 1.5vh #000;
   width: 50%;
-  background-color: black;
+  background-color: #212121;
   color: white;
   width: 66vh;
   margin-left: 8vh;
@@ -23,41 +23,7 @@
   align-items: center;
   position: relative;
   margin: auto;
-  background-color: black;
-}
-
-.campo {
-  border: none !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.300) !important;
-  background-color: black;
-  color: white;
-  margin-top: 3.5vh;
-}
-
-input[type="text"] {
-  border: none;
-  outline: none;
-  width: 54vh;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-  transition: border-bottom 0.2s ease-in-out, width 0.2s ease-in-out;
-}
-
-input[type="text"]:focus {
-  border-bottom: 1px solid white !important;
-  width: 62vh;
-}
-
-input[type="password"] {
-  border: none;
-  outline: none;
-  width: 54vh;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-  transition: border-bottom 0.2s ease-in-out, width 0.2s ease-in-out;
-}
-
-input[type="password"]:focus {
-  border-bottom: 1px solid white !important;
-  width: 62vh;
+  background-color: #212121;
 }
 
 .icon-logic {
@@ -139,7 +105,7 @@ input[type="password"]:focus {
   text-align: left;
   align-items: center;
   vertical-align: text-bottom;
-  margin: 0.7vh auto auto 4vh;
+  margin: 0.7vh auto 1.5vh 4vh;
   font-size: 2.1vh;
 }
 
@@ -169,3 +135,99 @@ input[type="password"]:focus {
 .div-title-principal {
   margin-top: 2vh;
 }
+
+.form-control {
+  position: relative;
+  margin: 2vh 0 2vh;
+  width: 56vh;
+  background-color: transparent;
+  border: none;
+}
+
+.form-control input {
+  background-color: transparent;
+  border: 0;
+  border-bottom: 2px #fff solid;
+  display: block;
+  width: 100%;
+  padding: 8px 0;
+  font-size: 18px;
+  color: #fff;
+}
+
+.form-control input:focus,
+.form-control input:valid {
+  outline: 0;
+  border-bottom-color: lightblue;
+}
+
+.form-control label {
+  position: absolute;
+  top: 15px;
+  left: 12px;
+  pointer-events: none;
+}
+
+.form-control label span {
+  display: inline-block;
+  font-size: 18px;
+  min-width: 5px;
+  color: #fff;
+  transition: 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.form-control input:focus+label span,
+.form-control input:valid+label span {
+  color: lightblue;
+  transform: translateY(-30px);
+}
+
+button {
+  --color: #560bad;
+  font-family: inherit;
+  display: inline-block;
+  width: 8em;
+  height: 2.6em;
+  line-height: 2.5em;
+  margin: 20px;
+  position: relative;
+  overflow: hidden;
+  border: 2px solid var(--color);
+  transition: color .5s;
+  z-index: 1;
+  font-size: 17px;
+  border-radius: 6px;
+  font-weight: 500;
+  color: var(--color);
+  background-color: transparent;
+ }
+ 
+ button:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  background: var(--color);
+  height: 150px;
+  width: 200px;
+  border-radius: 50%;
+ }
+ 
+ button:hover {
+  color: #fff;
+ }
+ 
+ button:before {
+  top: 100%;
+  left: 100%;
+  transition: all .7s;
+ }
+ 
+ button:hover:before {
+  top: -30px;
+  left: -30px;
+ }
+ 
+ button:active:before {
+  background: #3a0ca3;
+  transition: background 0s;
+ }
