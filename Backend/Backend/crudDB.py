@@ -2,8 +2,8 @@ import psycopg2
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.utils.timezone import now
 
-from ..api.models import Producto
-from ..api.serializer import ProductoSerializer
+from api.models import Producto
+from api.serializer import ProductoSerializer
 from .settings import DATABASES, REST_FRAMEWORK
 from enum import Enum
 from django.contrib.auth.hashers import check_password
@@ -16,7 +16,6 @@ from django.core.files.storage import default_storage
 from django.core.files.images import ImageFile
 from PIL import Image
 from io import BytesIO
-import settings
 
 
 # Aquí se declararán las clases y funciones que se encargarán
