@@ -10,12 +10,8 @@ from django.contrib.auth.hashers import check_password
 from rest_framework.response import Response
 from rest_framework import status
 import math
-import os
-from django.core.files.base import ContentFile
-from django.core.files.storage import default_storage
-from django.core.files.images import ImageFile
-from PIL import Image
-from io import BytesIO
+from image_process import process_image
+from django.http.request import QueryDict
 
 
 # Aquí se declararán las clases y funciones que se encargarán
@@ -362,17 +358,7 @@ class CrudDB:
         # Processing data
         url_imagen = None
         if imagen is not None:
-            img = Image.open(imagen)
-
-            if img.width != 1024 and img.height != 1024:
-                img = img.resize((1024, 1024))
-                buffer = BytesIO()
-                img.save(fp=buffer, format='PNG')
-                path = default_storage.save('stock/' + imagen.name, ContentFile(buffer.getvalue()))
-                url_imagen = os.path.join(path)
-            else:
-                path = default_storage.save('stock/' + imagen.name, ContentFile(imagen.read()))
-                url_imagen = os.path.join(path)
+            url_imagen = process_image(imagen)
 
         connection = self.connect_to_db()
         cursor = connection.cursor()
@@ -392,7 +378,26 @@ class CrudDB:
     def get_product(self):
         pass
 
-    def update_product(self):
+    def update_product(self, product_data: QueryDict):
+        id_product = product_data.get('id_product')
+        name = product_data.get('name')
+        price = product_data.get('price')
+        stock = product_data.get('stock')
+        category = product_data.get('category')
+        inventory = product_data.get('inventory')
+        image = product_data.get('image')
+        description = product_data.get('description')
+        entry_date = product_data.get('entry_date')
+
+        if not id_product:
+            return Response({'error': 'Please provide the id of the product to update'}, status=status.HTTP_400_BAD_REQUEST)
+
+        if not name or not price or not stock or not category or not stock or not entry_date:
+            return Response({'error': 'Please provide all the required fields',
+                             'mandatory_fields': 'name, price, stock, category, inventory, entry_date',
+                             'optional_fields': 'description, image'}, status=status.HTTP_400_BAD_REQUEST)
+
+
         pass
 
     def delete_product(self):
