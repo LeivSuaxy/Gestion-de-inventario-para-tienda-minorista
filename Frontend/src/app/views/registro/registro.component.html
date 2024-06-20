@@ -17,59 +17,22 @@
         <span class="signin">Sign Up</span>
       </div>
       <p class="continue">Continue to EliteStore</p>
-      <div class="form-control">
-        <input type="text" id="name" formControlName="username" required>
-      <label>
-        <span style="transition-delay:0ms">U</span>
-        <span style="transition-delay:50ms">s</span>
-        <span style="transition-delay:100ms">e</span>
-        <span style="transition-delay:150ms">r</span>
-        <span style="transition-delay:200ms">n</span>
-        <span style="transition-delay:250ms">a</span>
-        <span style="transition-delay:300ms">m</span>
-        <span style="transition-delay:350ms">e</span>
-      </label>
+      <div class="mb-3">
+        <input type="text" class="campo" id="name" placeholder="Username" formControlName="username" required>
       </div>
 
-      <div class="form-control">
-        <input type="password" id="password" formControlName="password" required>
-        <label>
-          <span style="transition-delay:0ms">P</span>
-          <span style="transition-delay:50ms">a</span>
-          <span style="transition-delay:100ms">s</span>
-          <span style="transition-delay:150ms">s</span>
-          <span style="transition-delay:200ms">w</span>
-          <span style="transition-delay:250ms">o</span>
-          <span style="transition-delay:300ms">r</span>
-          <span style="transition-delay:350ms">d</span>
-        </label>
+      <div class="mb-3">
+        <input type="password" class="campo" id="password" placeholder="Password" formControlName="password" required>
       </div>
 
-      <div class="form-control">
-        <input type="password" id="password" formControlName="cpassword" required>
-        <label>
-          <span style="transition-delay:0ms">R</span>
-          <span style="transition-delay:50ms">e</span>
-          <span style="transition-delay:100ms">p</span>
-          <span style="transition-delay:150ms">e</span>
-          <span style="transition-delay:200ms">a</span>
-          <span style="transition-delay:250ms">t</span>
-          <span style="transition-delay:250ms"> </span>
-          <span style="transition-delay:300ms">P</span>
-          <span style="transition-delay:350ms">a</span>
-          <span style="transition-delay:400ms">s</span>
-          <span style="transition-delay:450ms">s</span>
-          <span style="transition-delay:500ms">w</span>
-          <span style="transition-delay:550ms">o</span>
-          <span style="transition-delay:600ms">r</span>
-          <span style="transition-delay:650ms">d</span>
-        </label>
+      <div class="mb-3">
+        <input type="password" class="campo password" id="confirmPassword" placeholder="Repeat password" formControlName="cpassword" required>
       </div>
 
       <p>Do you have any account? <a routerLink="/login" class="login-text">Log In.</a></p>
 
       <ng-container *ngIf="!isValid; then alert"/>
-      <button type="submit" [disabled]="!registerForm.valid" class="button">Register</button>
+      <input type="submit" [disabled]="!registerForm.valid" class="btn btn-accept register-btn" value="Register">
     </form>
   </div>
 

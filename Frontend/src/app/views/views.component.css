@@ -5,7 +5,7 @@
   margin-bottom: 20px;
   padding-top: 20px;
   padding-bottom: 20px;
-  background-color: 212121;
+  background-color: black;
   border: 1px solid rgba(255, 255, 255, 0.300);
   border-radius: 10px;
 }
@@ -35,7 +35,8 @@
 }
 
 .listhelp {
-  background-color: #212121;
+  background-color: transparent;
+  background-image: linear-gradient(to right, black, transparent);
   color: white;
   font-size: 5vh;
   border: 1px solid rgba(255, 255, 255, 0.300);
@@ -44,7 +45,7 @@
 }
 
 .list {
-  background-color: #212121 !important;
+  background-color: black !important;
   border-radius: 10px 0 0 10px;
 }
 
@@ -74,18 +75,13 @@
 }
 
 .cardhelphead {
-  background-color: #212121;
+  background-color: rgb(7, 7, 7);
   color:white;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  border: none !important;
 }
 
-.card-body {
-  background-color: #212121 !important;
-}
-
-.encabezado {
-  background-color: rgb(31, 30, 30);
+.cardhelp {
+  background-color: #000000 !important;
+  color:white;
 }
 
 .span-encabezados {
@@ -219,10 +215,9 @@
 .card-git {
   max-width: 70%;
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-  color: white;
-  background-color: #212121;
+  background-color: black;
   border-radius: 10px;
-  
+  border: 1px solid rgba(255, 255, 255, 0.300);
   overflow: hidden;
   margin: 3vh 7vh 3vh 7vh;
 }
@@ -230,6 +225,7 @@
 .img-git {
   height: auto;
   border-radius: 10px 0 0 10px;
+  border-right: 1px solid rgba(255, 255, 255, 0.300);
 }
 
 .ico-git {
@@ -257,8 +253,9 @@
 }
 
 .card-interior {
-  border-radius: 0 0 10px 10px;
-  background-color: #212121;
+  border-radius: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.300);
+  background-color: rgba(255, 255, 255, 0.075) !important;
 }
 
 .extra {

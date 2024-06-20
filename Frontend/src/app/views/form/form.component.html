@@ -19,37 +19,16 @@
         <span class="signin">Sign In</span>
       </div>
       <p class="continue">Continue to EliteStore</p>
-        <div class="form-control">
-          <input type="text" id="name" required>
-        <label>
-          <span style="transition-delay:0ms">U</span>
-          <span style="transition-delay:50ms">s</span>
-          <span style="transition-delay:100ms">e</span>
-          <span style="transition-delay:150ms">r</span>
-          <span style="transition-delay:200ms">n</span>
-          <span style="transition-delay:250ms">a</span>
-          <span style="transition-delay:300ms">m</span>
-          <span style="transition-delay:350ms">e</span>
-        </label>
-        </div>
+      <div class="mb-3">
+        <input type="text" class="campo" id="name" placeholder="Username" formControlName="username" required>
+      </div>
   
-        <div class="form-control">
-          <input type="password" id="password" required>
-          <label>
-            <span style="transition-delay:0ms">P</span>
-            <span style="transition-delay:50ms">a</span>
-            <span style="transition-delay:100ms">s</span>
-            <span style="transition-delay:150ms">s</span>
-            <span style="transition-delay:200ms">w</span>
-            <span style="transition-delay:250ms">o</span>
-            <span style="transition-delay:300ms">r</span>
-            <span style="transition-delay:350ms">d</span>
-          </label>
-        </div>
-        
+      <div class="mb-3">
+        <input type="password" class="campo password" id="password" placeholder="Password" formControlName="password" required>
+      </div>
   
       <p>Do you haven't an account? <a routerLink="/register" class="register">Sign Up.</a></p>
   
-      <button type="submit" [disabled]="!loginForm.valid" class="button" value="Login">Login</button>
+      <input type="submit" [disabled]="!loginForm.valid" class="btn btn-accept login-btn" value="Login">
     </form>
 </div>
