@@ -6,7 +6,7 @@ from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from django.core.mail import send_mail
 from rest_framework.response import Response
-from Backend.crudDB import CrudDB, ResponseType
+from Backend.Backend.crudDB import CrudDB, ResponseType
 from rest_framework import status
 from django.core.files.images import ImageFile
 
