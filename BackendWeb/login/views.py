@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.authtoken.views import Token
 from .serializer import UserSerializer
-from Backend.Backend.crudDB import CrudDB
+from BackendWeb.Backend.crudDB import CrudDB
 
 
 # Create your views here.

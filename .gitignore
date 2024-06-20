@@ -1,12 +1,12 @@
 Frontend/node_modules/
 Frontend/.angular/
-Backend/api/migrations
+BackendWeb/api/migrations
 node_modules/
 Frontend/src/.idea/
 Frontend/src/.vscode/
 Frontend/src/api/migrations/
-Backend/Backend/settings.py
-Backend/media/stock
+BackendWeb/Backend/settings.py
+BackendWeb/media/stock
 /Backend/media/
 .idea/
 .idea/*
