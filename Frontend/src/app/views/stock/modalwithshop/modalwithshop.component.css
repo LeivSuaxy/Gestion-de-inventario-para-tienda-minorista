@@ -1,16 +1,16 @@
 .proyectNavButton{
-  background-color: #212121;
+  background-color: transparent;
   border: none;
   color: white;
   padding: auto;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 4vh;
+  font-size: 3vh;
   cursor: pointer;
   transition: background-color 0.2s, color 0.2s;
-  width: 18vh;
-  height: 10vh;
+  width: 10vh;
+  height: 8vh;
 }
 
 .proyectNavButton:hover{

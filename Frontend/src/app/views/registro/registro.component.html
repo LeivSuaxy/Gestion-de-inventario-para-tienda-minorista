@@ -69,7 +69,12 @@
     <p>Do you have any account? <a routerLink="/login" class="login-text">Log In.</a></p>
 
     <ng-container *ngIf="!isValid; then alert"/>
-    <button type="submit" [disabled]="!registerForm.valid" class="button">Register</button>
+    <button type="submit" [disabled]="!registerForm.valid">
+      Sign up
+      <div class="arrow-wrapper">
+          <div class="arrow"></div>
+      </div>
+  </button>
   </form>
 </div>
 

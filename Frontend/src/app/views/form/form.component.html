@@ -50,6 +50,11 @@
   
       <p>Do you haven't an account? <a routerLink="/register" class="register">Sign Up.</a></p>
   
-      <button type="submit" [disabled]="!loginForm.valid" class="button" value="Login">Login</button>
+      <button type="submit" [disabled]="!loginForm.valid" value="login">
+        Sign in
+        <div class="arrow-wrapper">
+            <div class="arrow"></div>
+        </div>
+    </button>
     </form>
 </div>
