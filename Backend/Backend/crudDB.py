@@ -336,11 +336,14 @@ class CrudDB:
         else:
             return Response({'id_value': id_storage}, status.HTTP_200_OK)
 
+    # TODO Endpoint to get inventories
     def get_inventories(self):
         pass
 
     # Product CRUD
     def insert_product(self, product_data: QueryDict) -> Response:
+        # TODO check if product exists
+
         name = product_data.get('name')
         price = product_data.get('price')
         stock = product_data.get('stock')
@@ -420,24 +423,7 @@ class CrudDB:
 
         return ResponseType.SUCCESS.value
 
-    def update_purchased_products(self, products: QueryDict):
-        """
-        JSON Received format:
-        {
-            "products": [
-                {
-                    "id": 1,
-                    "quantity": 5
-                },
-                {
-                    "id": 2,
-                    "quantity": 3
-                }
-            ]
-        }
-        :param products: Dict(JSON) with id products and quantity.
-        :return: Response
-        """
+    def update_purchased_products(self, products: QueryDict) -> Response:
         connection = self.connect_to_db()
         cursor = connection.cursor()
 
@@ -453,7 +439,7 @@ class CrudDB:
 
         return ResponseType.SUCCESS.value
 
-    def delete_product(self, data_id: QueryDict):
+    def delete_product(self, data_id: QueryDict) -> Response:
         id_product = data_id.get('id')
         if not id_product:
             return Response({'error': 'Please provide an id of product you will delete'},
