@@ -20,4 +20,10 @@ import {Router} from "@angular/router";
 })
 export class NavbarComponent {
   constructor(public router: Router) { }
+
+  menuOpen = false;
+
+  toggleMenu() {
+      this.menuOpen = !this.menuOpen;
+  }
 }
