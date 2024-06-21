@@ -458,4 +458,73 @@ class CrudDB:
 
     # TODO Endpoint to process purchases
     def process_purchases(self, data: QueryDict) -> Response:
-        pass
+        client = data.get('client')
+        products = data.get('products')
+
+        if not client:
+            return Response({'error': 'Please provide the client information',
+                             'required_fields:': 'ci, name, email, phone'}, status=status.HTTP_400_BAD_REQUEST)
+
+        if not products:
+            return Response({'error': 'Please provide the products to purchase',
+                             'required_fields': '[id, quantity]'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Reporte de venta: id, fecha, total, id_orden_compra
+        # Orden de compra: id, fecha, total, id_cliente
+        # Cliente: CI, nombre, email, telefono
+
+        # Price_all_products
+        price_all_products_calct = self.__process_total_price_products_purchased__(products).data['total_price']
+
+        connection = self.connect_to_db()
+        cursor = connection.cursor()
+
+        # Agnadir cliente if not exists
+
+        cursor.execute(f"INSERT INTO cliente (carnet_identidad, nombre, email, telefono) SELECT '{client['ci']}', "
+                       f"'{client['name']}',"
+                       f"'{client['email']}', '{client['phone']}' WHERE NOT EXISTS (SELECT 1 FROM Cliente WHERE "
+                       f"carnet_identidad='{client['ci']}')")
+
+        # Orden de compra:
+        cursor.execute(f"INSERT INTO orden_compra (fecha_realizada, monto_total, id_cliente)"
+                       f"VALUES ('{now()}', {price_all_products_calct}, '{client['ci']}') RETURNING id_orden_compra")
+
+        id_order = cursor.fetchone()[0]
+
+        # Reporte
+        cursor.execute(f"INSERT INTO reporte (fecha_reporte, id_empleado) VALUES  ('{now()}', 1) RETURNING id_reporte")
+        id_reporte = cursor.fetchone()[0]
+
+        # Reporte de venta el cual tiene que hacer un reporte
+        cursor.execute(f"INSERT INTO reporte_venta (id, fecha_hora_entrega, monto_total, id_orden_compra)"
+                       f" VALUES ({id_reporte}, '{now()}', {price_all_products_calct}, {id_order})")
+
+        connection.commit()
+
+        cursor.close()
+        connection.close()
+        return Response({'total_price': price_all_products_calct}, status=status.HTTP_200_OK)
+
+    def __process_total_price_products_purchased__(self, products: list) -> Response:
+        connection = self.connect_to_db()
+        cursor = connection.cursor()
+
+        print(products)
+
+        total_price = 0
+
+        for product in products:
+            product_id = product['id']
+            quantity = product['quantity']
+
+            cursor.execute(f"SELECT precio FROM producto WHERE id_producto={product_id}")
+            price = cursor.fetchone()[0]
+            print(price)
+
+            total_price += price * quantity
+
+        cursor.close()
+        connection.close()
+
+        return Response({'total_price': total_price}, status=status.HTTP_200_OK)
