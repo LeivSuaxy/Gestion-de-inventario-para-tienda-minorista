@@ -95,3 +95,9 @@ def purchased_products(request):
     db = CrudDB()
     response = db.update_purchased_products(data)
     return response
+
+
+# TODO Process buy_order, Tests have diagram to do
+@api_view(['POST'])
+def process_buy_order(request):
+    pass
