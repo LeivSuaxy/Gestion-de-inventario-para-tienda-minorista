@@ -15,6 +15,8 @@ from django.core.files.images import ImageFile
 class TenItemsPaginator(PageNumberPagination):
     page_size: int = 5
 
+# TODO Implement the token validation
+
 
 @api_view(['GET'])
 def get_objects(request):
@@ -70,8 +72,9 @@ def update_product_in_database(request):
     print(type(data))
     if not data:
         return Response({'error': 'Please provide a product'}, status=status.HTTP_400_BAD_REQUEST)
-    if request.FILES['image'] is not None:
-        data['image'] = ImageFile(request.FILES['image'])
+    if 'image' in request.FILES:
+        if request.FILES['image'] is not None:
+            data['image'] = ImageFile(request.FILES['image'])
     db = CrudDB()
     response = db.update_product(data)
     return response
