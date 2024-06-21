@@ -3,9 +3,10 @@ from io import BytesIO
 import os
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
+from django.core.files.images import ImageFile
 
 
-def process_image(image):
+def process_image(image: ImageFile):
     img = Image.open(image)
 
     if img.width != 1024 and img.height != 1024:
@@ -15,7 +16,9 @@ def process_image(image):
         path = default_storage.save('stock/' + image.name, ContentFile(buffer.getvalue()))
         url_imagen = os.path.join(path)
     else:
-        path = default_storage.save('stock/' + image.name, ContentFile(image.read()))
+        buffer = BytesIO()
+        img.save(fp=buffer, format='PNG')
+        path = default_storage.save('stock/' + image.name, ContentFile(buffer.getvalue()))
         url_imagen = os.path.join(path)
 
     return url_imagen

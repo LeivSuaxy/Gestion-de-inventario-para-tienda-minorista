@@ -57,8 +57,8 @@ def insert_product_in_database(request):
     data = request.data
     if not data:
         return Response({'error': 'Please provide a product'}, status=status.HTTP_400_BAD_REQUEST)
-    if request.FILES['imagen'] is not None:
-        data['imagen'] = ImageFile(request.FILES['imagen'])
+    if request.FILES['image'] is not None:
+        data['image'] = ImageFile(request.FILES['image'])
     db = CrudDB()
     response = db.insert_product(data)
     return response
@@ -70,8 +70,28 @@ def update_product_in_database(request):
     print(type(data))
     if not data:
         return Response({'error': 'Please provide a product'}, status=status.HTTP_400_BAD_REQUEST)
-    if request.FILES['imagen'] is not None:
-        data['imagen'] = ImageFile(request.FILES['imagen'])
+    if request.FILES['image'] is not None:
+        data['image'] = ImageFile(request.FILES['image'])
     db = CrudDB()
     response = db.update_product(data)
+    return response
+
+
+@api_view(['POST'])
+def delete_product_in_database(request):
+    data = request.data
+    if not data:
+        return Response({'error': 'Please provide a product'}, status=status.HTTP_400_BAD_REQUEST)
+    db = CrudDB()
+    response = db.delete_product(data)
+    return response
+
+
+@api_view(['POST'])
+def purchased_products(request):
+    data = request.data.get('products')
+    if not data:
+        return Response({'error': 'Please provide products'}, status=status.HTTP_400_BAD_REQUEST)
+    db = CrudDB()
+    response = db.update_purchased_products(data)
     return response
