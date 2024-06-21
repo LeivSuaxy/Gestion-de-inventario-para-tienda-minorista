@@ -194,7 +194,8 @@ class CrudDB:
 
         if pagination < self.total_elements_stock:
             query = ("SELECT id_producto, nombre, precio, descripcion, imagen, categoria, stock"
-                     f" FROM producto ORDER BY id_producto LIMIT {REST_FRAMEWORK['PAGE_SIZE']} OFFSET {pagination}")
+                     f" FROM producto WHERE stock > 0 ORDER BY id_producto "
+                     f"LIMIT {REST_FRAMEWORK['PAGE_SIZE']} OFFSET {pagination}")
             elements = Producto.objects.raw(query)
 
             if not elements:
@@ -228,6 +229,7 @@ class CrudDB:
         else:
             return ResponseType.ERROR.value
 
+    # Function to get elements and urls from stock with pagination. Is called by the get_objects view
     def get_response_elements(self, pagination: int) -> Response:
         if pagination < 0:
             return ResponseType.ERROR.value
@@ -381,6 +383,7 @@ class CrudDB:
     def get_product(self):
         pass
 
+    # FIXME the update product function
     def update_product(self, product_data: QueryDict) -> Response:
         id_product = product_data.get('id_product')
         name = product_data.get('name')
@@ -411,7 +414,7 @@ class CrudDB:
         cursor = connection.cursor()
 
         cursor.execute(f"""
-            UPDATE producto SET nombre='{name}', precio={price}, stock={stock}, categoria='{category}', 
+            UPDATE producto SET nombre='{name}', precio={price}, stock={int(stock)}, categoria='{category}', 
             id_inventario={inventory}, descripcion='{description}', imagen='{url_image}', fecha_entrada='{entry_date}'
             WHERE id_producto={id_product}
         """)
@@ -452,3 +455,7 @@ class CrudDB:
         cursor.close()
         connection.close()
         return ResponseType.SUCCESS.value
+
+    # TODO Endpoint to process purchases
+    def process_purchases(self, data: QueryDict) -> Response:
+        pass
