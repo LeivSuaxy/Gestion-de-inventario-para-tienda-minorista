@@ -25,6 +25,7 @@ export class NavbarComponent {
   @ViewChild('menuButton', { static: true }) menuButton!: ElementRef;
   @ViewChild('menu', { static: true }) menu!: ElementRef;
   @ViewChild('navbar', { static: true }) navbar!: ElementRef;
+
   menuOpen = false;
 
   toggleMenu() {

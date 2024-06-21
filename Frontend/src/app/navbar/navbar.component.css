@@ -132,50 +132,75 @@
 }*/
 
 .menu {
-  background-color: #212121;
+  background-color: #212121b9 !important;
+  backdrop-filter: blur(10px) !important;
   color: white;
   text-align: center;
-  font-family: Blogger Sans, serif;
   font-size: 20px;
   border-radius: 10px;
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-  width: 150px;
+  width: fit-content;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   max-height: 0;
   transition: max-height 0.5s ease-in-out;
   margin-top: 5px;
-  margin-right: 10px;
   z-index: 1;
   cursor: pointer;
   position: fixed;
+  padding: 0 !important;
 }
 
 .menu ul {
   list-style-type: none;
-  margin: 0;
-  padding: 0;
   overflow: hidden;
+  width: 100%;
+  margin: auto !important;
 }
 
 .menu li {
-  display: inline;
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Añade esta línea */
+  width: 100%;
+  margin: auto;
 }
 
 .menu a {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: center; /* Añade esta línea */
+  align-items: center; /* Añade esta línea */
   color: white;
-  text-align: left;
-  padding-left:48px;
+  text-align: center;
   text-decoration: none;
   transition: color 0.2s, background-color 0.2s;
   height: 50px;
   border-radius: 5px;
+  width: 30vh;
+  margin: auto;
 }
 
 .menu a:hover {
-  color: rgb(255, 204, 51);
+  color: gold;
   background-color: dimgray;
   cursor: pointer;
+}
+
+nav {
+  position: relative;
+}
+
+nav ul {
+  display: flex;
+  list-style-type: none;
+  padding: 0;
+}
+
+nav a {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
 }
