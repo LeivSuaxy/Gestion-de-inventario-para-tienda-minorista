@@ -1,7 +1,6 @@
 import psycopg2
-from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.utils.timezone import now
-
+from django.core.files.images import ImageFile
 from api.models import Producto
 from api.serializer import ProductoSerializer
 from .settings import DATABASES, REST_FRAMEWORK
@@ -10,12 +9,8 @@ from django.contrib.auth.hashers import check_password
 from rest_framework.response import Response
 from rest_framework import status
 import math
-import os
-from django.core.files.base import ContentFile
-from django.core.files.storage import default_storage
-from django.core.files.images import ImageFile
-from PIL import Image
-from io import BytesIO
+from Backend.image_process import process_image
+from django.http.request import QueryDict
 
 
 # Aquí se declararán las clases y funciones que se encargarán
@@ -199,7 +194,7 @@ class CrudDB:
 
         if pagination < self.total_elements_stock:
             query = ("SELECT id_producto, nombre, precio, descripcion, imagen, categoria, stock"
-                     f" FROM producto LIMIT {REST_FRAMEWORK['PAGE_SIZE']} OFFSET {pagination}")
+                     f" FROM producto ORDER BY id_producto LIMIT {REST_FRAMEWORK['PAGE_SIZE']} OFFSET {pagination}")
             elements = Producto.objects.raw(query)
 
             if not elements:
@@ -345,41 +340,32 @@ class CrudDB:
         pass
 
     # Product CRUD
-    def insert_product(self, product_data):
-        nombre = product_data['nombre']
-        precio = product_data['precio']
-        stock = product_data['stock']
-        categoria = product_data['categoria']
-        id_inventario = product_data['inventario']
-        imagen = product_data['imagen']
-        descripcion = product_data['descripcion']
+    def insert_product(self, product_data: QueryDict) -> Response:
+        name = product_data.get('name')
+        price = product_data.get('price')
+        stock = product_data.get('stock')
+        category = product_data.get('category')
+        inventory = product_data.get('inventory')
+        image: ImageFile = product_data.get('image')
+        description = product_data.get('description')
 
-        if not nombre or not precio or not stock or not categoria or not id_inventario:
+        if not name or not price or not stock or not category or not inventory:
             return Response({'error': 'Please provide all the required fields',
-                             'mandatory_fields': 'nombre, precio, stock, categoria, inventario',
-                             'optional_fields': 'descripcion, imagen'}, status=status.HTTP_400_BAD_REQUEST)
+                             'mandatory_fields': 'name, price, stock, category, inventory',
+                             'optional_fields': 'description, image'}, status=status.HTTP_400_BAD_REQUEST)
 
         # Processing data
         url_imagen = None
-        if imagen is not None:
-            img = Image.open(imagen)
-
-            if img.width != 1024 and img.height != 1024:
-                img = img.resize((1024, 1024))
-                buffer = BytesIO()
-                img.save(fp=buffer, format='PNG')
-                path = default_storage.save('stock/' + imagen.name, ContentFile(buffer.getvalue()))
-                url_imagen = os.path.join(path)
-            else:
-                path = default_storage.save('stock/' + imagen.name, ContentFile(imagen.read()))
-                url_imagen = os.path.join(path)
+        if image is not None:
+            url_imagen = process_image(image)
 
         connection = self.connect_to_db()
         cursor = connection.cursor()
 
         cursor.execute(f"""
             INSERT INTO producto (nombre, precio, stock, categoria, id_inventario, descripcion, imagen, fecha_entrada)
-            VALUES ('{nombre}', {precio}, {stock}, '{categoria}', {id_inventario}, '{descripcion}', '{url_imagen}', '{now()}')
+            VALUES ('{name}', {price}, {stock}, '{category}', {inventory}, '{description}', '{url_imagen}',
+             '{now()}')
         """)
 
         connection.commit()
@@ -392,8 +378,91 @@ class CrudDB:
     def get_product(self):
         pass
 
-    def update_product(self):
-        pass
+    def update_product(self, product_data: QueryDict) -> Response:
+        id_product = product_data.get('id_product')
+        name = product_data.get('name')
+        price = product_data.get('price')
+        stock = product_data.get('stock')
+        category = product_data.get('category')
+        inventory = product_data.get('inventory')
+        image = product_data.get('image')
+        description = product_data.get('description')
+        entry_date = product_data.get('entry_date')
 
-    def delete_product(self):
-        pass
+        if not id_product:
+            return Response({'error': 'Please provide the id of the product to update'},
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        if not name or not price or not stock or not category or not stock or not entry_date or not inventory:
+            return Response({'error': 'Please provide all the required fields',
+                             'mandatory_fields': 'name, price, stock, category, inventory, entry_date, inventory,',
+                             'optional_fields': 'description, image'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Processing data
+        url_image = None
+        if image is not None:
+            print(type(image))
+            url_image = process_image(image)
+
+        connection = self.connect_to_db()
+        cursor = connection.cursor()
+
+        cursor.execute(f"""
+            UPDATE producto SET nombre='{name}', precio={price}, stock={stock}, categoria='{category}', 
+            id_inventario={inventory}, descripcion='{description}', imagen='{url_image}', fecha_entrada='{entry_date}'
+            WHERE id_producto={id_product}
+        """)
+
+        connection.commit()
+
+        cursor.close()
+        connection.close()
+
+        return ResponseType.SUCCESS.value
+
+    def update_purchased_products(self, products: QueryDict):
+        """
+        JSON Received format:
+        {
+            "products": [
+                {
+                    "id": 1,
+                    "quantity": 5
+                },
+                {
+                    "id": 2,
+                    "quantity": 3
+                }
+            ]
+        }
+        :param products: Dict(JSON) with id products and quantity.
+        :return: Response
+        """
+        connection = self.connect_to_db()
+        cursor = connection.cursor()
+
+        for product in products:
+            product_id = product['id']
+            quantity = product['quantity']
+
+            cursor.execute(f"UPDATE producto SET stock=stock-{quantity} WHERE id_producto={product_id}")
+
+        connection.commit()
+        cursor.close()
+        connection.close()
+
+        return ResponseType.SUCCESS.value
+
+    def delete_product(self, data_id: QueryDict):
+        id_product = data_id.get('id')
+        if not id_product:
+            return Response({'error': 'Please provide an id of product you will delete'},
+                            status=status.HTTP_400_BAD_REQUEST)
+        connection = self.connect_to_db()
+        cursor = connection.cursor()
+        cursor.execute(f"DELETE FROM producto WHERE id_producto={id_product}")
+        connection.commit()
+        self.total_elements_stock -= 1
+        cursor.close()
+        connection.close()
+        return ResponseType.SUCCESS.value
