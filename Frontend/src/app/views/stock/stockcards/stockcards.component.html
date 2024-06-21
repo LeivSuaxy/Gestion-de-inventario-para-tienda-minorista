@@ -20,14 +20,14 @@
 </div>
 
 <ng-template #positive>
-  <a type="button" class="btn boton-add"  (click)="setadded(venta)">
-      Adicionar al carrito
-    </a>
+    <button class="cartBtn" (click)="setadded(venta)">
+      ADD TO CART
+    </button>
 </ng-template>
 <ng-template #negative>
-  <a type="button" class="btn boton-rm" (click)="removeFromCart(venta)">
-      Eliminar del carrito
-  </a>
+  <button class="cartBtn color" (click)="removeFromCart(venta)">
+    REMOVE
+  </button>
 </ng-template>
 
 <ng-template #foto>

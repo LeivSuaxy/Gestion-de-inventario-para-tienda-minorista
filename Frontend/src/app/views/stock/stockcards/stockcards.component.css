@@ -1,7 +1,7 @@
 .backCard {
   background-color: #212121;
   color: white;
-  border: 1px solid rgba(255, 255, 255, 0.300);
+  box-shadow: 0px 1vh 2vh 0 rgba(0,0,0,0.2);
   border-radius: 10px !important;
   overflow-x: hidden;
   width: 107vh;
@@ -55,5 +55,63 @@
 
 .img-card {
   border-radius: 10px 0 0 10px !important;
-  border-right: 1px solid rgba(255, 255, 255, 0.300);
 }
+
+button {
+  --color: chartreuse; /*#560bad*/
+  font-family: inherit;
+  display: inline-block;
+  width: 8em;
+  height: 2.6em;
+  line-height: 2.5em;
+  position: absolute;
+  right: 1vh;
+  bottom: 1vh;
+  overflow: hidden;
+  border: 2px solid var(--color);
+  transition: color .5s;
+  z-index: 1;
+  font-size: 14px;
+  border-radius: 10px;
+  font-weight: 500;
+  color: var(--color);
+  background-color: #212121;
+ }
+ 
+ button:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  background: var(--color);
+  height: 150px;
+  width: 200px;
+  border-radius: 50%;
+ }
+ 
+ button:hover {
+  color: black;
+ }
+ 
+ button:before {
+  top: 100%;
+  left: 100%;
+  transition: all .7s;
+ }
+ 
+ button:hover:before {
+  top: -30px;
+  left: -30px;
+ }
+ 
+ button:active:before {
+  background: #3a0ca3;
+  transition: background 0s;
+ }
+
+ .color {
+  --color: red !important;
+ }
+
+ .color:hover {
+  color: white;
+ }
