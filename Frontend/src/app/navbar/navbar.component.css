@@ -118,3 +118,64 @@
   stroke-dasharray: 20 300;
   stroke-dashoffset: -32.42;
 }
+
+/*.menu {
+  height: 0;
+  overflow: hidden;
+  transition: height 0.5s ease-out;
+  z-index: 400;
+  color: white;
+}
+
+.menu--open {
+  height: auto;
+}*/
+
+.menu {
+  background-color: #212121;
+  color: white;
+  text-align: center;
+  font-family: Blogger Sans, serif;
+  font-size: 20px;
+  border-radius: 10px;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  width: 150px;
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.5s ease-in-out;
+  margin-top: 5px;
+  margin-right: 10px;
+  z-index: 1;
+  cursor: pointer;
+  position: fixed;
+}
+
+.menu ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.menu li {
+  display: inline;
+}
+
+.menu a {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: white;
+  text-align: left;
+  padding-left:48px;
+  text-decoration: none;
+  transition: color 0.2s, background-color 0.2s;
+  height: 50px;
+  border-radius: 5px;
+}
+
+.menu a:hover {
+  color: rgb(255, 204, 51);
+  background-color: dimgray;
+  cursor: pointer;
+}
