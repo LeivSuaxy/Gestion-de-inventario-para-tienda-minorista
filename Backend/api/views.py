@@ -15,8 +15,10 @@ from django.core.files.images import ImageFile
 class TenItemsPaginator(PageNumberPagination):
     page_size: int = 5
 
+
 # TODO Implement the token validation
 
+# GET Methods
 
 @api_view(['GET'])
 def get_objects(request):
@@ -32,6 +34,14 @@ def get_total_objects(request):
     objects = db.get_amount_elements_stock()
     return objects
 
+
+# TODO Method to search products
+@api_view(['GET'])
+def get_objects_by_name(request):
+    pass
+
+
+# POST Methods
 
 @api_view(['POST'])
 def insert_storage_in_database(request):
