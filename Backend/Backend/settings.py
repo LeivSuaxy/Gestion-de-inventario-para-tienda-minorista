@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'login',
     'apiadmin',
     'messageApp',
-]
+    ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
