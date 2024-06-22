@@ -35,5 +35,6 @@ urlpatterns = [
     path('api/insertproduct/', api_views.insert_product_in_database, name='insert_product'),
     path('api/updateproduct/', api_views.update_product_in_database, name='update_product'),
     path('api/purchaseproducts/', api_views.purchased_products, name='purchase_products'),
-    path('api/testcount/', api_views.process_buy_order, name='process_buy_order'),
+    path('api/search/', api_views.get_objects_by_name, name='search_products'),
+    path('api/testcount/', api_views.get_objects_by_name, name='process_buy_order'), # Ruta testeo
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

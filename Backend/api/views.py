@@ -35,10 +35,14 @@ def get_total_objects(request):
     return objects
 
 
-# TODO Method to search products
 @api_view(['GET'])
 def get_objects_by_name(request):
-    pass
+    search = request.GET.get('search')
+    if not search:
+        return Response({'error': 'Please provide a search term'}, status=status.HTTP_400_BAD_REQUEST)
+    db = CrudDB()
+    response = db.search_products(search)
+    return response
 
 
 # POST Methods
