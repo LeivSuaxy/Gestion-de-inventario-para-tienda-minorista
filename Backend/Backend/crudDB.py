@@ -213,12 +213,12 @@ class CrudDB:
             if (pagination + 1) >= total_page:
                 next_page = None
             else:
-                next_page = f'http://localhost:8000/api/objects/?page={pagination + 1}'
+                next_page = f'http://localhost:8000/api/public/objects/?page={pagination + 1}'
 
             if (pagination - 1) < 0:
                 previous_page = None
             else:
-                previous_page = f'http://localhost:8000/api/objects/?page={pagination - 1}'
+                previous_page = f'http://localhost:8000/api/public/objects/?page={pagination - 1}'
 
             urls = {
                 'next': next_page,
