@@ -17,7 +17,6 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from api import views as api_views
 from django.conf.urls.static import static
 from django.conf import settings
 
@@ -28,13 +27,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
     path('api/auth/', include('login.urls')),
-    path('api/objects/', api_views.get_objects, name='get_objects'),
-    path('api/insertstorage/', api_views.insert_storage_in_database, name='insert_storage'),
-    path('api/total_objects/', api_views.get_total_objects, name='get_total_objects'),
-    path('api/insertinventory/', api_views.insert_inventory_at_database, name='insert_inventory'),
-    path('api/insertproduct/', api_views.insert_product_in_database, name='insert_product'),
-    path('api/updateproduct/', api_views.update_product_in_database, name='update_product'),
-    path('api/purchaseproducts/', api_views.purchased_products, name='purchase_products'),
-    path('api/search/', api_views.get_objects_by_name, name='search_products'),
-    path('api/testcount/', api_views.get_objects_by_name, name='process_buy_order'), # Ruta testeo
+    path('api/public/', include('api.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

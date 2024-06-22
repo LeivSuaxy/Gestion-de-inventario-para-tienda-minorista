@@ -40,7 +40,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'api',
     'corsheaders',
-    "login",
+    'login',
+    'apiadmin',
+    'messageApp',
 ]
 
 MIDDLEWARE = [
