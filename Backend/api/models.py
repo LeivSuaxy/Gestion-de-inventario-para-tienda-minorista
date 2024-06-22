@@ -44,7 +44,7 @@ class Empleado(models.Model):
     class Meta:
         db_table = 'empleado'
 
-
+# TODO Inventario add Nombre/Categoria
 class Inventario(models.Model):
     id_inventario = models.AutoField(primary_key=True)
     id_almacen = models.ForeignKey('Almacen', models.DO_NOTHING, db_column='id_almacen')
@@ -71,7 +71,7 @@ class OrdenCompra(models.Model):
     class Meta:
         db_table = 'orden_compra'
 
-
+# TODO Categoria is a Foreign Key of Inventario
 class Producto(models.Model):
     id_producto = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=255)

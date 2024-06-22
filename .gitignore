@@ -11,5 +11,5 @@ Backend/media/stock
 /Backend/login/__pycache__
 .idea/
 .idea/*!/Tests.puml
-Tests.puml
+UMLS
 jsontest.json
