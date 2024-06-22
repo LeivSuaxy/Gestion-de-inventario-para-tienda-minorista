@@ -188,9 +188,7 @@ class CrudDB:
 
         pagination = pagination * REST_FRAMEWORK['PAGE_SIZE']
 
-        self.get_amount_elements_stock()
-        # print('Total de elementos en stock: ', self.total_elements_stock)
-        # print(f'Tamagno: {REST_FRAMEWORK["PAGE_SIZE"]}')
+        # self.get_amount_elements_stock()
 
         if pagination < self.total_elements_stock:
             query = ("SELECT id_producto, nombre, precio, descripcion, imagen, categoria, stock"

@@ -16,10 +16,10 @@ def get_all_products(request):
     return response
 
 
-# TODO endpoint to get all employees
 @api_view(['GET'])
 def get_all_employees(request):
-    pass
+    response = crudAdmin.get_all_employees()
+    return response
 
 
 # TODO endpoint to get all reports
