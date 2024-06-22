@@ -1,22 +1,24 @@
-# How to use this API.
-Django Rest-Framework
+# EliteStock API 
+This API is developed with the purpose of serving information to the Frontend of the website that EliteStock is developed.
+It is developed with Django-Rest_Framework with PostgreSQL as a database manager. At a general level this project
+It is developed with the objective of meeting the objectives oriented in the final task that corresponds to us in the subject
+Database. The choice of technologies was with the objective of expanding our knowledge and improving ourselves as
+future programmers.
 
-## Endpoints
-Todos los endpoints comienzan con http://localhost:8000/api/ .
+# Authentication
+Authentication is not yet available. The development of it will begin soon.
 
-### Admin Endpoints
-Los endpoints administrativos continuan con un admin (http://localhost:8000/api/admin/)
+# Endpoints
+All endpoints in this API start with the URL: http://localhost:8000/api/.
 
-#### get_all_products (['GET'])
-Método que retorna todos los productos para la visualización administrativa en el sistema.
+There are two types of endpoints at the moment, those that respond to administrative requests and those that respond to requests
+general purpose or public purpose.
 
-<strong>URL: http://localhost:8000/api/admin/objects/</strong>
+# Administrative Endpoints
+## (GET) Endpoints
+### 
 
-<hr/>
+## (POST) Endpoints
+###
 
-#### get_all_employees (['GET'])
-Endpoint que retorna todos los empleados para la visualización administrativa en el sistema.
-
-<strong>URL: http://localhost:8000/api/admin/employees/</strong>
-
-### Public Endpoints
+# Public/General Endpoints
