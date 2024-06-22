@@ -1,6 +1,6 @@
-from Backend.Backend.crudDB import CrudDB, ResponseType
-from Backend.api.models import Producto
-from Backend.api.serializer import ProductoSerializer
+from Backend.crudDB import CrudDB, ResponseType
+from api.models import Producto
+from api.serializer import ProductoSerializer
 from rest_framework.response import Response
 from rest_framework import status
 

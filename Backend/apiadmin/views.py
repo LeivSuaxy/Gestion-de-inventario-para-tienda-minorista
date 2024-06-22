@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework.decorators import api_view
 
-import crudAdmin
+from apiadmin import crudAdmin
 
 
 # from Backend.apiadmin import crudAdmin as db
