@@ -456,7 +456,6 @@ class CrudDB:
         connection.close()
         return ResponseType.SUCCESS.value
 
-    # TODO Endpoint to process purchases
     def process_purchases(self, data: QueryDict) -> Response:
         client = data.get('client')
         products = data.get('products')
@@ -528,3 +527,17 @@ class CrudDB:
         connection.close()
 
         return Response({'total_price': total_price}, status=status.HTTP_200_OK)
+
+    def search_products(self, search_query: str) -> Response:
+        connection = self.connect_to_db()
+        cursor = connection.cursor()
+        query = f"SELECT * FROM producto WHERE nombre LIKE %s"
+        elements = Producto.objects.raw(query, [f'%{search_query}%'])
+        cursor.close()
+        connection.close()
+
+        if not elements:
+            return ResponseType.NOT_FOUND.value
+        else:
+            serializer = ProductoSerializer(elements, many=True)
+            return Response(serializer.data, status.HTTP_200_OK)
