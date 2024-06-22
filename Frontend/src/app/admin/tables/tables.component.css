@@ -7,7 +7,7 @@
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
     margin-left: 2vh;
     overflow: hidden;
-    
+    border-radius: 10px;
     height: 84vh;
     margin-right: 2vh;
 }

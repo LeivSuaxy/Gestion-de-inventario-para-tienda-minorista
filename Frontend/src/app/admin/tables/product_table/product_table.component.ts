@@ -6,13 +6,25 @@ import { TablesComponent } from '../tables.component';
 import { StockComponent } from '../../../views/stock/stock.component';
 import { Venta} from "../../../views/stock/cartservice.service";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+import { ButtonsComponent } from '../buttons/buttons.component';
 
 @Component({
   selector: 'app-product_table',
   templateUrl: './product_table.component.html',
   styleUrls: ['./product_table.component.css'],
   standalone: true,
-  imports: [HttpClientModule, MatTableModule, MatCheckboxModule, TablesComponent, StockComponent],
+  imports: [
+    HttpClientModule,
+    MatTableModule, 
+    MatCheckboxModule, 
+    TablesComponent, 
+    StockComponent, 
+    MatIconModule, 
+    MatButtonModule,
+    ButtonsComponent
+  ],
 })
 export class Product_tableComponent implements OnInit {
 
@@ -38,7 +50,7 @@ export class Product_tableComponent implements OnInit {
     let nextPage = true;
     while (nextPage) {
       try {
-        const response = await this.http.get(`http://localhost:8000/api/objects/?page=${this.counterPage}`).toPromise();
+        const response = await this.http.get(`http://localhost:8000/api/public/objects/?page=${this.counterPage}`).toPromise();
         this.data = response;
         this.traslate();
         this.counterPage++;

@@ -4,9 +4,25 @@
       <div class="mb-3">
         <input type="text" class="form-control postcar-bars" id="nombreForm" placeholder="Nombe del Articulo" [(ngModel)]="name" [ngModelOptions]="{standalone: true}">
       </div>
+
+      <!-- Nombre del Articulo -->
+      <mat-form-field id="nombreForm" [(ngModel)]="name">
+        <mat-label>Nombre del Artículo</mat-label>
+        <input matInput>
+      </mat-form-field>
+
       <div class="mb-3">
         <input type="text" class="form-control postcar-bars" id="precioForm" placeholder="Precio del articulo" [(ngModel)]="price" [ngModelOptions]="{standalone: true}">
       </div>
+
+      <!-- Precio del Articulo -->
+      <mat-form-field floatLabel="always">
+        <mat-label>Amount</mat-label>
+        <input matInput type="number" class="example-right-align" placeholder="0" />
+        <span matTextPrefix>$&nbsp;</span>
+        <span matTextSuffix>.00</span>
+      </mat-form-field>
+
       <div class="mb-3">
         <label for="imageForm" class="form-label">Imagen: </label>
         <input class="form-control postcar-bars" type="file" id="imageForm" (change)="onFileSelected($event)">

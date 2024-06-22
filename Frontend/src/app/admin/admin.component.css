@@ -28,8 +28,8 @@
 }
 
 .table td {
-    padding: 10px;
-    background-color: #ecf0f1; /* Un gris claro */
+    padding: 1vh;
+    background-color: #212121;
     color: #2c3e50; /* Texto oscuro para contrastar con el fondo claro */
     font-size: 16px;
 }
@@ -47,10 +47,35 @@
 .table .btn {
     margin-left: 5px; /* Esto añade un margen a la izquierda de cada botón para separarlos */
     border-radius: 10px;
+    background-color: #212121;
+    color: white;
+}
+
+.table .btn:hover {
+    color: #34495e;
 }
 
 .superior {
     background-color: #34495e; /* Un azul oscuro */
     color: #ffffff; /* Texto blanco para contrastar con el fondo oscuro */
     font-size: 20px;
+}
+
+.derecha {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+}
+
+a {
+    text-decoration: none;
+    padding: 10px;
+    background-color: transparent; /* Un gris claro */
+    color: deepskyblue;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: #34495e;
 }

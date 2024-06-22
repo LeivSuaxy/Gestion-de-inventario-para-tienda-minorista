@@ -1,6 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {ChangeDetectionStrategy} from '@angular/core';
+import {MatSelectModule} from '@angular/material/select';
+import {MatInputModule} from '@angular/material/input';
+import {MatIconModule} from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-postcar',
@@ -8,6 +14,11 @@ import {HttpClient, HttpClientModule} from "@angular/common/http";
   imports: [
     FormsModule,
     HttpClientModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatInputModule,
+    MatIconModule,
+    MatButtonModule
   ],
   templateUrl: './postcar.component.html',
   styleUrl: './postcar.component.css'

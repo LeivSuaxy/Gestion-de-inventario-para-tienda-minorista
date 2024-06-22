@@ -5,6 +5,7 @@ table {
 
 .mat-mdc-table {
     background-color: #212121;
+    border-radius: 10px;
 }
 
 .mat-elevation-z8 {
@@ -27,4 +28,6 @@ table {
     width: 60%;
     margin-left: 2vh;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    border-radius: 10px;
 }
+
