@@ -15,7 +15,7 @@ There are two types of endpoints at the moment, those that respond to administra
 general purpose or public purpose.
 
 # Administrative Endpoints
-Los endpoints administrativos siguen con el principio de la URL general añadiendosele un /admin/.
+Administrative endpoints continue with the principle of the general URL, adding an /admin/.
 Example: http://localhost:8000/api/admin/.
 
 ## (GET) Endpoints
@@ -40,7 +40,29 @@ This endpoint is responsible for returning all the products stored in the databa
     ]
 }
 
-`Retorna un JSON con un arreglo de elementos`
+`Returns a JSON with an array of elements that corresponds to objects`
+
+<hr/>
+
+### get_all_employees
+This endpoint is responsible for returning all the employees stored in the database.
+
+<strong>URL: http://localhost:8000/api/admin/employees/</strong>
+
+<strong>Return JSON Example: </strong>
+
+{
+    "elements": [
+        {
+            "carnet_identidad": "1",
+            "nombre": "Juan",
+            "salario": "3000.00",
+            "id_jefe": null
+        }
+    ]
+}
+
+`Returns a JSON with an array of elements that corresponds to employees`
 
 <hr/>
 
