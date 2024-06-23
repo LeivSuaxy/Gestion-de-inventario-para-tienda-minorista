@@ -33,7 +33,7 @@ export class StockComponent {
   ventas: Venta[] = []
   data: any;
   counterPage: number = 0;
-  apiurl? = 'http://localhost:8000/api/objects/?page='+this.counterPage;
+  apiurl? = 'http://localhost:8000/api/public/objects/?page='+this.counterPage;
   apiurlnext? : string;
   apiurlprev? : string;
   load: any;
@@ -65,7 +65,7 @@ export class StockComponent {
       });
     }
   }
-  
+
   traslate(): void {
     this.ventas = this.data['elements'].map((element: any) => ({
       nombre: element.nombre,
@@ -78,7 +78,7 @@ export class StockComponent {
     }));
   }
 
-  
+
 
   next(){
     new Promise(resolve => {

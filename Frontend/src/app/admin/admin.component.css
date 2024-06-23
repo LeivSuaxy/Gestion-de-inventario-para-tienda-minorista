@@ -1,0 +1,81 @@
+.principal {
+    background-color: #212121;
+    padding-left: 8%;
+    padding-right: 8%;
+}
+
+.encabezado {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: white;
+}
+
+.table {
+    width: 70%;
+    table-layout: fixed; /* Esto hace que las columnas tengan anchos fijos */
+    color: black;
+    overflow: hidden;
+    border-collapse: collapse; /* Esto elimina los espacios entre las celdas */
+    border-radius: 10px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.table th {
+    text-align: left; /* Esto alinea el texto a la izquierda */
+    padding: 10px;
+}
+
+.table td {
+    padding: 1vh;
+    background-color: #212121;
+    color: #2c3e50; /* Texto oscuro para contrastar con el fondo claro */
+    font-size: 16px;
+}
+  
+.table .head {
+    width: auto; /* Esto hace que la primera columna se ajuste al contenido */
+}
+
+.table .actions {
+    width: 31vh; /* Esto hace que la segunda columna tenga un ancho de 350px */
+    text-align: left; /* Esto alinea los botones a la derecha */
+    padding-right: 10px; /* Esto añade un margen de 10px a la derecha */
+}
+
+.table .btn {
+    margin-left: 5px; /* Esto añade un margen a la izquierda de cada botón para separarlos */
+    border-radius: 10px;
+    background-color: #212121;
+    color: white;
+}
+
+.table .btn:hover {
+    color: #34495e;
+}
+
+.superior {
+    background-color: #34495e; /* Un azul oscuro */
+    color: #ffffff; /* Texto blanco para contrastar con el fondo oscuro */
+    font-size: 20px;
+}
+
+.derecha {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+}
+
+a {
+    text-decoration: none;
+    padding: 10px;
+    background-color: transparent; /* Un gris claro */
+    color: deepskyblue;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: #34495e;
+}

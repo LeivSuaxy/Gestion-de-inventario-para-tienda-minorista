@@ -1,0 +1,18 @@
+@use '@angular/material' as mat;
+
+// Define una paleta de colores personalizada para el tema oscuro
+$custom-dark-primary: mat.define-palette(mat.$grey-palette, 900); // Oscuro
+$custom-dark-accent: mat.define-palette(mat.$blue-grey-palette, A200, A100, A400); // Contraste
+$custom-dark-warn: mat.define-palette(mat.$red-palette); // Para advertencias
+
+// Define el tema oscuro
+$custom-dark-theme: mat.define-dark-theme((
+  color: (
+    primary: $custom-dark-primary,
+    accent: $custom-dark-accent,
+    warn: $custom-dark-warn,
+  )
+));
+
+// Incluye todos los componentes de Material
+@include mat.all-component-themes($custom-dark-theme);

@@ -1,0 +1,76 @@
+.div-lateral {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    color: white;
+    min-width: 20%;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    margin-left: 2vh;
+    overflow: hidden;
+    border-radius: 10px;
+    height: 84vh;
+    margin-right: 2vh;
+}
+
+.head-table {
+    background-color: #212121;
+    color: #ffffff;
+    width: 100%;
+    font-size: 20px;
+    padding-top: 2.02vh;
+    padding-bottom: 5px;
+    font-weight: bold;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.div-lateral a {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    text-align: left;
+    text-decoration: none;
+    transition: color 0.2s, background-color 0.2s;
+    width: 100%;
+    padding: 2.07vh;
+    border-radius: 10px;
+    color: rgb(146, 177, 187);
+}
+
+.div-lateral a:hover {
+    color: #6489af;
+    cursor: pointer;
+}
+
+.tables {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: background-color 0.3s ease-in-out;
+}
+
+.boton {
+    background-color: rgb(146, 177, 187);
+    border: none;
+    border-radius: 8px;
+    padding: 0 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-right: 2.07vh;
+    color: black;
+    width: 5.4vh;
+    height: 5vh;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    font-size: 22px;
+}
+
+.boton:hover {
+    background-color: #6489af;
+}
+
+.tabla-activa {
+    background-color: #6489af;
+}

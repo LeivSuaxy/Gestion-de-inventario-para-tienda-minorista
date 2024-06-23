@@ -1,10 +1,12 @@
 .backCard {
-  background-color: black;
+  background-color: #212121;
   color: white;
-  border: 1px solid rgba(255, 255, 255, 0.300);
+  box-shadow: 0px 1vh 2vh 0 rgba(0,0,0,0.2);
   border-radius: 10px !important;
   overflow-x: hidden;
-  width: 107vh;
+  width: 120vh;
+  display: inline-block;
+  height: 35vh;
 }
 
 .transitionbutton {
@@ -27,7 +29,7 @@
   right: 1vh;
   border-radius: 10px;
   color: white;
-  background-color: black;
+  background-color: #212121;
   border: 1px solid chartreuse;
   transition: color 0.2s, background-color 0.2s;
 }
@@ -55,6 +57,42 @@
 
 .img-card {
   border-radius: 10px 0 0 10px !important;
-  border-right: 1px solid rgba(255, 255, 255, 0.300);
+  height: 34.7vh;
 }
 
+button {
+  --hover-shadows: 16px 16px 33px #121212, -16px -16px 33px #303030;
+  --accent: fuchsia;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+  border: none;
+  border-radius: 10px;
+  background-color: #212121;
+  cursor: pointer;
+  color: white;
+  padding: 0.3em 0.5em;
+  transition: box-shadow ease-in-out 0.3s, background-color ease-in-out 0.1s,
+    letter-spacing ease-in-out 0.1s, transform ease-in-out 0.1s;
+  box-shadow: 13px 13px 10px #1c1c1c, -13px -13px 10px #262626;
+  position: absolute;
+  right: 1vh;
+  bottom: 1vh;
+}
+
+button:hover {
+  box-shadow: var(--hover-shadows);
+}
+
+button:active {
+  box-shadow: var(--hover-shadows), var(--accent) 0px 0px 30px 5px;
+  background-color: var(--accent);
+  transform: scale(0.95);
+}
+
+ .color-positive {
+  border: 1px solid chartreuse;
+ }
+
+ .color-negative {
+  border: 1px solid red;
+ }

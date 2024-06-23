@@ -7,7 +7,7 @@
         </a>
       </ng-container>
     </div>
-    <div class="col-md-8">
+    <div class="col-md-8 body">
       <div class="card-body">
         <h5 class="card-title">{{venta.nombre}}</h5>
         <p class="card-text">{{venta.descripcion}}</p>
@@ -20,14 +20,15 @@
 </div>
 
 <ng-template #positive>
-  <a type="button" class="btn boton-add"  (click)="setadded(venta)">
-      Adicionar al carrito
-    </a>
+  <button (click)="setadded(venta)" class="color-positive">
+    Add to cart
+  </button>
+  
 </ng-template>
 <ng-template #negative>
-  <a type="button" class="btn boton-rm" (click)="removeFromCart(venta)">
-      Eliminar del carrito
-  </a>
+  <button class="color-negative" (click)="removeFromCart(venta)">
+    Remove from cart
+  </button>
 </ng-template>
 
 <ng-template #foto>

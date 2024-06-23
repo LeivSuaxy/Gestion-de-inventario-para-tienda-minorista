@@ -1,7 +1,6 @@
 import psycopg2
-from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.utils.timezone import now
-
+from django.core.files.images import ImageFile
 from api.models import Producto
 from api.serializer import ProductoSerializer
 from .settings import DATABASES, REST_FRAMEWORK
@@ -10,13 +9,9 @@ from django.contrib.auth.hashers import check_password
 from rest_framework.response import Response
 from rest_framework import status
 import math
-import os
-from django.core.files.base import ContentFile
-from django.core.files.storage import default_storage
-from django.core.files.images import ImageFile
-from PIL import Image
-from io import BytesIO
-from Backend import settings
+from Backend.image_process import process_image
+from django.http.request import QueryDict
+import hashlib
 
 
 # Aquí se declararán las clases y funciones que se encargarán
@@ -64,9 +59,10 @@ class CrudDB:
         return conn
 
     # Function to register users
-    def register_user(self, username: str, password: str) -> Response:
+    def register_user(self, ci: str, username: str, password: str) -> Response:
         """
         This method is used to register a new user in the database
+        :param ci: The ci of the employee
         :param username: The username of the new user
         :param password: The password of the new user.
         :return:A status code indicating the result of the opeation.
@@ -85,19 +81,39 @@ class CrudDB:
             # Create a cursor object to execute SQL commands
             cursor = connection.cursor()
 
+            cursor.execute(f"SELECT 1 FROM empleado WHERE carnet_identidad='{ci}'")
+
+            employee_exist = cursor.fetchone() is not None
+
+            if not employee_exist:
+                return Response({'not_found': 'The employee is not registered in the database'},
+                                status.HTTP_404_NOT_FOUND)
+
             # Execute a SQL command to check if a user with the provided username already exists in the database
-            cursor.execute(f"SELECT 1 FROM auth_user WHERE username = '{username}'")
+            cursor.execute(f"SELECT 1 FROM cuenta WHERE usuario = '{username}'")
 
             # If the user exists, close the connection and return a code indicating that the user already exists
             user_exists = cursor.fetchone() is not None
 
             if not user_exists:
+                # Generate Token
+                token_string = ci + username + password
+
+                token_hash = hashlib.sha256(token_string.encode()).hexdigest()
+
+                password = hashlib.sha256(password.encode()).hexdigest()
+
                 # If the user does not exist, insert a new record into the auth_user table with the provided username
                 # and hashed password, along with some default values for other fields.
-                cursor.execute(f"""
-                    INSERT INTO auth_user (password, is_superuser, username, first_name, last_name, email, is_staff,
-                     is_active, date_joined) VALUES ('{password}', false, '{username}', '', '', '', false, true, now())
-                """)
+                try:
+                    cursor.execute(f"""
+                        INSERT INTO cuenta VALUES ('{username}', '{password}', '{token_hash}', '{ci}')
+                    """)
+                except psycopg2.errors.UniqueViolation:
+                    cursor.close()
+                    connection.close()
+                    return Response({'error': 'Please, this CI is already registered'},
+                                    status.HTTP_409_CONFLICT)
 
                 # Commit the changes
                 connection.commit()
@@ -106,13 +122,15 @@ class CrudDB:
                 connection.close()
 
                 # Return a success code
-                return ResponseType.SUCCESS.value
+                return Response({'status': 'The user has been successfully registered',
+                                 'token': token_hash}, status.HTTP_200_OK)
             else:
                 # If the user exists, close the cursor and the connection and return a code indicating that the user
                 # already exists
                 cursor.close()
                 connection.close()
-                return ResponseType.EXIST.value
+                return Response({'status': 'You cannot register this user because it already exists.'},
+                                status.HTTP_400_BAD_REQUEST)
 
     # Function to log in users
     def log_in_user(self, username: str, password: str) -> Response:
@@ -139,7 +157,7 @@ class CrudDB:
             cursor = connection.cursor()
 
             # Execute a SQL command to check if a user with the provided username exists in the database
-            cursor.execute(f"SELECT 1 FROM auth_user WHERE username = '{username}'")
+            cursor.execute(f"SELECT 1 FROM cuenta WHERE usuario = '{username}'")
 
             # If the user exists, close the connection and return a code indicating that the user already exists
             user_exists = cursor.fetchone() is not None
@@ -152,15 +170,21 @@ class CrudDB:
                 return ResponseType.NOT_FOUND.value
             else:
                 # If the user exists, retrieve the hashed password of the user from the database
-                cursor.execute(f"SELECT password FROM auth_user WHERE username = '{username}'")
-                user_password = cursor.fetchone()[0]
+                cursor.execute(f"SELECT contrasegna, auth_token FROM cuenta WHERE usuario = '{username}'")
+                result = cursor.fetchone()
 
-                # Use Django's check_password function to compare the provided password with the stored hashed password
-                if check_password(password, user_password):
-                    # If the passwords match, close the cursor and the connection and return a success code
+                if result is not None:
+                    user_password, auth_token = result
+                else:
+                    return ResponseType.NOT_FOUND.value
+
+                # Process password
+                password = hashlib.sha256(password.encode()).hexdigest()
+
+                if password == user_password:
                     cursor.close()
                     connection.close()
-                    return ResponseType.SUCCESS.value
+                    return Response({'status': 'Login successfully', 'token': auth_token}, status.HTTP_200_OK)
                 else:
                     # If the passwords do not match, close the cursor and the connection and return an error code
                     cursor.close()
@@ -194,13 +218,12 @@ class CrudDB:
 
         pagination = pagination * REST_FRAMEWORK['PAGE_SIZE']
 
-        self.get_amount_elements_stock()
-        # print('Total de elementos en stock: ', self.total_elements_stock)
-        # print(f'Tamagno: {REST_FRAMEWORK["PAGE_SIZE"]}')
+        # self.get_amount_elements_stock()
 
         if pagination < self.total_elements_stock:
             query = ("SELECT id_producto, nombre, precio, descripcion, imagen, categoria, stock"
-                     f" FROM producto LIMIT {REST_FRAMEWORK['PAGE_SIZE']} OFFSET {pagination}")
+                     f" FROM producto WHERE stock > 0 ORDER BY id_producto "
+                     f"LIMIT {REST_FRAMEWORK['PAGE_SIZE']} OFFSET {pagination}")
             elements = Producto.objects.raw(query)
 
             if not elements:
@@ -218,12 +241,12 @@ class CrudDB:
             if (pagination + 1) >= total_page:
                 next_page = None
             else:
-                next_page = f'http://localhost:8000/api/objects/?page={pagination + 1}'
+                next_page = f'http://localhost:8000/api/public/objects/?page={pagination + 1}'
 
             if (pagination - 1) < 0:
                 previous_page = None
             else:
-                previous_page = f'http://localhost:8000/api/objects/?page={pagination - 1}'
+                previous_page = f'http://localhost:8000/api/public/objects/?page={pagination - 1}'
 
             urls = {
                 'next': next_page,
@@ -234,6 +257,7 @@ class CrudDB:
         else:
             return ResponseType.ERROR.value
 
+    # Function to get elements and urls from stock with pagination. Is called by the get_objects view
     def get_response_elements(self, pagination: int) -> Response:
         if pagination < 0:
             return ResponseType.ERROR.value
@@ -342,59 +366,111 @@ class CrudDB:
         else:
             return Response({'id_value': id_storage}, status.HTTP_200_OK)
 
+    # TODO Endpoint to get inventories
     def get_inventories(self):
         pass
 
-    # Product CRUD
-    def insert_product(self, product_data):
-        nombre = product_data['nombre']
-        precio = product_data['precio']
-        stock = product_data['stock']
-        categoria = product_data['categoria']
-        id_inventario = product_data['inventario']
-        imagen = product_data['imagen']
-        descripcion = product_data['descripcion']
+    def get_product(self):
+        pass
 
-        if not nombre or not precio or not stock or not categoria or not id_inventario:
-            return Response({'error': 'Please provide all the required fields',
-                             'mandatory_fields': 'nombre, precio, stock, categoria, inventario',
-                             'optional_fields': 'descripcion, imagen'}, status=status.HTTP_400_BAD_REQUEST)
-
-        # Processing data
-        url_imagen = None
-        if imagen is not None:
-            img = Image.open(imagen)
-
-            if img.width != 1024 and img.height != 1024:
-                img = img.resize((1024, 1024))
-                buffer = BytesIO()
-                img.save(fp=buffer, format='PNG')
-                path = default_storage.save('stock/' + imagen.name, ContentFile(buffer.getvalue()))
-                url_imagen = os.path.join(path)
-            else:
-                path = default_storage.save('stock/' + imagen.name, ContentFile(imagen.read()))
-                url_imagen = os.path.join(path)
-
+    def update_purchased_products(self, products: QueryDict) -> Response:
         connection = self.connect_to_db()
         cursor = connection.cursor()
 
-        cursor.execute(f"""
-            INSERT INTO producto (nombre, precio, stock, categoria, id_inventario, descripcion, imagen, fecha_entrada)
-            VALUES ('{nombre}', {precio}, {stock}, '{categoria}', {id_inventario}, '{descripcion}', '{url_imagen}', '{now()}')
-        """)
+        for product in products:
+            product_id = product['id']
+            quantity = product['quantity']
+
+            cursor.execute(f"UPDATE producto SET stock=stock-{quantity} WHERE id_producto={product_id}")
 
         connection.commit()
-
         cursor.close()
         connection.close()
 
         return ResponseType.SUCCESS.value
 
-    def get_product(self):
-        pass
+    def process_purchases(self, data: QueryDict) -> Response:
+        client = data.get('client')
+        products = data.get('products')
 
-    def update_product(self):
-        pass
+        if not client:
+            return Response({'error': 'Please provide the client information',
+                             'required_fields:': 'ci, name, email, phone'}, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete_product(self):
-        pass
+        if not products:
+            return Response({'error': 'Please provide the products to purchase',
+                             'required_fields': '[id, quantity]'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Reporte de venta: id, fecha, total, id_orden_compra
+        # Orden de compra: id, fecha, total, id_cliente
+        # Cliente: CI, nombre, email, telefono
+
+        # Price_all_products
+        price_all_products_calct = self.__process_total_price_products_purchased__(products).data['total_price']
+
+        connection = self.connect_to_db()
+        cursor = connection.cursor()
+
+        # Agnadir cliente if not exists
+
+        cursor.execute(f"INSERT INTO cliente (carnet_identidad, nombre, email, telefono) SELECT '{client['ci']}', "
+                       f"'{client['name']}',"
+                       f"'{client['email']}', '{client['phone']}' WHERE NOT EXISTS (SELECT 1 FROM Cliente WHERE "
+                       f"carnet_identidad='{client['ci']}')")
+
+        # Orden de compra:
+        cursor.execute(f"INSERT INTO orden_compra (fecha_realizada, monto_total, id_cliente)"
+                       f"VALUES ('{now()}', {price_all_products_calct}, '{client['ci']}') RETURNING id_orden_compra")
+
+        id_order = cursor.fetchone()[0]
+
+        # Reporte
+        cursor.execute(f"INSERT INTO reporte (fecha_reporte, id_empleado) VALUES  ('{now()}', 1) RETURNING id_reporte")
+        id_reporte = cursor.fetchone()[0]
+
+        # Reporte de venta el cual tiene que hacer un reporte
+        cursor.execute(f"INSERT INTO reporte_venta (id, fecha_hora_entrega, monto_total, id_orden_compra)"
+                       f" VALUES ({id_reporte}, '{now()}', {price_all_products_calct}, {id_order})")
+
+        connection.commit()
+
+        cursor.close()
+        connection.close()
+        return Response({'total_price': price_all_products_calct}, status=status.HTTP_200_OK)
+
+    def __process_total_price_products_purchased__(self, products: list) -> Response:
+        connection = self.connect_to_db()
+        cursor = connection.cursor()
+
+        print(products)
+
+        total_price = 0
+
+        for product in products:
+            product_id = product['id']
+            quantity = product['quantity']
+
+            cursor.execute(f"SELECT precio FROM producto WHERE id_producto={product_id}")
+            price = cursor.fetchone()[0]
+            print(price)
+
+            total_price += price * quantity
+
+        cursor.close()
+        connection.close()
+
+        return Response({'total_price': total_price}, status=status.HTTP_200_OK)
+
+    def search_products(self, search_query: str) -> Response:
+        connection = self.connect_to_db()
+        cursor = connection.cursor()
+        query = f"SELECT * FROM producto WHERE nombre LIKE %s"
+        elements = Producto.objects.raw(query, [f'%{search_query}%'])
+        cursor.close()
+        connection.close()
+
+        if not elements:
+            return ResponseType.NOT_FOUND.value
+        else:
+            serializer = ProductoSerializer(elements, many=True)
+            return Response(serializer.data, status.HTTP_200_OK)

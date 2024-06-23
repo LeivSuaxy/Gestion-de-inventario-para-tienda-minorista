@@ -1,0 +1,52 @@
+<div class="formulario">
+  <form action="POST" class="postcar" enctype="multipart/form-data" class="form-data">
+    <div class="postcar-inter">
+      <div class="header-form">
+        <h3 class="encabezado">
+          Add Product
+        </h3>
+      </div>
+
+      <div>
+        <!-- Nombre del Articulo -->
+      <mat-form-field class="nombre">
+        <mat-label>Product Name</mat-label>
+        <input matInput id="nombreForm" [(ngModel)]="name" [ngModelOptions]="{standalone: true}">
+      </mat-form-field>
+
+      <!-- Precio del Articulo -->
+      <mat-form-field floatLabel="always">
+        <mat-label>Product Price</mat-label>
+        <input matInput type="number" class="example-right-align" placeholder="0" id="precioForm" [(ngModel)]="price" [ngModelOptions]="{standalone: true}"/>
+        <span matTextPrefix>$&nbsp;</span>
+        <span matTextSuffix>.00</span>
+      </mat-form-field>
+      </div>
+      
+
+      <div class="mb-3">
+        <label for="imageForm" class="form-label">Product Image: </label>
+        <input class="form-control postcar-bars" type="file" id="imageForm" (change)="onFileSelected($event)">
+      </div>
+
+        <!-- Cantidad de Stock -->
+      <mat-form-field class="stock">
+        <mat-label>Stock</mat-label>
+        <input matInput id="nombreForm" [(ngModel)]="stock" [ngModelOptions]="{standalone: true}">
+      </mat-form-field>
+
+      <!-- Descripción -->
+      <mat-form-field>
+        <mat-label>Product Description</mat-label>
+        <textarea matInput id="DescripcionArea" [(ngModel)]="description" [ngModelOptions]="{standalone: true}"></textarea>
+      </mat-form-field>
+      
+
+      <div style="text-align: center;">
+        <a class="btn btn-success" (click)="posMethod()">Confirm</a>
+      </div>
+    </div>
+  </form>
+</div>
+
+

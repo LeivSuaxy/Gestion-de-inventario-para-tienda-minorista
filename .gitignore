@@ -8,3 +8,8 @@ Frontend/src/api/migrations/
 Backend/Backend/settings.py
 Backend/media/stock
 /Backend/media/
+/Backend/login/__pycache__
+.idea/
+.idea/*!/Tests.puml
+UMLS
+jsontest.json

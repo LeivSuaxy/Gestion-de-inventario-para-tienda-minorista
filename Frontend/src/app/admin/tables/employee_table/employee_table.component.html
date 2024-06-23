@@ -1,0 +1,79 @@
+<div class="tabla-productos">
+  <div style="min-width: 25%;">
+    <app-tables></app-tables>
+  </div>
+  
+<div class=" tab">
+  <mat-form-field class="busqueda">
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+  </mat-form-field>
+
+  <div class="tabla">
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+  <!-- Checkbox Column -->
+  <ng-container matColumnDef="select">
+    <th mat-header-cell *matHeaderCellDef>
+      <mat-checkbox (change)="$event ? toggleAllRows() : null"
+                    [checked]="selection.hasValue() && isAllSelected()"
+                    [indeterminate]="selection.hasValue() && !isAllSelected()"
+                    [aria-label]="checkboxLabel()">
+      </mat-checkbox>
+    </th>
+    <td mat-cell *matCellDef="let row">
+      <mat-checkbox (click)="$event.stopPropagation()"
+                    (change)="$event ? selection.toggle(row) : null"
+                    [checked]="selection.isSelected(row)"
+                    [aria-label]="checkboxLabel(row)">
+      </mat-checkbox>
+    </td>
+  </ng-container>
+
+  <!-- ID Column -->
+  <ng-container matColumnDef="carnet_identidad">
+    <th mat-header-cell *matHeaderCellDef> CI </th>
+    <td mat-cell *matCellDef="let element"> {{element.carnet_identidad}} </td>
+  </ng-container>
+
+  <!-- Nombre Column -->
+  <ng-container matColumnDef="nombre">
+    <th mat-header-cell *matHeaderCellDef> Nombre </th>
+    <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+  </ng-container>
+
+  <!-- Categoria Column -->
+  <ng-container matColumnDef="salario">
+    <th mat-header-cell *matHeaderCellDef> Salario </th>
+    <td mat-cell *matCellDef="let element"> {{element.salario}} </td>
+  </ng-container>
+
+  <!-- Stock Column -->
+  <ng-container matColumnDef="id_jefe">
+    <th mat-header-cell *matHeaderCellDef> CI Jefe </th>
+    <td mat-cell *matCellDef="let element"> {{element.id_jefe}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+      (click)="selection.toggle(row)">
+  </tr>
+</table>
+</div>
+</div>
+
+  <div class="div-botones">
+    <div class="example-button-container">
+      <button mat-mini-fab aria-label="Example icon button with a add icon" routerLink="/stockadd" class="boton">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+
+    <div class="example-button-container">
+      <button mat-mini-fab aria-label="Example icon button with a delete icon" class="boton" (click)="openDialog('0ms', '0ms')" [disabled]="selection.isEmpty()">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>
+

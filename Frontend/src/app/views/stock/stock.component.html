@@ -2,7 +2,15 @@
 
 <!-- Muestra la barra de carga cuando loading$ es true -->
 <div *ngIf="load | async; else content" class="overlay">
-  <div class="loader"></div>
+  <div class="loader">
+    <div class="loader-square"></div>
+    <div class="loader-square"></div>
+    <div class="loader-square"></div>
+    <div class="loader-square"></div>
+    <div class="loader-square"></div>
+    <div class="loader-square"></div>
+    <div class="loader-square"></div>
+    </div>
 </div>
 
 <!-- Contenido que se muestra después de la carga -->
@@ -16,18 +24,13 @@
           </div>
         </ng-container>
       </div>
-      <div class="crud-card">
-        <div class="title">
-          <i class="fas fa-pizza-slice"></i>
-          <span class="crud">Productos</span>
-          <i class="fas fa-pizza-slice"></i>
-        </div>
-        <button routerLink="/stockadd" routerLinkActive="active" class="btn boton-add" ariaCurrentWhenActive="page">Agregar un producto</button>
-        <button routerLink="/stockadd" routerLinkActive="active" class="btn boton-upd" ariaCurrentWhenActive="page">Actualizar un producto</button>
-        <button routerLink="/stockadd" routerLinkActive="active" class="btn boton-rm" ariaCurrentWhenActive="page">Eliminar un producto</button>
-      </div>
-      <input *ngIf="apiurlprev" type="button" value="Anterior" class="btn boton-prev" (click)="prev()" />
-      <input *ngIf="apiurlnext" type="button" value="Siguiente" class="btn boton-next" (click)="next()" />
+      
+      <button *ngIf="apiurlprev" (click)="prev()" class="boton-prev">
+        Previous
+      </button>
+      <button *ngIf="apiurlnext" (click)="next()" class="boton-next">
+        Next
+      </button>
     </div>
   </div>
 </ng-template>
