@@ -18,7 +18,8 @@ class Cliente(models.Model):
 class Cuenta(models.Model):
     usuario = models.CharField(primary_key=True, max_length=100)
     contrasegna = models.CharField(max_length=100)
-    carnet_identidad = models.ForeignKey('Empleado', models.DO_NOTHING, db_column='carnet_identidad')
+    auth_token = models.CharField(max_length=500)
+    carnet_identidad = models.OneToOneField('Empleado', models.DO_NOTHING, db_column='carnet_identidad')
 
     class Meta:
         db_table = 'cuenta'
