@@ -221,6 +221,7 @@ def update_employee_in_database(data: QueryDict) -> Response:
 
 
 # DELETE
+# FIXME fix the DELETE CASCADE
 def delete_employee_in_database(ci: str) -> Response:
     connection = CrudDB.connect_to_db()
     cursor = connection.cursor()
