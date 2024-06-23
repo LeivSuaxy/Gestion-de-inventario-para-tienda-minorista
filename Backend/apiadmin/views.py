@@ -108,7 +108,9 @@ def get_all_inventories(request):
 # INSERT INVENTORY
 @api_view(['POST'])
 def insert_inventory_in_database(request):
-    pass
+    data = request.data
+    response = crudAdmin.insert_inventory(data)
+    return response
 
 
 # DELETE INVENTORY
@@ -120,12 +122,6 @@ def delete_inventory_from_database(request):
 # TODO endpoint to get all reports
 @api_view(['GET'])
 def get_all_reports(request):
-    pass
-
-
-# TODO endpoint to get all inventories
-@api_view(['GET'])
-def get_all_inventories(request):
     pass
 
 

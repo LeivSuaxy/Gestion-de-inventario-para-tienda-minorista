@@ -242,14 +242,42 @@ def get_all_inventories() -> Response:
     query = "SELECT * FROM inventario"
     elements = Inventario.objects.raw(query)
     if not elements:
-        return ResponseType.NOT_FOUND.value
+        return Response({'error': 'is empty'}, status.HTTP_404_NOT_FOUND)
     serializer = InventarioSerializer(elements, many=True)
     return Response({'elements': serializer.data}, status.HTTP_200_OK)
 
 
 # INSERT
-def insert_inventory() -> Response:
-    pass
+def insert_inventory(request_data: QueryDict) -> Response:
+    category = request_data.get('category')
+    storage_id = request_data.get('storage_id')
+
+    if not category or not storage_id:
+        return Response({'error': 'Please provide a category and a storage_id'}, status.HTTP_400_BAD_REQUEST)
+
+    # Check if storage exists
+    connection = CrudDB.connect_to_db()
+    cursor = connection.cursor()
+
+    cursor.execute(f"""
+        SELECT 1 FROM almacen WHERE id_almacen='{storage_id}' 
+    """)
+    exist_storage = cursor.fetchone() is not None
+
+    if not exist_storage:
+        cursor.close()
+        connection.close()
+        return Response({'error': 'Please provide a valid warehouse'}, status.HTTP_404_NOT_FOUND)
+
+    cursor.execute(f"""
+        INSERT INTO inventario (categoria, id_almacen) VALUES ('{category}', {storage_id})
+    """)
+
+    connection.commit()
+    cursor.close()
+    connection.close()
+
+    return ResponseType.SUCCESS.value
 
 
 # DELETE
@@ -259,11 +287,6 @@ def delete_inventory() -> Response:
 
 # TODO endpoint to get all reports
 def get_all_reports() -> Response:
-    pass
-
-
-# TODO endpoint to get all inventories
-def get_all_inventories() -> Response:
     pass
 
 

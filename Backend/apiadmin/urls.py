@@ -14,4 +14,7 @@ urlpatterns = [
     path('insert_employee/', views.insert_employee_to_database, name='insert_employee'),
     path('update_employee/', views.update_employee_in_database, name='update_employee'),
     path('delete_employee/', views.delete_employee_in_database, name='delete_employee'),
+    # <--Inventories CRUD URLS-->
+    path('inventories/', views.get_all_inventories, name='get_all_inventories'),
+    path('insert_inventory/', views.insert_inventory_in_database, name='insert_inventory'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
