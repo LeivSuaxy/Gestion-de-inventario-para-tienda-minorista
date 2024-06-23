@@ -42,7 +42,7 @@ This endpoint is responsible for returning all the products stored in the databa
     ]
 }
 
-`Returns a JSON with an array of elements that corresponds to objects`
+`Returns a JSON with an array of elements that corresponds to objects` `HTTP_200_OK`
 
 <hr/>
 
@@ -64,12 +64,39 @@ This endpoint is responsible for returning all the employees stored in the datab
     ]
 }
 
-`Returns a JSON with an array of elements that corresponds to employees`
+`Returns a JSON with an array of elements that corresponds to employees` `HTTP_200_OK`
 
 <hr/>
 
 ## (POST) Endpoints
-###
+### insert_product
+This endpoint is responsible for insert a product into the database.
+
+<strong>URL: http://localhost:8000/api/admin/insert_product/</strong>
+
+<b>Required input data: `form-data`</b><br/>
+
+| Key         | Value  | Required |
+|-------------|--------|----------|
+| name        | String | True     |
+| price       | number | True     |
+| stock       | number | True     |
+| inventory   | number | False    |
+| description | String | False    |
+| image       | File   | False    |
+| category    | String | False    |
+
+If any of the required fields are missing, a JSON will be returned expressing the following:
+
+{'error': 'Please provide all the required fields',
+'mandatory_fields': 'name, price, stock',
+'optional_fields': 'description, image, category, inventory'} `HTTP_400_BAD_REQUEST`
+
+<strong>Return JSON Example: </strong>
+
+ `Returns confirmation of the process -> {'status': 'Success'}` `HTTP_200_OK`
+
+<hr/>
 
 # Public/General Endpoints
 Public/General endpoints are mainly used to display information to the user.<br/>
@@ -107,7 +134,7 @@ from the api. It starts with page=0.
 }
 
 `Returns a JSON with a list of elements that corresponds to the products and two urls that correspond to the following
-API call and the previous call, if there is no pagination it returns Null`
+API call and the previous call, if there is no pagination it returns Null` `HTTP_200_OK`
 
 
 
