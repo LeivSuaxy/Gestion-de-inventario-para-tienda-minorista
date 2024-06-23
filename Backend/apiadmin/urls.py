@@ -6,7 +6,7 @@ from . import views
 urlpatterns = [
     # <--Products CRUD URLS-->
     path('products/', views.get_all_products, name='get_all_products'),
-    path('insert_products', views.insert_product_in_database, name='insert_product'),
+    path('insert_product', views.insert_product_in_database, name='insert_product'),
     path('update_product', views.update_product_in_database, name='update_product'),
     path('delete_product', views.delete_product_in_database, name='delete_product'),
     # <--Employees CRUD URLS-->

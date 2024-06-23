@@ -26,15 +26,16 @@ def register(request):
     db = CrudDB()
 
     # Try to get the username and password from the request
+    ci = request.data.get('ci')
     username = request.data.get('username')
     password = request.data.get('password')
 
     # If the username or password is not in the request, return a 400 error
-    if username is None or password is None:
-        return Response({'error': 'Please provide both username and password'}, status.HTTP_400_BAD_REQUEST)
+    if username is None or password is None or ci is None:
+        return Response({'error': 'Please provide a ci, username and password'}, status.HTTP_400_BAD_REQUEST)
 
     # Call the register_user method of the CrudDB instance with the username and password
-    response: Response = db.register_user(username=username, password=password)
+    response: Response = db.register_user(ci=ci, username=username, password=password)
 
     return response
 
@@ -71,20 +72,3 @@ def login(request):
     response: Response = db.log_in_user(username=username, password=password)
 
     return response
-
-
-@api_view(['POST'])
-def check(request):
-    return Response({})
-
-
-@api_view(['POST'])
-def test(request):
-    db = CrudDB()
-
-    total = db.get_amount_elements_stock()
-    total = total.data['amount']
-    print(f'Total is: {total}')
-    db.get_elements_stock(0)
-
-    return Response({})
