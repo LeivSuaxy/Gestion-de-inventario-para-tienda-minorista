@@ -73,7 +73,7 @@ def insert_product_in_database(request):
     data = request.data
     if not data:
         return Response({'error': 'Please provide a product'}, status=status.HTTP_400_BAD_REQUEST)
-    if request.FILES['image'] is not None:
+    if request.FILES.get('image') is not None:
         data['image'] = ImageFile(request.FILES['image'])
     db = CrudDB()
     response = db.insert_product(data)

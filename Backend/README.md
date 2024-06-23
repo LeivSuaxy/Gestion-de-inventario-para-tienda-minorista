@@ -15,7 +15,9 @@ There are two types of endpoints at the moment, those that respond to administra
 general purpose or public purpose.
 
 # Administrative Endpoints
-Administrative endpoints continue with the principle of the general URL, adding an /admin/.
+The administrative endpoints are for managing the system databases. Offers tools for managing
+CRUD actions in the database. <br/>
+Administrative endpoints continue with the principle of the general URL, adding an /admin/.<br/>
 Example: http://localhost:8000/api/admin/.
 
 ## (GET) Endpoints
@@ -70,9 +72,44 @@ This endpoint is responsible for returning all the employees stored in the datab
 ###
 
 # Public/General Endpoints
+Public/General endpoints are mainly used to display information to the user.<br/>
+Public/General endpoints continue with the principle of the general URL, adding an /public/.<br/>
+Example: http://localhost:8000/api/public/.
 
 ## (GET) Endpoints
-###
+### get_objects
+This endpoint is responsible for returning a defined number of products stored in the database, and returning 
+two URLS that belong to the website pagination.
+
+<strong>URL: http://localhost:8000/api/public/objects/?page=0</strong><br/>
+
+The information page=# refers to the page that you will find on the web, which is automated by the response
+from the api. It starts with page=0.
+
+<strong>Return JSON Example: </strong>
+
+{
+    "elements": [
+        {
+            "id_producto": 1,
+            "nombre": "Coca cola",
+            "precio": "15.00",
+            "stock": 100000,
+            "categoria": "Bebidas",
+            "imagen": "/media/stock/R_mebF9xG.jpeg",
+            "descripcion": "Mejor marca de refresco de cola"
+        }
+    ],
+    "urls": {
+        "next": null,
+        "previous": null
+    }
+}
+
+`Returns a JSON with a list of elements that corresponds to the products and two urls that correspond to the following
+API call and the previous call, if there is no pagination it returns Null`
+
+
 
 ## (POST) Endpoints
 ###
