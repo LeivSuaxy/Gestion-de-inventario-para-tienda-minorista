@@ -11,6 +11,8 @@
     - [update_product](#update_product-post)
     - [delete_product](#delete_product-post)
     - [insert_employee](#insert_employee-post)
+    - [update_employee](#update_employee-post)
+    - [delete_employee](#delete_employee-post)
 - [Public/General Endpoints](#publicgeneral-endpoints)
   - [(GET) Endpoints](#get-endpoints-1)
     - [get_objects](#get_objects-get) 
@@ -238,6 +240,47 @@ Another error that could occur is that you may be trying to insert an employee t
 <hr/>
 
 ### update_employee (POST)
+This endpoint is responsible for update an employee in the database.
+
+<strong>URL: http://localhost:8000/api/admin/update_employee/</strong>
+
+<b>Required input data: `JSON`</b><br/>
+```json
+{
+  "employee": {
+    "CI": "Identity card, identifier",
+    "name": "String",
+    "salary": "number",
+    "boss": "Identify of another employee"
+  }
+}
+```
+`Required fields:` `employee`, `CI`, `name`, `salary`, `boss`.
+
+In case the employee is missing:
+```json
+{"error": "Please prove information about employee"}
+```
+
+In case any of the other required fields are missing:
+```json
+{
+  "error": "Please provide all the required fields", 
+  "mandatory_fields": "CI, name, salary, boss"
+}
+```
+`HTTP_400_BAD_REQUEST`<br/>
+
+_In any case, the filling out of this form will be automated by an autofill of fields in the frontend._
+
+<strong>Return JSON Example: </strong>
+
+ `Returns confirmation of the process -> {'status': 'Success'}` `HTTP_200_OK`
+
+<hr/>
+
+
+
 
 ### delete_employee (POST)
 
