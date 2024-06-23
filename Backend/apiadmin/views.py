@@ -97,6 +97,26 @@ def delete_employee_in_database(request):
     return response
 
 
+# <--INVENTORIES CRUD ENDPOINTS-->
+# READ INVENTORIES
+@api_view(['GET'])
+def get_all_inventories(request):
+    response = crudAdmin.get_all_inventories()
+    return response
+
+
+# INSERT INVENTORY
+@api_view(['POST'])
+def insert_inventory_in_database(request):
+    pass
+
+
+# DELETE INVENTORY
+@api_view(['POST'])
+def delete_inventory_from_database(request):
+    pass
+
+
 # TODO endpoint to get all reports
 @api_view(['GET'])
 def get_all_reports(request):

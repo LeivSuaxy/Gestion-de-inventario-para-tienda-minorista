@@ -1,7 +1,7 @@
 import psycopg2.errors
 from Backend.crudDB import CrudDB, ResponseType
-from api.models import Producto, Empleado
-from api.serializer import ProductoSerializer, EmpleadoSerializer
+from api.models import Producto, Empleado, Inventario
+from api.serializer import ProductoSerializer, EmpleadoSerializer, InventarioSerializer
 from django.http import QueryDict
 from rest_framework.response import Response
 from rest_framework import status
@@ -234,6 +234,27 @@ def delete_employee_in_database(ci: str) -> Response:
     connection.close()
 
     return ResponseType.SUCCESS.value
+
+
+# <--INVENTORIES - CRUD-->
+# READ
+def get_all_inventories() -> Response:
+    query = "SELECT * FROM inventario"
+    elements = Inventario.objects.raw(query)
+    if not elements:
+        return ResponseType.NOT_FOUND.value
+    serializer = InventarioSerializer(elements, many=True)
+    return Response({'elements': serializer.data}, status.HTTP_200_OK)
+
+
+# INSERT
+def insert_inventory() -> Response:
+    pass
+
+
+# DELETE
+def delete_inventory() -> Response:
+    pass
 
 
 # TODO endpoint to get all reports
