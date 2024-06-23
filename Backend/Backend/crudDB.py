@@ -340,98 +340,8 @@ class CrudDB:
     def get_inventories(self):
         pass
 
-    # TODO implement category search and insertion from inventory_id
-    def insert_product(self, product_data: QueryDict) -> Response:
-        # TODO check if product exists
-
-        name = product_data.get('name')
-        price = product_data.get('price')
-        stock = product_data.get('stock')
-        category = product_data.get('category')
-        inventory = product_data.get('inventory')
-        image: ImageFile = product_data.get('image')
-        description = product_data.get('description')
-
-        if not name or not price or not stock:
-            return Response({'error': 'Please provide all the required fields',
-                             'mandatory_fields': 'name, price, stock',
-                             'optional_fields': 'description, image, category, inventory'},
-                            status=status.HTTP_400_BAD_REQUEST)
-
-        # Processing data
-        url_imagen = None
-        if image is not None:
-            url_imagen = process_image(image)
-
-        connection = self.connect_to_db()
-        cursor = connection.cursor()
-
-        # If the data has an inventory, I take the value of the category.
-        if inventory is not None:
-            cursor.execute(f"""
-                SELECT categoria FROM inventario WHERE id_inventario={inventory}
-            """)
-
-            category = cursor.fetchone()[0]
-
-        cursor.execute(f"""
-            INSERT INTO producto (nombre, precio, stock, categoria, id_inventario, descripcion, imagen, fecha_entrada)
-            VALUES ('{name}', {price}, {stock}, '{category}', {inventory}, '{description}', '{url_imagen}',
-             '{now()}')
-        """)
-
-        connection.commit()
-
-        cursor.close()
-        connection.close()
-
-        return ResponseType.SUCCESS.value
-
     def get_product(self):
         pass
-
-    # FIXME the update product function
-    def update_product(self, product_data: QueryDict) -> Response:
-        id_product = product_data.get('id_product')
-        name = product_data.get('name')
-        price = product_data.get('price')
-        stock = product_data.get('stock')
-        category = product_data.get('category')
-        inventory = product_data.get('inventory')
-        image = product_data.get('image')
-        description = product_data.get('description')
-        entry_date = product_data.get('entry_date')
-
-        if not id_product:
-            return Response({'error': 'Please provide the id of the product to update'},
-                            status=status.HTTP_400_BAD_REQUEST)
-
-        if not name or not price or not stock or not category or not stock or not entry_date or not inventory:
-            return Response({'error': 'Please provide all the required fields',
-                             'mandatory_fields': 'name, price, stock, category, inventory, entry_date, inventory,',
-                             'optional_fields': 'description, image'}, status=status.HTTP_400_BAD_REQUEST)
-
-        # Processing data
-        url_image = None
-        if image is not None:
-            print(type(image))
-            url_image = process_image(image)
-
-        connection = self.connect_to_db()
-        cursor = connection.cursor()
-
-        cursor.execute(f"""
-            UPDATE producto SET nombre='{name}', precio={price}, stock={int(stock)}, categoria='{category}', 
-            id_inventario={inventory}, descripcion='{description}', imagen='{url_image}', fecha_entrada='{entry_date}'
-            WHERE id_producto={id_product}
-        """)
-
-        connection.commit()
-
-        cursor.close()
-        connection.close()
-
-        return ResponseType.SUCCESS.value
 
     def update_purchased_products(self, products: QueryDict) -> Response:
         connection = self.connect_to_db()
@@ -447,20 +357,6 @@ class CrudDB:
         cursor.close()
         connection.close()
 
-        return ResponseType.SUCCESS.value
-
-    def delete_product(self, data_id: QueryDict) -> Response:
-        id_product = data_id.get('id')
-        if not id_product:
-            return Response({'error': 'Please provide an id of product you will delete'},
-                            status=status.HTTP_400_BAD_REQUEST)
-        connection = self.connect_to_db()
-        cursor = connection.cursor()
-        cursor.execute(f"DELETE FROM producto WHERE id_producto={id_product}")
-        connection.commit()
-        self.total_elements_stock -= 1
-        cursor.close()
-        connection.close()
         return ResponseType.SUCCESS.value
 
     def process_purchases(self, data: QueryDict) -> Response:
