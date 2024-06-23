@@ -340,7 +340,7 @@ class CrudDB:
     def get_inventories(self):
         pass
 
-    # Product CRUD
+    # TODO implement category search and insertion from inventory_id
     def insert_product(self, product_data: QueryDict) -> Response:
         # TODO check if product exists
 
@@ -352,10 +352,11 @@ class CrudDB:
         image: ImageFile = product_data.get('image')
         description = product_data.get('description')
 
-        if not name or not price or not stock or not category or not inventory:
+        if not name or not price or not stock:
             return Response({'error': 'Please provide all the required fields',
-                             'mandatory_fields': 'name, price, stock, category, inventory',
-                             'optional_fields': 'description, image'}, status=status.HTTP_400_BAD_REQUEST)
+                             'mandatory_fields': 'name, price, stock',
+                             'optional_fields': 'description, image, category, inventory'},
+                            status=status.HTTP_400_BAD_REQUEST)
 
         # Processing data
         url_imagen = None
@@ -364,6 +365,14 @@ class CrudDB:
 
         connection = self.connect_to_db()
         cursor = connection.cursor()
+
+        # If the data has an inventory, I take the value of the category.
+        if inventory is not None:
+            cursor.execute(f"""
+                SELECT categoria FROM inventario WHERE id_inventario={inventory}
+            """)
+
+            category = cursor.fetchone()[0]
 
         cursor.execute(f"""
             INSERT INTO producto (nombre, precio, stock, categoria, id_inventario, descripcion, imagen, fecha_entrada)
