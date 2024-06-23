@@ -1,6 +1,8 @@
 # Index
 - [Presentation](#elitestock-api)
 - [Authentication](#authentication)
+  - [Register](#register-endpoint-post)
+  - [Login](#login-endpoint-post)
 - [Endpoints](#endpoints)
 - [Administrative Endpoints](#administrative-endpoints)
   - [(GET) Endpoints](#get-endpoints)
@@ -33,7 +35,7 @@ All endpoints in authentication start with the URL: http://localhost:8000/api/au
 The registration endpoint is built on the principle that an Employee can have one Account, only one account.
 This registration requires an identity card, a username and password that identifies the account.
 
-<strong>URL: http://localhost:8000/api/auth/login/</strong>
+<strong>URL: http://localhost:8000/api/auth/register/</strong>
 
 <b>Required input data: `form-data` or `JSON`</b>
 
@@ -46,6 +48,7 @@ This registration requires an identity card, a username and password that identi
 | password | string | True     |
 
 `JSON`
+
 ```json
 {
   "ci": "employee_identifier",
@@ -94,11 +97,68 @@ If the user is already registered, the following will be returned:
 }
 ```
 `Returns the registration confirmation status plus the authentication token of the registered user`<br/>
-`HTTP_200_OK`
+`HTTP_200_OK`<br/>
 
 <hr/>
 
 ## Login Endpoint (POST)
+The login endpoint is responsible for confirming the input data to perform a successful authentication. This endpoint 
+will return an authentication token which will be used for internal API calls within the site.
+
+<strong>URL: http://localhost:8000/api/auth/login/</strong>
+
+<b>Required input data: `form-data` or `JSON`</b>
+
+`form-data`
+
+| Key      | Value  | Required |
+|----------|--------|----------|
+| username | string | True     |
+| password | string | True     |
+
+`JSON`
+
+```json
+{
+  "username": "username_account",
+  "password": "password_account"
+}
+```
+If any of the required fields are missing, a JSON will be returned expressing the following:
+```json
+{
+    "error": "Please provide both username and password"
+}
+```
+`HTTP_400_BAD_REQUEST`<br/>
+
+If the user does not exist, a JSON will be returned expressing the following:
+```json
+{
+    "status": "Not_found"
+}
+```
+`HTTP_404_NOT_FOUND`<br/>
+
+If password is incorrect, a JSON will be returned expressing the following:
+```json
+{
+    "status": "Incorrect password"
+}
+```
+`HTTP_400_BAD_REQUEST`<br/>
+
+<strong>Return JSON Example: </strong>
+```json
+{
+    "status": "Login successfully",
+    "token": "9827582b7aad21eda5a921011e7b82d40c030faa98c218279c06e0a991f1d278"
+}
+```
+`Returns a login confirmation status plus the user's authentication token`<br/>
+`HTTP_200_OK`<br/>
+
+<hr/>
 
 # Endpoints
 All endpoints in this API start with the URL: http://localhost:8000/api/.
