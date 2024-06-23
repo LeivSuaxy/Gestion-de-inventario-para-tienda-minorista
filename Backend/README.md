@@ -27,7 +27,78 @@ Database. The choice of technologies was with the objective of expanding our kno
 future programmers.
 
 # Authentication
-Authentication is not yet available. The development of it will begin soon.
+All endpoints in authentication start with the URL: http://localhost:8000/api/auth/.
+
+## Register Endpoint (POST)
+The registration endpoint is built on the principle that an Employee can have one Account, only one account.
+This registration requires an identity card, a username and password that identifies the account.
+
+<strong>URL: http://localhost:8000/api/auth/login/</strong>
+
+<b>Required input data: `form-data` or `JSON`</b>
+
+`form-data`
+
+| Key      | Value  | Required |
+|----------|--------|----------|
+| ci       | string | True     |
+| username | string | True     |
+| password | string | True     |
+
+`JSON`
+```json
+{
+  "ci": "employee_identifier",
+  "username": "username_account",
+  "password": "password_account"
+}
+```
+If any of the required fields are missing, a JSON will be returned expressing the following:
+```json
+{
+    "error": "Please provide a ci, username and password"
+}
+```
+`HTTP_400_BAD_REQUEST`<br/>
+
+If the CI provided does not correspond to any employee in the database, this error will be returned:
+```json
+{
+    "not_found": "The employee is not registered in the database"
+}
+```
+`HTTP_404_NOT_FOUND`<br/>
+
+If the account is registered by the CI value, the following will be returned:
+```json
+{
+    "error": "Please, this CI is already registered"
+}
+```
+`HTTP_409_CONFLICT`<br/>
+
+If the user is already registered, the following will be returned:
+```json
+{
+    "status": "You cannot register this user because it already exists."
+}
+```
+`HTTP_400_BAD_REQUEST`<br/>
+
+<strong>Return JSON Example: </strong>
+
+```json
+{
+    "status": "The user has been successfully registered",
+    "token": "9827582b7aad21eda5a921011e7b82d40c030faa98c218279c06e0a991f1d278"
+}
+```
+`Returns the registration confirmation status plus the authentication token of the registered user`<br/>
+`HTTP_200_OK`
+
+<hr/>
+
+## Login Endpoint (POST)
 
 # Endpoints
 All endpoints in this API start with the URL: http://localhost:8000/api/.

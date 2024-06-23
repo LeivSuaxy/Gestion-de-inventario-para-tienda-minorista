@@ -112,7 +112,7 @@ class CrudDB:
                 except psycopg2.errors.UniqueViolation:
                     cursor.close()
                     connection.close()
-                    return Response({'error': 'Please, this CI or User is already registered'},
+                    return Response({'error': 'Please, this CI is already registered'},
                                     status.HTTP_409_CONFLICT)
 
                 # Commit the changes
