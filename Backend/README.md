@@ -279,10 +279,39 @@ _In any case, the filling out of this form will be automated by an autofill of f
 
 <hr/>
 
-
-
-
 ### delete_employee (POST)
+This endpoint is responsible for delete an employee that exists in the database.
+<b>REQUIRE REVIEW</b>
+
+<strong>URL: http://localhost:8000/api/admin/delete_employee/</strong>
+
+<b>Required input data: `form-data` or `JSON`</b>
+
+`form-data:`
+
+| Key | Value  | Required |
+|-----|--------|----------|
+| ci  | String | True     |
+
+`JSON:`
+```json
+{
+  "ci": "employee_indentify"
+}
+```
+If any of the required fields are missing, a JSON will be returned expressing the following:
+```json
+{
+  "error": "Please prove a ci to delete"
+}
+```
+`HTTP_400_BAD_REQUEST`<br/>
+
+<strong>Return JSON Example: </strong>
+
+ `Returns confirmation of the process -> {'status': 'Success'}` `HTTP_200_OK`
+
+<hr/>
 
 # Public/General Endpoints
 Public/General endpoints are mainly used to display information to the user.<br/>
@@ -322,8 +351,6 @@ from the api. It starts with page=0.
 
 `Returns a JSON with a list of elements that corresponds to the products and two urls that correspond to the following
 API call and the previous call, if there is no pagination it returns Null` `HTTP_200_OK`
-
-
 
 ## (POST) Endpoints
 ###
