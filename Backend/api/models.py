@@ -44,9 +44,10 @@ class Empleado(models.Model):
     class Meta:
         db_table = 'empleado'
 
-# TODO Inventario add Nombre/Categoria
+
 class Inventario(models.Model):
     id_inventario = models.AutoField(primary_key=True)
+    categoria = models.CharField(max_length=255)
     id_almacen = models.ForeignKey('Almacen', models.DO_NOTHING, db_column='id_almacen')
 
     class Meta:
@@ -71,18 +72,17 @@ class OrdenCompra(models.Model):
     class Meta:
         db_table = 'orden_compra'
 
-# TODO Categoria is a Foreign Key of Inventario
+
 class Producto(models.Model):
     id_producto = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=255)
     precio = models.DecimalField(max_digits=10, decimal_places=2)
     descripcion = models.TextField(blank=True, null=True)
     imagen = models.ImageField(max_length=255, blank=True, null=True)
-    categoria = models.CharField(max_length=100)
     id_inventario = models.ForeignKey(Inventario, models.DO_NOTHING, db_column='id_inventario', blank=True, null=True)
+    categoria = models.CharField(max_length=255, db_column='categoria', blank=True, null=True)
     stock = models.IntegerField()
     fecha_entrada = models.DateField()
-    fecha_salida = models.DateField(blank=True, null=True)
 
     class Meta:
         db_table = 'producto'
