@@ -21,13 +21,13 @@ Administrative endpoints continue with the principle of the general URL, adding 
 Example: http://localhost:8000/api/admin/.
 
 ## (GET) Endpoints
-### get_all_products
+### get_all_products (GET)
 This endpoint is responsible for returning all the products stored in the database.
 
 <strong>URL: http://localhost:8000/api/admin/products/</strong>
 
 <strong>Return JSON Example: </strong>
-
+```json
 {
     "elements": [
         {
@@ -41,35 +41,37 @@ This endpoint is responsible for returning all the products stored in the databa
         }
     ]
 }
+```
 
 `Returns a JSON with an array of elements that corresponds to objects` `HTTP_200_OK`
 
 <hr/>
 
-### get_all_employees
+### get_all_employees (GET)
 This endpoint is responsible for returning all the employees stored in the database.
 
 <strong>URL: http://localhost:8000/api/admin/employees/</strong>
 
 <strong>Return JSON Example: </strong>
-
-{
-    "elements": [
-        {
-            "carnet_identidad": "1",
-            "nombre": "Juan",
-            "salario": "3000.00",
-            "id_jefe": null
-        }
-    ]
+```json
+{ 
+    "elements": [ 
+        { 
+            "carnet_identidad": "1", 
+            "nombre": "Juan", 
+            "salario": "3000.00", 
+            "id_jefe": null 
+        } 
+    ] 
 }
+```
 
 `Returns a JSON with an array of elements that corresponds to employees` `HTTP_200_OK`
 
 <hr/>
 
 ## (POST) Endpoints
-### insert_product
+### insert_product (POST)
 This endpoint is responsible for insert a product into the database.
 
 <strong>URL: http://localhost:8000/api/admin/insert_product/</strong>
@@ -87,10 +89,12 @@ This endpoint is responsible for insert a product into the database.
 | category    | String | False    |
 
 If any of the required fields are missing, a JSON will be returned expressing the following:
-
-{'error': 'Please provide all the required fields',
-'mandatory_fields': 'name, price, stock',
-'optional_fields': 'description, image, category, inventory'} `HTTP_400_BAD_REQUEST`
+```json
+{"error": "Please provide all the required fields", 
+"mandatory_fields": "name, price, stock", 
+"optional_fields": "description, image, category, inventory"} 
+```
+`HTTP_400_BAD_REQUEST` <br/>
 
 <strong>Return JSON Example: </strong>
 
@@ -98,13 +102,49 @@ If any of the required fields are missing, a JSON will be returned expressing th
 
 <hr/>
 
+### update_product (POST)
+This endpoint is responsible for update a product that exists in the database.
+
+<strong>URL: http://localhost:8000/api/admin/insert_product/</strong>
+
+<b>Required input data: `form-data`</b><br/>
+
+| Key         | Value  | Required |
+|-------------|--------|----------|
+| name        | String | True     |
+| price       | number | True     |
+| stock       | number | True     |
+| inventory   | number | True     |
+| description | String | False    |
+| image       | File   | False    |
+| category    | String | True?    |
+| entry_data  | Date   | True     |
+
+If any of the required fields are missing, a JSON will be returned expressing the following:
+```json
+{"error": "Please provide all the required fields",
+"mandatory_fields": "name, price, stock, category, inventory, entry_date, inventory", 
+"optional_fields": "description, image"} 
+```
+
+`HTTP_400_BAD_REQUEST` <br/>
+
+_In any case, the filling out of this form will be automated by an autofill of fields in the frontend._
+
+<strong>Return JSON Example: </strong>
+
+ `Returns confirmation of the process -> {'status': 'Success'}` `HTTP_200_OK`
+
+<hr/>
+
+
 # Public/General Endpoints
 Public/General endpoints are mainly used to display information to the user.<br/>
 Public/General endpoints continue with the principle of the general URL, adding an /public/.<br/>
 Example: http://localhost:8000/api/public/.
 
 ## (GET) Endpoints
-### get_objects
+### get_objects (GET)
 This endpoint is responsible for returning a defined number of products stored in the database, and returning 
 two URLS that belong to the website pagination.
 
@@ -114,7 +154,7 @@ The information page=# refers to the page that you will find on the web, which i
 from the api. It starts with page=0.
 
 <strong>Return JSON Example: </strong>
-
+```json
 {
     "elements": [
         {
@@ -132,6 +172,7 @@ from the api. It starts with page=0.
         "previous": null
     }
 }
+```
 
 `Returns a JSON with a list of elements that corresponds to the products and two urls that correspond to the following
 API call and the previous call, if there is no pagination it returns Null` `HTTP_200_OK`
