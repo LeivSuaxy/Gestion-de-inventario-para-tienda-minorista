@@ -70,3 +70,9 @@ This endpoint is responsible for returning all the employees stored in the datab
 ###
 
 # Public/General Endpoints
+
+## (GET) Endpoints
+###
+
+## (POST) Endpoints
+###
