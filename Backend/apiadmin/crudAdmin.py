@@ -1,3 +1,4 @@
+import psycopg2.errors
 from Backend.crudDB import CrudDB, ResponseType
 from api.models import Producto, Empleado
 from api.serializer import ProductoSerializer, EmpleadoSerializer
@@ -26,7 +27,7 @@ def get_all_products() -> Response:
 
 # CREATE PRODUCT
 
-def insert_product(self, product_data: QueryDict) -> Response:
+def insert_product(product_data: QueryDict) -> Response:
     # TODO check if product exists
 
     name = product_data.get('name')
@@ -75,7 +76,7 @@ def insert_product(self, product_data: QueryDict) -> Response:
 
 # UPDATE PRODUCT
 # FIXME the update product function
-def update_product(self, product_data: QueryDict) -> Response:
+def update_product(product_data: QueryDict) -> Response:
     id_product = product_data.get('id_product')
     name = product_data.get('name')
     price = product_data.get('price')
@@ -120,7 +121,7 @@ def update_product(self, product_data: QueryDict) -> Response:
 
 # DELETE PRODUCT
 
-def delete_product(self, data_id: QueryDict) -> Response:
+def delete_product(data_id: QueryDict) -> Response:
     id_product = data_id.get('id')
     if not id_product:
         return Response({'error': 'Please provide an id of product you will delete'},
@@ -129,9 +130,67 @@ def delete_product(self, data_id: QueryDict) -> Response:
     cursor = connection.cursor()
     cursor.execute(f"DELETE FROM producto WHERE id_producto={id_product}")
     connection.commit()
-    self.total_elements_stock -= 1
     cursor.close()
     connection.close()
+    return ResponseType.SUCCESS.value
+
+
+# <--EMPLOYEES - CRUD-->
+# READ
+def get_all_employees() -> Response:
+    query = "SELECT * FROM empleado"
+    elements = Empleado.objects.raw(query)
+    if not elements:
+        return ResponseType.NOT_FOUND.value
+    serializer = EmpleadoSerializer(elements, many=True)
+    return Response({'elements': serializer.data}, status.HTTP_200_OK)
+
+
+# INSERT
+# TODO REVIEW
+def insert_employee_in_database(data: QueryDict) -> Response:
+    ci = data.get('CI')
+    name = data.get('name')
+    salary = data.get('salary')
+    boss = data.get('boss')
+
+    if not ci or not name or not salary:
+        return Response({'error': 'Please provide all the required fields',
+                         'mandatory_fields': 'CI, name, salary',
+                         'optional_fields': 'boss'}, status=status.HTTP_400_BAD_REQUEST)
+
+    connection = CrudDB.connect_to_db()
+    cursor = connection.cursor()
+
+    if boss is not None:
+        try:
+            cursor.execute(f"""
+                INSERT INTO empleado (carnet_identidad, nombre, salario, id_jefe)
+                VALUES ('{ci}', '{name}', {salary}, '{boss}')
+            """)
+        except psycopg2.errors.UniqueViolation as e:
+            cursor.close()
+            connection.close()
+            print(e.pgerror)
+            return Response({'error': 'El CI que esta introduciendo ya existe en la base de datos'},
+                            status.HTTP_409_CONFLICT)
+    else:
+        try:
+            cursor.execute(f"""
+                        INSERT INTO empleado (carnet_identidad, nombre, salario)
+                        VALUES ('{ci}', '{name}', {salary})
+                    """)
+        except psycopg2.errors.UniqueViolation as e:
+            cursor.close()
+            connection.close()
+            print(e.pgerror)
+            return Response({'error': 'El CI que esta introduciendo ya existe en la base de datos'},
+                            status.HTTP_409_CONFLICT)
+
+    connection.commit()
+    cursor.close()
+    connection.close()
+
     return ResponseType.SUCCESS.value
 
 
@@ -148,12 +207,3 @@ def get_all_inventories() -> Response:
 # TODO endpoint to get all warehouses
 def get_all_warehouses() -> Response:
     pass
-
-
-def get_all_employees() -> Response:
-    query = "SELECT * FROM empleado"
-    elements = Empleado.objects.raw(query)
-    if not elements:
-        return ResponseType.NOT_FOUND.value
-    serializer = EmpleadoSerializer(elements, many=True)
-    return Response({'elements': serializer.data}, status.HTTP_200_OK)

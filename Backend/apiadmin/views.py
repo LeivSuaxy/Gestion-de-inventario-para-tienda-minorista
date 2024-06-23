@@ -69,7 +69,11 @@ def get_all_employees(request):
 # INSERT EMPLOYEE
 @api_view(['POST'])
 def insert_employee_to_database(request):
-    pass
+    data = request.data
+    if not data or not data.get('employee'):
+        return Response({'error': 'Please prove information about employee'}, status.HTTP_400_BAD_REQUEST)
+    response = crudAdmin.insert_employee_in_database(data.get('employee'))
+    return response
 
 
 # UPDATE EMPLOYEE
