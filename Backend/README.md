@@ -10,6 +10,7 @@
     - [insert_product](#insert_product-post)
     - [update_product](#update_product-post)
     - [delete_product](#delete_product-post)
+    - [insert_employee](#insert_employee-post)
 - [Public/General Endpoints](#publicgeneral-endpoints)
   - [(GET) Endpoints](#get-endpoints-1)
     - [get_objects](#get_objects-get) 
@@ -186,6 +187,59 @@ If any of the required fields are missing, a JSON will be returned expressing th
 
 <hr/>
 
+### insert_employee (POST)
+This endpoint is responsible for insert an employee into the database.
+
+<strong>URL: http://localhost:8000/api/admin/insert_employee/</strong>
+
+<b>Required input data: `JSON`</b>
+
+```json
+{
+  "employee": {
+    "CI": "Identity card, identifier",
+    "name": "String",
+    "salary": "number",
+    "boss": "Identify of another employee"
+  }
+}
+```
+`Required fields:` `employee`, `CI`, `name`, `salary`.
+
+If any of the required fields are missing, a JSON will be returned expressing the following:
+
+In case the employee is missing:
+```json
+{"error": "Please prove information about employee"}
+```
+
+In case any of the other required fields are missing:
+```json
+{
+  "error": "Please provide all the required fields", 
+  "mandatory_fields": "CI, name, salary",
+  "optional_fields": "boss"
+}
+```
+`HTTP_400_BAD_REQUEST`<br/>
+
+Another error that could occur is that you may be trying to insert an employee that already exists in the database.
+```json
+{
+  "error": "El CI que esta introduciendo ya existe en la base de datos"
+}
+```
+`HTTP_409_CONFLICT`
+
+<strong>Return JSON Example: </strong>
+
+ `Returns confirmation of the process -> {'status': 'Success'}` `HTTP_200_OK`
+
+<hr/>
+
+### update_employee (POST)
+
+### delete_employee (POST)
 
 # Public/General Endpoints
 Public/General endpoints are mainly used to display information to the user.<br/>
