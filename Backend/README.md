@@ -137,6 +137,37 @@ _In any case, the filling out of this form will be automated by an autofill of f
 
 <hr/>
 
+### delete_product (POST)
+This endpoint is responsible for delete a product that exists in the database.
+
+<strong>URL: http://localhost:8000/api/admin/delete_product/</strong>
+
+<b>Required input data: `form-data` or `JSON`</b>
+
+`form-data:`
+
+| Key | Value  | Required |
+|-----|--------|----------|
+| id  | number | True     |
+
+`JSON:`
+```json
+{
+  "id": "number_value"
+}
+```
+If any of the required fields are missing, a JSON will be returned expressing the following:
+```json
+{"error": "Please provide an id of product you will delete"}
+```
+`HTTP_400_BAD_REQUEST`
+
+<strong>Return JSON Example: </strong>
+
+ `Returns confirmation of the process -> {'status': 'Success'}` `HTTP_200_OK`
+
+<hr/>
+
 
 # Public/General Endpoints
 Public/General endpoints are mainly used to display information to the user.<br/>
