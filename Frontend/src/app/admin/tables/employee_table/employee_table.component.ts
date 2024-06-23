@@ -50,6 +50,7 @@ export interface Employee {
 export class Employee_tableComponent implements OnInit {
   readonly dialog = inject(MatDialog);
 
+  // Configuracion del cuadro de dialogo
   openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
     const dialogRef = this.dialog.open(DeleteDialog, {
       width: '250px',
@@ -58,7 +59,6 @@ export class Employee_tableComponent implements OnInit {
       position: { top: '-35%', left: '40%' },
       hasBackdrop: true,
       disableClose: true,
-      backdropClass: 'custom-backdrop-class',
     });
   
     document.body.style.overflow = 'hidden'; // Deshabilita el desplazamiento
@@ -82,9 +82,9 @@ export class Employee_tableComponent implements OnInit {
     });
   }
 
+  // Datos para configurar la tabla
   data: any;
   employees: Employee[] = []
-
   dataSource: MatTableDataSource<Employee> = new MatTableDataSource<Employee>(this.employees);
   displayedColumns: string[] = ['select', 'carnet_identidad', 'nombre', 'salario', 'id_jefe'];
   selection = new SelectionModel<Employee>(true, []);
@@ -94,11 +94,13 @@ export class Employee_tableComponent implements OnInit {
     
   }
 
+  // Llamada a la API para extraer los datos y guardarlos en dataSource
   async ngOnInit() {
     await this.apicall();
     this.dataSource = new MatTableDataSource<Employee>(this.employees);
   }
 
+  // Extracción de datos de la API
   private async apicall(): Promise<void> {
     if (this.apiUrl) {
       try {
@@ -111,6 +113,7 @@ export class Employee_tableComponent implements OnInit {
     }
   }
   
+  // Traducción de los datos obtenidos de la API
   traslate(): void {
     this.employees.push(...this.data['elements'].map((element: any) => ({
       carnet_identidad: element.carnet_identidad,
@@ -120,19 +123,20 @@ export class Employee_tableComponent implements OnInit {
     })));
   }
 
+  // Busqueda de datos en la tabla
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  /** Whether the number of selected elements matches the total number of rows. */
+  // Devuelve si estan todas las filas seleccionadas
   isAllSelected() {
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length;
     return numSelected === numRows;
   }
 
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  // Selecciona todas las filas, si ya todas estan seleccionadas las deselecciona
   toggleAllRows() {
     if (this.isAllSelected()) {
       this.selection.clear();
@@ -142,16 +146,18 @@ export class Employee_tableComponent implements OnInit {
     this.selection.select(...this.dataSource.data);
   }
 
+  // Devuelve en un arreglo todas las filas seleccionadas
   getSelectedRowsData(): Employee[] {
     return this.selection.selected;
   }
 
+  // Muestra en consola las filas seleccionadas
   showSelectedRowsData(): void {
     const selectedRows = this.getSelectedRowsData();
     console.log('Filas seleccionadas:', selectedRows);
   }
 
-  /** The label for the checkbox on the passed row */
+  // Selecciona una casilla
   checkboxLabel(row?: Employee): string {
     if (!row) {
       return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
