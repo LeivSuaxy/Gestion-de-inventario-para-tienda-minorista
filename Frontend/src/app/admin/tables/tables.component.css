@@ -49,6 +49,7 @@
     flex-direction: row;
     align-items: center;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: background-color 0.3s ease-in-out;
 }
 
 .boton {
@@ -60,12 +61,16 @@
     transition: background-color 0.3s;
     margin-right: 2.07vh;
     color: black;
-    width: 5vh;
+    width: 5.4vh;
     height: 5vh;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
     font-size: 22px;
 }
 
 .boton:hover {
+    background-color: #6489af;
+}
+
+.tabla-activa {
     background-color: #6489af;
 }

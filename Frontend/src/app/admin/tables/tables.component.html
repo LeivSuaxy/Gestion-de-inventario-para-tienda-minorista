@@ -2,15 +2,15 @@
     <div class="head-table">
         <h4>Tables</h4>
     </div>
-    <div class="tables">
+    <div class="tables" [ngStyle]="tablaActiva === 'product' ? {'background-color': '#6489af'} : {}">
         <a routerLink="/tables/product_table">Products</a>
         <button class="boton">+</button>
     </div>
-    <div class="tables">
+    <div class="tables" [ngStyle]="tablaActiva === 'inventory' ? {'background-color': '#6489af'} : {}">
         <a routerLink="/tables/inventory_table">Inventories</a>
         <button class="boton">+</button>
     </div>
-    <div class="tables">
+    <div class="tables" [ngStyle]="tablaActiva === 'employee' ? {'background-color': '#6489af'} : {}">
         <a routerLink="/tables/employee_table">Employees</a>
         <button class="boton">+</button>
     </div>

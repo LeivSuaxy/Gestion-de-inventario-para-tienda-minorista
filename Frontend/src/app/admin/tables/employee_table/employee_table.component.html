@@ -1,7 +1,15 @@
-<div class="tabla-empleados">
+<div class="tabla-productos">
+  <div style="min-width: 25%;">
+    <app-tables></app-tables>
+  </div>
+  
+<div class=" tab">
+  <mat-form-field class="busqueda">
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+  </mat-form-field>
 
-  <app-tables></app-tables>
-
+  <div class="tabla">
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
   <!-- Checkbox Column -->
@@ -22,28 +30,34 @@
     </td>
   </ng-container>
 
-  <!-- Position Column -->
-  <ng-container matColumnDef="carnetID">
-    <th mat-header-cell *matHeaderCellDef> CI. </th>
-    <td mat-cell *matCellDef="let element"> {{element.carnetID}} </td>
+  <!-- ID Column -->
+  <ng-container matColumnDef="id_producto">
+    <th mat-header-cell *matHeaderCellDef> ID </th>
+    <td mat-cell *matCellDef="let element"> {{element.id_producto}} </td>
   </ng-container>
 
-  <!-- Name Column -->
+  <!-- Nombre Column -->
   <ng-container matColumnDef="nombre">
     <th mat-header-cell *matHeaderCellDef> Nombre </th>
     <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
   </ng-container>
 
-  <!-- Weight Column -->
-  <ng-container matColumnDef="salario">
-    <th mat-header-cell *matHeaderCellDef> Salario </th>
-    <td mat-cell *matCellDef="let element"> {{element.salario}} </td>
+  <!-- Categoria Column -->
+  <ng-container matColumnDef="categoria">
+    <th mat-header-cell *matHeaderCellDef> Categoria </th>
+    <td mat-cell *matCellDef="let element"> {{element.categoria}} </td>
   </ng-container>
 
-  <!-- Symbol Column -->
-  <ng-container matColumnDef="id_jefe">
-    <th mat-header-cell *matHeaderCellDef> ID Jefe </th>
-    <td mat-cell *matCellDef="let element"> {{element.id_jefe}} </td>
+  <!-- Stock Column -->
+  <ng-container matColumnDef="stock">
+    <th mat-header-cell *matHeaderCellDef> Stock </th>
+    <td mat-cell *matCellDef="let element"> {{element.stock}} </td>
+  </ng-container>
+
+  <!-- Precio Column -->
+  <ng-container matColumnDef="precio">
+    <th mat-header-cell *matHeaderCellDef> Precio </th>
+    <td mat-cell *matCellDef="let element"> {{element.precio}} </td>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -51,6 +65,21 @@
       (click)="selection.toggle(row)">
   </tr>
 </table>
+</div>
+</div>
 
+  <div class="div-botones">
+    <div class="example-button-container">
+      <button mat-mini-fab aria-label="Example icon button with a add icon" routerLink="/stockadd">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+
+    <div class="example-button-container">
+      <button mat-mini-fab aria-label="Example icon button with a delete icon">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </div>
 </div>
 

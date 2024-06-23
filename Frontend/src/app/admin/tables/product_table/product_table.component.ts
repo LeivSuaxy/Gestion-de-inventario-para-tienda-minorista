@@ -38,7 +38,7 @@ export class Product_tableComponent implements OnInit {
   dataSource: MatTableDataSource<Venta> = new MatTableDataSource<Venta>(this.products);
   displayedColumns: string[] = ['select', 'id_producto', 'nombre', 'categoria', 'stock', 'precio'];
   selection = new SelectionModel<Venta>(true, []);
-  apiUrl: string = 'http://localhost:8000/api/admin/objects/'
+  apiUrl: string = 'http://localhost:8000/api/admin/products/'
 
   constructor(private http: HttpClient) { 
     
