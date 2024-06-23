@@ -114,7 +114,6 @@ def purchased_products(request):
     return response
 
 
-# TODO Process buy_order, Tests have diagram to do
 @api_view(['POST'])
 def process_buy_order(request):
     data = request.data
