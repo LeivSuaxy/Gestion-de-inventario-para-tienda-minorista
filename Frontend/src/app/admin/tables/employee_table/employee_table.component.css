@@ -69,7 +69,11 @@ table {
     border-radius: 10px;
 }
 
-button {
+.boton {
     margin-bottom: 2vh;
     border-radius: 10px !important;
+}
+
+.custom-backdrop-class {
+    pointer-events: none;
 }
