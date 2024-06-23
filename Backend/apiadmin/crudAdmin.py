@@ -194,6 +194,47 @@ def insert_employee_in_database(data: QueryDict) -> Response:
     return ResponseType.SUCCESS.value
 
 
+# UPDATE
+def update_employee_in_database(data: QueryDict) -> Response:
+    ci = data.get('CI')
+    name = data.get('name')
+    salary = data.get('salary')
+    boss = data.get('boss')
+
+    if not ci or not name or not salary or not boss:
+        return Response({'error': 'Please provide all the required fields',
+                         'mandatory_fields': 'CI, name, salary, boss'}, status=status.HTTP_400_BAD_REQUEST)
+
+    connection = CrudDB.connect_to_db()
+    cursor = connection.cursor()
+
+    cursor.execute(f"""
+        UPDATE empleado SET nombre='{name}', salario={salary}, id_jefe='{boss}'
+        WHERE carnet_identidad='{ci}'
+    """)
+
+    connection.commit()
+    cursor.close()
+    connection.close()
+
+    return ResponseType.SUCCESS.value
+
+
+# DELETE
+def delete_employee_in_database(ci: str) -> Response:
+    connection = CrudDB.connect_to_db()
+    cursor = connection.cursor()
+
+    cursor.execute(f"""
+        DELETE FROM empleado WHERE carnet_identidad='{ci}'
+    """)
+    connection.commit()
+    cursor.close()
+    connection.close()
+
+    return ResponseType.SUCCESS.value
+
+
 # TODO endpoint to get all reports
 def get_all_reports() -> Response:
     pass

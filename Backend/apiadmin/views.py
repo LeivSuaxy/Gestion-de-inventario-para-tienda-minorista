@@ -78,12 +78,20 @@ def insert_employee_to_database(request):
 
 # UPDATE EMPLOYEE
 def update_employee_in_database(request):
-    pass
+    data = request.data
+    if not data.get('employee'):
+        return Response({'error': 'Please prove information about employee'}, status.HTTP_400_BAD_REQUEST)
+    response = crudAdmin.update_employee_in_database(data.get('employee'))
+    return response
 
 
 # DELETE EMPLOYEE
 def delete_employee_in_database(request):
-    pass
+    data = request.data
+    if not data.get('ci'):
+        return Response({'error': 'Please prove a ci to delete'}, status.HTTP_400_BAD_REQUEST)
+    response = crudAdmin.delete_employee_in_database(data.get('ci'))
+    return response
 
 
 # TODO endpoint to get all reports
