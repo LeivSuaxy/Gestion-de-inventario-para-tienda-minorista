@@ -1,4 +1,22 @@
-# EliteStock API 
+# Index
+- [Presentation](#elitestock-api)
+- [Authentication](#authentication)
+- [Endpoints](#endpoints)
+- [Administrative Endpoints](#administrative-endpoints)
+  - [(GET) Endpoints](#get-endpoints)
+    - [get_all_products](#get_all_products-get)
+    - [get_all_employees](#get_all_employees-get)
+  - [(POST) Endpoints](#post-endpoints)
+    - [insert_product](#insert_product-post)
+    - [update_product](#update_product-post)
+    - [delete_product](#delete_product-post)
+- [Public/General Endpoints](#publicgeneral-endpoints)
+  - [(GET) Endpoints](#get-endpoints-1)
+    - [get_objects](#get_objects-get) 
+  - [(POST) Endpoints](#post-endpoints-1)
+
+
+# EliteStock API
 This API is developed with the purpose of serving information to the Frontend of the website that EliteStock is developed.
 It is developed with Django-Rest_Framework with PostgreSQL as a database manager. At a general level this project
 It is developed with the objective of meeting the objectives oriented in the final task that corresponds to us in the subject
