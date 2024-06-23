@@ -3,6 +3,11 @@
     <app-tables></app-tables>
   </div>
   
+<div class=" tab">
+  <mat-form-field class="busqueda">
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+  </mat-form-field>
 
   <div class="tabla">
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
@@ -60,6 +65,7 @@
       (click)="selection.toggle(row)">
   </tr>
 </table>
+</div>
 </div>
 
 <app-buttons></app-buttons>

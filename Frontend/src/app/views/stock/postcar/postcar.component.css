@@ -9,13 +9,21 @@
 }
 
 .postcar-inter {
-  margin: 4.6%;
-  padding: 0.4%;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  background-color: #212121;
+  box-shadow: 0px 1vh 2vh 0 rgba(0,0,0,0.2);
+  border-radius: 10px;
+  padding: 4vh;
 }
 
 .postcar-bars {
-  color: white;
-  background-color: #646464;
+  color: rgb(214, 214, 214);
+  background-color: #505050;
+  border-radius: 5px 5px 0 0;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.6);
 }
 
 ::placeholder {
@@ -50,4 +58,32 @@ input.example-right-align::-webkit-inner-spin-button {
 
 input.example-right-align {
   -moz-appearance: textfield;
+}
+
+.form-data {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: auto;
+}
+
+.encabezado {
+  color: white;
+  font-size: 2.5em;
+  margin: auto;
+  margin-bottom: 4vh;
+}
+
+.header-form {
+  text-align: center;
+  width: 100%;
+}
+
+.form-label {
+  color: white;
+}
+
+.nombre {
+  margin-right: 2vh; 
 }

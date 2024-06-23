@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -18,10 +18,11 @@ import { MatButtonModule } from '@angular/material/button';
     MatSelectModule,
     MatInputModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
   ],
   templateUrl: './postcar.component.html',
-  styleUrl: './postcar.component.css'
+  styleUrl: './postcar.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PostcarComponent {
   name? : string;
@@ -29,7 +30,7 @@ export class PostcarComponent {
   description? : string;
   image? : File;
   stock? : number;
-
+  
   constructor(private http : HttpClient) {
   }
 
@@ -60,7 +61,6 @@ export class PostcarComponent {
     const target = event.target as HTMLInputElement;
     if (target && target.files && target.files.length > 0) {
       this.image = target.files[0];
-      //alert(this.image.type)
     }
   }
 

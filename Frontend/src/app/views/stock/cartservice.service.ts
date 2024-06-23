@@ -9,6 +9,7 @@ export interface Venta{
   descripcion: string;
   stock: number;
   categoria: string;
+  fecha_entrada: string;
 }
 
 @Injectable({

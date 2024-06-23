@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {SelectionModel} from '@angular/cdk/collections';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatCheckboxModule} from '@angular/material/checkbox';
@@ -9,6 +9,8 @@ import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import { ButtonsComponent } from '../buttons/buttons.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-product_table',
@@ -23,19 +25,20 @@ import { ButtonsComponent } from '../buttons/buttons.component';
     StockComponent, 
     MatIconModule, 
     MatButtonModule,
-    ButtonsComponent
+    ButtonsComponent,
+    MatFormFieldModule,
+    MatInputModule
   ],
 })
 export class Product_tableComponent implements OnInit {
 
   data: any;
   products: Venta[] = []
-  aux: Venta[] = []
-  counterPage: number = 0;
 
   dataSource: MatTableDataSource<Venta> = new MatTableDataSource<Venta>(this.products);
   displayedColumns: string[] = ['select', 'id_producto', 'nombre', 'categoria', 'stock', 'precio'];
   selection = new SelectionModel<Venta>(true, []);
+  apiUrl: string = 'http://localhost:8000/api/admin/objects/'
 
   constructor(private http: HttpClient) { 
     
@@ -47,17 +50,13 @@ export class Product_tableComponent implements OnInit {
   }
 
   private async apicall(): Promise<void> {
-    let nextPage = true;
-    while (nextPage) {
+    if (this.apiUrl) {
       try {
-        const response = await this.http.get(`http://localhost:8000/api/public/objects/?page=${this.counterPage}`).toPromise();
+        const response = await this.http.get(this.apiUrl).toPromise();
         this.data = response;
         this.traslate();
-        this.counterPage++;
-        nextPage = !!this.data['urls'].next; // Continúa si hay una siguiente página
       } catch (error) {
         console.error(error);
-        nextPage = false; // Detiene el bucle si hay un error
       }
     }
   }
@@ -70,11 +69,14 @@ export class Product_tableComponent implements OnInit {
       stock: element.stock,
       categoria: element.categoria,
       descripcion: element.descripcion,
-      imagen: element.imagen
+      imagen: element.imagen,
     })));
   }
 
-  
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
