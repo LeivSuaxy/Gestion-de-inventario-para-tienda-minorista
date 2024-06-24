@@ -52,6 +52,8 @@ def insert_product(product_data: QueryDict) -> Response:
     connection = CrudDB.connect_to_db()
     cursor = connection.cursor()
 
+    # TODO Here is the place to check if product exists and implements!
+
     # If the data has an inventory, I take the value of the category.
     if inventory is not None:
         cursor.execute(f"""
@@ -281,8 +283,18 @@ def insert_inventory(request_data: QueryDict) -> Response:
 
 
 # DELETE
-def delete_inventory() -> Response:
-    pass
+def delete_inventory(id_inventory: int) -> Response:
+    connection = CrudDB.connect_to_db()
+    cursor = connection.cursor()
+
+    cursor.execute(f"""
+        DELETE FROM inventario WHERE id_inventario={id_inventory}
+    """)
+
+    connection.commit()
+    cursor.close()
+    connection.close()
+    return ResponseType.SUCCESS.value
 
 
 # TODO endpoint to get all reports
