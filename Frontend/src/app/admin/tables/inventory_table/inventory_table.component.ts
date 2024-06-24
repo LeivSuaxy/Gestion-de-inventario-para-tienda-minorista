@@ -174,7 +174,7 @@ export class Inventory_tableComponent implements OnInit {
 }
 
 @Component({
-  selector: 'delete-dialog',
+  selector: 'inventory-delete-dialog',
   templateUrl: 'delete-dialog.html',
   standalone: true,
   imports: [MatButtonModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent, MatDialogModule],
