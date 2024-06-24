@@ -2,9 +2,6 @@
 from django.db import models
 
 
-# Create your models here.
-
-
 class Cliente(models.Model):
     carnet_identidad = models.CharField(primary_key=True, max_length=20)
     nombre = models.CharField(max_length=255)
