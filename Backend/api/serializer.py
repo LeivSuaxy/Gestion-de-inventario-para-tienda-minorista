@@ -5,7 +5,7 @@ from .models import Producto, Empleado, Inventario
 class ProductoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Producto
-        fields = ['id_producto', 'nombre', 'precio', 'stock', 'categoria', 'imagen', 'descripcion']
+        fields = ['id_producto', 'nombre', 'precio', 'stock', 'categoria', 'imagen', 'descripcion', 'id_inventario']
 
 
 class EmpleadoSerializer(serializers.ModelSerializer):
