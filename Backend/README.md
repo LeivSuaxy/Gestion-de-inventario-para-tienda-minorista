@@ -239,20 +239,21 @@ En caso que no existan inventarios en la base de datos retorna:
 }
 ```
 `HTTP_404_NOT_FOUND`<br/>
- <!-- TODO Fix example -->
+
 <strong>Return JSON Example: </strong>
 ```json
-{ 
-    "elements": [ 
-        { 
-            "carnet_identidad": "1", 
-            "nombre": "Juan", 
-            "salario": "3000.00", 
-            "id_jefe": null 
-        } 
-    ] 
+{
+    "elements": [
+        {
+            "id_inventario": 3,
+            "categoria": "Bebidas",
+            "id_almacen": 1
+        }
+    ]
 }
 ```
+
+<hr/>
 
 ## (POST) Endpoints
 ### insert_product (POST)
@@ -477,6 +478,49 @@ If any of the required fields are missing, a JSON will be returned expressing th
 <hr/>
 
 ### insert_inventory (POST)
+This endpoint is responsible for insert an employee into the database.
+
+<strong>URL: http://localhost:8000/api/admin/insert_inventory/</strong>
+
+<b>Required input data: `form-data` or `JSON`</b>
+
+`form-data`
+
+| Key        | Value  | Required |
+|------------|--------|----------|
+| category   | String | True     |
+| storage_id | Number | True     |
+
+`JSON`
+```json
+{
+  "category": "String_example",
+  "storage_id": 30
+}
+```
+
+If any of the required fields are missing, a JSON will be returned expressing the following:
+```json
+{
+  "error": "Please provide a category and a storage_id"
+}
+```
+`HTTP_400_BAD_REQUEST`<br/>
+
+In case there is no valid warehouse, a JSON will be returned expressing the following:
+```json
+{
+  "error": "Please provide a valid warehouse"
+}
+```
+`HTTP_404_NOT_FOUND`<br/>
+
+<strong>Return JSON Example: </strong>
+
+ `Returns confirmation of the process -> {'status': 'Success'}` `HTTP_200_OK`
+
+<hr/>
+
 
 ### delete_inventory (POST)
 
