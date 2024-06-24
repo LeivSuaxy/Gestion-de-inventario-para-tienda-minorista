@@ -14,13 +14,11 @@ import {
   MatDialog,
   MatDialogActions,
   MatDialogClose,
-  MatDialogConfig,
   MatDialogContent,
   MatDialogModule,
   MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog';
-import { MAT_SELECT_SCROLL_STRATEGY } from '@angular/material/select';
 
 export interface Employee {
   carnet_identidad: string;
@@ -131,6 +129,7 @@ export class Employee_tableComponent implements OnInit {
 
   // Devuelve si estan todas las filas seleccionadas
   isAllSelected() {
+    console.log(this.getSelectedRowsData());
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length;
     return numSelected === numRows;
@@ -147,8 +146,25 @@ export class Employee_tableComponent implements OnInit {
   }
 
   // Devuelve en un arreglo todas las filas seleccionadas
-  getSelectedRowsData(): Employee[] {
-    return this.selection.selected;
+  getSelectedRowsData(): string[] {
+    let ids: any[] = [];
+
+    this.selection.selected.forEach((element) => {
+      ids.push(element.carnet_identidad);
+    });
+  
+    return ids;
+  }
+
+  eliminarEmpleados(carnetIds: string[]) {
+    return this.http.delete('http://localhost:8000/api/admin/delete_employee/', { body: { ci: carnetIds } });
+  }
+
+  deleteEmployees() {
+    this.eliminarEmpleados(this.getSelectedRowsData()).subscribe({
+      next: (response) => console.log('Empleados eliminados', response),
+      error: (error) => console.error('Error al eliminar empleados', error)
+    });
   }
 
   // Muestra en consola las filas seleccionadas

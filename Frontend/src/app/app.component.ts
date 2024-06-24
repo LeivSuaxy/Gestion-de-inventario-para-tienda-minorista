@@ -7,7 +7,7 @@ import {ViewsComponent} from "./views/views.component";
   standalone: true,
   imports: [RouterOutlet,
     NavbarComponent,
-    ViewsComponent
+    ViewsComponent,
     ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
