@@ -1,6 +1,7 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {SelectionModel} from '@angular/cdk/collections';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
+import { MatTable } from '@angular/material/table';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { TablesComponent } from '../tables.component';
 import { StockComponent } from '../../../views/stock/stock.component';
@@ -12,6 +13,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Venta } from '../../../views/stock/cartservice.service'
 import { CommonModule } from '@angular/common';
+import { forkJoin, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-product_table',
@@ -44,8 +46,25 @@ export class Product_tableComponent implements OnInit {
 
   deleteConfirmed() {
     this.showConfirmDialog = false;
+    let filas: string[] = this.getSelectedRowsData();
+    filas.forEach((element) => {
+      this.eliminarElemento(parseInt(element));
+    });
     this.deleteProducts();
-    this.apicall();
+  }
+
+  @ViewChild(MatTable) table!: MatTable<any>;
+
+  eliminarElemento(id: number) {
+    // Eliminar el elemento de la fuente de datos
+    const index = this.dataSource.data.findIndex(item => item.id_producto === id);
+    if (index > -1) {
+      this.dataSource.data.splice(index, 1);
+      // Actualizar el dataSource
+      this.dataSource.data = [...this.dataSource.data];
+      // Refrescar la tabla, si es necesario
+      // this.table.renderRows();
+    }
   }
 
 
@@ -100,8 +119,14 @@ export class Product_tableComponent implements OnInit {
     return ids;
   }
 
-  eliminarProductos(ids: string[]) {
-    return this.http.delete('http://localhost:8000/api/admin/delete_product', { body: { ci: ids } });
+  eliminarProductos(ids: string[]): Observable<any[]> {
+    // Mapea cada id a una petición HTTP individual
+    const observables = ids.map(id => 
+      this.http.post('http://localhost:8000/api/admin/delete_product', { id: id }),
+    );
+  
+    // forkJoin espera a que todos los observables se completen y luego emite los valores de todos ellos
+    return forkJoin(observables);
   }
 
   deleteProducts() {
