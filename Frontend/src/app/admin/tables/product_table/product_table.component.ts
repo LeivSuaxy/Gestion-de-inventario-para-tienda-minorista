@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import {SelectionModel} from '@angular/cdk/collections';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatCheckboxModule} from '@angular/material/checkbox';
@@ -10,16 +10,8 @@ import {MatButtonModule} from '@angular/material/button';
 import { ButtonsComponent } from '../buttons/buttons.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import {
-  MatDialog,
-  MatDialogActions,
-  MatDialogClose,
-  MatDialogContent,
-  MatDialogModule,
-  MatDialogRef,
-  MatDialogTitle,
-} from '@angular/material/dialog';
 import { Venta } from '../../../views/stock/cartservice.service'
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-product_table',
@@ -36,43 +28,26 @@ import { Venta } from '../../../views/stock/cartservice.service'
     MatButtonModule,
     ButtonsComponent,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatButtonModule, 
+    HttpClientModule,
+    CommonModule
   ],
 })
 export class Product_tableComponent implements OnInit {
-  readonly dialog = inject(MatDialog);
+  showConfirmDialog = false; // Controla la visibilidad del diálogo
 
-  // Configuracion del cuadro de dialogo
-  openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
-    const dialogRef = this.dialog.open(DeleteDialog, {
-      width: '250px',
-      enterAnimationDuration,
-      exitAnimationDuration,
-      position: { top: '-35%', left: '40%' },
-      hasBackdrop: true,
-      disableClose: true,
-    });
-  
-    document.body.style.overflow = 'hidden'; // Deshabilita el desplazamiento
-  
-    // Función para detener la propagación de eventos de clic fuera del diálogo
-    const stopClickPropagation = (e: MouseEvent) => {
-      const overlayContainer = document.querySelector('.cdk-overlay-container');
-      if (overlayContainer && !overlayContainer.contains(e.target as Node)) {
-        e.stopPropagation();
-        e.preventDefault();
-      }
-    };
-  
-    // Agrega el manejador de eventos al documento
-    document.addEventListener('click', stopClickPropagation, true);
-  
-    dialogRef.afterClosed().subscribe(() => {
-      document.body.style.overflow = ''; // Re-habilita el desplazamiento
-      // Importante: remover el manejador de eventos una vez que el diálogo se cierra
-      document.removeEventListener('click', stopClickPropagation, true);
-    });
+  // Otros métodos y propiedades...
+  openConfirmDialog() {
+    this.showConfirmDialog = true;
   }
+
+  deleteConfirmed() {
+    this.showConfirmDialog = false;
+    this.deleteProducts();
+    this.apicall();
+  }
+
 
   data: any;
   products: Venta[] = []
@@ -126,7 +101,7 @@ export class Product_tableComponent implements OnInit {
   }
 
   eliminarProductos(ids: string[]) {
-    return this.http.delete('http://localhost:8000/api/admin/delete_product/', { body: { ci: ids } });
+    return this.http.delete('http://localhost:8000/api/admin/delete_product', { body: { ci: ids } });
   }
 
   deleteProducts() {
@@ -166,16 +141,5 @@ export class Product_tableComponent implements OnInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id_producto + 1}`;
   }
 
-}
-
-@Component({
-  selector: 'delete-dialog',
-  templateUrl: 'delete-dialog.html',
-  standalone: true,
-  imports: [MatButtonModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent, MatDialogModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
-export class DeleteDialog {
-  readonly dialogRef = inject(MatDialogRef<DeleteDialog>);
 }
 

@@ -184,7 +184,7 @@ export class Employee_tableComponent implements OnInit {
 }
 
 @Component({
-  selector: 'delete-dialog',
+  selector: 'employee-delete-dialog',
   templateUrl: 'delete-dialog.html',
   standalone: true,
   imports: [MatButtonModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent, MatDialogModule],
