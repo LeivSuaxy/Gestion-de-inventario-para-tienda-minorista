@@ -8,6 +8,7 @@
   - [(GET) Endpoints](#get-endpoints)
     - [get_all_products](#get_all_products-get)
     - [get_all_employees](#get_all_employees-get)
+    - [get_all_inventories](#get_all_inventories-get)
   - [(POST) Endpoints](#post-endpoints)
     - [insert_product](#insert_product-post)
     - [update_product](#update_product-post)
@@ -15,6 +16,8 @@
     - [insert_employee](#insert_employee-post)
     - [update_employee](#update_employee-post)
     - [delete_employee](#delete_employee-post)
+    - [insert_inventory](#insert_inventory-post)
+    - [delete_inventory](#delete_inventory-post)
 - [Public/General Endpoints](#publicgeneral-endpoints)
   - [(GET) Endpoints](#get-endpoints-1)
     - [get_objects](#get_objects-get) 
@@ -221,6 +224,35 @@ This endpoint is responsible for returning all the employees stored in the datab
 `Returns a JSON with an array of elements that corresponds to employees` `HTTP_200_OK`
 
 <hr/>
+
+### get_all_inventories (GET)
+This endpoint is responsible for returning all the inventories stored in database.
+
+<strong>URL: http://localhost:8000/api/admin/inventories/</strong>
+
+<strong>_Errors JSON Examples:_</strong>
+
+En caso que no existan inventarios en la base de datos retorna:
+```json
+{
+    "error": "is empty"
+}
+```
+`HTTP_404_NOT_FOUND`<br/>
+ <!-- TODO Fix example -->
+<strong>Return JSON Example: </strong>
+```json
+{ 
+    "elements": [ 
+        { 
+            "carnet_identidad": "1", 
+            "nombre": "Juan", 
+            "salario": "3000.00", 
+            "id_jefe": null 
+        } 
+    ] 
+}
+```
 
 ## (POST) Endpoints
 ### insert_product (POST)
@@ -443,6 +475,10 @@ If any of the required fields are missing, a JSON will be returned expressing th
  `Returns confirmation of the process -> {'status': 'Success'}` `HTTP_200_OK`
 
 <hr/>
+
+### insert_inventory (POST)
+
+### delete_inventory (POST)
 
 # Public/General Endpoints
 Public/General endpoints are mainly used to display information to the user.<br/>

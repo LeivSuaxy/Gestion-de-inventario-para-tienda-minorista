@@ -1,6 +1,42 @@
 <!DOCTYPE html>
 <html lang="es">
-
-
-
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Confirmación de Pedido</title>
+<style>
+  body { font-family: Arial, sans-serif; color: #333; margin: 0; padding: 0; }
+  .container { width: 80%; margin: auto; background-color: #f4f4f4; padding: 20px; }
+  .header { background-color: #212121; color: white; padding: 10px; }
+  .logo { text-align: center; font-size: 24px; }
+  .shop-btn { text-align: right; }
+  .main-content { background-color: white; padding: 20px; }
+  .order-summary { margin-top: 20px; }
+  .item { display: flex; justify-content: space-between; border-bottom: 1px solid #ccc; padding-bottom: 10px; margin-bottom: 10px; }
+  .total { display: flex; justify-content: space-between; font-weight: bold; margin-top: 10px; }
+  .footer { background-color: #343434; color: white; padding: 20px; text-align: center; }
+  .discount-banner { background-color: #ff9900; color: white; text-align: center; padding: 15px; }
+  .address-section { font-style: normal; color: #777; text-align: center; margin-top: 30px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div class="logo">EliteStock</div>
+  </div>
+  <div class="main-content">
+    <h1>¡Gracias por tu pedido {{ nombre }}!</h1>
+    <p>EliteStock es una cadena de tiendas minoristas orientadas a la satisfacción del cliente, con numerosas ofertas y
+    precios completamente absequibles, además de una amplia gama de categorías de producto. Esperamos que haya sido grata
+    la atención y recibida y esperamos nuevamente su visita por nuestro sitio. SOMOS ELITESTOCK!</p>
+    <!-- Agrega aquí el contenido de tu pedido -->
+      <div class="order-summary">
+          Se supone que aqui van productos
+      </div>
+  </div>
+  <div class="footer">
+    <p>92204 FTE, UCI</p>
+  </div>
+</div>
+</body>
 </html>
