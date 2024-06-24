@@ -29,4 +29,5 @@ urlpatterns = [
     path('api/auth/', include('login.urls')),
     path('api/public/', include('api.urls')),
     path('api/admin/', include('apiadmin.urls')),
+    path('api/correo/', include('messageApp.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
