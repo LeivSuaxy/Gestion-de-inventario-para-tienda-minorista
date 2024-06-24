@@ -521,8 +521,39 @@ In case there is no valid warehouse, a JSON will be returned expressing the foll
 
 <hr/>
 
-
 ### delete_inventory (POST)
+This endpoint is responsible for delete an inventory that exists in the database.
+<b>REQUIRE REVIEW</b>
+
+<strong>URL: http://localhost:8000/api/admin/delete_inventory/</strong>
+
+<b>Required input data: `form-data` or `JSON`</b>
+
+`form-data:`
+
+| Key | Value  | Required |
+|-----|--------|----------|
+| id  | Number | True     |
+
+`JSON:`
+```json
+{
+  "id": 1
+}
+```
+If any of the required fields are missing, a JSON will be returned expressing the following:
+```json
+{
+  "error": "Please provide an id"
+}
+```
+`HTTP_400_BAD_REQUEST`<br/>
+
+<strong>Return JSON Example: </strong>
+
+ `Returns confirmation of the process -> {'status': 'Success'}` `HTTP_200_OK`
+
+<hr/>
 
 # Public/General Endpoints
 Public/General endpoints are mainly used to display information to the user.<br/>
