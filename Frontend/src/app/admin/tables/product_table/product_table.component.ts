@@ -23,16 +23,16 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   standalone: true,
   imports: [
     HttpClientModule,
-    MatTableModule, 
-    MatCheckboxModule, 
-    TablesComponent, 
-    StockComponent, 
-    MatIconModule, 
+    MatTableModule,
+    MatCheckboxModule,
+    TablesComponent,
+    StockComponent,
+    MatIconModule,
     MatButtonModule,
     ButtonsComponent,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule, 
+    MatButtonModule,
     HttpClientModule,
     CommonModule,
     RouterLink,
@@ -79,8 +79,8 @@ export class Product_tableComponent implements OnInit {
   selection = new SelectionModel<Venta>(true, []);
   apiUrl: string = 'http://localhost:8000/api/admin/products/'
 
-  constructor(private http: HttpClient) { 
-    
+  constructor(private http: HttpClient) {
+
   }
 
   async ngOnInit() {
@@ -99,16 +99,16 @@ export class Product_tableComponent implements OnInit {
       }
     }
   }
-  
+
   traslate(): void {
     this.products.push(...this.data['elements'].map((element: any) => ({
-      nombre: element.nombre,
-      id_producto: element.id_producto,
-      precio: element.precio,
+      nombre: element.name,
+      id_producto: element.id_product,
+      precio: element.price,
       stock: element.stock,
-      categoria: element.categoria,
-      descripcion: element.descripcion,
-      imagen: element.imagen,
+      categoria: element.category,
+      descripcion: element.description,
+      imagen: element.image,
     })));
   }
 
@@ -118,16 +118,16 @@ export class Product_tableComponent implements OnInit {
     this.selection.selected.forEach((element) => {
       ids.push(element.id_producto);
     });
-  
+
     return ids;
   }
 
   eliminarProductos(ids: string[]): Observable<any[]> {
     // Mapea cada id a una petición HTTP individual
-    const observables = ids.map(id => 
+    const observables = ids.map(id =>
       this.http.post('http://localhost:8000/api/admin/delete_product', { id: id }),
     );
-  
+
     // forkJoin espera a que todos los observables se completen y luego emite los valores de todos ellos
     return forkJoin(observables);
   }
