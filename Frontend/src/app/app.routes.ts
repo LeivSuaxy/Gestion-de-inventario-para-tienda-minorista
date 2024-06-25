@@ -10,6 +10,8 @@ import { Employee_tableComponent } from './admin/tables/employee_table/employee_
 import { Inventory_tableComponent } from './admin/tables/inventory_table/inventory_table.component';
 import { Product_tableComponent } from './admin/tables/product_table/product_table.component';
 import { Post_inventoryComponent } from './admin/tables/inventory_table/post_inventory/post_inventory.component';
+import { AboutComponent } from './views/about/about.component';
+import { ContactComponent } from './views/contact/contact.component';
 
 export const routes: Routes = [
   { path: '', component: ViewsComponent },
@@ -23,5 +25,7 @@ export const routes: Routes = [
   { path: 'tables/employee_table', component: Employee_tableComponent },
   { path: 'tables/inventory_table', component: Inventory_tableComponent },
   { path: 'tables/product_table', component: Product_tableComponent },
-  { path: 'inventory_add', component: Post_inventoryComponent},
+  { path: 'inventory_add', component: Post_inventoryComponent },
+  { path: 'about', component: AboutComponent },
+  { path: 'contact', component: ContactComponent }
 ];
