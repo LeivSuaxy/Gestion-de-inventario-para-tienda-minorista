@@ -1,8 +1,8 @@
 import psycopg2.errors
 from Backend.crudDB import CrudDB, ResponseType
-from api.models import Producto, Empleado, Inventario
-from api.serializer import EmpleadoSerializer, InventarioSerializer
-from .serializer import ProductoSerializerAdmin
+from api.models import Product, Employee, Inventory
+from api.serializer import EmployeeSerializer, InventorySerializer
+from .serializer import ProductSerializerAdmin
 from django.http import QueryDict
 from rest_framework.response import Response
 from rest_framework import status
@@ -18,15 +18,36 @@ from django.utils.timezone import now
 # READ PRODUCTS
 
 def get_all_products() -> Response:
-    query = "SELECT * FROM producto"
-    elements = Producto.objects.raw(query)
+    query = "SELECT * FROM product"
+    elements = Product.objects.raw(query)
     if not elements:
         return ResponseType.NOT_FOUND.value
-    serializer = ProductoSerializerAdmin(elements, many=True)
+    serializer = ProductSerializerAdmin(elements, many=True)
     return Response({'elements': serializer.data}, status.HTTP_200_OK)
 
 
 # CREATE PRODUCT
+def temp_insert_product(product_data: QueryDict) -> Response:
+    # Obligatory columns
+    if not product_data.get('name') or not product_data.get('price') or not product_data.get(
+            'stock') or not product_data.get('description'):
+        return Response({'error': 'Please provide all the required fields',
+                         'mandatory_fields': 'name, price, stock, description',
+                         'optional_fields': 'image, category, inventory'},
+                        status=status.HTTP_400_BAD_REQUEST)
+
+    columns = ', '.join(product_data.keys())
+    placeholders = ', '.join(['%s'] * len(product_data))
+
+    query = f"""INSERT INTO product ({columns}) VALUES ({placeholders})"""
+
+    connection = CrudDB.connect_to_db()
+    cursor = connection.cursor()
+
+    cursor.execute(query, tuple(product_data.values()))
+
+    return ResponseType.SUCCESS.value
+
 
 def insert_product(product_data: QueryDict) -> Response:
     # TODO check if product exists
@@ -59,7 +80,7 @@ def insert_product(product_data: QueryDict) -> Response:
     if inventory is not None:
         try:
             cursor.execute(f"""
-                SELECT categoria FROM inventario WHERE id_inventario={inventory}
+                SELECT category FROM inventory WHERE id_inventory={inventory}
             """)
 
             if category is None:
@@ -72,9 +93,8 @@ def insert_product(product_data: QueryDict) -> Response:
 
         try:
             cursor.execute(f"""
-                INSERT INTO producto (nombre, precio, stock, categoria, id_inventario, descripcion, imagen, fecha_entrada)
-                VALUES ('{name}', {price}, {stock}, '{category}', {inventory}, '{description}', '{url_imagen}',
-                 '{now()}')
+                INSERT INTO product (name, price, stock, category, id_inventory, description, image)
+                VALUES ('{name}', {price}, {stock}, '{category}', {inventory}, '{description}', '{url_imagen}')
             """)
         except psycopg2.errors.UndefinedColumn as e:
             print(f'An error occurred executing the query in the database: {e.pgerror}')
@@ -89,9 +109,8 @@ def insert_product(product_data: QueryDict) -> Response:
 
         try:
             cursor.execute(f"""
-                       INSERT INTO producto (nombre, precio, stock, categoria, descripcion, imagen, fecha_entrada)
-                       VALUES ('{name}', {price}, {stock}, '{category}', '{description}', '{url_imagen}',
-                        '{now()}')
+                       INSERT INTO product (name, price, stock, category, description, image)
+                       VALUES ('{name}', {price}, {stock}, '{category}', '{description}', '{url_imagen}')
                    """)
         except psycopg2.errors.UndefinedColumn as e:
             print(f'An error occurred executing the query in the database: {e.pgerror}')
@@ -120,7 +139,6 @@ def update_product(product_data: QueryDict) -> Response:
     inventory = product_data.get('inventory')
     image = product_data.get('image')
     description = product_data.get('description')
-    entry_date = product_data.get('entry_date')
 
     if not id_product:
         return Response({'error': 'Please provide the id of the product to update'},
@@ -141,8 +159,8 @@ def update_product(product_data: QueryDict) -> Response:
     cursor = connection.cursor()
 
     cursor.execute(f"""
-        UPDATE producto SET nombre='{name}', precio={price}, stock={int(stock)}, categoria='{category}', 
-        id_inventario={inventory}, descripcion='{description}', imagen='{url_image}', fecha_entrada='{entry_date}'
+        UPDATE product SET name='{name}', price={price}, stock={int(stock)}, category='{category}', 
+        id_inventory={inventory}, description='{description}', image='{url_image}'
         WHERE id_producto={id_product}
     """)
 
@@ -163,7 +181,7 @@ def delete_product(data_id: QueryDict) -> Response:
                         status=status.HTTP_400_BAD_REQUEST)
     connection = CrudDB.connect_to_db()
     cursor = connection.cursor()
-    cursor.execute(f"DELETE FROM producto WHERE id_producto={id_product}")
+    cursor.execute(f"DELETE FROM product WHERE id_product={id_product}")
     connection.commit()
     cursor.close()
     connection.close()
@@ -173,11 +191,11 @@ def delete_product(data_id: QueryDict) -> Response:
 # <--EMPLOYEES - CRUD-->
 # READ
 def get_all_employees() -> Response:
-    query = "SELECT * FROM empleado"
-    elements = Empleado.objects.raw(query)
+    query = "SELECT * FROM employee"
+    elements = Employee.objects.raw(query)
     if not elements:
         return ResponseType.NOT_FOUND.value
-    serializer = EmpleadoSerializer(elements, many=True)
+    serializer = EmployeeSerializer(elements, many=True)
     return Response({'elements': serializer.data}, status.HTTP_200_OK)
 
 
@@ -200,7 +218,7 @@ def insert_employee_in_database(data: QueryDict) -> Response:
     if boss is not None:
         try:
             cursor.execute(f"""
-                INSERT INTO empleado (carnet_identidad, nombre, salario, id_jefe)
+                INSERT INTO employee (ci, name, salary, id_boss)
                 VALUES ('{ci}', '{name}', {salary}, '{boss}')
             """)
         except psycopg2.errors.UniqueViolation as e:
@@ -212,7 +230,7 @@ def insert_employee_in_database(data: QueryDict) -> Response:
     else:
         try:
             cursor.execute(f"""
-                        INSERT INTO empleado (carnet_identidad, nombre, salario)
+                        INSERT INTO employee (ci, name, salary)
                         VALUES ('{ci}', '{name}', {salary})
                     """)
         except psycopg2.errors.UniqueViolation as e:
@@ -244,8 +262,8 @@ def update_employee_in_database(data: QueryDict) -> Response:
     cursor = connection.cursor()
 
     cursor.execute(f"""
-        UPDATE empleado SET nombre='{name}', salario={salary}, id_jefe='{boss}'
-        WHERE carnet_identidad='{ci}'
+        UPDATE employee SET name='{name}', salary={salary}, id_boss='{boss}'
+        WHERE ci='{ci}'
     """)
 
     connection.commit()
@@ -262,7 +280,7 @@ def delete_employee_in_database(ci: str) -> Response:
     cursor = connection.cursor()
 
     cursor.execute(f"""
-        DELETE FROM empleado WHERE carnet_identidad='{ci}'
+        DELETE FROM employee WHERE ci='{ci}'
     """)
     connection.commit()
     cursor.close()
@@ -274,11 +292,11 @@ def delete_employee_in_database(ci: str) -> Response:
 # <--INVENTORIES - CRUD-->
 # READ
 def get_all_inventories() -> Response:
-    query = "SELECT * FROM inventario"
-    elements = Inventario.objects.raw(query)
+    query = "SELECT * FROM inventory"
+    elements = Inventory.objects.raw(query)
     if not elements:
         return Response({'error': 'is empty'}, status.HTTP_404_NOT_FOUND)
-    serializer = InventarioSerializer(elements, many=True)
+    serializer = InventorySerializer(elements, many=True)
     return Response({'elements': serializer.data}, status.HTTP_200_OK)
 
 
@@ -295,7 +313,7 @@ def insert_inventory(request_data: QueryDict) -> Response:
     cursor = connection.cursor()
 
     cursor.execute(f"""
-        SELECT 1 FROM almacen WHERE id_almacen='{storage_id}' 
+        SELECT 1 FROM warehouse WHERE id_warehouse='{storage_id}' 
     """)
     exist_storage = cursor.fetchone() is not None
 
@@ -305,7 +323,7 @@ def insert_inventory(request_data: QueryDict) -> Response:
         return Response({'error': 'Please provide a valid warehouse'}, status.HTTP_404_NOT_FOUND)
 
     cursor.execute(f"""
-        INSERT INTO inventario (categoria, id_almacen) VALUES ('{category}', {storage_id})
+        INSERT INTO inventory (category, id_warehouse) VALUES ('{category}', {storage_id})
     """)
 
     connection.commit()
@@ -321,7 +339,7 @@ def delete_inventory(id_inventory: int) -> Response:
     cursor = connection.cursor()
 
     cursor.execute(f"""
-        DELETE FROM inventario WHERE id_inventario={id_inventory}
+        DELETE FROM inventory WHERE id_inventory={id_inventory}
     """)
 
     connection.commit()
