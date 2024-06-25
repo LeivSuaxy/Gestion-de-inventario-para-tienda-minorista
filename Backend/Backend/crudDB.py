@@ -1,8 +1,8 @@
 import psycopg2
 from django.utils.timezone import now
 from django.core.files.images import ImageFile
-from api.models import Producto
-from api.serializer import ProductoSerializer
+from api.models import Product
+from api.serializer import ProductSerializer
 from .settings import DATABASES, REST_FRAMEWORK
 from enum import Enum
 from django.contrib.auth.hashers import check_password
@@ -81,7 +81,7 @@ class CrudDB:
             # Create a cursor object to execute SQL commands
             cursor = connection.cursor()
 
-            cursor.execute(f"SELECT 1 FROM empleado WHERE carnet_identidad='{ci}'")
+            cursor.execute(f"SELECT 1 FROM employee WHERE ci='{ci}'")
 
             employee_exist = cursor.fetchone() is not None
 
@@ -90,7 +90,7 @@ class CrudDB:
                                 status.HTTP_404_NOT_FOUND)
 
             # Execute a SQL command to check if a user with the provided username already exists in the database
-            cursor.execute(f"SELECT 1 FROM cuenta WHERE usuario = '{username}'")
+            cursor.execute(f"SELECT 1 FROM account WHERE user = '{username}'")
 
             # If the user exists, close the connection and return a code indicating that the user already exists
             user_exists = cursor.fetchone() is not None
@@ -107,7 +107,7 @@ class CrudDB:
                 # and hashed password, along with some default values for other fields.
                 try:
                     cursor.execute(f"""
-                        INSERT INTO cuenta VALUES ('{username}', '{password}', '{token_hash}', '{ci}')
+                        INSERT INTO account VALUES ('{username}', '{password}', '{token_hash}', '{ci}')
                     """)
                 except psycopg2.errors.UniqueViolation:
                     cursor.close()
@@ -157,7 +157,7 @@ class CrudDB:
             cursor = connection.cursor()
 
             # Execute a SQL command to check if a user with the provided username exists in the database
-            cursor.execute(f"SELECT 1 FROM cuenta WHERE usuario = '{username}'")
+            cursor.execute(f"SELECT 1 FROM account WHERE user = '{username}'")
 
             # If the user exists, close the connection and return a code indicating that the user already exists
             user_exists = cursor.fetchone() is not None
@@ -170,7 +170,7 @@ class CrudDB:
                 return ResponseType.NOT_FOUND.value
             else:
                 # If the user exists, retrieve the hashed password of the user from the database
-                cursor.execute(f"SELECT contrasegna, auth_token FROM cuenta WHERE usuario = '{username}'")
+                cursor.execute(f"SELECT password, auth_token FROM account WHERE user = '{username}'")
                 result = cursor.fetchone()
 
                 if result is not None:
@@ -202,7 +202,7 @@ class CrudDB:
         else:
             cursor = connection.cursor()
 
-            cursor.execute("SELECT COUNT(*) FROM producto")
+            cursor.execute("SELECT COUNT(*) FROM product")
 
             self.total_elements_stock = cursor.fetchone()[0]
 
@@ -221,15 +221,15 @@ class CrudDB:
         # self.get_amount_elements_stock()
 
         if pagination < self.total_elements_stock:
-            query = ("SELECT id_producto, nombre, precio, descripcion, imagen, categoria, stock"
-                     f" FROM producto WHERE stock > 0 ORDER BY id_producto "
+            query = ("SELECT id_product, name, price, description, image, category, stock"
+                     f" FROM product WHERE stock > 0 ORDER BY id_product "
                      f"LIMIT {REST_FRAMEWORK['PAGE_SIZE']} OFFSET {pagination}")
-            elements = Producto.objects.raw(query)
+            elements = Product.objects.raw(query)
 
             if not elements:
                 return ResponseType.NOT_FOUND.value
             else:
-                serializer = ProductoSerializer(elements, many=True)
+                serializer = ProductSerializer(elements, many=True)
                 return Response(serializer.data, status.HTTP_200_OK)
         else:
             return ResponseType.ERROR.value
@@ -295,7 +295,7 @@ class CrudDB:
             connection.close()
             return Response({'error': 'Ya existe el nombre'}, status.HTTP_400_BAD_REQUEST)
 
-        cursor.execute(f"INSERT INTO almacen (nombre, ubicacion) VALUES ('{name}', '{location}')")
+        cursor.execute(f"INSERT INTO warehouse (name, location) VALUES ('{name}', '{location}')")
         connection.commit()
 
         cursor.close()
@@ -308,7 +308,7 @@ class CrudDB:
         connection = self.connect_to_db()
         cursor = connection.cursor()
 
-        cursor.execute(f"SELECT EXISTS(SELECT 1 FROM almacen WHERE nombre='{name}')")
+        cursor.execute(f"SELECT EXISTS(SELECT 1 FROM warehouse WHERE name='{name}')")
 
         exist_storage = cursor.fetchone()[0]
 
@@ -338,7 +338,7 @@ class CrudDB:
 
         cursor = connection.cursor()
 
-        cursor.execute(f"INSERT INTO inventario (id_almacen) VALUES ('{id_storage}')")
+        cursor.execute(f"INSERT INTO inventory (id_warehouse) VALUES ('{id_storage}')")
         connection.commit()
 
         cursor.close()
@@ -354,7 +354,7 @@ class CrudDB:
 
         cursor = connection.cursor()
 
-        cursor.execute(f"SELECT id_almacen FROM almacen WHERE nombre='{storage_name}'")
+        cursor.execute(f"SELECT id_warehouse FROM warehouse WHERE name='{storage_name}'")
 
         id_storage = cursor.fetchone()[0]
 
@@ -381,7 +381,7 @@ class CrudDB:
             product_id = product['id']
             quantity = product['quantity']
 
-            cursor.execute(f"UPDATE producto SET stock=stock-{quantity} WHERE id_producto={product_id}")
+            cursor.execute(f"UPDATE product SET stock=stock-{quantity} WHERE id_product={product_id}")
 
         connection.commit()
         cursor.close()
@@ -413,23 +413,23 @@ class CrudDB:
 
         # Agnadir cliente if not exists
 
-        cursor.execute(f"INSERT INTO cliente (carnet_identidad, nombre, email, telefono) SELECT '{client['ci']}', "
+        cursor.execute(f"INSERT INTO client (ci, name, email, phone) SELECT '{client['ci']}', "
                        f"'{client['name']}',"
-                       f"'{client['email']}', '{client['phone']}' WHERE NOT EXISTS (SELECT 1 FROM Cliente WHERE "
-                       f"carnet_identidad='{client['ci']}')")
+                       f"'{client['email']}', '{client['phone']}' WHERE NOT EXISTS (SELECT 1 FROM client WHERE "
+                       f"ci='{client['ci']}')")
 
         # Orden de compra:
-        cursor.execute(f"INSERT INTO orden_compra (fecha_realizada, monto_total, id_cliente)"
-                       f"VALUES ('{now()}', {price_all_products_calct}, '{client['ci']}') RETURNING id_orden_compra")
+        cursor.execute(f"INSERT INTO purchase_order (date_done, total_amount, id_client)"
+                       f"VALUES ('{now()}', {price_all_products_calct}, '{client['ci']}') RETURNING id_purchase_order")
 
         id_order = cursor.fetchone()[0]
 
         # Reporte
-        cursor.execute(f"INSERT INTO reporte (fecha_reporte, id_empleado) VALUES  ('{now()}', 1) RETURNING id_reporte")
+        cursor.execute(f"INSERT INTO report (report_date, id_employee) VALUES  ('{now()}', 1) RETURNING id_report")
         id_reporte = cursor.fetchone()[0]
 
         # Reporte de venta el cual tiene que hacer un reporte
-        cursor.execute(f"INSERT INTO reporte_venta (id, fecha_hora_entrega, monto_total, id_orden_compra)"
+        cursor.execute(f"INSERT INTO sales_report (id, date_time_delivery, total_amount, id_purchase_order)"
                        f" VALUES ({id_reporte}, '{now()}', {price_all_products_calct}, {id_order})")
 
         connection.commit()
@@ -450,7 +450,7 @@ class CrudDB:
             product_id = product['id']
             quantity = product['quantity']
 
-            cursor.execute(f"SELECT precio FROM producto WHERE id_producto={product_id}")
+            cursor.execute(f"SELECT price FROM product WHERE id_product={product_id}")
             price = cursor.fetchone()[0]
             print(price)
 
@@ -464,13 +464,13 @@ class CrudDB:
     def search_products(self, search_query: str) -> Response:
         connection = self.connect_to_db()
         cursor = connection.cursor()
-        query = f"SELECT * FROM producto WHERE nombre LIKE %s"
-        elements = Producto.objects.raw(query, [f'%{search_query}%'])
+        query = f"SELECT * FROM product WHERE name LIKE %s"
+        elements = Product.objects.raw(query, [f'%{search_query}%'])
         cursor.close()
         connection.close()
 
         if not elements:
             return ResponseType.NOT_FOUND.value
         else:
-            serializer = ProductoSerializer(elements, many=True)
+            serializer = ProductSerializer(elements, many=True)
             return Response(serializer.data, status.HTTP_200_OK)

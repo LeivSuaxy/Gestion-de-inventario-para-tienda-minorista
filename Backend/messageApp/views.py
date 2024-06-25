@@ -5,6 +5,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 
+
 # Create your views here.
 # TODO System of messages for the app and build the template.
 @api_view(['POST'])
@@ -24,13 +25,13 @@ def send_email(request):
     productos = [ProductoTemp(dat['name'], dat['price'], dat['quantity']) for dat in data]
     html_content = render_to_string('correo.html', context={'nombre': name, 'productos': productos})
 
-    email_message: EmailMessage = EmailMessage('Hola, aqui esta tu pedido', body=html_content, to=[f'{email}'], from_email='elitestock970430@gmail.com')
+    email_message: EmailMessage = EmailMessage('Hola, aqui esta tu pedido', body=html_content, to=[f'{email}'],
+                                               from_email='elitestock970430@gmail.com')
 
     email_message.content_subtype = 'html'
 
     email_message.send()
     return render(request, 'correo.html', context={'nombre': name, 'productos': productos})
-
 
 
 class ProductoTemp:
