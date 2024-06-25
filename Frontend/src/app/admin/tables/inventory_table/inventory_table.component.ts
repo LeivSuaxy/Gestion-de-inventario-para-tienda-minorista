@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectionStrategy, ViewChild } from '@angular/core';
 import {SelectionModel} from '@angular/cdk/collections';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatCheckboxModule} from '@angular/material/checkbox';
@@ -10,18 +10,12 @@ import {MatButtonModule} from '@angular/material/button';
 import { ButtonsComponent } from '../buttons/buttons.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import {
-  MatDialog,
-  MatDialogActions,
-  MatDialogClose,
-  MatDialogContent,
-  MatDialogModule,
-  MatDialogRef,
-  MatDialogTitle,
-} from '@angular/material/dialog';
+import { MatTable } from '@angular/material/table';
+import { forkJoin, Observable } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 export interface Inventario {
-  id: string;
+  id: number;
   categoria: string;
   id_almacen: string;
 }
@@ -41,51 +35,47 @@ export interface Inventario {
     MatButtonModule,
     ButtonsComponent,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    CommonModule
   ],
 })
 export class Inventory_tableComponent implements OnInit {
-  readonly dialog = inject(MatDialog);
+  showConfirmDialog = false; // Controla la visibilidad del diálogo
 
-  // Configuracion del cuadro de dialogo
-  openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
-    const dialogRef = this.dialog.open(DeleteDialog, {
-      width: '250px',
-      enterAnimationDuration,
-      exitAnimationDuration,
-      position: { top: '-35%', left: '40%' },
-      hasBackdrop: true,
-      disableClose: true,
+  // Otros métodos y propiedades...
+  openConfirmDialog() {
+    this.showConfirmDialog = true;
+  }
+
+  deleteConfirmed() {
+    this.showConfirmDialog = false;
+    let filas: string[] = this.getSelectedRowsData();
+    filas.forEach((element) => {
+      this.eliminarElemento(parseInt(element));
     });
-  
-    document.body.style.overflow = 'hidden'; // Deshabilita el desplazamiento
-  
-    // Función para detener la propagación de eventos de clic fuera del diálogo
-    const stopClickPropagation = (e: MouseEvent) => {
-      const overlayContainer = document.querySelector('.cdk-overlay-container');
-      if (overlayContainer && !overlayContainer.contains(e.target as Node)) {
-        e.stopPropagation();
-        e.preventDefault();
-      }
-    };
-  
-    // Agrega el manejador de eventos al documento
-    document.addEventListener('click', stopClickPropagation, true);
-  
-    dialogRef.afterClosed().subscribe(() => {
-      document.body.style.overflow = ''; // Re-habilita el desplazamiento
-      // Importante: remover el manejador de eventos una vez que el diálogo se cierra
-      document.removeEventListener('click', stopClickPropagation, true);
-    });
+    this.deleteInventory();
+  }
+
+  @ViewChild(MatTable) table!: MatTable<any>;
+
+  eliminarElemento(id: number) {
+    // Eliminar el elemento de la fuente de datos
+    const index = this.dataSource.data.findIndex(item => item.id === id);
+    if (index > -1) {
+      this.dataSource.data.splice(index, 1);
+      // Actualizar el dataSource
+      this.dataSource.data = [...this.dataSource.data];
+      // Refrescar la tabla, si es necesario
+      // this.table.renderRows();
+    }
   }
 
   data: any;
   inventarios: Inventario[] = []
-
   dataSource: MatTableDataSource<Inventario> = new MatTableDataSource<Inventario>(this.inventarios);
   displayedColumns: string[] = ['select', 'id_producto', 'nombre', 'categoria', 'stock', 'precio'];
   selection = new SelectionModel<Inventario>(true, []);
-  apiUrl: string = 'http://localhost:8000/api/admin/objects/'
+  apiUrl: string = 'http://localhost:8000/api/admin/inventories/'
 
   constructor(private http: HttpClient) { 
     
@@ -96,7 +86,7 @@ export class Inventory_tableComponent implements OnInit {
     this.dataSource = new MatTableDataSource<Inventario>(this.inventarios);
   }
 
-  /*private async apicall(): Promise<void> {
+  private async apicall(): Promise<void> {
     if (this.apiUrl) {
       try {
         const response = await this.http.get(this.apiUrl).toPromise();
@@ -109,16 +99,12 @@ export class Inventory_tableComponent implements OnInit {
   }
   
   traslate(): void {
-    this.products.push(...this.data['elements'].map((element: any) => ({
-      nombre: element.nombre,
-      id_producto: element.id_producto,
-      precio: element.precio,
-      stock: element.stock,
+    this.inventarios.push(...this.data['elements'].map((element: any) => ({
+      id: element.id,
       categoria: element.categoria,
-      descripcion: element.descripcion,
-      imagen: element.imagen,
+      id_almacen: element.id_almacen
     })));
-  }*/
+  }
 
   getSelectedRowsData(): string[] {
     let ids: any[] = [];
@@ -131,7 +117,10 @@ export class Inventory_tableComponent implements OnInit {
   }
 
   eliminarInventario(ids: string[]) {
-    return this.http.delete('http://localhost:8000/api/admin/delete_inventory/', { body: { ci: ids } });
+    const observables = ids.map(id => 
+      this.http.post('http://localhost:8000/api/admin/delete_inventory/', { id: id }),
+    );
+    return forkJoin(observables);
   }
 
   deleteInventory() {
@@ -171,15 +160,4 @@ export class Inventory_tableComponent implements OnInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
   }
 
-}
-
-@Component({
-  selector: 'inventory-delete-dialog',
-  templateUrl: 'delete-dialog.html',
-  standalone: true,
-  imports: [MatButtonModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent, MatDialogModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
-export class DeleteDialog {
-  readonly dialogRef = inject(MatDialogRef<DeleteDialog>);
 }
