@@ -20,6 +20,7 @@ from django.utils.timezone import now
 def get_all_products() -> Response:
     query = "SELECT * FROM product"
     elements = Product.objects.raw(query)
+    print(elements)
     if not elements:
         return ResponseType.NOT_FOUND.value
     serializer = ProductSerializerAdmin(elements, many=True)
@@ -27,100 +28,56 @@ def get_all_products() -> Response:
 
 
 # CREATE PRODUCT
-def temp_insert_product(product_data: QueryDict) -> Response:
+def insert_product(product_data: QueryDict) -> Response:
     # Obligatory columns
     if not product_data.get('name') or not product_data.get('price') or not product_data.get(
             'stock') or not product_data.get('description'):
         return Response({'error': 'Please provide all the required fields',
                          'mandatory_fields': 'name, price, stock, description',
-                         'optional_fields': 'image, category, inventory'},
+                         'optional_fields': 'image, category, id_inventory'},
                         status=status.HTTP_400_BAD_REQUEST)
+
+    connection = CrudDB.connect_to_db()
+    cursor = connection.cursor()
+
+    if product_data.get('category') is None:
+        if product_data.get('id_inventory') is not None:
+            try:
+                cursor.execute(f"SELECT category FROM inventory WHERE id_inventory={product_data.get('id_inventory')}")
+                category_inventory = cursor.fetchone()
+                if category_inventory is not None:
+                    category_inventory = category_inventory[0]
+                    product_data['category'] = category_inventory
+            except psycopg2.errors.ForeignKeyViolation as e:
+                print(f'Error {e.pgerror}')
+                cursor.close()
+                connection.close()
+                return Response({'error': 'The inventory you are entering does not exist',
+                                 'code': e.pgcode},
+                                status.HTTP_409_CONFLICT)
+        else:
+            product_data["category"] = "Others"
+
+    if product_data.get('image') is not None:
+        image: ImageFile = product_data.get('image')
+        url_imagen = process_image(image)
+        product_data['image'] = url_imagen
 
     columns = ', '.join(product_data.keys())
     placeholders = ', '.join(['%s'] * len(product_data))
 
     query = f"""INSERT INTO product ({columns}) VALUES ({placeholders})"""
 
-    connection = CrudDB.connect_to_db()
-    cursor = connection.cursor()
-
-    cursor.execute(query, tuple(product_data.values()))
-
-    return ResponseType.SUCCESS.value
-
-
-def insert_product(product_data: QueryDict) -> Response:
-    # TODO check if product exists
-
-    name = product_data.get('name')
-    price = product_data.get('price')
-    stock = product_data.get('stock')
-    category = product_data.get('category')
-    inventory = product_data.get('inventory')
-    image: ImageFile = product_data.get('image')
-    description = product_data.get('description')
-
-    if not name or not price or not stock:
-        return Response({'error': 'Please provide all the required fields',
-                         'mandatory_fields': 'name, price, stock',
-                         'optional_fields': 'description, image, category, inventory'},
-                        status=status.HTTP_400_BAD_REQUEST)
-
-    # Processing data
-    url_imagen = None
-    if image is not None:
-        url_imagen = process_image(image)
-
-    connection = CrudDB.connect_to_db()
-    cursor = connection.cursor()
-
-    # TODO Here is the place to check if product exists and implements!
-
-    # If the data has an inventory, I take the value of the category.
-    if inventory is not None:
-        try:
-            cursor.execute(f"""
-                SELECT category FROM inventory WHERE id_inventory={inventory}
-            """)
-
-            if category is None:
-                category = cursor.fetchone()[0]
-        except TypeError as e:
-            print(e.args)
-            cursor.close()
-            connection.close()
-            return Response({'not_found': 'The inventory you provided does not exist'}, status.HTTP_404_NOT_FOUND)
-
-        try:
-            cursor.execute(f"""
-                INSERT INTO product (name, price, stock, category, id_inventory, description, image)
-                VALUES ('{name}', {price}, {stock}, '{category}', {inventory}, '{description}', '{url_imagen}')
-            """)
-        except psycopg2.errors.UndefinedColumn as e:
-            print(f'An error occurred executing the query in the database: {e.pgerror}')
-            cursor.close()
-            connection.close()
-            return Response(
-                {'conflict': 'There is a conflict with the database, check the console for more information'},
-                status.HTTP_409_CONFLICT)
-    else:
-        if category is None:
-            category = 'Others'
-
-        try:
-            cursor.execute(f"""
-                       INSERT INTO product (name, price, stock, category, description, image)
-                       VALUES ('{name}', {price}, {stock}, '{category}', '{description}', '{url_imagen}')
-                   """)
-        except psycopg2.errors.UndefinedColumn as e:
-            print(f'An error occurred executing the query in the database: {e.pgerror}')
-            cursor.close()
-            connection.close()
-            return Response(
-                {'conflict': 'There is a conflict with the database, check the console for more information'},
-                status.HTTP_409_CONFLICT)
-
-    connection.commit()
+    try:
+        cursor.execute(query, tuple(product_data.values()))
+        connection.commit()
+    except psycopg2.errors.ForeignKeyViolation as e:
+        print(f'Error {e.pgerror}')
+        cursor.close()
+        connection.close()
+        return Response({'error': 'The inventory you are entering does not exist',
+                         'code': e.pgcode},
+                        status.HTTP_409_CONFLICT)
 
     cursor.close()
     connection.close()

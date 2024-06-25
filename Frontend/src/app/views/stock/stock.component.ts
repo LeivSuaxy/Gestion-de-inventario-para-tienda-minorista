@@ -68,13 +68,13 @@ export class StockComponent {
 
   traslate(): void {
     this.ventas = this.data['elements'].map((element: any) => ({
-      nombre: element.nombre,
-      id_producto: element.id_producto,
-      precio: element.precio,
+      nombre: element.name,
+      id_producto: element.id_product,
+      precio: element.price,
       stock: element.stock,
-      categoria: element.categoria,
-      descripcion: element.descripcion,
-      imagen: element.imagen
+      categoria: element.category,
+      descripcion: element.description,
+      imagen: element.image
     }));
   }
 
