@@ -14,6 +14,7 @@ import { MatInputModule } from '@angular/material/input';
 import { Venta } from '../../../views/stock/cartservice.service'
 import { CommonModule } from '@angular/common';
 import { forkJoin, Observable } from 'rxjs';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-product_table',
@@ -33,7 +34,9 @@ import { forkJoin, Observable } from 'rxjs';
     MatInputModule,
     MatButtonModule, 
     HttpClientModule,
-    CommonModule
+    CommonModule,
+    RouterLink,
+    RouterLinkActive
   ],
 })
 export class Product_tableComponent implements OnInit {

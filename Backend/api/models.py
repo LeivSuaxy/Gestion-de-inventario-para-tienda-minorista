@@ -2,9 +2,6 @@
 from django.db import models
 
 
-# Create your models here.
-
-
 class Cliente(models.Model):
     carnet_identidad = models.CharField(primary_key=True, max_length=20)
     nombre = models.CharField(max_length=255)
@@ -19,7 +16,7 @@ class Cuenta(models.Model):
     usuario = models.CharField(primary_key=True, max_length=100)
     contrasegna = models.CharField(max_length=100)
     auth_token = models.CharField(max_length=500)
-    carnet_identidad = models.OneToOneField('Empleado', models.DO_NOTHING, db_column='carnet_identidad')
+    carnet_identidad = models.OneToOneField('Empleado', on_delete=models.CASCADE, db_column='carnet_identidad')
 
     class Meta:
         db_table = 'cuenta'
@@ -40,7 +37,7 @@ class Empleado(models.Model):
     carnet_identidad = models.CharField(primary_key=True, max_length=20)
     nombre = models.CharField(max_length=255)
     salario = models.DecimalField(max_digits=10, decimal_places=2)
-    id_jefe = models.ForeignKey('self', models.DO_NOTHING, db_column='id_jefe', blank=True, null=True)
+    id_jefe = models.ForeignKey('self', on_delete=models.SET_NULL, db_column='id_jefe', blank=True, null=True)
 
     class Meta:
         db_table = 'empleado'
@@ -49,7 +46,7 @@ class Empleado(models.Model):
 class Inventario(models.Model):
     id_inventario = models.AutoField(primary_key=True)
     categoria = models.CharField(max_length=255)
-    id_almacen = models.ForeignKey('Almacen', models.DO_NOTHING, db_column='id_almacen')
+    id_almacen = models.ForeignKey('Almacen', on_delete=models.SET_NULL, db_column='id_almacen', null=True, blank=True)
 
     class Meta:
         db_table = 'inventario'
@@ -80,7 +77,7 @@ class Producto(models.Model):
     precio = models.DecimalField(max_digits=10, decimal_places=2)
     descripcion = models.TextField(blank=True, null=True)
     imagen = models.ImageField(max_length=255, blank=True, null=True)
-    id_inventario = models.ForeignKey(Inventario, models.DO_NOTHING, db_column='id_inventario', blank=True, null=True)
+    id_inventario = models.ForeignKey(Inventario, models.SET_NULL, db_column='id_inventario', blank=True, null=True)
     categoria = models.CharField(max_length=255, db_column='categoria', blank=True, null=True)
     stock = models.IntegerField()
     fecha_entrada = models.DateField()

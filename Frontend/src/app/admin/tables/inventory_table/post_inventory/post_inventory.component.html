@@ -1,0 +1,31 @@
+<div class="formulario">
+  <form action="POST" class="post_inventory" enctype="multipart/form-data" class="form-data">
+    <div class="post_inventory-inter">
+      <div class="header-form">
+        <h3 class="encabezado">
+          Add Inventory
+        </h3>
+      </div>
+
+      <div>
+        <!-- Categoria del Inventario -->
+      <mat-form-field class="category">
+        <mat-label>Inventory category</mat-label>
+        <input matInput id="categoriaForm" [(ngModel)]="category" [ngModelOptions]="{standalone: true}">
+      </mat-form-field>
+
+        <!-- Storage_id de Inventario -->
+      <mat-form-field class="storage_id">
+        <mat-label>Storage id</mat-label>
+        <input matInput id="almacenForm" [(ngModel)]="storage_id" [ngModelOptions]="{standalone: true}">
+      </mat-form-field>
+      
+      <div class="botones">
+        <button mat-stroked-button (click)="posMethod(true)" class="boton">Save and add another</button>
+        <button mat-stroked-button (click)="posMethod(false)" class="boton">Save</button>
+      </div>
+      
+    </div>
+  </div>
+  </form>
+</div>

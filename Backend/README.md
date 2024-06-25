@@ -8,6 +8,7 @@
   - [(GET) Endpoints](#get-endpoints)
     - [get_all_products](#get_all_products-get)
     - [get_all_employees](#get_all_employees-get)
+    - [get_all_inventories](#get_all_inventories-get)
   - [(POST) Endpoints](#post-endpoints)
     - [insert_product](#insert_product-post)
     - [update_product](#update_product-post)
@@ -15,6 +16,8 @@
     - [insert_employee](#insert_employee-post)
     - [update_employee](#update_employee-post)
     - [delete_employee](#delete_employee-post)
+    - [insert_inventory](#insert_inventory-post)
+    - [delete_inventory](#delete_inventory-post)
 - [Public/General Endpoints](#publicgeneral-endpoints)
   - [(GET) Endpoints](#get-endpoints-1)
     - [get_objects](#get_objects-get) 
@@ -219,6 +222,36 @@ This endpoint is responsible for returning all the employees stored in the datab
 ```
 
 `Returns a JSON with an array of elements that corresponds to employees` `HTTP_200_OK`
+
+<hr/>
+
+### get_all_inventories (GET)
+This endpoint is responsible for returning all the inventories stored in database.
+
+<strong>URL: http://localhost:8000/api/admin/inventories/</strong>
+
+<strong>_Errors JSON Examples:_</strong>
+
+En caso que no existan inventarios en la base de datos retorna:
+```json
+{
+    "error": "is empty"
+}
+```
+`HTTP_404_NOT_FOUND`<br/>
+
+<strong>Return JSON Example: </strong>
+```json
+{
+    "elements": [
+        {
+            "id_inventario": 3,
+            "categoria": "Bebidas",
+            "id_almacen": 1
+        }
+    ]
+}
+```
 
 <hr/>
 
@@ -434,6 +467,84 @@ If any of the required fields are missing, a JSON will be returned expressing th
 ```json
 {
   "error": "Please prove a ci to delete"
+}
+```
+`HTTP_400_BAD_REQUEST`<br/>
+
+<strong>Return JSON Example: </strong>
+
+ `Returns confirmation of the process -> {'status': 'Success'}` `HTTP_200_OK`
+
+<hr/>
+
+### insert_inventory (POST)
+This endpoint is responsible for insert an employee into the database.
+
+<strong>URL: http://localhost:8000/api/admin/insert_inventory/</strong>
+
+<b>Required input data: `form-data` or `JSON`</b>
+
+`form-data`
+
+| Key        | Value  | Required |
+|------------|--------|----------|
+| category   | String | True     |
+| storage_id | Number | True     |
+
+`JSON`
+```json
+{
+  "category": "String_example",
+  "storage_id": 30
+}
+```
+
+If any of the required fields are missing, a JSON will be returned expressing the following:
+```json
+{
+  "error": "Please provide a category and a storage_id"
+}
+```
+`HTTP_400_BAD_REQUEST`<br/>
+
+In case there is no valid warehouse, a JSON will be returned expressing the following:
+```json
+{
+  "error": "Please provide a valid warehouse"
+}
+```
+`HTTP_404_NOT_FOUND`<br/>
+
+<strong>Return JSON Example: </strong>
+
+ `Returns confirmation of the process -> {'status': 'Success'}` `HTTP_200_OK`
+
+<hr/>
+
+### delete_inventory (POST)
+This endpoint is responsible for delete an inventory that exists in the database.
+<b>REQUIRE REVIEW</b>
+
+<strong>URL: http://localhost:8000/api/admin/delete_inventory/</strong>
+
+<b>Required input data: `form-data` or `JSON`</b>
+
+`form-data:`
+
+| Key | Value  | Required |
+|-----|--------|----------|
+| id  | Number | True     |
+
+`JSON:`
+```json
+{
+  "id": 1
+}
+```
+If any of the required fields are missing, a JSON will be returned expressing the following:
+```json
+{
+  "error": "Please provide an id"
 }
 ```
 `HTTP_400_BAD_REQUEST`<br/>

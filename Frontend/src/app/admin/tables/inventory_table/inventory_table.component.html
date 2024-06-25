@@ -70,15 +70,26 @@
 
   <div class="div-botones">
     <div class="example-button-container">
-      <button mat-mini-fab aria-label="Example icon button with a add icon" routerLink="/stockadd">
+      <button mat-mini-fab aria-label="Example icon button with a add icon" routerLink="/inventory_add">
         <mat-icon>add</mat-icon>
       </button>
     </div>
 
     <div class="example-button-container">
-      <button mat-mini-fab aria-label="Example icon button with a delete icon" (click)="openDialog('0ms', '0ms')" [disabled]="selection.isEmpty()">
+      <button mat-mini-fab aria-label="Example icon button with a delete icon" (click)="openConfirmDialog()" [disabled]="selection.isEmpty()">
         <mat-icon>delete</mat-icon>
       </button>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="showConfirmDialog" class="dialog-overlay">
+  <div class="dialog">
+    <h3>Confirmar eliminación</h3>
+    <p>¿Estás seguro de que quieres eliminar los productos seleccionados?</p>
+    <div class="dialog-actions">
+      <button (click)="deleteConfirmed()">Eliminar</button>
+      <button (click)="showConfirmDialog = false">Cancelar</button>
     </div>
   </div>
 </div>
