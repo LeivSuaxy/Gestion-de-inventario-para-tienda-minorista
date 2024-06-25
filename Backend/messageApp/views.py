@@ -21,12 +21,6 @@ def send_email(request):
     email: str = info_client['email']
 
     # Get Products
-
-    print(data)
-    print(info_client)
-    print(type(data))
-    print(type(info_client))
-
     productos = [ProductoTemp(dat['name'], dat['price'], dat['quantity']) for dat in data]
     html_content = render_to_string('correo.html', context={'nombre': name, 'productos': productos})
 

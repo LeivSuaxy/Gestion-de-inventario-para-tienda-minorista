@@ -57,17 +57,49 @@ def insert_product(product_data: QueryDict) -> Response:
 
     # If the data has an inventory, I take the value of the category.
     if inventory is not None:
-        cursor.execute(f"""
-            SELECT categoria FROM inventario WHERE id_inventario={inventory}
-        """)
+        try:
+            cursor.execute(f"""
+                SELECT categoria FROM inventario WHERE id_inventario={inventory}
+            """)
 
-        category = cursor.fetchone()[0]
+            if category is None:
+                category = cursor.fetchone()[0]
+        except TypeError as e:
+            print(e.args)
+            cursor.close()
+            connection.close()
+            return Response({'not_found': 'The inventory you provided does not exist'}, status.HTTP_404_NOT_FOUND)
 
-    cursor.execute(f"""
-        INSERT INTO producto (nombre, precio, stock, categoria, id_inventario, descripcion, imagen, fecha_entrada)
-        VALUES ('{name}', {price}, {stock}, '{category}', {inventory}, '{description}', '{url_imagen}',
-         '{now()}')
-    """)
+        try:
+            cursor.execute(f"""
+                INSERT INTO producto (nombre, precio, stock, categoria, id_inventario, descripcion, imagen, fecha_entrada)
+                VALUES ('{name}', {price}, {stock}, '{category}', {inventory}, '{description}', '{url_imagen}',
+                 '{now()}')
+            """)
+        except psycopg2.errors.UndefinedColumn as e:
+            print(f'An error occurred executing the query in the database: {e.pgerror}')
+            cursor.close()
+            connection.close()
+            return Response(
+                {'conflict': 'There is a conflict with the database, check the console for more information'},
+                status.HTTP_409_CONFLICT)
+    else:
+        if category is None:
+            category = 'Others'
+
+        try:
+            cursor.execute(f"""
+                       INSERT INTO producto (nombre, precio, stock, categoria, descripcion, imagen, fecha_entrada)
+                       VALUES ('{name}', {price}, {stock}, '{category}', '{description}', '{url_imagen}',
+                        '{now()}')
+                   """)
+        except psycopg2.errors.UndefinedColumn as e:
+            print(f'An error occurred executing the query in the database: {e.pgerror}')
+            cursor.close()
+            connection.close()
+            return Response(
+                {'conflict': 'There is a conflict with the database, check the console for more information'},
+                status.HTTP_409_CONFLICT)
 
     connection.commit()
 
