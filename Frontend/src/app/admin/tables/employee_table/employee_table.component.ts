@@ -120,7 +120,6 @@ export class Employee_tableComponent implements OnInit {
 
   // Devuelve si estan todas las filas seleccionadas
   isAllSelected() {
-    console.log(this.getSelectedRowsData());
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length;
     return numSelected === numRows;
