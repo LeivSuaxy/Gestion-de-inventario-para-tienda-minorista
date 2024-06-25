@@ -1,7 +1,8 @@
 import psycopg2.errors
 from Backend.crudDB import CrudDB, ResponseType
 from api.models import Producto, Empleado, Inventario
-from api.serializer import ProductoSerializer, EmpleadoSerializer, InventarioSerializer
+from api.serializer import EmpleadoSerializer, InventarioSerializer
+from .serializer import ProductoSerializerAdmin
 from django.http import QueryDict
 from rest_framework.response import Response
 from rest_framework import status
@@ -21,7 +22,7 @@ def get_all_products() -> Response:
     elements = Producto.objects.raw(query)
     if not elements:
         return ResponseType.NOT_FOUND.value
-    serializer = ProductoSerializer(elements, many=True)
+    serializer = ProductoSerializerAdmin(elements, many=True)
     return Response({'elements': serializer.data}, status.HTTP_200_OK)
 
 

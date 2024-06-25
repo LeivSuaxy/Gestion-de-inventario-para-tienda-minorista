@@ -192,7 +192,8 @@ This endpoint is responsible for returning all the products stored in the databa
             "stock": 80,
             "categoria": "Tecnologia",
             "imagen": "/media/stock/_145a3916-d853-4091-a586-168dd8b8a5f8.jpeg",
-            "descripcion": "Monitor 240HZ."
+            "descripcion": "Monitor 240HZ.",
+            "id_inventario": 1
         }
     ]
 }
