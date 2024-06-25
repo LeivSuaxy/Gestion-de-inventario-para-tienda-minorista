@@ -1,0 +1,50 @@
+#contact {
+    background-color: #212121;
+    color: white;
+    padding: 40px 0;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  #contact .container {
+    width: 80%;
+    margin: 0 auto;
+  }
+  
+  #contact h2 {
+    color: #007bff;
+    margin-bottom: 20px;
+  }
+  
+  #contact p {
+    margin-bottom: 20px;
+  }
+  
+  #contact .form-group {
+    margin-bottom: 15px;
+  }
+  
+  #contact .form-group label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  #contact .form-group input,
+  #contact .form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  #contact button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  #contact button:hover {
+    background-color: #0056b3;
+  }

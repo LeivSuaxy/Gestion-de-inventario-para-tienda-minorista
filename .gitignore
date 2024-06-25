@@ -13,3 +13,13 @@ Backend/media/stock
 .idea/*!/Tests.puml
 UMLS
 jsontest.json
+
+/Backend/apiadmin/__pycache__
+/Backend/apiadmin/migrations/__pycache__
+/Backend/api/__pycache__
+/Backend/api/migrations/__pycache__
+/Backend/Backend/__pycache__
+/Backend/login/migrations/__pycache__
+/Backend/messageApp/__pycache__
+/Backend/messageApp/migrations/__pycache__
+

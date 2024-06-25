@@ -1,0 +1,26 @@
+<section id="contact">
+  <div class="container">
+    <h2>Contacto</h2>
+    <p>Si tienes alguna pregunta o deseas trabajar con nosotros, no dudes en enviarnos un mensaje.</p>
+    
+    <!-- Formulario de contacto -->
+    <form action="procesar-formulario.php" method="post">
+      <div class="form-group">
+        <label for="name">Nombre:</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="email">Correo Electrónico:</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="message">Mensaje:</label>
+        <textarea id="message" name="message" rows="4" required></textarea>
+      </div>
+      
+      <button type="submit">Enviar Mensaje</button>
+    </form>
+  </div>
+</section>

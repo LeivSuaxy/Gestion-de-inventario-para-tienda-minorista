@@ -29,17 +29,25 @@
         <input class="form-control postcar-bars" type="file" id="imageForm" (change)="onFileSelected($event)">
       </div>
 
-        <!-- Cantidad de Stock -->
+
+      <div>
+
+        <!-- Descripción -->
+      <mat-form-field class="descripcion">
+        <mat-label>Product Description</mat-label>
+        <textarea matInput id="DescripcionArea" [(ngModel)]="description" [ngModelOptions]="{standalone: true}"></textarea>
+      </mat-form-field>
+
+
+          <!-- Cantidad de Stock -->
       <mat-form-field class="stock">
         <mat-label>Stock</mat-label>
         <input matInput id="stockForm" [(ngModel)]="stock" [ngModelOptions]="{standalone: true}">
       </mat-form-field>
 
-      <!-- Descripción -->
-      <mat-form-field>
-        <mat-label>Product Description</mat-label>
-        <textarea matInput id="DescripcionArea" [(ngModel)]="description" [ngModelOptions]="{standalone: true}"></textarea>
-      </mat-form-field>
+      
+      </div>
+      
       
       <div class="botones">
         <button mat-stroked-button (click)="cancel()" class="boton">Cancel</button>

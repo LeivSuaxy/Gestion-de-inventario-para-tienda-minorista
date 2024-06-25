@@ -186,13 +186,14 @@ This endpoint is responsible for returning all the products stored in the databa
 {
     "elements": [
         {
-            "id_producto": 39,
-            "nombre": "ASUS Monitor",
-            "precio": "400.00",
-            "stock": 80,
-            "categoria": "Tecnologia",
-            "imagen": "/media/stock/_145a3916-d853-4091-a586-168dd8b8a5f8.jpeg",
-            "descripcion": "Monitor 240HZ."
+            "id_product": 8,
+            "name": "Fanta",
+            "price": "15.00",
+            "stock": 100000,
+            "category": "Bebidas",
+            "image": "/media/stock/OIP_IalOJN6.jpeg",
+            "description": "Descripcion de prueba",
+            "id_inventory": 1
         }
     ]
 }
@@ -263,29 +264,39 @@ This endpoint is responsible for insert a product into the database.
 
 <b>Required input data: `form-data`</b><br/>
 
-| Key         | Value  | Required |
-|-------------|--------|----------|
-| name        | String | True     |
-| price       | number | True     |
-| stock       | number | True     |
-| inventory   | number | False    |
-| description | String | False    |
-| image       | File   | False    |
-| category    | String | False    |
+| Key          | Value  | Required |
+|--------------|--------|----------|
+| name         | String | True     |
+| price        | number | True     |
+| stock        | number | True     |
+| id_inventory | number | False    |
+| description  | String | True     |
+| image        | File   | False    |
+| category     | String | False    |
 
 If any of the required fields are missing, a JSON will be returned expressing the following:
 ```json
 {"error": "Please provide all the required fields", 
-"mandatory_fields": "name, price, stock", 
-"optional_fields": "description, image, category, inventory"} 
+"mandatory_fields": "name, price, stock, description", 
+"optional_fields": "image, category, inventory"} 
 ```
 `HTTP_400_BAD_REQUEST` <br/>
+
+If the inventory that is entered does not exist, a JSON will be returned expressing the following:
+```json
+{
+  "error": "The inventory you are entering does not exist",
+  "code": "23503"
+}
+```
 
 <strong>Return JSON Example: </strong>
 
  `Returns confirmation of the process -> {'status': 'Success'}` `HTTP_200_OK`
 
 <hr/>
+
+<!-- Needs Review -->
 
 ### update_product (POST)
 This endpoint is responsible for update a product that exists in the database.

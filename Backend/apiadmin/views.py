@@ -24,12 +24,7 @@ def get_all_products(request):
 # CREATE PRODUCTS
 @api_view(['POST'])
 def insert_product_in_database(request):
-    data = request.data
-    if not data:
-        return Response({'error': 'Please provide a product'}, status=status.HTTP_400_BAD_REQUEST)
-    if request.FILES.get('image') is not None:
-        data['image'] = ImageFile(request.FILES['image'])
-    return crudAdmin.insert_product(data)
+    return crudAdmin.insert_product(request.data)
 
 
 # UPDATE PRODUCTS
@@ -120,4 +115,9 @@ def get_all_reports(request):
 # TODO endpoint to get all warehouses
 @api_view(['GET'])
 def get_all_warehouses(request):
+    pass
+
+
+@api_view(['POST'])
+def insert_warehouse(request):
     pass

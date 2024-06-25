@@ -35,7 +35,7 @@ export class Post_inventoryComponent {
   ngOnInit() {}
 
   async posMethod(again: boolean): Promise<void> {
-    let url = 'http://localhost:8000/api/admin/insert_product/';
+    let url = 'http://localhost:8000/api/admin/insert_inventory/';
     const formData = new FormData();
     formData.append('category', this.category!);
     formData.append('storage_id', this.storage_id!.toString());

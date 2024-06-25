@@ -6,6 +6,11 @@
   height: 60%;
   left: 30%;
   margin-top: 4.6%;
+  overflow: hidden;
+}
+
+body {
+  overflow: hidden;
 }
 
 .postcar-inter {
@@ -97,4 +102,10 @@ input.example-right-align {
 
 .boton {
   margin-left: 1vh;
+}
+
+.descripcion {
+  margin-right: 2vh;
+  display: flex;
+  align-items: flex-start;
 }
