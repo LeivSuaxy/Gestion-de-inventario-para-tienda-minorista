@@ -1,5 +1,5 @@
-from .models import Producto
-from .serializer import ProductoSerializer
+from .models import Product
+from .serializer import ProductSerializer
 from rest_framework import viewsets
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.views import APIView

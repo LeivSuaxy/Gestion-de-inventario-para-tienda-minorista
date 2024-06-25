@@ -2,114 +2,121 @@
 from django.db import models
 
 
-class Cliente(models.Model):
-    carnet_identidad = models.CharField(primary_key=True, max_length=20)
-    nombre = models.CharField(max_length=255)
+class Client(models.Model):
+    ci = models.CharField(primary_key=True, max_length=20)
+    name = models.CharField(max_length=255)
     email = models.CharField(max_length=255)
-    telefono = models.CharField(max_length=20, blank=True, null=True)
+    phone = models.CharField(max_length=20, blank=True, null=True)
 
     class Meta:
-        db_table = 'cliente'
+        db_table = 'client'
 
 
-class Cuenta(models.Model):
-    usuario = models.CharField(primary_key=True, max_length=100)
-    contrasegna = models.CharField(max_length=100)
+class Account(models.Model):
+    user = models.CharField(primary_key=True, max_length=100)
+    password = models.CharField(max_length=100)
     auth_token = models.CharField(max_length=500)
-    carnet_identidad = models.OneToOneField('Empleado', on_delete=models.CASCADE, db_column='carnet_identidad')
+    ci = models.OneToOneField('Employee', on_delete=models.CASCADE, db_column='ci')
 
     class Meta:
-        db_table = 'cuenta'
+        db_table = 'account'
 
 
-class DetalleOrdenCompra(models.Model):
-    id_detalle = models.AutoField(primary_key=True)
-    id_orden_compra = models.ForeignKey('OrdenCompra', models.DO_NOTHING, db_column='id_orden_compra')
-    id_inventario = models.ForeignKey('Inventario', models.DO_NOTHING, db_column='id_inventario')
-    cantidad = models.IntegerField()
-    precio = models.DecimalField(max_digits=10, decimal_places=2)
-
-    class Meta:
-        db_table = 'detalle_orden_compra'
-
-
-class Empleado(models.Model):
-    carnet_identidad = models.CharField(primary_key=True, max_length=20)
-    nombre = models.CharField(max_length=255)
-    salario = models.DecimalField(max_digits=10, decimal_places=2)
-    id_jefe = models.ForeignKey('self', on_delete=models.SET_NULL, db_column='id_jefe', blank=True, null=True)
+class PurchaseOrderDetail(models.Model):
+    id_detail = models.AutoField(primary_key=True)
+    purchase_order = models.ForeignKey('PurchaseOrder', models.DO_NOTHING, db_column='purchase_order')
+    id_inventory = models.ForeignKey('Inventory', models.DO_NOTHING, db_column='id_inventory')
+    quantity = models.IntegerField()  # Cantidad de objetos
+    total_price = models.DecimalField(max_digits=10, decimal_places=2)  # Precio total de compra
 
     class Meta:
-        db_table = 'empleado'
+        db_table = 'purchase_order_detail'
 
 
-class Inventario(models.Model):
-    id_inventario = models.AutoField(primary_key=True)
-    categoria = models.CharField(max_length=255)
-    id_almacen = models.ForeignKey('Almacen', on_delete=models.SET_NULL, db_column='id_almacen', null=True, blank=True)
-
-    class Meta:
-        db_table = 'inventario'
-
-
-class Almacen(models.Model):
-    id_almacen = models.AutoField(primary_key=True)
-    nombre = models.CharField(max_length=255, unique=True)
-    ubicacion = models.CharField(max_length=255)
+class Employee(models.Model):
+    ci = models.CharField(primary_key=True, max_length=20)
+    name = models.CharField(max_length=255)
+    salary = models.DecimalField(max_digits=10, decimal_places=2)
+    id_boss = models.ForeignKey('self', on_delete=models.SET_NULL, db_column='id_boss', blank=True, null=True)
 
     class Meta:
-        db_table = 'almacen'
+        db_table = 'employee'
 
 
-class OrdenCompra(models.Model):
-    id_orden_compra = models.AutoField(primary_key=True)
-    fecha_realizada = models.DateField()
-    monto_total = models.DecimalField(max_digits=10, decimal_places=2)
-    id_cliente = models.ForeignKey(Cliente, models.DO_NOTHING, db_column='id_cliente')
+class Inventory(models.Model):
+    id_inventory = models.AutoField(primary_key=True)
+    category = models.CharField(max_length=255)
+    id_warehouse = models.ForeignKey('Warehouse', on_delete=models.SET_NULL, db_column='id_warehouse', null=True,
+                                     blank=True)
 
     class Meta:
-        db_table = 'orden_compra'
+        db_table = 'inventory'
 
 
-class Producto(models.Model):
-    id_producto = models.AutoField(primary_key=True)
-    nombre = models.CharField(max_length=255)
-    precio = models.DecimalField(max_digits=10, decimal_places=2)
-    descripcion = models.TextField(blank=True, null=True)
-    imagen = models.ImageField(max_length=255, blank=True, null=True)
-    id_inventario = models.ForeignKey(Inventario, models.SET_NULL, db_column='id_inventario', blank=True, null=True)
-    categoria = models.CharField(max_length=255, db_column='categoria', blank=True, null=True)
+class Warehouse(models.Model):
+    id_warehouse = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=255, unique=True)
+    location = models.CharField(max_length=255)
+
+    class Meta:
+        db_table = 'warehouse'
+
+
+class PurchaseOrder(models.Model):
+    id_purchase_order = models.AutoField(primary_key=True)
+    date_done = models.DateField()
+    total_amount = models.DecimalField(max_digits=10, decimal_places=2)
+    id_client = models.ForeignKey(Client, models.DO_NOTHING, db_column='id_client')
+
+    class Meta:
+        db_table = 'purchase_order'
+
+
+class Product(models.Model):
+    id_product = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=255)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    description = models.TextField()
+    image = models.ImageField(max_length=255, blank=True, null=True)
+    id_inventory = models.ForeignKey(Inventory, models.SET_NULL, db_column='id_inventory', blank=True, null=True)
+    category = models.CharField(max_length=255, db_column='category', blank=True, null=True)
     stock = models.IntegerField()
-    fecha_entrada = models.DateField()
 
     class Meta:
-        db_table = 'producto'
+        db_table = 'product'
 
 
-class Reporte(models.Model):
-    id_reporte = models.AutoField(primary_key=True)
-    fecha_reporte = models.DateField()
-    id_empleado = models.ForeignKey(Empleado, models.DO_NOTHING, db_column='id_empleado')
-
-    class Meta:
-        db_table = 'reporte'
-
-
-class ReporteInventario(models.Model):
-    id = models.OneToOneField(Reporte, models.DO_NOTHING, db_column='id', primary_key=True)
-    id_inventario = models.ForeignKey(Inventario, models.DO_NOTHING, db_column='id_inventario')
-    cantidad_stock = models.IntegerField()
-    valor_total = models.DecimalField(max_digits=10, decimal_places=2)
+class Report(models.Model):
+    id_report = models.AutoField(primary_key=True)
+    report_date = models.DateField()
+    id_employee = models.ForeignKey(Employee, models.DO_NOTHING, db_column='id_employee')
 
     class Meta:
-        db_table = 'reporte_inventario'
+        db_table = 'report'
 
 
-class ReporteVenta(models.Model):
-    id = models.OneToOneField(Reporte, models.DO_NOTHING, db_column='id', primary_key=True)
-    fecha_hora_entrega = models.DateTimeField()
-    id_orden_compra = models.ForeignKey(OrdenCompra, models.DO_NOTHING, db_column='id_orden_compra')
-    monto_total = models.DecimalField(max_digits=10, decimal_places=2)
+class InventoryReport(models.Model):
+    id = models.OneToOneField(Report, models.DO_NOTHING, db_column='id', primary_key=True)
+    id_inventory = models.ForeignKey(Inventory, models.DO_NOTHING, db_column='id_inventory')
+    stock_amount = models.IntegerField()
+    total_value = models.DecimalField(max_digits=10, decimal_places=2)
 
     class Meta:
-        db_table = 'reporte_venta'
+        db_table = 'inventory_report'
+
+
+class Messenger(models.Model):
+    ci = models.OneToOneField(Employee, models.CASCADE, db_column='ci', primary_key=True)
+    vehicle = models.CharField(max_length=255, null=True, blank=True)
+    salary_per_km = models.DecimalField(max_digits=10, decimal_places=2)
+
+
+class SalesReport(models.Model):
+    id = models.OneToOneField(Report, models.DO_NOTHING, db_column='id', primary_key=True)
+    date_time_delivery = models.DateTimeField()
+    id_purchase_order = models.ForeignKey(PurchaseOrder, models.DO_NOTHING, db_column='id_purchase_order')
+    total_amount = models.DecimalField(max_digits=10, decimal_places=2)
+    messenger = models.ForeignKey(Messenger, models.DO_NOTHING, db_column='messenger')
+
+    class Meta:
+        db_table = 'sales_report'
