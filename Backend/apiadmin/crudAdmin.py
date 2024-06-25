@@ -28,6 +28,7 @@ def get_all_products() -> Response:
 
 
 # CREATE PRODUCT
+# CHECKED
 def insert_product(product_data: QueryDict) -> Response:
     # Obligatory columns
     if not product_data.get('name') or not product_data.get('price') or not product_data.get(
@@ -157,47 +158,39 @@ def get_all_employees() -> Response:
 
 
 # INSERT
-# TODO REVIEW
+# CHECKED
 def insert_employee_in_database(data: QueryDict) -> Response:
-    ci = data.get('CI')
-    name = data.get('name')
-    salary = data.get('salary')
-    boss = data.get('boss')
-
-    if not ci or not name or not salary:
+    if not data.get('ci') or not data.get('name') or not data.get('salary'):
         return Response({'error': 'Please provide all the required fields',
-                         'mandatory_fields': 'CI, name, salary',
-                         'optional_fields': 'boss'}, status=status.HTTP_400_BAD_REQUEST)
+                         'mandatory_fields': 'ci, name, salary',
+                         'optional_fields': 'id_boss'}, status=status.HTTP_400_BAD_REQUEST)
+
+    columns = ', '.join(data.keys())
+    placeholders = ', '.join(['%s'] * len(data))
+
+    query = f"""INSERT INTO employee ({columns}) VALUES ({placeholders})"""
 
     connection = CrudDB.connect_to_db()
     cursor = connection.cursor()
 
-    if boss is not None:
-        try:
-            cursor.execute(f"""
-                INSERT INTO employee (ci, name, salary, id_boss)
-                VALUES ('{ci}', '{name}', {salary}, '{boss}')
-            """)
-        except psycopg2.errors.UniqueViolation as e:
-            cursor.close()
-            connection.close()
-            print(e.pgerror)
-            return Response({'error': 'El CI que esta introduciendo ya existe en la base de datos'},
-                            status.HTTP_409_CONFLICT)
-    else:
-        try:
-            cursor.execute(f"""
-                        INSERT INTO employee (ci, name, salary)
-                        VALUES ('{ci}', '{name}', {salary})
-                    """)
-        except psycopg2.errors.UniqueViolation as e:
-            cursor.close()
-            connection.close()
-            print(e.pgerror)
-            return Response({'error': 'El CI que esta introduciendo ya existe en la base de datos'},
-                            status.HTTP_409_CONFLICT)
+    try:
+        cursor.execute(query, tuple(data.values()))
+        connection.commit()
+    except psycopg2.errors.UniqueViolation as e:
+        cursor.close()
+        connection.close()
+        print(e.pgerror)
+        return Response({'error': 'The CI you are entering already exists in the database',
+                         'code': e.pgcode},
+                        status.HTTP_409_CONFLICT)
+    except psycopg2.errors.ForeignKeyViolation as e:
+        cursor.close()
+        connection.close()
+        print(e.pgerror)
+        return Response({'error': 'The employee to whom the id_boss corresponds does not exist',
+                         'code': e.pgcode},
+                        status.HTTP_409_CONFLICT)
 
-    connection.commit()
     cursor.close()
     connection.close()
 
