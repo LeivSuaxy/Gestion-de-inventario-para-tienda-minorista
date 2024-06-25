@@ -7,7 +7,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { Router } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-postcar',
@@ -20,6 +20,8 @@ import { Router } from '@angular/router';
     MatInputModule,
     MatIconModule,
     MatButtonModule,
+    RouterLink,
+    RouterLinkActive
   ],
   templateUrl: './postcar.component.html',
   styleUrl: './postcar.component.css',
@@ -74,4 +76,7 @@ export class PostcarComponent {
     }
   }
 
+  cancel(): void {
+    this.router.navigate(['/tables/product_table']);
+  }
 }

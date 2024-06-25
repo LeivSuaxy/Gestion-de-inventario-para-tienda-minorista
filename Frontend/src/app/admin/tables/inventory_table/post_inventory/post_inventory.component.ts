@@ -63,6 +63,10 @@ export class Post_inventoryComponent {
     }
   }
 
+  cancel(): void {
+    this.router.navigate(['/tables/inventory_table']);
+  }
+
 }
 
 

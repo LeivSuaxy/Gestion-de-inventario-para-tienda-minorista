@@ -100,9 +100,8 @@
   }
 
 .formulario {
-    height: 84vh;
+    height: 60vh;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    vertical-align: middle;
+    justify-content: center;
 }
