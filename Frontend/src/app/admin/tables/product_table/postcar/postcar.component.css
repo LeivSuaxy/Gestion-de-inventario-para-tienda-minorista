@@ -87,3 +87,14 @@ input.example-right-align {
 .nombre {
   margin-right: 2vh; 
 }
+
+.botones {
+  width: 100%;
+  display: flex !important;
+  justify-content: flex-end !important;
+
+}
+
+.boton {
+  margin-left: 1vh;
+}

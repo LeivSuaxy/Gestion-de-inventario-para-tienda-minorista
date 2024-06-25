@@ -13,6 +13,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTable } from '@angular/material/table';
 import { forkJoin, Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
 export interface Inventario {
   id: number;
@@ -36,7 +37,9 @@ export interface Inventario {
     ButtonsComponent,
     MatFormFieldModule,
     MatInputModule,
-    CommonModule
+    CommonModule,
+    RouterLink,
+    RouterLinkActive
   ],
 })
 export class Inventory_tableComponent implements OnInit {
@@ -77,7 +80,7 @@ export class Inventory_tableComponent implements OnInit {
   selection = new SelectionModel<Inventario>(true, []);
   apiUrl: string = 'http://localhost:8000/api/admin/inventories/'
 
-  constructor(private http: HttpClient) { 
+  constructor(private http: HttpClient, private router: Router) { 
     
   }
 

@@ -8,9 +8,12 @@ import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
+import { MatTableModule } from '@angular/material/table';
 
 @Component({
-  selector: 'app-postcar',
+  selector: 'app-post_inventory',
+  templateUrl: './post_inventory.component.html',
+  styleUrls: ['./post_inventory.component.css'],
   standalone: true,
   imports: [
     FormsModule,
@@ -21,28 +24,21 @@ import { Router } from '@angular/router';
     MatIconModule,
     MatButtonModule,
   ],
-  templateUrl: './postcar.component.html',
-  styleUrl: './postcar.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PostcarComponent {
-  name? : string;
-  price? : number;
-  description? : string;
-  image? : File;
-  stock? : number;
+export class Post_inventoryComponent {
+
+  category? : string;
+  storage_id? : number;
   
-  constructor(private http : HttpClient, private router: Router) {
-  }
+  constructor(private http : HttpClient, private router: Router) {}
+
+  ngOnInit() {}
 
   async posMethod(again: boolean): Promise<void> {
     let url = 'http://localhost:8000/api/admin/insert_product/';
     const formData = new FormData();
-    formData.append('image', this.image ? this.image : '');
-    formData.append('name', this.name?.toString() ?? '');
-    formData.append('price', this.price?.toString() ?? '');
-    formData.append('description', this.description?.toString() ?? '');
-    formData.append('stock', this.stock?.toString() ?? '');
+    formData.append('category', this.category!);
+    formData.append('storage_id', this.storage_id!.toString());
   
     try {
       const response = await fetch(url, {
@@ -56,10 +52,10 @@ export class PostcarComponent {
   
       const data = await response.json(); // Asumiendo que el servidor responde con JSON
       console.log(data); // Manejar la respuesta del servidor
-      this.name = this.price = this.description = this.image = this.stock = undefined;
+      this.category = this.storage_id = undefined;
   
       if (!again) {
-        this.router.navigate(['/tables/product_table']);
+        this.router.navigate(['/tables/inventory_table']);
       }
     } catch (error) {
       console.error('There was a problem with your fetch operation:', error);
@@ -67,11 +63,6 @@ export class PostcarComponent {
     }
   }
 
-  onFileSelected(event: Event) {
-    const target = event.target as HTMLInputElement;
-    if (target && target.files && target.files.length > 0) {
-      this.image = target.files[0];
-    }
-  }
-
 }
+
+
