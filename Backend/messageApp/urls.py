@@ -5,4 +5,5 @@ from . import views
 
 urlpatterns = [
     path('send_email/', views.send_email, name='send_email'),
+    path('contact/', views.send_contact_email, name='send_contact_email'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
