@@ -40,8 +40,9 @@ def insert_product(product_data: QueryDict) -> Response:
 
     connection = CrudDB.connect_to_db()
     cursor = connection.cursor()
-
-    if product_data.get('category') is None:
+    if product_data.get('category') is not None and product_data.get('id_inventory') is not None:
+        pass
+    elif product_data.get('category') is None:
         if product_data.get('id_inventory') is not None:
             try:
                 cursor.execute(f"SELECT category FROM inventory WHERE id_inventory={product_data.get('id_inventory')}")
