@@ -48,6 +48,12 @@ def delete_product_in_database(request):
     return crudAdmin.delete_product(data)
 
 
+# DELETE MORE THAN ONE PRODUCT
+@api_view(['POST'])
+def delete_products_in_database(request):
+    return crudAdmin.delete_more_than_one_product(request.data)
+
+
 # <--Employees CRUD ENDPOINTS-->
 # READ EMPLOYEES
 @api_view(['GET'])
