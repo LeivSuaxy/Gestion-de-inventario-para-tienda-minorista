@@ -28,9 +28,13 @@ button {
 footer {
   background-color: #212121;
   color: rgba(255, 255, 255, 0.568);
-  margin-left: 21vh;
-  margin-top: 7vh;
-  margin-bottom: 5vh;
+  padding-left: 21vh;
+  bottom: 0;
+  margin-top: 3vh;
+  padding-top: 4vh;
+  padding-bottom: 4vh;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  border-radius: 10px 10px 0 0;
 }
 /* ============================ */
 /* <style for bg> ======== */
