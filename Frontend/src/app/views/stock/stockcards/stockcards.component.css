@@ -6,7 +6,7 @@
   overflow-x: hidden;
   width: 120vh;
   display: inline-block;
-  height: 35vh;
+  
 }
 
 .transitionbutton {
@@ -57,7 +57,7 @@
 
 .img-card {
   border-radius: 10px 0 0 10px !important;
-  height: 34.7vh;
+  
 }
 
 button {
