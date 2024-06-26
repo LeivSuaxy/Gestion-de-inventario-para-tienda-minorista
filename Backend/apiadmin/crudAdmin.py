@@ -58,7 +58,7 @@ def insert_product(product_data: QueryDict) -> Response:
                                  'code': e.pgcode},
                                 status.HTTP_409_CONFLICT)
         else:
-            product_data["category"] = "Others"
+            product_data['category'] = 'Others'
 
     if product_data.get('image') is not None:
         image: ImageFile = product_data.get('image')
