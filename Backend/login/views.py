@@ -4,6 +4,7 @@ from rest_framework.decorators import api_view
 from rest_framework.authtoken.views import Token
 from .serializer import UserSerializer
 from Backend.crudDB import CrudDB
+import psycopg2
 
 
 # Create your views here.
@@ -72,3 +73,25 @@ def login(request):
     response: Response = db.log_in_user(username=username, password=password)
 
     return response
+
+
+@api_view(['POST'])
+def validate_token(request):
+    user = request.data.get('user')
+    auth_token = request.data.get('auth_token')
+
+    print(user)
+    print(auth_token)
+
+    if not user or not auth_token:
+        return Response({'status': 'denied'}, status.HTTP_401_UNAUTHORIZED)
+    print('llegamo a la base')
+    db = CrudDB()
+    return db.validate_token(user, auth_token)
+
+
+
+
+
+
+

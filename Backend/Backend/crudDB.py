@@ -191,6 +191,24 @@ class CrudDB:
                     connection.close()
                     return ResponseType.PASSWORD_INCORRECT.value
 
+    def validate_token(self, username: str, auth_token: str) -> Response:
+        connection = self.connect_to_db()
+        cursor = connection.cursor()
+
+        cursor.execute(f"SELECT auth_token FROM account WHERE username='{username}'")
+
+        selected_token = cursor.fetchone()
+
+        if not selected_token:
+            return Response({'status': 'denied'}, status.HTTP_401_UNAUTHORIZED)
+
+        selected_token = selected_token[0]
+
+        if selected_token == auth_token:
+            return Response({'status': 'confirm'}, status.HTTP_200_OK)
+        else:
+            return Response({'status': 'denied'}, status.HTTP_401_UNAUTHORIZED)
+
     # Function to get amount of elements from stock
     def get_amount_elements_stock(self) -> Response:
 

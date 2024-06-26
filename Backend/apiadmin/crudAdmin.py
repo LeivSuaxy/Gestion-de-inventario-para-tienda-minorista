@@ -146,6 +146,24 @@ def delete_product(data_id: QueryDict) -> Response:
     return ResponseType.SUCCESS.value
 
 
+# DELETE PRODUCTS
+def delete_more_than_one_product(data: QueryDict) -> Response:
+    if not data.get('elements'):
+        return Response({'error': 'Please provide elements to delete'}, status.HTTP_400_BAD_REQUEST)
+    datas: list = data.get('elements')
+
+    connection = CrudDB.connect_to_db()
+    cursor = connection.cursor()
+    for data in datas:
+        if type(data) is int:
+            cursor.execute(f"DELETE FROM product WHERE id_product={data}")
+
+    connection.commit()
+    cursor.close()
+    connection.close()
+    return ResponseType.SUCCESS.value
+
+
 # <--EMPLOYEES - CRUD-->
 # READ
 def get_all_employees() -> Response:

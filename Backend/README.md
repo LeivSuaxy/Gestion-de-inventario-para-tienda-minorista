@@ -3,6 +3,7 @@
 - [Authentication](#authentication)
   - [Register](#register-endpoint-post)
   - [Login](#login-endpoint-post)
+  - [Validating](#validate-token-post)
 - [Endpoints](#endpoints)
 - [Administrative Endpoints](#administrative-endpoints)
   - [(GET) Endpoints](#get-endpoints)
@@ -13,6 +14,7 @@
     - [insert_product](#insert_product-post)
     - [update_product](#update_product-post)
     - [delete_product](#delete_product-post)
+    - [delete_products](#delete_products-post)
     - [insert_employee](#insert_employee-post)
     - [update_employee](#update_employee-post)
     - [delete_employee](#delete_employee-post)
@@ -162,6 +164,61 @@ If password is incorrect, a JSON will be returned expressing the following:
 `HTTP_200_OK`<br/>
 
 <hr/>
+
+## Validate Token (POST)
+This endpoint is responsible for validating if the user and token sent are correct and allowing access.
+
+<strong>URL: http://localhost:8000/api/auth/validate/</strong>
+
+<b>Required input data: `form-data` or `JSON`</b>
+
+`form-data`
+
+| Key        | Value  | Required |
+|------------|--------|----------|
+| username   | string | True     |
+| auth_token | string | True     |
+
+`JSON`
+
+```json
+{
+  "username": "username_account",
+  "auth_token": "auth_token archived in user cache"
+}
+```
+If any of the required fields are missing, a JSON will be returned expressing the following:
+```json
+{
+    "status": "denied"
+}
+```
+`HTTP_401_UNAUTHORIZED`<br/>
+
+If the username provided is not registered, a JSON will be returned expressing the following:
+```json
+{
+    "status": "denied"
+}
+```
+`HTTP_401_UNAUTHORIZED`<br/>
+
+If the supplied token is not the same as the one stored in the user, a JSON will be returned expressing the following:
+```json
+{
+    "status": "denied"
+}
+```
+`HTTP_401_UNAUTHORIZED`<br/>
+
+<strong>Return JSON Example: </strong>
+```json
+{
+    "status": "confirm"
+}
+```
+`Returns the confirmation`<br/>
+`HTTP_200_OK`<br/>
 
 # Endpoints
 All endpoints in this API start with the URL: http://localhost:8000/api/.
@@ -355,6 +412,36 @@ This endpoint is responsible for delete a product that exists in the database.
 If any of the required fields are missing, a JSON will be returned expressing the following:
 ```json
 {"error": "Please provide an id of product you will delete"}
+```
+`HTTP_400_BAD_REQUEST`
+
+<strong>Return JSON Example: </strong>
+
+ `Returns confirmation of the process -> {'status': 'Success'}` `HTTP_200_OK`
+
+<hr/>
+
+### delete_products (POST)
+This endpoint has the same objective as the endpoint of deleting a product, unlike this endpoint deleting multiple products.
+from an array of integers.
+
+<strong>URL: http://localhost:8000/api/admin/delete_products/</strong>
+
+<b>Required input data: `JSON`</b>
+
+`JSON: `
+```json
+{
+  "elements": ["Array of integer. There are no restrictions with other values, the API will ignore them"]
+}
+```
+`Required field: elements`
+
+If any of the required fields are missing, a JSON will be returned expressing the following:
+```json
+{
+    "error": "Please provide elements to delete"
+}
 ```
 `HTTP_400_BAD_REQUEST`
 
