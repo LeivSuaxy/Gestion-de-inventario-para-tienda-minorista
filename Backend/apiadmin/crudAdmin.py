@@ -334,19 +334,27 @@ def get_all_warehouses() -> Response:
 
 
 # CREATE
-def insert_warehouse(data: QueryDict) -> Response:
+def insert_warehouse(data) -> Response:
     if not data.get('name') or not data.get('location'):
         return Response({'error': 'Please provide all the required fields',
-                         'mandatory_fields': 'name, location'}, status=status.HTTP_400_BAD_REQUEST)
+                         'mandatory_fields': 'name, location'}, status.HTTP_400_BAD_REQUEST)
 
     connection = CrudDB.connect_to_db()
     cursor = connection.cursor()
 
-    cursor.execute(f"""
-        INSERT INTO warehouse (name, location) VALUES ({data.get('name')}, {data.get('location')})
-    """)
+    cursor.execute(f"SELECT EXISTS(SELECT 1 FROM warehouse WHERE name='{data.get('name')}')")
+    exist_storage = cursor.fetchone()[0]
 
+    if exist_storage:
+        cursor.close()
+        connection.close()
+        return Response({'error': 'There is already a warehouse with this name'}, status.HTTP_400_BAD_REQUEST)
+
+    cursor.execute(f"""
+        INSERT INTO warehouse (name, location) VALUES ('{data.get('name')}', '{data.get('location')}')
+    """)
     connection.commit()
+
     cursor.close()
     connection.close()
 
