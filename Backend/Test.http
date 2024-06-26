@@ -53,5 +53,6 @@ content-type: multipart/form-data
         "imagen":
   }
 }
-
-
+###
+POST http://localhost:8000/api/admin/delete_products/
+content_type: application/json
