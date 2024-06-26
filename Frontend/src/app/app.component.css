@@ -24,5 +24,12 @@ button {
   left: 2vh;
   top: 2vh;
 }
+
+footer {
+  background-color: #212121;
+  color: rgba(255, 255, 255, 0.568);
+  margin-left: 21vh;
+  margin-top: 7vh;
+}
 /* ============================ */
 /* <style for bg> ======== */
