@@ -2,7 +2,6 @@
     background-color: #212121;
     color: white;
     padding: 20px 0;
-    font-family: 'Arial', sans-serif;
   }
   
   #about .container {
@@ -59,4 +58,8 @@
   .cabecera {
     width: fit-content;
     margin-bottom: 3vh;
+  }
+
+  .info {
+    width: 90vh;
   }
