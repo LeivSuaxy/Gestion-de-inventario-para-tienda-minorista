@@ -40,8 +40,9 @@ def insert_product(product_data: QueryDict) -> Response:
 
     connection = CrudDB.connect_to_db()
     cursor = connection.cursor()
-
-    if product_data.get('category') is None:
+    if product_data.get('category') is not None and product_data.get('id_inventory') is not None:
+        pass
+    elif product_data.get('category') is None:
         if product_data.get('id_inventory') is not None:
             try:
                 cursor.execute(f"SELECT category FROM inventory WHERE id_inventory={product_data.get('id_inventory')}")
@@ -57,7 +58,7 @@ def insert_product(product_data: QueryDict) -> Response:
                                  'code': e.pgcode},
                                 status.HTTP_409_CONFLICT)
         else:
-            product_data["category"] = "Others"
+            product_data['category'] = 'Others'
 
     if product_data.get('image') is not None:
         image: ImageFile = product_data.get('image')
@@ -140,6 +141,24 @@ def delete_product(data_id: QueryDict) -> Response:
     connection = CrudDB.connect_to_db()
     cursor = connection.cursor()
     cursor.execute(f"DELETE FROM product WHERE id_product={id_product}")
+    connection.commit()
+    cursor.close()
+    connection.close()
+    return ResponseType.SUCCESS.value
+
+
+# DELETE PRODUCTS
+def delete_more_than_one_product(data: QueryDict) -> Response:
+    if not data.get('elements'):
+        return Response({'error': 'Please provide elements to delete'}, status.HTTP_400_BAD_REQUEST)
+    datas: list = data.get('elements')
+
+    connection = CrudDB.connect_to_db()
+    cursor = connection.cursor()
+    for data in datas:
+        if type(data) is int:
+            cursor.execute(f"DELETE FROM product WHERE id_product={data}")
+
     connection.commit()
     cursor.close()
     connection.close()
