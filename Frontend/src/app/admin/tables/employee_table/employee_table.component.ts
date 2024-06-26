@@ -15,10 +15,10 @@ import { forkJoin, Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 
 export interface Employee {
-  carnet_identidad: string;
-  nombre: string;
-  salario: number;
-  id_jefe: string;
+  ci: string;
+  name: string;
+  salary: number;
+  id_boss: string;
 }
 
 @Component({
@@ -61,7 +61,7 @@ export class Employee_tableComponent implements OnInit {
 
   eliminarElemento(id: string) {
     // Eliminar el elemento de la fuente de datos
-    const index = this.dataSource.data.findIndex(item => item.carnet_identidad === id);
+    const index = this.dataSource.data.findIndex(item => item.ci === id);
     if (index > -1) {
       this.dataSource.data.splice(index, 1);
       // Actualizar el dataSource
@@ -140,7 +140,7 @@ export class Employee_tableComponent implements OnInit {
     let ids: any[] = [];
 
     this.selection.selected.forEach((element) => {
-      ids.push(element.carnet_identidad);
+      ids.push(element.ci);
     });
   
     return ids;
@@ -171,7 +171,7 @@ export class Employee_tableComponent implements OnInit {
     if (!row) {
       return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
     }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.carnet_identidad + 1}`;
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.ci + 1}`;
   }
 
 }
