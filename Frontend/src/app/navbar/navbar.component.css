@@ -3,17 +3,13 @@
   backdrop-filter: blur(10px) !important;
   border-radius: 9999px;
   overflow: hidden;
-  margin-left: auto;
-  margin-right: auto;
-  height: max-content;
+  height: 7vh;
   text-align: left;
   display: flex;
-  width: 50%;
-  vertical-align: middle;
+  width: fit-content;
   position: fixed;
   top: 2vh;
   z-index: 1000;
-  
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 
@@ -27,20 +23,19 @@
   background-color: transparent;
   border: none;
   color: white;
-  width: 15vh;
-  height: 8vh;
+  width: 12vh;
   text-align: center;
   text-decoration: none;
   display: flex;
-  font-size: 3vh;
+  font-size: 2.5vh;
   cursor: pointer;
-  transition: background-color 0.3s, color 0.3s, border-bottom 0.5s ease-in-out;
-  justify-content: center;
-  align-items: center;
+  transition: background-color 0.3s, color 0.3s;
+  padding-left: 1vh;
+  padding-right: 1vh;
 }
 
 .active {
-  border-bottom: 2px solid gold !important;
+  color: gold !important;
 }
 
 .proyectNavButton:hover{
@@ -57,12 +52,14 @@
   background-color: transparent;
   color: white;
   width: 8%;
-  font-size: 3vh;
+  font-size: 2.5vh;
   border: none;
-  width: 15vh;
-  height: 8vh;
+  width: 12vh;
   transition: background-color 0.2s, color 0.2s;
   border-radius: 0 10px 10px 0 !important;
+  padding-left: 1vh;
+  padding-right: 1vh;
+  text-align: center;
 }
 
 .login:hover {
@@ -89,7 +86,7 @@
 
 .hamburger svg {
   /* The size of the SVG defines the overall size */
-  height: 2.5em;
+  height: 5vh;
   /* Define the transition for transforming the SVG */
   transition: transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
   margin: auto;
@@ -189,18 +186,11 @@
   cursor: pointer;
 }
 
-nav {
-  position: relative;
-}
-
-nav ul {
-  display: flex;
-  list-style-type: none;
-  padding: 0;
-}
-
 nav a {
-  display: block;
-  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: auto;
+  vertical-align: middle;
   text-decoration: none;
 }

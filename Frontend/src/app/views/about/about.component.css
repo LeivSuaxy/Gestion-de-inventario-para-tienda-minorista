@@ -10,7 +10,7 @@
   }
   
   #about h2, #about h3 {
-    color: #007bff;
+    color: white;
   }
   
   #about p, #about ul {
@@ -41,6 +41,7 @@
   
   #about a:hover {
     text-decoration: underline;
+    cursor: pointer;
   }
 
   .fa-users {

@@ -6,11 +6,13 @@
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 3vh;
   cursor: pointer;
   transition: background-color 0.2s, color 0.2s;
-  width: 10vh;
-  height: 8vh;
+  width: 6vh;
+  height: 100%;
+  padding-left: 1vh;
+  padding-right: 1vh;
+  margin-right: 4vh;
 }
 
 .proyectNavButton:hover{
@@ -35,8 +37,8 @@
 }
 
 .cart {
-  width: 4.5vh;
-  height: 4.5vh;
+  width: 3.8vh;
+  height: 3.8vh;
   vertical-align: middle;
 }
 
