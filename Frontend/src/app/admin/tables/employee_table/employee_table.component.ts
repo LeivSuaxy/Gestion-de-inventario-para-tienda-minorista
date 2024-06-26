@@ -28,11 +28,11 @@ export interface Employee {
   standalone: true,
   imports: [
     HttpClientModule,
-    MatTableModule, 
-    MatCheckboxModule, 
-    TablesComponent, 
-    StockComponent, 
-    MatIconModule, 
+    MatTableModule,
+    MatCheckboxModule,
+    TablesComponent,
+    StockComponent,
+    MatIconModule,
     MatButtonModule,
     ButtonsComponent,
     MatFormFieldModule,
@@ -79,8 +79,8 @@ export class Employee_tableComponent implements OnInit {
   selection = new SelectionModel<Employee>(true, []);
   apiUrl: string = 'http://localhost:8000/api/admin/employees/'
 
-  constructor(private http: HttpClient) { 
-    
+  constructor(private http: HttpClient) {
+
   }
 
   // Llamada a la API para extraer los datos y guardarlos en dataSource
@@ -101,14 +101,14 @@ export class Employee_tableComponent implements OnInit {
       }
     }
   }
-  
+
   // Traducción de los datos obtenidos de la API
   traslate(): void {
     this.employees.push(...this.data['elements'].map((element: any) => ({
-      carnet_identidad: element.carnet_identidad,
-      nombre: element.nombre,
-      salario: element.salario,
-      id_jefe: element.id_jefe ? element.id_jefe : "-"
+      carnet_identidad: element.ci,
+      nombre: element.name,
+      salario: element.salary,
+      id_jefe: element.id_boss ? element.id_boss : "-"
     })));
   }
 
@@ -142,12 +142,12 @@ export class Employee_tableComponent implements OnInit {
     this.selection.selected.forEach((element) => {
       ids.push(element.ci);
     });
-  
+
     return ids;
   }
 
   eliminarEmpleados(carnetIds: string[]) {
-    const observables = carnetIds.map(id => 
+    const observables = carnetIds.map(id =>
       this.http.post('http://localhost:8000/api/admin/delete_inventory/', { ci: id }),
     );
     return forkJoin(observables);
