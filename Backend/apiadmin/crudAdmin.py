@@ -1,8 +1,8 @@
 import psycopg2.errors
 from Backend.crudDB import CrudDB, ResponseType
-from api.models import Product, Employee, Inventory
+from api.models import Product, Employee, Inventory, Warehouse
 from api.serializer import EmployeeSerializer, InventorySerializer
-from .serializer import ProductSerializerAdmin
+from .serializer import ProductSerializerAdmin, WarehouseSerializerAdmin
 from django.http import QueryDict
 from rest_framework.response import Response
 from rest_framework import status
@@ -20,7 +20,6 @@ from django.utils.timezone import now
 def get_all_products() -> Response:
     query = "SELECT * FROM product"
     elements = Product.objects.raw(query)
-    print(elements)
     if not elements:
         return ResponseType.NOT_FOUND.value
     serializer = ProductSerializerAdmin(elements, many=True)
@@ -103,7 +102,7 @@ def update_product(product_data: QueryDict) -> Response:
         return Response({'error': 'Please provide the id of the product to update'},
                         status=status.HTTP_400_BAD_REQUEST)
 
-    if not name or not price or not stock or not category or not stock or not entry_date or not inventory:
+    if not name or not price or not stock or not category or not stock or not inventory:
         return Response({'error': 'Please provide all the required fields',
                          'mandatory_fields': 'name, price, stock, category, inventory, entry_date, inventory,',
                          'optional_fields': 'description, image'}, status=status.HTTP_400_BAD_REQUEST)
@@ -323,5 +322,70 @@ def get_all_reports() -> Response:
 
 
 # TODO endpoint to get all warehouses
+# <--Warehouses - CRUD-->
+# READ
 def get_all_warehouses() -> Response:
-    pass
+    query = "SELECT * FROM warehouse"
+    elements = Warehouse.objects.raw(query)
+    if not elements:
+        return ResponseType.NOT_FOUND.value
+    serializer = WarehouseSerializerAdmin(elements, many=True)
+    return Response({'elements': serializer.data}, status.HTTP_200_OK)
+
+
+# CREATE
+def insert_warehouse(data: QueryDict) -> Response:
+    if not data.get('name') or not data.get('location'):
+        return Response({'error': 'Please provide all the required fields',
+                         'mandatory_fields': 'name, location'}, status=status.HTTP_400_BAD_REQUEST)
+
+    connection = CrudDB.connect_to_db()
+    cursor = connection.cursor()
+
+    cursor.execute(f"""
+        INSERT INTO warehouse (name, location) VALUES ({data.get('name')}, {data.get('location')})
+    """)
+
+    connection.commit()
+    cursor.close()
+    connection.close()
+
+    return ResponseType.SUCCESS.value
+
+
+# UPDATE
+def update_warehouse(data: QueryDict) -> Response:
+    if not data.get('id_warehouse') or not data.get('name') or not data.get('location'):
+        return Response({'error': 'Please provide all the required fields',
+                         'mandatory_fields': 'id_warehouse, name, location'}, status.HTTP_400_BAD_REQUEST)
+
+    connection = CrudDB.connect_to_db()
+    cursor = connection.cursor()
+
+    cursor.execute(f"""
+        UPDATE warehouse SET name='{data.get("name")}', location='{data.get("location")}'
+        WHERE id_warehouse={data.get('id_warehouse')}
+    """)
+
+    connection.commit()
+    cursor.close()
+    connection.close()
+
+    return ResponseType.SUCCESS.value
+
+
+# DELETE
+def delete_warehouse(id_warehouse: int) -> Response:
+    if not id_warehouse:
+        return Response({'error': 'Please provide an id to delete warehouse'}, status.HTTP_400_BAD_REQUEST)
+
+    connection = CrudDB.connect_to_db()
+    cursor = connection.cursor()
+
+    cursor.execute(f'DELETE FROM warehouse WHERE id_warehouse={id_warehouse}')
+
+    connection.commit()
+    cursor.close()
+    connection.close()
+
+    return ResponseType.SUCCESS.value
