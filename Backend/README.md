@@ -374,10 +374,10 @@ This endpoint is responsible for insert an employee into the database.
 ```json
 {
   "employee": {
-    "CI": "Identity card, identifier",
+    "ci": "Identity card, identifier",
     "name": "String",
     "salary": "number",
-    "boss": "Identify of another employee"
+    "id_boss": "Identify of another employee"
   }
 }
 ```
@@ -394,8 +394,8 @@ In case any of the other required fields are missing:
 ```json
 {
   "error": "Please provide all the required fields", 
-  "mandatory_fields": "CI, name, salary",
-  "optional_fields": "boss"
+  "mandatory_fields": "ci, name, salary",
+  "optional_fields": "id_boss"
 }
 ```
 `HTTP_400_BAD_REQUEST`<br/>
@@ -403,10 +403,20 @@ In case any of the other required fields are missing:
 Another error that could occur is that you may be trying to insert an employee that already exists in the database.
 ```json
 {
-  "error": "El CI que esta introduciendo ya existe en la base de datos"
+    "error": "The CI you are entering already exists in the database",
+    "code": "23505"
 }
 ```
-`HTTP_409_CONFLICT`
+`HTTP_409_CONFLICT`<br/>
+
+Another error that can occur is if the boss_id does not correspond to any other employee in the database.
+```json
+{
+    "error": "The employee to whom the id_boss corresponds does not exist",
+    "code": "23503"
+}
+```
+`HTTP_409_CONFLICT`<br/>
 
 <strong>Return JSON Example: </strong>
 
