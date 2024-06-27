@@ -7,22 +7,28 @@
   padding-bottom: 4vh;
   padding-top: 2vh;
   border-radius: 10px;
-  width: 100%;
+  width: fit-content;
   background-color: #212121;
   position: relative;
   margin-bottom: 4vh;
+  padding-left: 15vh;
+  padding-right: 15vh;
+}
+
+.my-btn {
+  width: 100%;
+  margin-bottom: 2vh;
 }
 
 .boton-prev {
-  position: absolute;
-  bottom: auto;
-  left: 15.7vh;
+  position: relative;
+  margin-left: 5vh;
 }
 
 .boton-next {
-  left: 120vh;
-  bottom: auto;
-  position: absolute;
+  position: relative;
+  float: right;
+  margin-right: 35vh;
 }
 
 .boton-add {

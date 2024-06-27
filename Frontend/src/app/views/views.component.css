@@ -3,10 +3,7 @@
   margin-right: 8%;
   color: white;
   margin-bottom: 20px;
-  padding-top: 20px;
-  padding-bottom: 20px;
   background-color: #212121;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   border-radius: 10px;
 }
 
@@ -22,11 +19,11 @@
 .textfont {
   font-size: 5vh;
   text-align: left;
-  margin: 0 7vh 1vh 7vh;
+  margin: 0 5vh 1vh 5vh;
 }
 
 .separacion {
-  margin-bottom: 7vh !important;
+  margin-bottom: 5vh !important;
 }
 
 .fonter {
@@ -40,7 +37,7 @@
   font-size: 5vh;
   border: 1px solid rgba(255, 255, 255, 0.300);
   text-align: left;
-  margin: auto 7vh 0 7vh;
+  margin: auto 5vh 0 5vh;
 }
 
 .list {
@@ -110,7 +107,7 @@
   margin-top: 4.6%;
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.300);
-  margin: 1vh 7vh 1vh 7vh;
+  margin: 1vh 5vh 1vh 5vh;
 }
 
 .img-angular {
@@ -148,7 +145,7 @@
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.300);
 
-  margin: 5vh 7vh 5vh 7vh;
+  margin: 5vh 5vh 5vh 5vh;
 }
 
 .django {
@@ -184,7 +181,7 @@
   margin-top: 4.6%;
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.300);
-  margin: 5vh 7vh 5vh 7vh;
+  margin: 5vh 5vh 5vh 5vh;
 }
 
 .img-postgre {
@@ -224,7 +221,7 @@
   border-radius: 10px;
   
   overflow: hidden;
-  margin: 3vh 7vh 3vh 7vh;
+  margin: 3vh 5vh 3vh 5vh;
 }
 
 .img-git {
