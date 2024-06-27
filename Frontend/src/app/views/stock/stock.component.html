@@ -24,13 +24,15 @@
           </div>
         </ng-container>
       </div>
+      <div class="my-btn">
+        <button *ngIf="apiurlprev" (click)="prev()" class="boton-prev">
+          Previous
+        </button>
+        <button *ngIf="apiurlnext" (click)="next()" class="boton-next">
+          Next
+        </button>
+      </div>
       
-      <button *ngIf="apiurlprev" (click)="prev()" class="boton-prev">
-        Previous
-      </button>
-      <button *ngIf="apiurlnext" (click)="next()" class="boton-next">
-        Next
-      </button>
     </div>
   </div>
 </ng-template>
