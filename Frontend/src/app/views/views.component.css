@@ -38,6 +38,7 @@
   border: 1px solid rgba(255, 255, 255, 0.300);
   text-align: left;
   margin: auto 5vh 0 5vh;
+  list-style-type: none !important;
 }
 
 .list {
@@ -290,4 +291,8 @@
 
 .rel {
   text-decoration: none;
+}
+
+ul {
+  list-style-type: none !important;
 }

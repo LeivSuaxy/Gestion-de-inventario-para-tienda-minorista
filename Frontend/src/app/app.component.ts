@@ -11,7 +11,6 @@ import { CommonModule } from '@angular/common';
   imports: [RouterOutlet,
     NavbarComponent,
     ViewsComponent,
-
     HttpClientModule,
     CommonModule
     ],
