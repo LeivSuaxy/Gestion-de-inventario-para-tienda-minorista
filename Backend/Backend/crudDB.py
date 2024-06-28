@@ -413,8 +413,6 @@ class CrudDB:
         connection = self.connect_to_db()
         cursor = connection.cursor()
 
-        print(products)
-
         total_price = 0
 
         for product in products:
