@@ -48,4 +48,3 @@ ADD CONSTRAINT purchase_order_detai_id_inventory_a3205e8f_fk_inventory
 FOREIGN KEY (id_inventory) REFERENCES inventory(id_inventory) ON DELETE NO ACTION DEFERRABLE INITIALLY DEFERRED;
 
 
-
