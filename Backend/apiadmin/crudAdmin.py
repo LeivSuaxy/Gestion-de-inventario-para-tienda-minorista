@@ -396,5 +396,3 @@ def delete_warehouse(id_warehouse: int) -> Response:
     connection.close()
 
     return ResponseType.SUCCESS.value
-
-# Process to build Reports in messages or documents
