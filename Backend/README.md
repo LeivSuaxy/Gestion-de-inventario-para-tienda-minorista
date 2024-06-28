@@ -313,6 +313,12 @@ En caso que no existan inventarios en la base de datos retorna:
 
 <hr/>
 
+### get_all_sales_reports (GET)
+
+### get_all_inventory_reports (GET)
+
+### get_all_warehouses (GET)
+
 ## (POST) Endpoints
 ### insert_product (POST)
 This endpoint is responsible for insert a product into the database.
@@ -662,6 +668,10 @@ If any of the required fields are missing, a JSON will be returned expressing th
  `Returns confirmation of the process -> {'status': 'Success'}` `HTTP_200_OK`
 
 <hr/>
+
+### insert_warehouse (POST)
+
+### delete_warehouse (POST)
 
 # Public/General Endpoints
 Public/General endpoints are mainly used to display information to the user.<br/>

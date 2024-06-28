@@ -7,9 +7,6 @@ from rest_framework import status
 from apiadmin import crudAdmin
 
 
-# from Backend.apiadmin import crudAdmin as db
-
-
 # Create your views here.
 
 # TODO all endpoints of admin view
@@ -111,18 +108,41 @@ def delete_inventory_from_database(request):
     return crudAdmin.delete_inventory(id_inventory)
 
 
-# TODO endpoint to get all reports
+# <--REPORTS CRUD ENDPOINTS-->
+# SALES REPORTS
 @api_view(['GET'])
-def get_all_reports(request):
-    pass
+def get_all_sales_reports(request):
+    return crudAdmin.get_all_sales_reports()
 
 
-# TODO endpoint to get all warehouses
+# INVENTORY REPORTS
+@api_view(['GET'])
+def get_all_inventory_reports(request):
+    return crudAdmin.get_all_inventory_reports()
+
+
+# <--WAREHOUSES CRUD ENDPOINTS-->
+# READ
 @api_view(['GET'])
 def get_all_warehouses(request):
-    pass
+    return crudAdmin.get_all_warehouses()
 
 
+# CREATE
 @api_view(['POST'])
 def insert_warehouse(request):
-    pass
+    return crudAdmin.insert_warehouse(request.data)
+
+
+# UPDATE
+@api_view(['POST'])
+def update_warehouse(request):
+    return crudAdmin.update_warehouse(request.data)
+
+
+# DELETE
+@api_view(['POST'])
+def delete_warehouse(request):
+    if not request.data.get('id_warehouse'):
+        return Response({'error': 'Please provide an id_warehouse'}, status.HTTP_400_BAD_REQUEST)
+    return crudAdmin.delete_warehouse(request.data.get('id_warehouse'))

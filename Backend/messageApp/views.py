@@ -18,7 +18,6 @@ def send_email(request):
     if not info_client or not data:
         return Response({'error': 'Please provide client and products data'}, status.HTTP_400_BAD_REQUEST)
 
-    print(info_client)
     # Get info client
     name: str = info_client['name']
     email: str = info_client['email']
@@ -42,15 +41,6 @@ def send_email(request):
 # New Method to send email to owners
 @api_view(['POST'])
 def send_contact_email(request):
-    """
-    {
-        "name":"Name",
-        "email":"email",
-        "content:"Content"
-    }
-    :param request:
-    :return:
-    """
     if not request.data.get('name') or not request.data.get('email') or not request.data.get('content'):
         return Response({'error': 'Por favor proporciona todos los campos requeridos',
                          'required_fields': 'name, email, content'}, status.HTTP_400_BAD_REQUEST)

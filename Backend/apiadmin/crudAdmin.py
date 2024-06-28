@@ -1,14 +1,16 @@
 import psycopg2.errors
 from Backend.crudDB import CrudDB, ResponseType
-from api.models import Product, Employee, Inventory, Warehouse
+from api.models import Product, Employee, Inventory, Warehouse, SalesReport
 from api.serializer import EmployeeSerializer, InventorySerializer
-from .serializer import ProductSerializerAdmin, WarehouseSerializerAdmin
+from .serializer import (ProductSerializerAdmin,
+                         WarehouseSerializerAdmin,
+                         SalesReportSerializerAdmin,
+                         InventoryReportSerializerAdmin)
 from django.http import QueryDict
 from rest_framework.response import Response
 from rest_framework import status
 from django.core.files.images import ImageFile
 from Backend.image_process import process_image
-from django.utils.timezone import now
 
 
 # TODO all endpoints of admin view
@@ -317,8 +319,24 @@ def delete_inventory(id_inventory: int) -> Response:
 
 # TODO endpoint to get all reports
 # <--Reports - CRUD-->
-def get_all_reports() -> Response:
-    pass
+# Sales Reports
+def get_all_sales_reports() -> Response:
+    query = "SELECT * FROM sales_report"
+    elements = SalesReport.objects.raw(query)
+    if not elements:
+        return ResponseType.NOT_FOUND.value
+    serializer = SalesReportSerializerAdmin(elements, many=True)
+    return Response({'elements': serializer.data}, status.HTTP_200_OK)
+
+
+# Inventories Reports
+def get_all_inventory_reports() -> Response:
+    query = "SELECT * FROM inventory_report"
+    elements = SalesReport.objects.raw(query)
+    if not elements:
+        return ResponseType.NOT_FOUND.value
+    serializer = InventoryReportSerializerAdmin(elements, many=True)
+    return Response({'elements': serializer.data}, status.HTTP_200_OK)
 
 
 # <--Warehouses - CRUD-->
