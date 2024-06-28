@@ -1,5 +1,5 @@
 # Index
-- [Presentation](#elitestock-api)
+- [Presentation](#elitestore-api)
 - [Authentication](#authentication)
   - [Register](#register-endpoint-post)
   - [Login](#login-endpoint-post)
@@ -26,8 +26,8 @@
   - [(POST) Endpoints](#post-endpoints-1)
 
 
-# EliteStock API
-This API is developed with the purpose of serving information to the Frontend of the website that EliteStock is developed.
+# EliteStore API
+This API is developed with the purpose of serving information to the Frontend of the website that EliteStore is developed.
 It is developed with Django-Rest_Framework with PostgreSQL as a database manager. At a general level this project
 It is developed with the objective of meeting the objectives oriented in the final task that corresponds to us in the subject
 Database. The choice of technologies was with the objective of expanding our knowledge and improving ourselves as
