@@ -16,8 +16,6 @@ class TenItemsPaginator(PageNumberPagination):
     page_size: int = 5
 
 
-# TODO Implement the token validation
-
 # GET Methods
 
 @api_view(['GET'])

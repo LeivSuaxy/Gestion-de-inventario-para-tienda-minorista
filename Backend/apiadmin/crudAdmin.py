@@ -87,7 +87,7 @@ def insert_product(product_data: QueryDict) -> Response:
 
 
 # UPDATE PRODUCT
-# FIXME the update product function
+# TODO ask frontend developer and TEST this method.
 def update_product(product_data: QueryDict) -> Response:
     id_product = product_data.get('id_product')
     name = product_data.get('name')
@@ -242,7 +242,6 @@ def update_employee_in_database(data: QueryDict) -> Response:
 
 
 # DELETE
-# FIXME fix the DELETE CASCADE
 def delete_employee_in_database(ci: str) -> Response:
     connection = CrudDB.connect_to_db()
     cursor = connection.cursor()
@@ -317,11 +316,11 @@ def delete_inventory(id_inventory: int) -> Response:
 
 
 # TODO endpoint to get all reports
+# <--Reports - CRUD-->
 def get_all_reports() -> Response:
     pass
 
 
-# TODO endpoint to get all warehouses
 # <--Warehouses - CRUD-->
 # READ
 def get_all_warehouses() -> Response:
