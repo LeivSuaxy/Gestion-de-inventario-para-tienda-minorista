@@ -344,13 +344,6 @@ class CrudDB:
         else:
             return Response({'id_value': id_storage}, status.HTTP_200_OK)
 
-    # TODO Endpoint to get inventories
-    def get_inventories(self):
-        pass
-
-    def get_product(self):
-        pass
-
     def update_purchased_products(self, products: QueryDict) -> Response:
         connection = self.connect_to_db()
         cursor = connection.cursor()

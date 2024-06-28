@@ -80,7 +80,6 @@ def update_employee_in_database(request):
 
 
 # DELETE EMPLOYEE
-# FIXME Review delete cascade
 @api_view(['POST'])
 def delete_employee_in_database(request):
     data = request.data

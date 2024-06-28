@@ -33,10 +33,11 @@ export class PostcarComponent {
   description? : string;
   image? : File;
   stock? : number;
-  
+
   constructor(private http : HttpClient, private router: Router) {
   }
 
+  // FIXME Adriano, haz que cuando again == true reinicie los valores de las variables.
   async posMethod(again: boolean): Promise<void> {
     let url = 'http://localhost:8000/api/admin/insert_product/';
     const formData = new FormData();
@@ -45,21 +46,21 @@ export class PostcarComponent {
     formData.append('price', this.price?.toString() ?? '');
     formData.append('description', this.description?.toString() ?? '');
     formData.append('stock', this.stock?.toString() ?? '');
-  
+
     try {
       const response = await fetch(url, {
         method: 'POST',
         body: formData
       });
-  
+
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-  
+
       const data = await response.json(); // Asumiendo que el servidor responde con JSON
       console.log(data); // Manejar la respuesta del servidor
       this.name = this.price = this.description = this.image = this.stock = undefined;
-  
+
       if (!again) {
         this.router.navigate(['/tables/product_table']);
       }
