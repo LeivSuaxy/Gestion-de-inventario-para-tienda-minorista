@@ -13,7 +13,11 @@
   font-size: 9vh;
   margin-bottom: 30px;
   margin-top: 10px;
-  text-shadow: 2px 2px 4px #000000;
+  text-shadow: -1px -1px 0 #000,  
+                1px -1px 0 #000,
+               -1px  1px 0 #000,
+                1px  1px 0 #000;
+  
 }
 
 .textfont {
@@ -220,7 +224,7 @@
   color: white;
   background-color: #212121;
   border-radius: 10px;
-  
+  border: 1px solid rgba(0,0,0,0.2);
   overflow: hidden;
   margin: 3vh 5vh 3vh 5vh;
 }
@@ -232,7 +236,11 @@
 
 .ico-git {
   margin-left: 5px;
-  font-family: JetBrains Mono;
+  font-family: Rubik Moonrocks;
+  text-shadow: -1px -1px 0 #000,  
+                1px -1px 0 #000,
+               -1px  1px 0 #000,
+                1px  1px 0 #000;
 }
 
 .btn-git {

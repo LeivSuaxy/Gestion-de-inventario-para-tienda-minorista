@@ -3,5 +3,24 @@ body {
 }/* You can add global styles to this file, and also import other style files */
 
 
-html, body { height: 100%; }
+html, body {
+  height: 100%;
+  margin: 0;
+}
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+footer {
+  background-color: #212121;
+  color: rgba(255, 255, 255, 0.568);
+  padding-left: 21vh;
+  /* position: absolute; Removido */
+  bottom: 0; /* Esto puede ser removido si el footer ya no necesita ser posicionado absolutamente */
+  width: 100%;
+  margin-top: 3vh;
+  padding-top: 4vh;
+  padding-bottom: 4vh;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  border-radius: 10px 10px 0 0;
+}
+
+
