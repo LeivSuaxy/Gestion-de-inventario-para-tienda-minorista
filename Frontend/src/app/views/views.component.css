@@ -35,9 +35,10 @@
   background-color: #212121;
   color: white;
   font-size: 5vh;
-  border: 1px solid rgba(255, 255, 255, 0.300);
+  border: none !important;
   text-align: left;
   margin: auto 5vh 0 5vh;
+  list-style-type: none !important;
 }
 
 .list {
@@ -290,4 +291,18 @@
 
 .rel {
   text-decoration: none;
+}
+
+ul {
+  list-style-type: none !important;
+}
+
+.list {
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  margin-left: 5vh;
+  margin-right: 5vh;
+  padding-top: 5vh;
+  padding-bottom: 5vh;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.300);
 }
