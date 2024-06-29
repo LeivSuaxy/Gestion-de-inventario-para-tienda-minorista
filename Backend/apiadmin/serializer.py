@@ -1,5 +1,10 @@
 from rest_framework import serializers
-from api.models import Product, Warehouse, Report, SalesReport, InventoryReport
+from api.models import (Product,
+                        Warehouse,
+                        Report,
+                        SalesReport,
+                        InventoryReport,
+                        Messenger)
 
 
 class ProductSerializerAdmin(serializers.ModelSerializer):
@@ -30,3 +35,9 @@ class InventoryReportSerializerAdmin(serializers.ModelSerializer):
     class Meta:
         model = InventoryReport
         fields = ['id', 'stock_amount', 'total_value', 'id_inventory']
+
+
+class MessengerSerializerAdmin(serializers.ModelSerializer):
+    class Meta:
+        model = Messenger
+        fields = ['ci', 'vehicle', 'salary_per_km']
