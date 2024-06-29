@@ -33,20 +33,21 @@
 <body style="font-family: Quicksand;" class="">
   <style>
     body {
-  margin: 0;
-  font-family: Quicksand;
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.5;
-  color: #212529;
-  text-align: left;
-  margin-top: 14vh;
-  scroll-behavior: smooth;
-  overflow: auto;
-  position: relative;
-  min-height: 100vh;
-  background-color: #212121;
-}
+    margin-top: 14vh;
+    font-family: Quicksand;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    text-align: left;
+    scroll-behavior: smooth;
+    overflow: auto;
+    position: relative;
+    min-height: 100vh; /* Ajustado a 100vh */
+    background-color: #212121;
+    display: flex; /* Nuevo */
+    flex-direction: column; /* Nuevo */
+  }
 
 /*body::after {
   content: "";
@@ -60,7 +61,17 @@
   z-index: -1;
 }*/
 
+.site-container {
+  flex: 1;
+}
+
   </style>
-  <app-root></app-root>
+  <div class="site-container">
+    <app-root></app-root>
+  </div>
+  
+  <footer>
+    <span>© 2024 AGR55 & LeivSuaxy. Casi todos los derechos reservados</span> 
+  </footer>
 </body>
 </html>

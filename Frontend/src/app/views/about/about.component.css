@@ -8,6 +8,7 @@
     background-color: #212121;
     color: white;
     padding-left: 5vh;
+    font-family: Nunito;
   }
   
   #about h2, #about h3 {
@@ -81,7 +82,7 @@
     background: transparent; /* Color del borde */
     border-radius: 20px;
     border: 2px solid rgba(255, 255, 255, 0.1);
-    padding: 5px; /* Espacio entre la imagen y el borde */
+    padding: 0.3rem; /* Espacio entre la imagen y el borde */
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   }
 
