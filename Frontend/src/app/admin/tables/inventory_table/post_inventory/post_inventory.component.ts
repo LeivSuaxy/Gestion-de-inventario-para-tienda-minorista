@@ -29,31 +29,32 @@ export class Post_inventoryComponent {
 
   category? : string;
   storage_id? : number;
-  
+
   constructor(private http : HttpClient, private router: Router) {}
 
   ngOnInit() {}
 
+  // FIXME Adriano, haz que cuando again == true reinicie las variables
   async posMethod(again: boolean): Promise<void> {
     let url = 'http://localhost:8000/api/admin/insert_inventory/';
     const formData = new FormData();
     formData.append('category', this.category!);
     formData.append('storage_id', this.storage_id!.toString());
-  
+
     try {
       const response = await fetch(url, {
         method: 'POST',
         body: formData
       });
-  
+
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-  
+
       const data = await response.json(); // Asumiendo que el servidor responde con JSON
       console.log(data); // Manejar la respuesta del servidor
       this.category = this.storage_id = undefined;
-  
+
       if (!again) {
         this.router.navigate(['/tables/inventory_table']);
       }

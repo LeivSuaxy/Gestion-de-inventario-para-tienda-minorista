@@ -19,4 +19,11 @@ urlpatterns = [
     path('inventories/', views.get_all_inventories, name='get_all_inventories'),
     path('insert_inventory/', views.insert_inventory_in_database, name='insert_inventory'),
     path('delete_inventory/', views.delete_inventory_from_database, name='delete_inventory'),
+    # <-- Reports CRUD URLS-->
+    path('sales_reports/', views.get_all_sales_reports, name='get_all_sales_reports'),
+    path('inventory_reports/', views.get_all_inventory_reports, name='get_all_inventory_reports'),
+    # <--Warehouses CRUD URLS-->
+    path('warehouses/', views.get_all_warehouses, name='get_all_warehouses'),
+    path('insert_warehouse/', views.insert_warehouse, name='insert_warehouse'),
+    path('delete_warehouse/', views.delete_warehouse, name='delete_warehouse'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

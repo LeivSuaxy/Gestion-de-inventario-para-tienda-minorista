@@ -37,6 +37,7 @@ class ResponseType(Enum):
     PASSWORD_INCORRECT = Response({'status': 'Incorrect password'}, status=status.HTTP_400_BAD_REQUEST)
 
 
+# TODO REVIEW methods
 class CrudDB:
     def __init__(self):
         self.total_elements_stock = 0
@@ -191,6 +192,7 @@ class CrudDB:
                     connection.close()
                     return ResponseType.PASSWORD_INCORRECT.value
 
+    # Function to validate token
     def validate_token(self, username: str, auth_token: str) -> Response:
         connection = self.connect_to_db()
         cursor = connection.cursor()
@@ -297,73 +299,6 @@ class CrudDB:
 
         return Response(data=data, status=status.HTTP_200_OK)
 
-    # Storage CRUD
-    def create_storage(self, name, location) -> Response:
-        connection = self.connect_to_db()
-
-        if connection == ResponseType.ERROR.value:
-            return connection
-
-        cursor = connection.cursor()
-
-        check = self.__exist_storage__(name)
-
-        if check == ResponseType.ERROR.value:
-            cursor.close()
-            connection.close()
-            return Response({'error': 'Ya existe el nombre'}, status.HTTP_400_BAD_REQUEST)
-
-        cursor.execute(f"INSERT INTO warehouse (name, location) VALUES ('{name}', '{location}')")
-        connection.commit()
-
-        cursor.close()
-        connection.close()
-        print('Insertado en la base de datos!')
-
-        return ResponseType.SUCCESS.value
-
-    def __exist_storage__(self, name) -> Response:
-        connection = self.connect_to_db()
-        cursor = connection.cursor()
-
-        cursor.execute(f"SELECT EXISTS(SELECT 1 FROM warehouse WHERE name='{name}')")
-
-        exist_storage = cursor.fetchone()[0]
-
-        cursor.close()
-        connection.close()
-
-        if not exist_storage:
-            return ResponseType.SUCCESS.value
-        else:
-            return ResponseType.ERROR.value
-
-    # Inventory CRUD
-    def create_inventory(self, storage_name) -> Response:
-        id_storage = self.__get_storage_id__(storage_name)
-
-        if id_storage == ResponseType.ERROR.value or id_storage == ResponseType.NOT_FOUND.value:
-            return id_storage
-
-        id_storage = id_storage.data.get('id_value')
-
-        print(id_storage)
-
-        connection = self.connect_to_db()
-
-        if connection == ResponseType.ERROR.value:
-            return connection
-
-        cursor = connection.cursor()
-
-        cursor.execute(f"INSERT INTO inventory (id_warehouse) VALUES ('{id_storage}')")
-        connection.commit()
-
-        cursor.close()
-        connection.close()
-
-        return ResponseType.SUCCESS.value
-
     def __get_storage_id__(self, storage_name) -> Response:
         connection = self.connect_to_db()
 
@@ -383,13 +318,6 @@ class CrudDB:
             return ResponseType.NOT_FOUND.value
         else:
             return Response({'id_value': id_storage}, status.HTTP_200_OK)
-
-    # TODO Endpoint to get inventories
-    def get_inventories(self):
-        pass
-
-    def get_product(self):
-        pass
 
     def update_purchased_products(self, products: QueryDict) -> Response:
         connection = self.connect_to_db()
@@ -459,8 +387,6 @@ class CrudDB:
     def __process_total_price_products_purchased__(self, products: list) -> Response:
         connection = self.connect_to_db()
         cursor = connection.cursor()
-
-        print(products)
 
         total_price = 0
 

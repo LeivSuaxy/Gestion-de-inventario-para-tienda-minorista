@@ -1,14 +1,16 @@
 import psycopg2.errors
 from Backend.crudDB import CrudDB, ResponseType
-from api.models import Product, Employee, Inventory
+from api.models import Product, Employee, Inventory, Warehouse, SalesReport
 from api.serializer import EmployeeSerializer, InventorySerializer
-from .serializer import ProductSerializerAdmin
+from .serializer import (ProductSerializerAdmin,
+                         WarehouseSerializerAdmin,
+                         SalesReportSerializerAdmin,
+                         InventoryReportSerializerAdmin)
 from django.http import QueryDict
 from rest_framework.response import Response
 from rest_framework import status
 from django.core.files.images import ImageFile
 from Backend.image_process import process_image
-from django.utils.timezone import now
 
 
 # TODO all endpoints of admin view
@@ -20,7 +22,6 @@ from django.utils.timezone import now
 def get_all_products() -> Response:
     query = "SELECT * FROM product"
     elements = Product.objects.raw(query)
-    print(elements)
     if not elements:
         return ResponseType.NOT_FOUND.value
     serializer = ProductSerializerAdmin(elements, many=True)
@@ -88,7 +89,7 @@ def insert_product(product_data: QueryDict) -> Response:
 
 
 # UPDATE PRODUCT
-# FIXME the update product function
+# TODO ask frontend developer and TEST this method.
 def update_product(product_data: QueryDict) -> Response:
     id_product = product_data.get('id_product')
     name = product_data.get('name')
@@ -103,7 +104,7 @@ def update_product(product_data: QueryDict) -> Response:
         return Response({'error': 'Please provide the id of the product to update'},
                         status=status.HTTP_400_BAD_REQUEST)
 
-    if not name or not price or not stock or not category or not stock or not entry_date or not inventory:
+    if not name or not price or not stock or not category or not stock or not inventory:
         return Response({'error': 'Please provide all the required fields',
                          'mandatory_fields': 'name, price, stock, category, inventory, entry_date, inventory,',
                          'optional_fields': 'description, image'}, status=status.HTTP_400_BAD_REQUEST)
@@ -243,7 +244,6 @@ def update_employee_in_database(data: QueryDict) -> Response:
 
 
 # DELETE
-# FIXME fix the DELETE CASCADE
 def delete_employee_in_database(ci: str) -> Response:
     connection = CrudDB.connect_to_db()
     cursor = connection.cursor()
@@ -318,10 +318,99 @@ def delete_inventory(id_inventory: int) -> Response:
 
 
 # TODO endpoint to get all reports
-def get_all_reports() -> Response:
-    pass
+# <--Reports - CRUD-->
+# Sales Reports
+def get_all_sales_reports() -> Response:
+    query = "SELECT * FROM sales_report"
+    elements = SalesReport.objects.raw(query)
+    if not elements:
+        return ResponseType.NOT_FOUND.value
+    serializer = SalesReportSerializerAdmin(elements, many=True)
+    return Response({'elements': serializer.data}, status.HTTP_200_OK)
 
 
-# TODO endpoint to get all warehouses
+# Inventories Reports
+def get_all_inventory_reports() -> Response:
+    query = "SELECT * FROM inventory_report"
+    elements = SalesReport.objects.raw(query)
+    if not elements:
+        return ResponseType.NOT_FOUND.value
+    serializer = InventoryReportSerializerAdmin(elements, many=True)
+    return Response({'elements': serializer.data}, status.HTTP_200_OK)
+
+
+# <--Warehouses - CRUD-->
+# READ
 def get_all_warehouses() -> Response:
-    pass
+    query = "SELECT * FROM warehouse"
+    elements = Warehouse.objects.raw(query)
+    if not elements:
+        return ResponseType.NOT_FOUND.value
+    serializer = WarehouseSerializerAdmin(elements, many=True)
+    return Response({'elements': serializer.data}, status.HTTP_200_OK)
+
+
+# CREATE
+def insert_warehouse(data) -> Response:
+    if not data.get('name') or not data.get('location'):
+        return Response({'error': 'Please provide all the required fields',
+                         'mandatory_fields': 'name, location'}, status.HTTP_400_BAD_REQUEST)
+
+    connection = CrudDB.connect_to_db()
+    cursor = connection.cursor()
+
+    cursor.execute(f"SELECT EXISTS(SELECT 1 FROM warehouse WHERE name='{data.get('name')}')")
+    exist_storage = cursor.fetchone()[0]
+
+    if exist_storage:
+        cursor.close()
+        connection.close()
+        return Response({'error': 'There is already a warehouse with this name'}, status.HTTP_400_BAD_REQUEST)
+
+    cursor.execute(f"""
+        INSERT INTO warehouse (name, location) VALUES ('{data.get('name')}', '{data.get('location')}')
+    """)
+    connection.commit()
+
+    cursor.close()
+    connection.close()
+
+    return ResponseType.SUCCESS.value
+
+
+# UPDATE
+def update_warehouse(data: QueryDict) -> Response:
+    if not data.get('id_warehouse') or not data.get('name') or not data.get('location'):
+        return Response({'error': 'Please provide all the required fields',
+                         'mandatory_fields': 'id_warehouse, name, location'}, status.HTTP_400_BAD_REQUEST)
+
+    connection = CrudDB.connect_to_db()
+    cursor = connection.cursor()
+
+    cursor.execute(f"""
+        UPDATE warehouse SET name='{data.get("name")}', location='{data.get("location")}'
+        WHERE id_warehouse={data.get('id_warehouse')}
+    """)
+
+    connection.commit()
+    cursor.close()
+    connection.close()
+
+    return ResponseType.SUCCESS.value
+
+
+# DELETE
+def delete_warehouse(id_warehouse: int) -> Response:
+    if not id_warehouse:
+        return Response({'error': 'Please provide an id to delete warehouse'}, status.HTTP_400_BAD_REQUEST)
+
+    connection = CrudDB.connect_to_db()
+    cursor = connection.cursor()
+
+    cursor.execute(f'DELETE FROM warehouse WHERE id_warehouse={id_warehouse}')
+
+    connection.commit()
+    cursor.close()
+    connection.close()
+
+    return ResponseType.SUCCESS.value
