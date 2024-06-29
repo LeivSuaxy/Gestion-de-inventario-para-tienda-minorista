@@ -37,7 +37,6 @@ class ResponseType(Enum):
     PASSWORD_INCORRECT = Response({'status': 'Incorrect password'}, status=status.HTTP_400_BAD_REQUEST)
 
 
-# TODO REVIEW methods
 class CrudDB:
     def __init__(self):
         self.total_elements_stock = 0
@@ -276,48 +275,6 @@ class CrudDB:
             return Response(data=urls, status=status.HTTP_200_OK)
         else:
             return ResponseType.ERROR.value
-
-    # Function to get elements and urls from stock with pagination. Is called by the get_objects view
-    def get_response_elements(self, pagination: int) -> Response:
-        if pagination < 0:
-            return ResponseType.ERROR.value
-
-        elements = self.get_elements_stock(pagination)
-
-        if elements == ResponseType.ERROR.value:
-            return elements
-
-        urls = self.__get_urls__(pagination)
-
-        if urls == ResponseType.ERROR.value:
-            return urls
-
-        data = {
-            'elements': elements.data,
-            'urls': urls.data
-        }
-
-        return Response(data=data, status=status.HTTP_200_OK)
-
-    def __get_storage_id__(self, storage_name) -> Response:
-        connection = self.connect_to_db()
-
-        if connection == ResponseType.ERROR.value:
-            return connection
-
-        cursor = connection.cursor()
-
-        cursor.execute(f"SELECT id_warehouse FROM warehouse WHERE name='{storage_name}'")
-
-        id_storage = cursor.fetchone()[0]
-
-        cursor.close()
-        connection.close()
-
-        if not id_storage:
-            return ResponseType.NOT_FOUND.value
-        else:
-            return Response({'id_value': id_storage}, status.HTTP_200_OK)
 
     def update_purchased_products(self, products: QueryDict) -> Response:
         connection = self.connect_to_db()
