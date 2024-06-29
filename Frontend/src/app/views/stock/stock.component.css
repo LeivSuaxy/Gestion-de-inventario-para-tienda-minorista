@@ -8,7 +8,7 @@
   padding-top: 2vh;
   border-radius: 10px;
   width: fit-content;
-  background-color: #212121;
+  background-color: transparent;
   position: relative;
   margin-bottom: 4vh;
   padding-left: 15vh;
@@ -22,81 +22,13 @@
 
 .boton-prev {
   position: relative;
-  margin-left: 5vh;
+  margin-left: 20vh;
 }
 
 .boton-next {
   position: relative;
   float: right;
-  margin-right: 35vh;
-}
-
-.boton-add {
-  color: white;
-  border-radius: 10px;
-  border: 1px solid rgb(128, 255, 0);
-  transition: color 0.2s, background-color 0.2s;
-  margin-top: 5px;
-  width: 40vh;
-}
-
-.boton-add:hover {
-  color: chartreuse;
-  background-color: #191a1c;
-}
-
-.boton-rm {
-  color: white;
-  border: 1px solid red;
-  transition: color 0.2s, background-color 0.2s;
-  width: 40vh;
-  margin-top: 2vh;
-  border-radius: 10px;
-  margin-bottom: 15px;
-}
-
-.boton-rm:hover {
-  color: red;
-  background-color: #191a1c;
-}
-
-.boton-upd {
-  color: white;
-  border: 1px solid yellow;
-  transition: color 0.2s, background-color 0.2s;
-  width: 40vh;
-  margin-top: 2vh;
-  border-radius: 10px;
-}
-
-.boton-upd:hover {
-  color: yellow;
-  background-color: #191a1c;
-}
-
-.crud-card {
-  border-radius: 10px;
-  border: 1px solid rgba(255,255,255,0.300);
-  position: absolute;
-  top: 2.1vh;
-  right: 15.4vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 50vh;
-  background-color: #212121;
-}
-
-.crud {
-  color: white;
-  font-size: 6vh;
-  margin-left: 1vh;
-  margin-right: 1vh;
-}
-
-.fa-pizza-slice {
-  color: white;
-  font-size: 4vh;
+  margin-right: 20vh;
 }
 
 .title {
@@ -113,7 +45,7 @@
   align-items: center;
   width: 100%;
   height: 100%;
-  background-color: #212121;
+  background-color: transparent;
   z-index: 999;
 }
 

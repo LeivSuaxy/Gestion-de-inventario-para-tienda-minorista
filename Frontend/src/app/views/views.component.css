@@ -36,7 +36,7 @@
 }
 
 .listhelp {
-  background-color: #212121;
+  background-color: transparent;
   color: white;
   font-size: 5vh;
   border: none !important;
@@ -46,7 +46,7 @@
 }
 
 .list {
-  background-color: #212121 !important;
+  background-color: transparent !important;
   border-radius: 10px 0 0 10px;
 }
 
@@ -76,14 +76,14 @@
 }
 
 .cardhelphead {
-  background-color: #212121;
+  background-color: transparent;
   color:white;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   border: none !important;
 }
 
 .card-body {
-  background-color: #212121 !important;
+  background-color: transparent !important;
 }
 
 .encabezado {
@@ -222,7 +222,7 @@
   max-width: 70%;
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
   color: white;
-  background-color: #212121;
+  background-color: transparent;
   border-radius: 10px;
   border: 1px solid rgba(0,0,0,0.2);
   overflow: hidden;
@@ -264,7 +264,7 @@
 
 .card-interior {
   border-radius: 0 0 10px 10px;
-  background-color: #212121;
+  background-color: transparent;
 }
 
 .extra {

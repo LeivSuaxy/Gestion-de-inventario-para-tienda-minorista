@@ -10,7 +10,7 @@ html, body {
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 footer {
-  background-color: #212121;
+  background-color: transparent;
   color: rgba(255, 255, 255, 0.568);
   padding-left: 21vh;
   /* position: absolute; Removido */

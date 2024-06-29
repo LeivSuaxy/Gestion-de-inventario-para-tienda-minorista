@@ -9,7 +9,7 @@
   border-radius: 1.5vh;
   background-color: #f5f5f5;
   width: 50%;
-  background-color: #212121;
+  background-color: transparent;
   color: white;
   width: 66vh;
   margin-left: 8vh;
@@ -22,7 +22,7 @@
   align-items: center;
   position: relative;
   margin: auto;
-  background-color: #212121;
+  background-color: transparent;
 }
 
 .title {

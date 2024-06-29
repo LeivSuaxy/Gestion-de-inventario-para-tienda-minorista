@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import {RouterLink, RouterLinkActive, RouterOutlet} from "@angular/router";
 import {CommonModule, NgOptimizedImage} from "@angular/common";
 import {ModalwithshopComponent} from "../views/stock/modalwithshop/modalwithshop.component";
@@ -30,13 +30,27 @@ export class NavbarComponent {
 
   toggleMenu() {
     this.menuOpen = !this.menuOpen;
+    this.menuButton.nativeElement.checked = this.menuOpen; // Actualiza el estado del checkbox
     if (this.menuOpen) {
       const rect = this.navbar.nativeElement.getBoundingClientRect();
       this.menu.nativeElement.style.top = `${rect.bottom}px`;
       this.menu.nativeElement.style.left = `${rect.left}px`;
-      this.menu.nativeElement.style.maxHeight = '500px'; // Ajusta la maxHeight a un valor grande cuando el menú está abierto
+      this.menu.nativeElement.style.maxHeight = '500px';
     } else {
-      this.menu.nativeElement.style.maxHeight = '0'; // Ajusta la maxHeight a '0' cuando el menú está cerrado
+      this.closeMenu();
+    }
+  }
+  
+  closeMenu() {
+    this.menuOpen = false;
+    this.menu.nativeElement.style.maxHeight = '0';
+    this.menuButton.nativeElement.checked = false; // Asegura que el checkbox se desmarque
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    if (!this.navbar.nativeElement.contains(event.target) && !this.menuButton.nativeElement.contains(event.target) && this.menuOpen) {
+      this.closeMenu();
     }
   }
 }
