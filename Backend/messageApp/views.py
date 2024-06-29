@@ -9,7 +9,6 @@ from rest_framework import status
 
 
 # Create your views here.
-# TODO System of messages for the app and build the template.
 @api_view(['POST'])
 def send_email(request):
     info_client = request.data.get('client')

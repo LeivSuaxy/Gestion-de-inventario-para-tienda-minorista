@@ -9,8 +9,6 @@ from apiadmin import crudAdmin
 
 # Create your views here.
 
-# TODO all endpoints of admin view
-
 # <--PRODUCTS CRUD ENDPOINTS-->
 # READ PRODUCTS
 @api_view(['GET'])

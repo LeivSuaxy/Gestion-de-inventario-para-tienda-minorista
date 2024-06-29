@@ -14,9 +14,6 @@ from django.core.files.images import ImageFile
 from Backend.image_process import process_image
 
 
-# TODO all endpoints of admin view
-# TODO REVIEW alls URLS
-# FIXME REVIEW alls POO items
 # <--PRODUCTS - CRUD-->
 # READ PRODUCTS
 
@@ -318,7 +315,6 @@ def delete_inventory(id_inventory: int) -> Response:
     return ResponseType.SUCCESS.value
 
 
-# TODO endpoint to get all reports
 # <--Reports - CRUD-->
 # Sales Reports
 def get_all_sales_reports() -> Response:
@@ -494,4 +490,3 @@ def delete_messenger(ci: str) -> Response:
     connection.close()
 
     return ResponseType.SUCCESS.value
-
