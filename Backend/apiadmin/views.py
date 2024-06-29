@@ -146,3 +146,9 @@ def delete_warehouse(request):
     if not request.data.get('id_warehouse'):
         return Response({'error': 'Please provide an id_warehouse'}, status.HTTP_400_BAD_REQUEST)
     return crudAdmin.delete_warehouse(request.data.get('id_warehouse'))
+
+# <--MESSENGER CRUD ENDPOINTS-->
+# READ
+# CREATE
+# UPDATE
+# DELETE

@@ -110,6 +110,9 @@ class Messenger(models.Model):
     vehicle = models.CharField(max_length=255, null=True, blank=True)
     salary_per_km = models.DecimalField(max_digits=10, decimal_places=2)
 
+    class Meta:
+        db_table = 'messenger'
+
 
 class SalesReport(models.Model):
     id = models.OneToOneField(Report, models.DO_NOTHING, db_column='id', primary_key=True)
