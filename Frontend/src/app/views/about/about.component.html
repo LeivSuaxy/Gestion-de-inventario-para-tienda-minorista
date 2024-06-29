@@ -1,18 +1,18 @@
 <!-- Sección About -->
-<section id="about">
-  <div class="container">
+<div class="container about-flex-container">
+  <!-- Contenedor para todo excepto imágenes -->
+  <div class="about-content">
     <!-- Introducción -->
-     <div class="cabecera">
+    <div class="cabecera">
       <i class="fas fa-users"></i>
-    <span class="acerca">Acerca de Nosotros</span>
-     </div>
+      <span class="acerca">Acerca de Nosotros</span>
+    </div>
 
-     <div class="info">
+    <div class="info">
       <p>
         Somos un pequeño equipo dedicado al desarrollo de aplicaciones,
         con un compromiso firme con la calidad y la innovación.
       </p>
-
       <!-- Equipo -->
       <span>Nuestro equipo está conformado por:</span> <br>
       <ul>
@@ -20,14 +20,23 @@
         <li><strong>Javier Leiva Suárez</strong> - Estudiante de Ciencias Informáticas con un fuerte caracter competitivo y ansias de aprender sobre tecnologías. Inclinado por el desarrollo Back-End.</li>
         <!-- Agrega más miembros según sea necesario -->
       </ul>
-
       <p>Nuestra filosofía es simple: La programación da dinero. Esto nos guía en cada proyecto que emprendemos.</p>
-
-     </div>
-
+    </div>
 
     <!-- Contacto -->
     <h3>Contacto</h3>
     <p>Interesado en trabajar con nosotros? <a routerLink="">Contáctanos</a> o envíanos un correo a [tu email].</p>
   </div>
-</section>
+
+  <!-- Contenedor para imágenes -->
+  <div class="about-images">
+    <div class="div-img-profile adriano">
+      <img src="../../../assets/img/profile/adriano.jpg" alt="" class="img-profile">
+    </div>
+    <div class="div-img-profile javier derecha">
+      <img src="../../../assets/img/profile/Javier.jpg" alt="" class="img-profile">
+    </div>
+  </div>
+</div>
+  
+

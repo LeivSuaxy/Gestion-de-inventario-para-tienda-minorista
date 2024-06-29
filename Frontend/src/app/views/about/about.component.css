@@ -1,12 +1,13 @@
-#about {
+
+  .container {
+    width: fit-content;
+    margin-left: 8%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
     background-color: #212121;
     color: white;
-    padding: 20px 0;
-  }
-  
-  #about .container {
-    width: 80%;
-    margin: 0 auto;
+    padding-left: 5vh;
   }
   
   #about h2, #about h3 {
@@ -63,4 +64,42 @@
 
   .info {
     width: 90vh;
+  }
+
+  img {
+    width: 35vh;
+    border-radius: 15px;
+  }
+
+  .div-img-profile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5vh;
+    margin-left: 5vh;
+    display: inline-block;
+    background: transparent; /* Color del borde */
+    border-radius: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    padding: 5px; /* Espacio entre la imagen y el borde */
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  }
+
+  .adriano {
+    transform: rotate(5deg);
+    z-index: 1000;
+  }
+
+  .javier {
+    transform: rotate(5deg);
+    position: absolute;
+    right: 5vh;
+    bottom: 5vh;
+    z-index: 1;
+  }
+
+  .about-images {
+    width: 80vh;
+    height: 80vh;
+    position: relative;
   }
