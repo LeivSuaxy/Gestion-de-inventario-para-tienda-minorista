@@ -1,38 +1,41 @@
-<div class="card mb-3 backCard card-ventas">
-  <div class="row g-0">
-    <div class="col-md-4">
-      <ng-container *ngIf="venta.imagen == null; else foto">
-        <a href="../../../../assets/img/nophoto.jpeg" target="_blank">
-          <img src="../../../../assets/img/nophoto.jpeg" class="img-fluid rounded-start img-card" alt="{{venta.nombre}}"/>
-        </a>
-      </ng-container>
-    </div>
-    <div class="col-md-8 body">
-      <div class="card-body">
-        <h5 class="card-title">{{venta.nombre}}</h5>
-        <p class="card-text">{{venta.descripcion}}</p>
-        <p class="precio">{{venta.precio}}$</p>
-        <p class="card-text"> Cantidad disponible: {{venta.stock}}</p>
+<div class="centrar">
+  <div class="card mb-3 backCard card-ventas">
+    <div class="row g-0">
+      <div class="col-md-4">
+        <ng-container *ngIf="venta.imagen == null; else foto">
+          <a href="../../../../assets/img/nophoto.jpeg" target="_blank">
+            <img src="../../../../assets/img/nophoto.jpeg" class="img-fluid rounded-start img-card" alt="{{venta.nombre}}"/>
+          </a>
+        </ng-container>
+      </div>
+      <div class="col-md-8 body">
+        <div class="card-body">
+          <h5 class="card-title">{{venta.nombre}}</h5>
+          <p class="card-text">{{venta.descripcion}}</p>
+          <p class="precio">{{venta.precio}}$</p>
+          <p class="card-text"> Cantidad disponible: {{venta.stock}}</p>
+        </div>
       </div>
     </div>
+    <ng-container *ngIf="!isAdded(venta); then positive else negative"/>
   </div>
-  <ng-container *ngIf="!isAdded(venta); then positive else negative"/>
+  
+  <ng-template #positive>
+    <button (click)="setadded(venta)" class="color-positive">
+      Add to cart
+    </button>
+    
+  </ng-template>
+  <ng-template #negative>
+    <button class="color-negative" (click)="removeFromCart(venta)">
+      Remove from cart
+    </button>
+  </ng-template>
+  
+  <ng-template #foto>
+    <a href="http://localhost:8000{{venta.imagen}}" target="_blank">
+      <img src="http://localhost:8000{{venta.imagen}}" class="img-fluid rounded-start" alt="{{venta.nombre}}"/>
+    </a>
+  </ng-template>
 </div>
 
-<ng-template #positive>
-  <button (click)="setadded(venta)" class="color-positive">
-    Add to cart
-  </button>
-  
-</ng-template>
-<ng-template #negative>
-  <button class="color-negative" (click)="removeFromCart(venta)">
-    Remove from cart
-  </button>
-</ng-template>
-
-<ng-template #foto>
-  <a href="http://localhost:8000{{venta.imagen}}" target="_blank">
-    <img src="http://localhost:8000{{venta.imagen}}" class="img-fluid rounded-start" alt="{{venta.nombre}}"/>
-  </a>
-</ng-template>

@@ -6,7 +6,6 @@
   overflow-x: hidden;
   width: 120vh;
   display: inline-block;
-  
 }
 
 .transitionbutton {
@@ -95,4 +94,10 @@ button:active {
 
  .color-negative {
   border: 1px solid red;
+ }
+
+ .centrar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
  }
