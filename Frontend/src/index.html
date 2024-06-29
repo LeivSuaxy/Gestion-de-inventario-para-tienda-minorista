@@ -32,40 +32,42 @@
 </head>
 <body style="font-family: Quicksand;" class="">
   <style>
-    body {
-    margin-top: 14vh;
-    font-family: Quicksand;
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 1.5;
-    color: #212529;
-    text-align: left;
-    scroll-behavior: smooth;
-    overflow: auto;
-    position: relative;
-    min-height: 100vh; /* Ajustado a 100vh */
-    background-color: #212121;
-    display: flex; /* Nuevo */
-    flex-direction: column; /* Nuevo */
-  }
+    html, body {
+  height: 100%; /* Asegura que al menos sean tan altos como la ventana del navegador */
+  margin: 0;
+}
 
-/*body::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: radial-gradient(circle, #212121 0%, #182225 50%, #11181b 100%);
-  background-attachment: fixed;
-  z-index: -1;
-}*/
+body {
+  padding-top: 14vh;
+  font-family: Quicksand;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  text-align: left;
+  scroll-behavior: smooth;
+  overflow: auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
 
 .site-container {
   flex: 1;
 }
 
+.dynamic-background {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1; /* Coloca el degradado detrás del contenido */
+    background: linear-gradient(to bottom, #11181b 0%, #182225 50%, #212121 100%);
+  }
+
   </style>
+  <div class="dynamic-background"></div>
   <div class="site-container">
     <app-root></app-root>
   </div>
@@ -73,5 +75,18 @@
   <footer>
     <span>© 2024 AGR55 & LeivSuaxy. Casi todos los derechos reservados</span> 
   </footer>
+
+  <script>
+    const background = document.querySelector('.dynamic-background');
+  
+    window.addEventListener('scroll', () => {
+      const scrollPercentage = (document.documentElement.scrollTop + document.body.scrollTop) / (document.documentElement.scrollHeight - document.documentElement.clientHeight);
+      // Ajusta los valores para el nuevo orden de colores
+      const newColorStop1 = Math.max(0, 50 - scrollPercentage * 50); // Ajusta estos valores según necesites
+      const newColorStop2 = Math.max(50, 100 - scrollPercentage * 50); // Ajusta estos valores según necesites
+  
+      background.style.background = `linear-gradient(to bottom, #11181b 0%, #182225 ${newColorStop1}%, #212121 ${newColorStop2}%)`;
+    });
+  </script>
 </body>
 </html>
