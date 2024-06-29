@@ -230,6 +230,29 @@ class CrudDB:
 
             return ResponseType.SUCCESS.value
 
+    # Function to get elements and urls from stock with pagination. Is called by the get_objects view
+
+    def get_response_elements(self, pagination: int) -> Response:
+        if pagination < 0:
+            return ResponseType.ERROR.value
+
+        elements = self.get_elements_stock(pagination)
+
+        if elements == ResponseType.ERROR.value:
+            return elements
+
+        urls = self.__get_urls__(pagination)
+
+        if urls == ResponseType.ERROR.value:
+            return urls
+
+        data = {
+            'elements': elements.data,
+            'urls': urls.data
+        }
+
+        return Response(data=data, status=status.HTTP_200_OK)
+
     # Function to get elements from stock
     def get_elements_stock(self, pagination: int) -> Response:
         if pagination < 0:
