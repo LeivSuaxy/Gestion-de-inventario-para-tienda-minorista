@@ -54,5 +54,4 @@ content-type: multipart/form-data
   }
 }
 ###
-POST http://localhost:8000/api/admin/delete_products/
-content_type: application/json
+GET http://localhost:8000/api/admin/messengers/

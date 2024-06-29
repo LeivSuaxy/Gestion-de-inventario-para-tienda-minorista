@@ -9,7 +9,10 @@
   - [(GET) Endpoints](#get-endpoints)
     - [get_all_products](#get_all_products-get)
     - [get_all_employees](#get_all_employees-get)
+    - [get_all_sales_reports](#get_all_sales_reports-get)
     - [get_all_inventories](#get_all_inventories-get)
+    - [get_all_warehouse](#get_all_warehouses-get)
+    - [get_all_messengers](#get_all_messengers-get)
   - [(POST) Endpoints](#post-endpoints)
     - [insert_product](#insert_product-post)
     - [update_product](#update_product-post)
@@ -20,6 +23,11 @@
     - [delete_employee](#delete_employee-post)
     - [insert_inventory](#insert_inventory-post)
     - [delete_inventory](#delete_inventory-post)
+    - [insert_warehouse](#insert_warehouse-post)
+    - [delete_warehousue](#delete_warehouse-post)
+    - [insert_messenger](#insert_messenger-post)
+    - [update_messenger](#update_messenger-post)
+    - [delete_messenger](#delete_messenger-post)
 - [Public/General Endpoints](#publicgeneral-endpoints)
   - [(GET) Endpoints](#get-endpoints-1)
     - [get_objects](#get_objects-get) 
@@ -314,10 +322,95 @@ En caso que no existan inventarios en la base de datos retorna:
 <hr/>
 
 ### get_all_sales_reports (GET)
+This endpoint is responsible for returning all the sales reports stored in the database.
+
+<strong>URL: http://localhost:8000/api/admin/sales_reports/</strong>
+
+<strong>Return JSON Example: </strong>
+```json
+{
+    "elements": [
+        {
+            "id": 2,
+            "date_time_delivery": "2024-06-29T14:26:27.799085Z",
+            "total_amount": "400.00",
+            "id_purchase_order": 2,
+            "messenger": "03112366746"
+        }
+    ]
+}
+```
+
+`Returns a JSON with an array of elements that corresponds to reports` `HTTP_200_OK`
+
+<hr/>
 
 ### get_all_inventory_reports (GET)
+This endpoint is responsible for returning all the inventory reports stored in the database.
+
+<strong>URL: http://localhost:8000/api/admin/inventory_reports/</strong>
+
+<strong>Return JSON Example: </strong>
+```json
+{
+    "elements": [
+        {
+            "id": 2,
+            "stock_amount": 30,
+            "total_value": "3000.00",
+            "id_inventory": 2
+        }
+    ]
+}
+```
+
+`Returns a JSON with an array of elements that corresponds to inventories` `HTTP_200_OK`
+
+<hr/>
 
 ### get_all_warehouses (GET)
+This endpoint is responsible for returning all the warehouses stored in the database.
+
+<strong>URL: http://localhost:8000/api/admin/warehouses/</strong>
+
+<strong>Return JSON Example: </strong>
+```json
+{
+    "elements": [
+        {
+            "id_warehouse": 2,
+            "name": "EliteStore",
+            "location": "UCI"
+        }
+    ]
+}
+```
+
+`Returns a JSON with an array of elements that corresponds to warehouses` `HTTP_200_OK`
+
+<hr/>
+
+### get_all_messengers (GET)
+This endpoint is responsible for returning all messengers stored in the database.
+
+<strong>URL: http://localhost:8000/api/admin/messengers/</strong>
+
+<strong>Return JSON Example: </strong>
+```json
+{
+    "elements": [
+        {
+            "ci": "03112366746",
+            "vehicle": "carro",
+            "salary_per_km": "30.00"
+        }
+    ]
+}
+```
+
+`Returns a JSON with an array of elements that corresponds to messengers` `HTTP_200_OK`
+
+<hr/>
 
 ## (POST) Endpoints
 ### insert_product (POST)
@@ -559,8 +652,6 @@ _In any case, the filling out of this form will be automated by an autofill of f
 
 ### delete_employee (POST)
 This endpoint is responsible for delete an employee that exists in the database.
-<b>REQUIRE REVIEW</b>
-
 <strong>URL: http://localhost:8000/api/admin/delete_employee/</strong>
 
 <b>Required input data: `form-data` or `JSON`</b>
@@ -637,7 +728,6 @@ In case there is no valid warehouse, a JSON will be returned expressing the foll
 
 ### delete_inventory (POST)
 This endpoint is responsible for delete an inventory that exists in the database.
-<b>REQUIRE REVIEW</b>
 
 <strong>URL: http://localhost:8000/api/admin/delete_inventory/</strong>
 
@@ -670,8 +760,196 @@ If any of the required fields are missing, a JSON will be returned expressing th
 <hr/>
 
 ### insert_warehouse (POST)
+This endpoint is responsible for insert a warehouse into the database.
+
+<strong>URL: http://localhost:8000/api/admin/insert_warehouse/</strong>
+
+<b>Required input data: `form-data` or `JSON`</b>
+
+`form-data`
+
+| Key      | Value  | Required |
+|----------|--------|----------|
+| name     | String | True     |
+| location | String | True     |
+
+`JSON`
+```json
+{
+  "name": "String_example",
+  "location": "Location example"
+}
+```
+
+If any of the required fields are missing, a JSON will be returned expressing the following:
+```json
+{
+  "error": "Please provide all the required fields", 
+  "mandatory_fields": "name, location"
+}
+```
+`HTTP_400_BAD_REQUEST`<br/>
+
+In case the warehouse already exists, a JSON will be returned expressing the following:
+```json
+{
+  "error": "There is already a warehouse with this name"
+}
+```
+`HTTP_400_BAD_REQUEST`<br/>
+
+<strong>Return JSON Example: </strong>
+
+ `Returns confirmation of the process -> {'status': 'Success'}` `HTTP_200_OK`
+
+<hr/>
 
 ### delete_warehouse (POST)
+This endpoint is responsible for delete a warehouse that exists in the database.
+<b>REQUIRE REVIEW</b>
+
+<strong>URL: http://localhost:8000/api/admin/delete_warehouse/</strong>
+
+<b>Required input data: `form-data` or `JSON`</b>
+
+`form-data:`
+
+| Key          | Value  | Required |
+|--------------|--------|----------|
+| id_warehouse | Number | True     |
+
+`JSON:`
+```json
+{
+  "id_warehouse": 1
+}
+```
+If any of the required fields are missing, a JSON will be returned expressing the following:
+```json
+{
+  "error": "Please provide an id to delete warehouse"
+}
+```
+`HTTP_400_BAD_REQUEST`<br/>
+
+<strong>Return JSON Example: </strong>
+
+ `Returns confirmation of the process -> {'status': 'Success'}` `HTTP_200_OK`
+
+<hr/>
+
+### insert_messenger (POST)
+This endpoint is responsible for insert a messenger into the database.
+
+<strong>URL: http://localhost:8000/api/admin/insert_messenger/</strong>
+
+<b>Required input data: `form-data` or `JSON`</b>
+
+`form-data`
+
+| Key           | Value  | Required |
+|---------------|--------|----------|
+| employee_ci   | String | True     |
+| vehicle       | String | True     |
+| salary_per_km | Number | True     |
+
+`JSON`
+```json
+{
+  "employee_ci": "Existing employee identifier",
+  "vehicle": "String Example",
+  "salary_per_km": 30
+}
+```
+
+If any of the required fields are missing, a JSON will be returned expressing the following:
+```json
+{
+  "error": "Please provide all the required fields", 
+  "mandatory_fields": "employee_id, vehicle, salary_per_km"
+}
+```
+`HTTP_400_BAD_REQUEST`<br/>
+
+In the event that there is no employee with the CI, a JSON will be returned expressing the following:
+```json
+{
+  "error": "Please provide a CI that belongs to an employee"
+}
+```
+`HTTP_400_BAD_REQUEST`<br/>
+
+<strong>Return JSON Example: </strong>
+
+ `Returns confirmation of the process -> {'status': 'Success'}` `HTTP_200_OK`
+
+<hr/>
+
+### update_messenger (POST)
+This endpoint is responsible for update a messenger in the database.
+
+<strong>URL: http://localhost:8000/api/admin/update_messenger/</strong>
+
+<b>Required input data: `form-data` or `JSON`</b><br/>
+
+`form-data`
+
+| Key           | Value  | Required |
+|---------------|--------|----------|
+| employee_ci   | String | True     |
+| vehicle       | String | True     |
+| salary_per_km | number | True     |
+
+`JSON`
+```json
+{
+  "employee_ci": "Existing employee identifier",
+  "vehicle": "String Example",
+  "salary_per_km": 30
+}
+```
+`HTTP_400_BAD_REQUEST`<br/>
+
+_In any case, the filling out of this form will be automated by an autofill of fields in the frontend._
+
+<strong>Return JSON Example: </strong>
+
+ `Returns confirmation of the process -> {'status': 'Success'}` `HTTP_200_OK`
+
+<hr/>
+
+### delete_messenger (POST)
+This endpoint is responsible for delete a messenger that exists in the database.
+
+<strong>URL: http://localhost:8000/api/admin/delete_messenger/</strong>
+
+<b>Required input data: `form-data` or `JSON`</b>
+
+`form-data:`
+
+| Key | Value  | Required |
+|-----|--------|----------|
+| ci  | String | True     |
+
+`JSON:`
+```json
+{
+  "ci": "CI example"
+}
+```
+If any of the required fields are missing, a JSON will be returned expressing the following:
+```json
+{
+  "error": "Please prove a ci to delete messenger"
+}
+```
+`HTTP_400_BAD_REQUEST`<br/>
+
+<strong>Return JSON Example: </strong>
+
+ `Returns confirmation of the process -> {'status': 'Success'}` `HTTP_200_OK`
+
+<hr/>
 
 # Public/General Endpoints
 Public/General endpoints are mainly used to display information to the user.<br/>
