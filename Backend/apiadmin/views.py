@@ -147,8 +147,28 @@ def delete_warehouse(request):
         return Response({'error': 'Please provide an id_warehouse'}, status.HTTP_400_BAD_REQUEST)
     return crudAdmin.delete_warehouse(request.data.get('id_warehouse'))
 
+
 # <--MESSENGER CRUD ENDPOINTS-->
 # READ
+@api_view(['GET'])
+def get_all_messengers(request):
+    return crudAdmin.get_all_messengers()
+
+
 # CREATE
+@api_view(['POST'])
+def insert_messenger(request):
+    return crudAdmin.insert_messenger(request.data)
+
+
 # UPDATE
+@api_view(['POST'])
+def update_messenger(request):
+    return crudAdmin.update_messenger(request.data)
+
+
 # DELETE
+def delete_messenger(request):
+    if not request.data.get('ci'):
+        return Response({'error': 'Please provide a ci of the messenger'}, status.HTTP_400_BAD_REQUEST)
+    return crudAdmin.delete_messenger(request.data.get('ci'))
