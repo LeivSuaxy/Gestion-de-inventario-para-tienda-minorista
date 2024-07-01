@@ -21,6 +21,8 @@ import { AuthService } from '../auth.service';
   styleUrl: './navbar.component.css',
 })
 export class NavbarComponent {
+  showConfirmDialog = false;
+
   constructor(public router: Router, public authService: AuthService) { }
 
   @ViewChild('menuButton', { static: true }) menuButton!: ElementRef;

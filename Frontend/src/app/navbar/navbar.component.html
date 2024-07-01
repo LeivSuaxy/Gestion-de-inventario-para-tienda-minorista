@@ -15,7 +15,7 @@
   <a class="proyectNavButton" routerLinkActive="active" routerLink="/contact">Contact</a>
   <app-modalwithshop></app-modalwithshop>
 
-  <a ariaCurrentWhenActive="page" class="login" (click)="this.authService.logout()">Logout</a>
+  <a ariaCurrentWhenActive="page" class="login" (click)="this.showConfirmDialog = true">Logout</a>
 
   <div #activeTabIndicator class="active-tab-indicator"></div>
 </nav>
@@ -23,4 +23,15 @@
   <li><a routerLink="/admin" ariaCurrentWhenActive="page">Admin</a></li>
   <!-- Agrega más opciones aquí -->
 </ul>
+</div>
+
+<div *ngIf="showConfirmDialog" class="dialog-overlay">
+  <div class="dialog">
+    <h3>Confirmar cierre de cuenta</h3>
+    <p>¿Estás seguro de que desea cerrar su cuenta?</p>
+    <div class="dialog-actions">
+      <button (click)="showConfirmDialog = false">Cancelar</button>
+      <button (click)="this.authService.logout()">Cerrar</button>
+    </div>
+  </div>
 </div>
