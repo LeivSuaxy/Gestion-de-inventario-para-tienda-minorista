@@ -62,3 +62,4 @@ ALTER TABLE sales_report
 -- 30/6/2024
 ALTER TABLE account
     ADD token_expiration TIMESTAMP NULL;
+

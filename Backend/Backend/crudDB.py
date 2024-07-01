@@ -111,7 +111,7 @@ class CrudDB:
                 try:
                     cursor.execute(f"""
                         INSERT INTO account
-                        VALUES ('{username}', '{password}', '{token_hash}', '{ci}', {expiration_time}) 
+                        VALUES ('{username}', '{password}', '{token_hash}', '{ci}', '{expiration_time}') 
                     """)
                 except psycopg2.errors.UniqueViolation:
                     cursor.close()
@@ -219,7 +219,7 @@ class CrudDB:
             if datetime.now() < token_expiration:
                 expiration_time = datetime.now() + timedelta(minutes=20)
                 cursor.execute(f"""
-                    UPDATE account SET (token_expiration={expiration_time} WHERE username='{username}')
+                    UPDATE account SET (token_expiration='{expiration_time}' WHERE username='{username}')
                     """)
                 connection.commit()
                 cursor.close()
