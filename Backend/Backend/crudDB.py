@@ -12,6 +12,7 @@ import math
 from Backend.image_process import process_image
 from django.http.request import QueryDict
 import hashlib
+from datetime import datetime, timedelta
 
 
 # Aquí se declararán las clases y funciones que se encargarán
@@ -103,11 +104,14 @@ class CrudDB:
 
                 password = hashlib.sha256(password.encode()).hexdigest()
 
+                expiration_time = datetime.now() + timedelta(minutes=20)
+
                 # If the user does not exist, insert a new record into the auth_user table with the provided username
                 # and hashed password, along with some default values for other fields.
                 try:
                     cursor.execute(f"""
-                        INSERT INTO account VALUES ('{username}', '{password}', '{token_hash}', '{ci}')
+                        INSERT INTO account
+                        VALUES ('{username}', '{password}', '{token_hash}', '{ci}', {expiration_time}) 
                     """)
                 except psycopg2.errors.UniqueViolation:
                     cursor.close()
@@ -182,6 +186,12 @@ class CrudDB:
                 password = hashlib.sha256(password.encode()).hexdigest()
 
                 if password == user_password:
+                    expiration_time = datetime.now() + timedelta(minutes=20)
+
+                    cursor.execute(f"""
+                        UPDATE account SET (token_expiration={expiration_time} WHERE username='{username}')
+                    """)
+                    connection.commit()
                     cursor.close()
                     connection.close()
                     return Response({'status': 'Login successfully', 'token': auth_token}, status.HTTP_200_OK)
@@ -196,9 +206,9 @@ class CrudDB:
         connection = self.connect_to_db()
         cursor = connection.cursor()
 
-        cursor.execute(f"SELECT auth_token FROM account WHERE username='{username}'")
+        cursor.execute(f"SELECT auth_token, token_expiration FROM account WHERE username='{username}'")
 
-        selected_token = cursor.fetchone()
+        selected_token, token_expiration = cursor.fetchone()
 
         if not selected_token:
             return Response({'status': 'denied'}, status.HTTP_401_UNAUTHORIZED)
@@ -206,8 +216,22 @@ class CrudDB:
         selected_token = selected_token[0]
 
         if selected_token == auth_token:
-            return Response({'status': 'confirm'}, status.HTTP_200_OK)
+            if datetime.now() < token_expiration:
+                expiration_time = datetime.now() + timedelta(minutes=20)
+                cursor.execute(f"""
+                    UPDATE account SET (token_expiration={expiration_time} WHERE username='{username}')
+                    """)
+                connection.commit()
+                cursor.close()
+                connection.close()
+                return Response({'status': 'confirm'}, status.HTTP_200_OK)
+            else:
+                cursor.close()
+                connection.close()
+                return Response({'status': 'expired'}, status.HTTP_401_UNAUTHORIZED)
         else:
+            cursor.close()
+            connection.close()
             return Response({'status': 'denied'}, status.HTTP_401_UNAUTHORIZED)
 
     # Function to get amount of elements from stock
