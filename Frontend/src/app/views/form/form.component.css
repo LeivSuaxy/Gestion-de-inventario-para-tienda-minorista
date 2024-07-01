@@ -225,3 +225,7 @@ button:hover .arrow {
 button:hover .arrow:before {
   right: 0;
 }
+
+img {
+  mask-image: linear-gradient(black 60%, transparent);
+}

@@ -11,7 +11,6 @@
   top: 2vh;
   z-index: 1000;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  border: 1px solid rgba(0,0,0,0.2);
 }
 
 .centrar {
@@ -33,6 +32,7 @@
   transition: background-color 0.3s, color 0.3s;
   padding-left: 1vh;
   padding-right: 1vh;
+  border-radius: 10px;
 }
 
 .active {
@@ -57,7 +57,7 @@
   border: none;
   width: 12vh;
   transition: background-color 0.2s, color 0.2s;
-  border-radius: 0 10px 10px 0 !important;
+  border-radius: 10px !important;
   padding-left: 1vh;
   padding-right: 1vh;
   text-align: center;
@@ -75,6 +75,7 @@
   vertical-align: text-bottom;
   padding-left: 10px;
   padding-right: 10px;
+  border-radius: 10px;
 }
 
 .hamburger:hover {

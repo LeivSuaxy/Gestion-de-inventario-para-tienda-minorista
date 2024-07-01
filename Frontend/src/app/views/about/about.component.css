@@ -104,3 +104,27 @@
     height: 80vh;
     position: relative;
   }
+
+  a {
+    color: steelblue;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  a:hover {
+    text-decoration: underline;
+    color: skyblue;
+  }
+
+  .nombres {
+    color: khaki;
+  }
+
+  /*.about-content {
+    border-radius: 0 0 0 30px;
+    border-left: 2px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+    padding-left: 5vh;
+    padding-bottom: 5vh;
+  }*/
+
