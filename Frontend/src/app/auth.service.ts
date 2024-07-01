@@ -16,7 +16,7 @@ export class AuthService {
       .subscribe(response => {
         this.token = response.token;
         localStorage.setItem('auth_token', this.token);
-        this.router.navigate(['/home']);
+        this.router.navigate(['/main']);
       });
   }
 
