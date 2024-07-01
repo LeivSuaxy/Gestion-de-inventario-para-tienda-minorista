@@ -1,4 +1,4 @@
-@use '@angular/material' as mat;
+@use '@angular/material' as mat;;
 
 // Define una paleta de colores personalizada para el tema oscuro
 $custom-dark-primary: mat.define-palette(mat.$grey-palette, 900); // Oscuro
