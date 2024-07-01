@@ -26,4 +26,9 @@ urlpatterns = [
     path('warehouses/', views.get_all_warehouses, name='get_all_warehouses'),
     path('insert_warehouse/', views.insert_warehouse, name='insert_warehouse'),
     path('delete_warehouse/', views.delete_warehouse, name='delete_warehouse'),
+    # <--Messenger CRUD URLS-->
+    path('messengers/', views.get_all_messengers, name='get_all_messengers'),
+    path('insert_messenger/', views.insert_messenger, name='insert_messenger'),
+    path('update_messenger/', views.update_messenger, name='update_messenger'),
+    path('delete_messenger/', views.delete_messenger, name='delete_messenger'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

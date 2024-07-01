@@ -1,11 +1,12 @@
 import psycopg2.errors
 from Backend.crudDB import CrudDB, ResponseType
-from api.models import Product, Employee, Inventory, Warehouse, SalesReport
+from api.models import Product, Employee, Inventory, Warehouse, SalesReport, Messenger
 from api.serializer import EmployeeSerializer, InventorySerializer
 from .serializer import (ProductSerializerAdmin,
                          WarehouseSerializerAdmin,
                          SalesReportSerializerAdmin,
-                         InventoryReportSerializerAdmin)
+                         InventoryReportSerializerAdmin,
+                         MessengerSerializerAdmin)
 from django.http import QueryDict
 from rest_framework.response import Response
 from rest_framework import status
@@ -13,9 +14,6 @@ from django.core.files.images import ImageFile
 from Backend.image_process import process_image
 
 
-# TODO all endpoints of admin view
-# TODO REVIEW alls URLS
-# FIXME REVIEW alls POO items
 # <--PRODUCTS - CRUD-->
 # READ PRODUCTS
 
@@ -317,7 +315,6 @@ def delete_inventory(id_inventory: int) -> Response:
     return ResponseType.SUCCESS.value
 
 
-# TODO endpoint to get all reports
 # <--Reports - CRUD-->
 # Sales Reports
 def get_all_sales_reports() -> Response:
@@ -351,7 +348,7 @@ def get_all_warehouses() -> Response:
 
 
 # CREATE
-def insert_warehouse(data) -> Response:
+def insert_warehouse(data: QueryDict) -> Response:
     if not data.get('name') or not data.get('location'):
         return Response({'error': 'Please provide all the required fields',
                          'mandatory_fields': 'name, location'}, status.HTTP_400_BAD_REQUEST)
@@ -408,6 +405,85 @@ def delete_warehouse(id_warehouse: int) -> Response:
     cursor = connection.cursor()
 
     cursor.execute(f'DELETE FROM warehouse WHERE id_warehouse={id_warehouse}')
+
+    connection.commit()
+    cursor.close()
+    connection.close()
+
+    return ResponseType.SUCCESS.value
+
+
+# <--Messenger - CRUD-->
+# READ
+def get_all_messengers() -> Response:
+    query = 'SELECT * FROM messenger'
+    elements = Messenger.objects.raw(query)
+    if not elements:
+        return ResponseType.NOT_FOUND.value
+    serializer = MessengerSerializerAdmin(elements, many=True)
+    return Response({'elements': serializer.data}, status.HTTP_200_OK)
+
+
+# CREATE
+def insert_messenger(data: QueryDict) -> Response:
+    if not data.get('employee_ci') or not data.get('vehicle') or not data.get('salary_per_km'):
+        return Response({'error': 'Please provide all the required fields',
+                         'mandatory_fields': 'employee_id, vehicle, salary_per_km'}, status.HTTP_400_BAD_REQUEST)
+
+    connection = CrudDB.connect_to_db()
+    cursor = connection.cursor()
+
+    cursor.execute(f"""
+        SELECT ci FROM employee WHERE ci='{data.get('employee_ci')}'
+    """)
+
+    employee_exists = cursor.fetchone()
+
+    if not employee_exists:
+        return Response({'error': 'Please provide a CI that belongs to an employee'}, status.HTTP_400_BAD_REQUEST)
+
+    cursor.execute(f"""
+        INSERT INTO messenger (ci, vehicle, salary_per_km)
+        VALUES ('{data.get('employee_ci')}', '{data.get('vehicle')}', {data.get('salary_per_km')}) 
+    """)
+
+    connection.commit()
+    cursor.close()
+    connection.close()
+
+    return ResponseType.SUCCESS.value
+
+
+# UPDATE
+def update_messenger(data: QueryDict) -> Response:
+    if not data.get('employee_ci') or not data.get('vehicle') or not data.get('salary_per_km'):
+        return Response({'error': 'Please provide all the required fields',
+                         'mandatory_fields': 'employee_id, vehicle, salary_per_km'}, status.HTTP_400_BAD_REQUEST)
+
+    connection = CrudDB.connect_to_db()
+    cursor = connection.cursor()
+
+    cursor.execute(f"""
+        UPDATE messenger SET vehicle='{data.get('vehicle')}', salary_per_km={data.get('salary_per_km')}
+        WHERE ci='{data.get('employee_ci')}'
+    """)
+
+    connection.commit()
+    cursor.close()
+    connection.close()
+
+    return ResponseType.SUCCESS.value
+
+
+# DELETE
+def delete_messenger(ci: str) -> Response:
+    if not ci:
+        return Response({'error': 'Please prove a ci to delete messenger'}, status.HTTP_400_BAD_REQUEST)
+
+    connection = CrudDB.connect_to_db()
+    cursor = connection.cursor()
+
+    cursor.execute(f"DELETE FROM messenger WHERE ci='{ci}'")
 
     connection.commit()
     cursor.close()
