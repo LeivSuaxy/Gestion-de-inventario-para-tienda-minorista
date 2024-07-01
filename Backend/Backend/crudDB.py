@@ -159,12 +159,12 @@ class CrudDB:
         else:
             # Create a cursor object to execute SQL commands
             cursor = connection.cursor()
-
             # Execute a SQL command to check if a user with the provided username exists in the database
-            cursor.execute(f"SELECT 1 FROM account WHERE user = '{username}'")
-
+            cursor.execute(f"""
+                SELECT username FROM account WHERE username='{username}'
+            """)
             # If the user exists, close the connection and return a code indicating that the user already exists
-            user_exists = cursor.fetchone() is not None
+            user_exists = cursor.fetchone()[0] is not None
 
             if not user_exists:
                 # If the user does not exist, close the cursor and the connection and return a code indicating that the
@@ -174,7 +174,7 @@ class CrudDB:
                 return ResponseType.NOT_FOUND.value
             else:
                 # If the user exists, retrieve the hashed password of the user from the database
-                cursor.execute(f"SELECT password, auth_token FROM account WHERE user = '{username}'")
+                cursor.execute(f"SELECT password, auth_token FROM account WHERE username = '{username}'")
                 result = cursor.fetchone()
 
                 if result is not None:
@@ -189,7 +189,7 @@ class CrudDB:
                     expiration_time = datetime.now() + timedelta(minutes=20)
 
                     cursor.execute(f"""
-                        UPDATE account SET (token_expiration='{expiration_time}' WHERE username='{username}')
+                        UPDATE account SET token_expiration='{expiration_time}' WHERE username='{username}'
                     """)
                     connection.commit()
                     cursor.close()
