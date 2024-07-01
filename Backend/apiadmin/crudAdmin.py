@@ -12,6 +12,14 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.core.files.images import ImageFile
 from Backend.image_process import process_image
+from psycopg2.extensions import connection as cnt, cursor as crs
+
+
+def __close_connections__(connect: cnt, cursor_send: crs, commited: bool = False):
+    cursor_send.close()
+    if commited is not False:
+        connect.commit()
+    connect.close()
 
 
 # <--PRODUCTS - CRUD-->
@@ -51,8 +59,7 @@ def insert_product(product_data: QueryDict) -> Response:
                     product_data['category'] = category_inventory
             except psycopg2.errors.ForeignKeyViolation as e:
                 print(f'Error {e.pgerror}')
-                cursor.close()
-                connection.close()
+                __close_connections__(connect=connection, cursor_send=cursor)
                 return Response({'error': 'The inventory you are entering does not exist',
                                  'code': e.pgcode},
                                 status.HTTP_409_CONFLICT)
@@ -74,14 +81,12 @@ def insert_product(product_data: QueryDict) -> Response:
         connection.commit()
     except psycopg2.errors.ForeignKeyViolation as e:
         print(f'Error {e.pgerror}')
-        cursor.close()
-        connection.close()
+        __close_connections__(connect=connection, cursor_send=cursor)
         return Response({'error': 'The inventory you are entering does not exist',
                          'code': e.pgcode},
                         status.HTTP_409_CONFLICT)
 
-    cursor.close()
-    connection.close()
+    __close_connections__(connect=connection, cursor_send=cursor)
 
     return ResponseType.SUCCESS.value
 
@@ -122,10 +127,7 @@ def update_product(product_data: QueryDict) -> Response:
         WHERE id_producto={id_product}
     """)
 
-    connection.commit()
-
-    cursor.close()
-    connection.close()
+    __close_connections__(connect=connection, cursor_send=cursor, commited=True)
 
     return ResponseType.SUCCESS.value
 
@@ -140,9 +142,7 @@ def delete_product(data_id: QueryDict) -> Response:
     connection = CrudDB.connect_to_db()
     cursor = connection.cursor()
     cursor.execute(f"DELETE FROM product WHERE id_product={id_product}")
-    connection.commit()
-    cursor.close()
-    connection.close()
+    __close_connections__(connect=connection, cursor_send=cursor, commited=True)
     return ResponseType.SUCCESS.value
 
 
@@ -158,9 +158,7 @@ def delete_more_than_one_product(data: QueryDict) -> Response:
         if type(data) is int:
             cursor.execute(f"DELETE FROM product WHERE id_product={data}")
 
-    connection.commit()
-    cursor.close()
-    connection.close()
+    __close_connections__(connect=connection, cursor_send=cursor, commited=True)
     return ResponseType.SUCCESS.value
 
 
@@ -195,22 +193,19 @@ def insert_employee_in_database(data: QueryDict) -> Response:
         cursor.execute(query, tuple(data.values()))
         connection.commit()
     except psycopg2.errors.UniqueViolation as e:
-        cursor.close()
-        connection.close()
+        __close_connections__(connect=connection, cursor_send=cursor)
         print(e.pgerror)
         return Response({'error': 'The CI you are entering already exists in the database',
                          'code': e.pgcode},
                         status.HTTP_409_CONFLICT)
     except psycopg2.errors.ForeignKeyViolation as e:
-        cursor.close()
-        connection.close()
+        __close_connections__(connect=connection, cursor_send=cursor)
         print(e.pgerror)
         return Response({'error': 'The employee to whom the id_boss corresponds does not exist',
                          'code': e.pgcode},
                         status.HTTP_409_CONFLICT)
 
-    cursor.close()
-    connection.close()
+    __close_connections__(connect=connection, cursor_send=cursor)
 
     return ResponseType.SUCCESS.value
 
@@ -234,9 +229,7 @@ def update_employee_in_database(data: QueryDict) -> Response:
         WHERE ci='{ci}'
     """)
 
-    connection.commit()
-    cursor.close()
-    connection.close()
+    __close_connections__(connect=connection, cursor_send=cursor, commited=True)
 
     return ResponseType.SUCCESS.value
 
@@ -249,9 +242,8 @@ def delete_employee_in_database(ci: str) -> Response:
     cursor.execute(f"""
         DELETE FROM employee WHERE ci='{ci}'
     """)
-    connection.commit()
-    cursor.close()
-    connection.close()
+
+    __close_connections__(connect=connection, cursor_send=cursor, commited=True)
 
     return ResponseType.SUCCESS.value
 
@@ -285,17 +277,14 @@ def insert_inventory(request_data: QueryDict) -> Response:
     exist_storage = cursor.fetchone() is not None
 
     if not exist_storage:
-        cursor.close()
-        connection.close()
+        __close_connections__(connect=connection, cursor_send=cursor)
         return Response({'error': 'Please provide a valid warehouse'}, status.HTTP_404_NOT_FOUND)
 
     cursor.execute(f"""
         INSERT INTO inventory (category, id_warehouse) VALUES ('{category}', {storage_id})
     """)
 
-    connection.commit()
-    cursor.close()
-    connection.close()
+    __close_connections__(connect=connection, cursor_send=cursor, commited=True)
 
     return ResponseType.SUCCESS.value
 
@@ -309,9 +298,7 @@ def delete_inventory(id_inventory: int) -> Response:
         DELETE FROM inventory WHERE id_inventory={id_inventory}
     """)
 
-    connection.commit()
-    cursor.close()
-    connection.close()
+    __close_connections__(connect=connection, cursor_send=cursor, commited=True)
     return ResponseType.SUCCESS.value
 
 
@@ -360,17 +347,14 @@ def insert_warehouse(data: QueryDict) -> Response:
     exist_storage = cursor.fetchone()[0]
 
     if exist_storage:
-        cursor.close()
-        connection.close()
+        __close_connections__(connect=connection, cursor_send=cursor)
         return Response({'error': 'There is already a warehouse with this name'}, status.HTTP_400_BAD_REQUEST)
 
     cursor.execute(f"""
         INSERT INTO warehouse (name, location) VALUES ('{data.get('name')}', '{data.get('location')}')
     """)
-    connection.commit()
 
-    cursor.close()
-    connection.close()
+    __close_connections__(connect=connection, cursor_send=cursor, commited=True)
 
     return ResponseType.SUCCESS.value
 
@@ -389,9 +373,7 @@ def update_warehouse(data: QueryDict) -> Response:
         WHERE id_warehouse={data.get('id_warehouse')}
     """)
 
-    connection.commit()
-    cursor.close()
-    connection.close()
+    __close_connections__(connect=connection, cursor_send=cursor, commited=True)
 
     return ResponseType.SUCCESS.value
 
@@ -406,9 +388,7 @@ def delete_warehouse(id_warehouse: int) -> Response:
 
     cursor.execute(f'DELETE FROM warehouse WHERE id_warehouse={id_warehouse}')
 
-    connection.commit()
-    cursor.close()
-    connection.close()
+    __close_connections__(connect=connection, cursor_send=cursor, commited=True)
 
     return ResponseType.SUCCESS.value
 
@@ -447,9 +427,7 @@ def insert_messenger(data: QueryDict) -> Response:
         VALUES ('{data.get('employee_ci')}', '{data.get('vehicle')}', {data.get('salary_per_km')}) 
     """)
 
-    connection.commit()
-    cursor.close()
-    connection.close()
+    __close_connections__(connect=connection, cursor_send=cursor, commited=True)
 
     return ResponseType.SUCCESS.value
 
@@ -468,9 +446,7 @@ def update_messenger(data: QueryDict) -> Response:
         WHERE ci='{data.get('employee_ci')}'
     """)
 
-    connection.commit()
-    cursor.close()
-    connection.close()
+    __close_connections__(connect=connection, cursor_send=cursor, commited=True)
 
     return ResponseType.SUCCESS.value
 
@@ -485,8 +461,6 @@ def delete_messenger(ci: str) -> Response:
 
     cursor.execute(f"DELETE FROM messenger WHERE ci='{ci}'")
 
-    connection.commit()
-    cursor.close()
-    connection.close()
+    __close_connections__(connect=connection, cursor_send=cursor, commited=True)
 
     return ResponseType.SUCCESS.value
