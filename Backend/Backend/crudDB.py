@@ -164,7 +164,7 @@ class CrudDB:
                 SELECT username FROM account WHERE username='{username}'
             """)
             # If the user exists, close the connection and return a code indicating that the user already exists
-            user_exists = cursor.fetchone()[0] is not None
+            user_exists = cursor.fetchone() is not None
 
             if not user_exists:
                 # If the user does not exist, close the cursor and the connection and return a code indicating that the
