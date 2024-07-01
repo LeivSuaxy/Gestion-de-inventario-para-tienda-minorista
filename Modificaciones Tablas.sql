@@ -59,3 +59,6 @@ ALTER TABLE purchase_order
 ALTER TABLE sales_report
     ADD COLUMN productos_comprados jsonb;
 
+-- 30/6/2024
+ALTER TABLE account
+    ADD token_expiration TIMESTAMP NULL;
