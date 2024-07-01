@@ -13,6 +13,7 @@ from Backend.image_process import process_image
 from django.http.request import QueryDict
 import hashlib
 from datetime import datetime, timedelta
+from psycopg2.extensions import cursor as crs, connection as cnt
 
 
 # Aquí se declararán las clases y funciones que se encargarán
@@ -58,6 +59,13 @@ class CrudDB:
             return ResponseType.DATABASE_ERROR.value
 
         return conn
+
+    @staticmethod
+    def __close_connections__(connect: cnt, cursor_send: crs, commited: bool = False):
+        cursor_send.close()
+        if commited is not False:
+            connect.commit()
+        connect.close()
 
     # Function to register users
     def register_user(self, ci: str, username: str, password: str) -> Response:
@@ -114,16 +122,12 @@ class CrudDB:
                         VALUES ('{username}', '{password}', '{token_hash}', '{ci}', '{expiration_time}') 
                     """)
                 except psycopg2.errors.UniqueViolation:
-                    cursor.close()
-                    connection.close()
+                    self.__close_connections__(connect=connection, cursor_send=cursor)
                     return Response({'error': 'Please, this CI is already registered'},
                                     status.HTTP_409_CONFLICT)
 
                 # Commit the changes
-                connection.commit()
-                # Close the cursor and the connection
-                cursor.close()
-                connection.close()
+                self.__close_connections__(connect=connection, cursor_send=cursor, commited=True)
 
                 # Return a success code
                 return Response({'status': 'The user has been successfully registered',
@@ -131,8 +135,7 @@ class CrudDB:
             else:
                 # If the user exists, close the cursor and the connection and return a code indicating that the user
                 # already exists
-                cursor.close()
-                connection.close()
+                self.__close_connections__(connect=connection, cursor_send=cursor)
                 return Response({'status': 'You cannot register this user because it already exists.'},
                                 status.HTTP_400_BAD_REQUEST)
 
@@ -153,12 +156,15 @@ class CrudDB:
         # Connect to the database
         connection = self.connect_to_db()
 
+        print(type(connection))
+
         # If the connection is unsuccessful, return an error code
         if connection == ResponseType.ERROR.value:
             return connection
         else:
             # Create a cursor object to execute SQL commands
             cursor = connection.cursor()
+            print(type(cursor))
             # Execute a SQL command to check if a user with the provided username exists in the database
             cursor.execute(f"""
                 SELECT username FROM account WHERE username='{username}'
@@ -169,8 +175,7 @@ class CrudDB:
             if not user_exists:
                 # If the user does not exist, close the cursor and the connection and return a code indicating that the
                 # user does not exist
-                cursor.close()
-                connection.close()
+                self.__close_connections__(connect=connection, cursor_send=cursor)
                 return ResponseType.NOT_FOUND.value
             else:
                 # If the user exists, retrieve the hashed password of the user from the database
@@ -191,14 +196,11 @@ class CrudDB:
                     cursor.execute(f"""
                         UPDATE account SET token_expiration='{expiration_time}' WHERE username='{username}'
                     """)
-                    connection.commit()
-                    cursor.close()
-                    connection.close()
+                    self.__close_connections__(connect=connection, cursor_send=cursor, commited=True)
                     return Response({'status': 'Login successfully', 'token': auth_token}, status.HTTP_200_OK)
                 else:
                     # If the passwords do not match, close the cursor and the connection and return an error code
-                    cursor.close()
-                    connection.close()
+                    self.__close_connections__(connect=connection, cursor_send=cursor)
                     return ResponseType.PASSWORD_INCORRECT.value
 
     # Function to validate token
@@ -211,6 +213,7 @@ class CrudDB:
         selected_token, token_expiration = cursor.fetchone()
 
         if not selected_token:
+            self.__close_connections__(connect=connection, cursor_send=cursor)
             return Response({'status': 'denied'}, status.HTTP_401_UNAUTHORIZED)
 
         selected_token = selected_token[0]
@@ -221,17 +224,13 @@ class CrudDB:
                 cursor.execute(f"""
                     UPDATE account SET (token_expiration='{expiration_time}' WHERE username='{username}')
                     """)
-                connection.commit()
-                cursor.close()
-                connection.close()
+                self.__close_connections__(connect=connection, cursor_send=cursor, commited=True)
                 return Response({'status': 'confirm'}, status.HTTP_200_OK)
             else:
-                cursor.close()
-                connection.close()
+                self.__close_connections__(connect=connection, cursor_send=cursor)
                 return Response({'status': 'expired'}, status.HTTP_401_UNAUTHORIZED)
         else:
-            cursor.close()
-            connection.close()
+            self.__close_connections__(connect=connection, cursor_send=cursor)
             return Response({'status': 'denied'}, status.HTTP_401_UNAUTHORIZED)
 
     # Function to get amount of elements from stock
@@ -249,8 +248,7 @@ class CrudDB:
 
             self.total_elements_stock = cursor.fetchone()[0]
 
-            cursor.close()
-            connection.close()
+            self.__close_connections__(connect=connection, cursor_send=cursor)
 
             return ResponseType.SUCCESS.value
 
@@ -333,9 +331,7 @@ class CrudDB:
 
             cursor.execute(f"UPDATE product SET stock=stock-{quantity} WHERE id_product={product_id}")
 
-        connection.commit()
-        cursor.close()
-        connection.close()
+        self.__close_connections__(connect=connection, cursor_send=cursor, commited=True)
 
         return ResponseType.SUCCESS.value
 
@@ -382,10 +378,7 @@ class CrudDB:
         cursor.execute(f"INSERT INTO sales_report (id, date_time_delivery, total_amount, id_purchase_order)"
                        f" VALUES ({id_reporte}, '{now()}', {price_all_products_calct}, {id_order})")
 
-        connection.commit()
-
-        cursor.close()
-        connection.close()
+        self.__close_connections__(connect=connection, cursor_send=cursor, commited=True)
         return Response({'total_price': price_all_products_calct}, status=status.HTTP_200_OK)
 
     def __process_total_price_products_purchased__(self, products: list) -> Response:
@@ -400,22 +393,16 @@ class CrudDB:
 
             cursor.execute(f"SELECT price FROM product WHERE id_product={product_id}")
             price = cursor.fetchone()[0]
-            print(price)
 
             total_price += price * quantity
 
-        cursor.close()
-        connection.close()
+        self.__close_connections__(connect=connection, cursor_send=cursor)
 
         return Response({'total_price': total_price}, status=status.HTTP_200_OK)
 
     def search_products(self, search_query: str) -> Response:
-        connection = self.connect_to_db()
-        cursor = connection.cursor()
         query = f"SELECT * FROM product WHERE name LIKE %s"
         elements = Product.objects.raw(query, [f'%{search_query}%'])
-        cursor.close()
-        connection.close()
 
         if not elements:
             return ResponseType.NOT_FOUND.value
