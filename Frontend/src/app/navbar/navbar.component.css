@@ -61,6 +61,7 @@
   padding-left: 1vh;
   padding-right: 1vh;
   text-align: center;
+  cursor: pointer;
 }
 
 .login:hover {
