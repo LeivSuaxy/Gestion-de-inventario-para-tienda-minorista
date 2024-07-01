@@ -189,7 +189,7 @@ class CrudDB:
                     expiration_time = datetime.now() + timedelta(minutes=20)
 
                     cursor.execute(f"""
-                        UPDATE account SET (token_expiration={expiration_time} WHERE username='{username}')
+                        UPDATE account SET (token_expiration='{expiration_time}' WHERE username='{username}')
                     """)
                     connection.commit()
                     cursor.close()
