@@ -18,6 +18,10 @@ import {HttpClient} from "@angular/common/http";
 })
 export class RegistroComponent {
   isValid : boolean = true;
+  ci: string = '';
+  username: string = '';
+  password: string = '';
+  cpassword: string = '';
 
 
   constructor(private http: HttpClient, private router: Router) {
@@ -25,23 +29,29 @@ export class RegistroComponent {
 
   registerForm = new FormGroup({
     username: new FormControl(''),
+    ci: new FormControl(''),
     password: new FormControl(''),
     cpassword: new FormControl('')
   });
 
-  createAccount():void {
+  createAccount(): void {
     console.log(this.registerForm.value);
-
+  
     const account = {
+      ci: this.registerForm.value.ci,
       username: this.registerForm.value.username,
       password: this.registerForm.value.password
     };
-
-
-    this.http.post('http://localhost:8000/api/auth/register/', account).subscribe(
+  
+    this.http.post<any>('http://localhost:8000/api/auth/register/', account).subscribe(
       response => {
-        console.log('Succes', response)
-        this.router.navigate(['/main']);
+        console.log('Success', response);
+        // Asumiendo que el token viene en un campo llamado 'token' en la respuesta
+        const token = response.token;
+        // Almacenar el token en el almacenamiento local
+        localStorage.setItem('authToken', token);
+        // Navegar a la página de inicio
+        this.router.navigate(['/home']);
       },
       error => console.error('Error', error)
     );

@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
   private token: string | null = null;
+  //isLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(private http: HttpClient, private router: Router) {}
 

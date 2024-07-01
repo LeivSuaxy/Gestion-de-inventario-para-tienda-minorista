@@ -2,13 +2,11 @@ import { Component } from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {MatFormFieldModule} from '@angular/material/form-field';
-import {ChangeDetectionStrategy} from '@angular/core';
 import {MatSelectModule} from '@angular/material/select';
 import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
-import { MatTableModule } from '@angular/material/table';
 
 @Component({
   selector: 'app-post_inventory',
