@@ -4,6 +4,7 @@ import {CommonModule, NgOptimizedImage} from "@angular/common";
 import {ModalwithshopComponent} from "../views/stock/modalwithshop/modalwithshop.component";
 import {Router} from "@angular/router";
 import { ViewChild, ElementRef } from '@angular/core';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -20,7 +21,7 @@ import { ViewChild, ElementRef } from '@angular/core';
   styleUrl: './navbar.component.css',
 })
 export class NavbarComponent {
-  constructor(public router: Router) { }
+  constructor(public router: Router, public authService: AuthService) { }
 
   @ViewChild('menuButton', { static: true }) menuButton!: ElementRef;
   @ViewChild('menu', { static: true }) menu!: ElementRef;
