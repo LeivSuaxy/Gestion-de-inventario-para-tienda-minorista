@@ -56,4 +56,9 @@ body /* o .main-container si estás usando un div como contenedor principal */ {
   left: 20vh;
 }
 
+.login-route html, .login-route body,
+.register-route html, .register-route body {
+  margin-top: 0;
+}
+
 
