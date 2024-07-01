@@ -1,3 +1,10 @@
+POST http://localhost:8000/api/auth/login/
+Content-Type: application/x-www-form-urlencoded
+
+username = "Javier" &
+password = "018900149913"
+
+###
 
 ### POST request to example server
 POST http://localhost:8000/api/token/refresh/
@@ -16,8 +23,8 @@ POST http://localhost:8000/api/auth/register/
 content-type: application/json
 
 {
-    "username":"Valerie",
-    "password":"123456"
+  "username": "Valerie",
+  "password": "123456"
 }
 
 ### POST request to login user
@@ -53,5 +60,16 @@ content-type: multipart/form-data
         "imagen":
   }
 }
+
 ###
 GET http://localhost:8000/api/admin/messengers/
+
+###
+POST http://localhost:8000/api/auth/login/
+contet-type: multipart/form-data
+
+--WebAppBoundary
+Content-Disposition: form-data; username="Pedrito"
+Content-Disposition: form-data; password="018900149913"
+
+###
