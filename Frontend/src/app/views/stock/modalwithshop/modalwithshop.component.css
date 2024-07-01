@@ -13,6 +13,7 @@
   padding-left: 1vh;
   padding-right: 1vh;
   margin-right: 4vh;
+  border-radius: 10px;
 }
 
 .proyectNavButton:hover{

@@ -50,6 +50,7 @@ body {
   position: relative;
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
 }
 
 .site-container {
@@ -64,13 +65,14 @@ body {
     left: 0;
     z-index: -1; /* Coloca el degradado detrás del contenido */
     background: linear-gradient(to bottom, #11181b 0%, #182225 50%, #212121 100%);
-  }
+}
 
   </style>
-  <div class="dynamic-background"></div>
-  <div class="site-container">
+
+    <div class="dynamic-background"></div>
     <app-root></app-root>
-  </div>
+
+  
   
   <footer>
     <span>© 2024 AGR55 & LeivSuaxy. Casi todos los derechos reservados</span> 

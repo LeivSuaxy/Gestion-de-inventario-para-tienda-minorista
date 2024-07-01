@@ -1,4 +1,4 @@
-import { Routes } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
 import {ViewsComponent} from "./views/views.component";
 import {StockComponent} from "./views/stock/stock.component";
 import {FormComponent} from "./views/form/form.component";
@@ -12,20 +12,21 @@ import { Product_tableComponent } from './admin/tables/product_table/product_tab
 import { Post_inventoryComponent } from './admin/tables/inventory_table/post_inventory/post_inventory.component';
 import { AboutComponent } from './views/about/about.component';
 import { ContactComponent } from './views/contact/contact.component';
+import { AuthGuardService } from './authGuard.service';
 
 export const routes: Routes = [
-  { path: '', component: ViewsComponent },
-  { path: 'main', component: ViewsComponent },
-  { path: 'stock', component: StockComponent },
+  { path: '', component: ViewsComponent, canActivate: [AuthGuardService] },
+  { path: 'main', component: ViewsComponent, canActivate: [AuthGuardService] },
+  { path: 'stock', component: StockComponent, canActivate: [AuthGuardService] },
   { path: 'login', component: FormComponent },
-  { path: 'stock_add', component: PostcarComponent },
+  { path: 'stock_add', component: PostcarComponent, canActivate: [AuthGuardService] },
   { path: 'register', component: RegistroComponent },
-  { path: 'admin', component: AdminComponent },
-  { path: 'tables', component: TablesComponent },
-  { path: 'tables/employee_table', component: Employee_tableComponent },
-  { path: 'tables/inventory_table', component: Inventory_tableComponent },
-  { path: 'tables/product_table', component: Product_tableComponent },
-  { path: 'inventory_add', component: Post_inventoryComponent },
-  { path: 'about', component: AboutComponent },
-  { path: 'contact', component: ContactComponent }
+  { path: 'admin', component: AdminComponent, canActivate: [AuthGuardService] },
+  { path: 'tables', component: TablesComponent, canActivate: [AuthGuardService] },
+  { path: 'tables/employee_table', component: Employee_tableComponent, canActivate: [AuthGuardService] },
+  { path: 'tables/inventory_table', component: Inventory_tableComponent, canActivate: [AuthGuardService] },
+  { path: 'tables/product_table', component: Product_tableComponent, canActivate: [AuthGuardService] },
+  { path: 'inventory_add', component: Post_inventoryComponent, canActivate: [AuthGuardService] },
+  { path: 'about', component: AboutComponent, canActivate: [AuthGuardService] },
+  { path: 'contact', component: ContactComponent, canActivate: [AuthGuardService] }
 ];
