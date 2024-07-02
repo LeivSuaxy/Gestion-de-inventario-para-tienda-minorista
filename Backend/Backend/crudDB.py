@@ -400,6 +400,7 @@ class CrudDB:
 
         return Response({'total_price': total_price}, status=status.HTTP_200_OK)
 
+    @staticmethod
     def search_products(self, search_query: str) -> Response:
         query = f"SELECT * FROM product WHERE name LIKE %s"
         elements = Product.objects.raw(query, [f'%{search_query}%'])
