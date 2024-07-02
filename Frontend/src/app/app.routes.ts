@@ -13,6 +13,7 @@ import { Post_inventoryComponent } from './admin/tables/inventory_table/post_inv
 import { AboutComponent } from './views/about/about.component';
 import { ContactComponent } from './views/contact/contact.component';
 import { AuthGuardService } from './authGuard.service';
+import { Post_employeeComponent } from './admin/tables/employee_table/post_employee/post_employee.component';
 
 export const routes: Routes = [
   { path: '', component: ViewsComponent, canActivate: [AuthGuardService] },
@@ -28,5 +29,6 @@ export const routes: Routes = [
   { path: 'tables/product_table', component: Product_tableComponent, canActivate: [AuthGuardService] },
   { path: 'inventory_add', component: Post_inventoryComponent, canActivate: [AuthGuardService] },
   { path: 'about', component: AboutComponent, canActivate: [AuthGuardService] },
-  { path: 'contact', component: ContactComponent, canActivate: [AuthGuardService] }
+  { path: 'contact', component: ContactComponent, canActivate: [AuthGuardService] },
+  { path: 'employee_add', component: Post_employeeComponent, canActivate: [AuthGuardService]}
 ];

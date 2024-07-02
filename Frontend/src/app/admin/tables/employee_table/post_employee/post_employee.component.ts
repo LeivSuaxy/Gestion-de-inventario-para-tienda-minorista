@@ -2,15 +2,17 @@ import { Component } from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {MatFormFieldModule} from '@angular/material/form-field';
-import {ChangeDetectionStrategy} from '@angular/core';
 import {MatSelectModule} from '@angular/material/select';
 import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @Component({
-  selector: 'app-postcar',
+  selector: 'app-post_employee',
+  templateUrl: './post_employee.component.html',
+  styleUrls: ['./post_employee.component.css'],
   standalone: true,
   imports: [
     FormsModule,
@@ -21,67 +23,63 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
     MatIconModule,
     MatButtonModule,
     RouterLink,
-    RouterLinkActive
+    RouterLinkActive,
+    MatCheckboxModule
   ],
-  templateUrl: './postcar.component.html',
-  styleUrl: './postcar.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PostcarComponent {
+export class Post_employeeComponent {
+
   name? : string;
-  price? : number;
-  description? : string;
-  image? : File;
-  stock? : number;
+  ci? : string;
+  salary? : number;
+  ci_boss? : string;
 
   constructor(private http : HttpClient, private router: Router) {
   }
 
   async posMethod(again: boolean): Promise<void> {
-    let url = 'http://localhost:8000/api/admin/insert_product/';
-    const formData = new FormData();
-    formData.append('image', this.image ? this.image : '');
-    formData.append('name', this.name?.toString() ?? '');
-    formData.append('price', this.price?.toString() ?? '');
-    formData.append('description', this.description?.toString() ?? '');
-    formData.append('stock', this.stock?.toString() ?? '');
-
+    let url = 'http://localhost:8000/api/admin/insert_employee/';
+    const employeeData = {
+      employee: { // Añadir este nivel para encapsular los datos del empleado
+        ci: this.ci ? this.ci : '',
+        name: this.name ? this.name : '',
+        salary: this.salary?.toString() ?? '',
+        id_boss: this.ci_boss ? this.ci_boss : ''
+      }
+    };
+  
     try {
       const response = await fetch(url, {
         method: 'POST',
-        body: formData
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(employeeData)
       });
-
+  
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-
+  
       const data = await response.json();
       console.log(data);
-      this.name = this.price = this.description = this.image = this.stock = undefined;
-
+      this.ci = this.name = this.salary = this.ci_boss = undefined;
+  
       if (!again) {
-        this.router.navigate(['/tables/product_table']);
+        this.router.navigate(['/tables/employee_table']);
       } else {
         this.name = "";
-        this.stock = undefined;
-        this.price = undefined;
-        this.description = "";
-        this.image = undefined;
+        this.ci = "";
+        this.salary = undefined;
+        this.ci_boss = "";
       }
     } catch (error) {
       console.error('There was a problem with your fetch operation:', error);
     }
   }
 
-  onFileSelected(event: Event) {
-    const target = event.target as HTMLInputElement;
-    if (target && target.files && target.files.length > 0) {
-      this.image = target.files[0];
-    }
+  cancel(): void {
+    this.router.navigate(['/tables/employee_table']);
   }
 
-  cancel(): void {
-    this.router.navigate(['/tables/product_table']);
-  }
 }

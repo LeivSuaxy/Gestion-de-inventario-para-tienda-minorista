@@ -15,16 +15,16 @@ import { forkJoin } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
-export interface Inventario {
+export interface Almacen {
   id: number;
-  categoria: string;
-  id_almacen: string;
+  name: string;
+  location: string;
 }
 
 @Component({
-  selector: 'app-inventory_table',
-  templateUrl: './inventory_table.component.html',
-  styleUrls: ['./inventory_table.component.css'],
+  selector: 'app-warehouse_table',
+  templateUrl: './warehouse_table.component.html',
+  styleUrls: ['./warehouse_table.component.css'],
   standalone: true,
   imports: [
     HttpClientModule,
@@ -42,7 +42,8 @@ export interface Inventario {
     RouterLinkActive
   ],
 })
-export class Inventory_tableComponent implements OnInit {
+export class Warehouse_tableComponent implements OnInit {
+
   showConfirmDialog = false; // Controla la visibilidad del diálogo
 
   // Otros métodos y propiedades...
@@ -74,19 +75,19 @@ export class Inventory_tableComponent implements OnInit {
   }
 
   data: any;
-  inventarios: Inventario[] = []
-  dataSource: MatTableDataSource<Inventario> = new MatTableDataSource<Inventario>(this.inventarios);
-  displayedColumns: string[] = ['select', 'id_producto', 'nombre', 'categoria', 'stock', 'precio'];
-  selection = new SelectionModel<Inventario>(true, []);
-  apiUrl: string = 'http://localhost:8000/api/admin/inventories/'
+  almacenes: Almacen[] = []
+  dataSource: MatTableDataSource<Almacen> = new MatTableDataSource<Almacen>(this.almacenes);
+  displayedColumns: string[] = ['select', 'id', 'name', 'location'];
+  selection = new SelectionModel<Almacen>(true, []);
+  apiUrl: string = 'http://localhost:8000/api/admin/warehouses/'
 
   constructor(private http: HttpClient, private router: Router) { 
     
   }
 
   async ngOnInit() {
-    //await this.apicall();
-    this.dataSource = new MatTableDataSource<Inventario>(this.inventarios);
+    await this.apicall();
+    this.dataSource = new MatTableDataSource<Almacen>(this.almacenes);
   }
 
   private async apicall(): Promise<void> {
@@ -102,10 +103,10 @@ export class Inventory_tableComponent implements OnInit {
   }
   
   traslate(): void {
-    this.inventarios.push(...this.data['elements'].map((element: any) => ({
+    this.almacenes.push(...this.data['elements'].map((element: any) => ({
       id: element.id,
-      categoria: element.categoria,
-      id_almacen: element.id_almacen
+      name: element.name,
+      location: element.location
     })));
   }
 
@@ -119,7 +120,7 @@ export class Inventory_tableComponent implements OnInit {
     return ids;
   }
 
-  eliminarInventario(ids: string[]) {
+  eliminarAlmacen(ids: string[]) {
     const observables = ids.map(id => 
       this.http.post('http://localhost:8000/api/admin/delete_inventory/', { id: id }),
     );
@@ -127,7 +128,7 @@ export class Inventory_tableComponent implements OnInit {
   }
 
   deleteInventory() {
-    this.eliminarInventario(this.getSelectedRowsData()).subscribe({
+    this.eliminarAlmacen(this.getSelectedRowsData()).subscribe({
       next: (response) => console.log('Inventarios eliminados', response),
       error: (error) => console.error('Error al eliminar inventarios', error)
     });
@@ -156,7 +157,7 @@ export class Inventory_tableComponent implements OnInit {
   }
 
   /** The label for the checkbox on the passed row */
-  checkboxLabel(row?: Inventario): string {
+  checkboxLabel(row?: Almacen): string {
     if (!row) {
       return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
     }

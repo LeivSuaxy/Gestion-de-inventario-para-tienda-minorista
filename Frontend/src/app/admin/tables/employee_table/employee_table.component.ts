@@ -13,6 +13,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTable } from '@angular/material/table';
 import { forkJoin, Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { Router, RouterLink } from '@angular/router';
 
 export interface Employee {
   ci: string;
@@ -37,7 +38,8 @@ export interface Employee {
     ButtonsComponent,
     MatFormFieldModule,
     MatInputModule,
-    CommonModule
+    CommonModule,
+    RouterLink
   ],
 })
 export class Employee_tableComponent implements OnInit {
@@ -79,9 +81,7 @@ export class Employee_tableComponent implements OnInit {
   selection = new SelectionModel<Employee>(true, []);
   apiUrl: string = 'http://localhost:8000/api/admin/employees/'
 
-  constructor(private http: HttpClient) {
-
-  }
+  constructor(private http: HttpClient, private router: Router) {}
 
   // Llamada a la API para extraer los datos y guardarlos en dataSource
   async ngOnInit() {
