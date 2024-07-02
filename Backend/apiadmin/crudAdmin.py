@@ -13,6 +13,7 @@ from rest_framework import status
 from django.core.files.images import ImageFile
 from Backend.image_process import process_image
 from psycopg2.extensions import connection as cnt, cursor as crs
+from datetime import datetime
 
 
 def __close_connections__(connect: cnt, cursor_send: crs, commited: bool = False):
@@ -321,6 +322,66 @@ def get_all_inventory_reports() -> Response:
         return ResponseType.NOT_FOUND.value
     serializer = InventoryReportSerializerAdmin(elements, many=True)
     return Response({'elements': serializer.data}, status.HTTP_200_OK)
+
+
+# Generate inventories Reports
+def generate_inventories_reports(data: QueryDict) -> Response:
+    # Primero, se realiza la llamada al methods
+    if not data.get('ci_employee'):
+        return Response({'error': 'Please provide an ci_employee'}, status.HTTP_400_BAD_REQUEST)
+
+    id_employee = data.get('ci_employee')
+    # Cada reporte de inventario lleva: stock_amount: Cantidad de elementos en stock
+    # total_value: La suma de la multiplication de la cantidad de elementos en stock por el precio
+    # id_inventario al que corresponde.
+    connection: cnt = CrudDB.connect_to_db()
+    cursor: crs = connection.cursor()
+
+    cursor.execute("SELECT report_date FROM report ORDER BY id_report DESC LIMIT 1")
+
+    last_date = cursor.fetchone()
+
+    if last_date is not None:
+        last_date = last_date[0]
+
+    if last_date == datetime.now().date():
+        __close_connections__(connect=connection, cursor_send=cursor)
+        return Response({'error': 'You have already made the corresponding inventory reports on the day',
+                         'status': 'not_today',
+                         'last_date': last_date},
+                        status.HTTP_400_BAD_REQUEST)
+
+    cursor.execute("SELECT id_inventory FROM inventory")
+    inventories = cursor.fetchall()
+
+    if not inventories:
+        __close_connections__(connect=connection, cursor_send=cursor)
+    else:
+        for inventory in inventories:
+            id_inventory = inventory[0]
+
+            cursor.execute(f"""
+                INSERT INTO report (report_date, id_employee)
+                VALUES ('{datetime.now()}', '{id_employee}')
+                RETURNING id_report
+            """)
+
+            id_report = cursor.fetchone()[0]
+
+            cursor.execute(f"""
+                SELECT SUM(stock), SUM(price*stock)
+                FROM product
+                WHERE id_inventory={id_inventory}
+            """)
+            stock_sum, total_value = cursor.fetchone()
+
+            cursor.execute(f"""
+                INSERT INTO inventory_report (id, stock_amount, total_value, id_inventory)
+                VALUES ({id_report}, {stock_sum}, {total_value}, {id_inventory})
+            """)
+
+    __close_connections__(connect=connection, cursor_send=cursor, commited=True)
+    return ResponseType.SUCCESS.value
 
 
 # <--Warehouses - CRUD-->

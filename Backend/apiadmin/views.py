@@ -119,6 +119,12 @@ def get_all_inventory_reports(request):
     return crudAdmin.get_all_inventory_reports()
 
 
+# Get Inventories Reports
+@api_view(['POST'])
+def generate_inventories_reports(request):
+    return crudAdmin.generate_inventories_reports(request.data)
+
+
 # <--WAREHOUSES CRUD ENDPOINTS-->
 # READ
 @api_view(['GET'])
