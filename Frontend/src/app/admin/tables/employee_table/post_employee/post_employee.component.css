@@ -1,4 +1,4 @@
-.post_inventory {
+.post_employee {
     color: white;
     background-color: black;
     border-radius: 20px;
@@ -8,17 +8,17 @@
     margin-top: 4.6%;
   }
   
-  .post_inventory-inter {
+  .post_employee-inter {
     display: flex;
     flex-direction: column;
-    align-items: start;
-    background-color: #212121;
+    justify-content: space-between;
+    background-color: transparent;
     box-shadow: 0px 1vh 2vh 0 rgba(0,0,0,0.2);
     border-radius: 10px;
     padding: 4vh;
   }
   
-  .post_inventory-bars {
+  .post_employee-bars {
     color: rgb(214, 214, 214);
     background-color: #505050;
     border-radius: 5px 5px 0 0;
@@ -30,13 +30,7 @@
     color: rgb(178, 178, 178);
   }
   
-  input[type="text"] {
-    border: none;
-    outline: none;
-    width: 350px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-    transition: border-bottom 0.2s ease-in-out, width 0.2s ease-in-out;
-  }
+
   
   input[type="text"]:focus {
     border-bottom: 1px solid white !important;
@@ -104,4 +98,24 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+}
+
+.name {
+    margin-right: 2vh; 
+}
+
+.ci {
+    margin-right: 0 !important;
+}
+
+.salary {
+    margin-right: 2vh;
+}
+
+.ci_boss {
+    margin-right: 2vh;
+}
+
+.checkbox {
+    margin-bottom: 4vh;
 }

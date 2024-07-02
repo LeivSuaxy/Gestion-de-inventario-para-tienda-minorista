@@ -1,0 +1,58 @@
+<div class="formulario">
+  <form action="POST" class="post_employee" enctype="multipart/form-data" class="form-data">
+    <div class="post_employee-inter">
+      <div class="header-form">
+        <h3 class="encabezado">
+          Add Employee
+        </h3>
+      </div>
+
+      <div>
+        <!-- Nombre del Empleado -->
+      <mat-form-field class="name">
+        <mat-label>Name</mat-label>
+        <input matInput id="nombreForm" [(ngModel)]="name" [ngModelOptions]="{standalone: true}">
+      </mat-form-field>
+
+      <!-- Carnet de Identidad del Empleado -->
+      <mat-form-field class="ci">
+        <mat-label>Identity Card</mat-label>
+        <input matInput id="ciForm" [(ngModel)]="ci" [ngModelOptions]="{standalone: true}">
+      </mat-form-field>
+    </div>
+
+    <div>
+      <!-- Carnet de Identidad del Jefe del Empleado -->
+      <mat-form-field class="ci_boss">
+        <mat-label>Boss Identity Card</mat-label>
+        <input matInput id="ci_bossForm" [(ngModel)]="ci_boss" [ngModelOptions]="{standalone: true}">
+      </mat-form-field>
+
+        <!-- Salario del Empleado -->
+        <mat-form-field floatLabel="always" class="salary">
+          <mat-label>Salary</mat-label>
+          <input matInput type="number" class="example-right-align" placeholder="0" id="salarioForm" [(ngModel)]="salary" [ngModelOptions]="{standalone: true}"/>
+          <span matTextPrefix>$&nbsp;</span>
+          <span matTextSuffix>.00</span>
+        </mat-form-field>
+        
+        
+    </div>
+    
+
+      <mat-checkbox class="example-margin checkbox">This employee haves a boss?</mat-checkbox>
+
+      <div class="botones">
+        <button mat-stroked-button (click)="cancel()" class="boton">Cancel</button>
+        <button mat-stroked-button (click)="posMethod(true)" class="boton">Save and add another</button>
+        <button mat-stroked-button (click)="posMethod(false)" class="boton">Save</button>
+      </div>
+      
+      </div>
+      
+      
+      
+
+      </form>
+    </div>
+
