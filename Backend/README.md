@@ -29,6 +29,7 @@
         - [insert_messenger](#insert_messenger-post)
         - [update_messenger](#update_messenger-post)
         - [delete_messenger](#delete_messenger-post)
+        - [generate_inventories_reports](#generate_inventories_reports-post)
 - [Public/General Endpoints](#publicgeneral-endpoints)
     - [(GET) Endpoints](#get-endpoints-1)
         - [get_objects](#get_objects-get)
@@ -1091,6 +1092,56 @@ If any of the required fields are missing, a JSON will be returned expressing th
 ```json
 {
   "error": "Please prove a ci to delete messenger"
+}
+```
+
+`HTTP_400_BAD_REQUEST`<br/>
+
+<strong>Return JSON Example: </strong>
+
+`Returns confirmation of the process -> {'status': 'Success'}` `HTTP_200_OK`
+
+<hr/>
+
+### generate_inventories_reports (POST)
+
+This endpoint is responsible for generating reports on all inventories in the database.
+
+<strong>URL: http://localhost:8000/api/admin/generate_invetories_reports/</strong>
+
+<b>Required input data: `form-data` or `JSON`</b>
+
+`form-data:`
+
+| Key         | Value  | Required |
+|-------------|--------|----------|
+| ci_employee | String | True     |
+
+`JSON:`
+
+```json
+{
+  "ci_employee": "Ci of the employee who is logged in"
+}
+```
+
+If any of the required fields are missing, a JSON will be returned expressing the following:
+
+```json
+{
+  "error": "Please provide an ci_employee"
+}
+```
+
+`HTTP_400_BAD_REQUEST`<br/>
+
+In case you have already made a report on the day, a JSON will be returned expressing the following:
+
+```json
+{
+  "error": "You have already made the corresponding inventory reports on the day",
+  "status": "not_today",
+  "last_date": "YYYY-MM-DD"
 }
 ```
 
