@@ -2,6 +2,7 @@
   <div class="tabla-productos">
     <div style="min-width: 25%;">
       <app-tables></app-tables>
+    </div>
 
 <div class=" tab">
   <mat-form-field class="busqueda">
@@ -62,8 +63,14 @@
         <mat-icon>add</mat-icon>
       </button>
     </div>
+    <div class="example-button-container">
+      <button mat-mini-fab aria-label="Example icon button with a delete icon" (click)="openConfirmDialog()" [disabled]="selection.isEmpty()">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
   </div>
 </div>
+
 </div>
   
 <div *ngIf="showConfirmDialog" class="dialog-overlay">
