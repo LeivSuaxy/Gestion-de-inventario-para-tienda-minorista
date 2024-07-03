@@ -334,6 +334,7 @@ class CrudDB:
         cursor.execute(f"INSERT INTO report (report_date, id_employee) VALUES  ('{now()}', 1) RETURNING id_report")
         id_reporte = cursor.fetchone()[0]
 
+        # REVIEW This method should go somewhere else.
         # Reporte de venta el cual tiene que hacer un reporte
         cursor.execute(f"INSERT INTO sales_report (id, date_time_delivery, total_amount, id_purchase_order)"
                        f" VALUES ({id_reporte}, '{now()}', {price_all_products_calct}, {id_order})")
