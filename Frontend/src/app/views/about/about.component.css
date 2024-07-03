@@ -65,6 +65,7 @@
 
   .info {
     width: 90vh;
+    font-size: 3vh;
   }
 
   img {
@@ -73,10 +74,8 @@
   }
 
   .div-img-profile {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     margin-top: 5vh;
+    width: fit-content;
     margin-left: 5vh;
     display: inline-block;
     background: transparent; /* Color del borde */
@@ -96,7 +95,6 @@
     position: absolute;
     right: 5vh;
     bottom: 5vh;
-    z-index: 1;
   }
 
   .about-images {
@@ -123,6 +121,3 @@
   .about-content {
     border-radius: 0;
   }
-
-
-
