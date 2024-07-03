@@ -34,6 +34,8 @@ export class TablesComponent implements AfterViewInit{
       this.tablaActiva = 'employee';
     } else if (this.router.url.includes('/warehouse_table')) {
       this.tablaActiva = 'warehouse'
+    } else if (this.router.url.includes('/messengers_table')){
+      this.tablaActiva = 'messengers'
     }
 
     // Aplica el estilo

@@ -2,6 +2,8 @@ import psycopg2.errors
 from Backend.crudDB import CrudDB, ResponseType
 from api.models import Product, Employee, Inventory, Warehouse, SalesReport, Messenger
 from api.serializer import EmployeeSerializer, InventorySerializer
+from django.db.models.query import RawQuerySet
+
 from .serializer import (ProductSerializerAdmin,
                          WarehouseSerializerAdmin,
                          SalesReportSerializerAdmin,
@@ -151,6 +153,7 @@ def delete_product(data: QueryDict) -> Response:
 
 # <--EMPLOYEES - CRUD-->
 # READ
+# TODO Update serializer to messengers & employees or do view
 def get_all_employees() -> Response:
     query = "SELECT * FROM employee"
     elements = Employee.objects.raw(query)
