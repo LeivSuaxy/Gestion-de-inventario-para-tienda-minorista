@@ -1,49 +1,132 @@
-#contact {
-    background-color: transparent;
+  .container {
     color: white;
-    padding: 40px 0;
+    padding-left: 5vh;
   }
-  
-  #contact .container {
-    width: 80%;
-    margin: 0 auto;
-  }
-  
-  #contact h2 {
-    color: #007bff;
-    margin-bottom: 20px;
-  }
-  
-  #contact p {
-    margin-bottom: 20px;
-  }
-  
-  #contact .form-group {
-    margin-bottom: 15px;
-  }
-  
-  #contact .form-group label {
-    display: block;
-    margin-bottom: 5px;
-  }
-  
-  #contact .form-group input,
-  #contact .form-group textarea {
+
+  .contain {
+    display: flex;
+    flex: 1;
+    margin: 0;
     width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+    flex-direction: column;
+    gap: 7px;
+    position: relative;
+    color: white;
   }
   
-  #contact button {
-    background-color: #007bff;
-    color: #fff;
-    padding: 10px 20px;
+  .contain .label {
+    font-size: 15px;
+    padding-left: 10px;
+    position: absolute;
+    top: 13px;
+    transition: 0.3s;
+    pointer-events: none;
+  }
+  
+  .input {
+    width: 100%;
+    min-height: 45px;
+    margin-bottom: 5vh;
     border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    outline: none;
+    padding: 0px 7px;
+    border-radius: 6px;
+    color: #fff;
+    font-size: 15px;
+    background-color: transparent;
+    box-shadow: 3px 3px 10px rgba(0,0,0,1),
+    -1px -1px 6px rgba(255, 255, 255, 0.4);
   }
   
-  #contact button:hover {
-    background-color: #0056b3;
+  .input:focus {
+    border: 2px solid transparent;
+    color: #fff;
+    box-shadow: 3px 3px 10px rgba(0,0,0,1),
+    -1px -1px 6px rgba(255, 255, 255, 0.4),
+    inset 3px 3px 10px rgba(0,0,0,1),
+    inset -1px -1px 6px rgba(255, 255, 255, 0.4);
   }
+  
+  .contain .input:valid ~ .label,
+  .contain .input:focus ~ .label {
+    transition: 0.3s;
+    padding-left: 2px;
+    transform: translateY(-35px);
+  }
+  
+  .contain .input:valid,
+  .contain .input:focus {
+    box-shadow: 3px 3px 10px rgba(0,0,0,1),
+    -1px -1px 6px rgba(255, 255, 255, 0.4),
+    inset 3px 3px 10px rgba(0,0,0,1),
+    inset -1px -1px 6px rgba(255, 255, 255, 0.4);
+  }
+
+  .form {
+    margin-top: 6vh;
+  }
+
+  .row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  button {
+    font-family: inherit;
+    font-size: 20px;
+    background: royalblue;
+    color: white;
+    padding: 0.3em 0.5em;
+    padding-left: 0.9em;
+    display: flex;
+    align-items: center;
+    border: none;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.2s;
+    cursor: pointer;
+    box-shadow: 3px 3px 10px rgba(0,0,0,1),
+    -1px -1px 6px rgba(255, 255, 255, 0.4);
+  }
+  
+  button span {
+    display: block;
+    margin-left: 0.3em;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  button svg {
+    display: block;
+    transform-origin: center center;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  button:hover .svg-wrapper {
+    animation: fly-1 0.6s ease-in-out infinite alternate;
+  }
+  
+  button:hover svg {
+    transform: translateX(1.2em) rotate(45deg) scale(1.1);
+  }
+  
+  button:hover span {
+    transform: translateX(5em);
+  }
+  
+  button:active {
+    transform: scale(0.95);
+  }
+  
+  @keyframes fly-1 {
+    from {
+      transform: translateY(0.1em);
+    }
+  
+    to {
+      transform: translateY(-0.1em);
+    }
+  }
+  
+  
+  
