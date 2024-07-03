@@ -116,10 +116,10 @@ class Messenger(models.Model):
 
 class SalesReport(models.Model):
     id = models.OneToOneField(Report, models.DO_NOTHING, db_column='id', primary_key=True)
-    date_time_delivery = models.DateTimeField()
+    date_time_delivery = models.DateTimeField(null=True, blank=True)
     id_purchase_order = models.ForeignKey(PurchaseOrder, models.DO_NOTHING, db_column='id_purchase_order')
     total_amount = models.DecimalField(max_digits=10, decimal_places=2)
-    messenger = models.ForeignKey(Messenger, models.DO_NOTHING, db_column='messenger')
+    messenger = models.ForeignKey(Messenger, models.DO_NOTHING, db_column='messenger', null=True, blank=True)
 
     class Meta:
         db_table = 'sales_report'

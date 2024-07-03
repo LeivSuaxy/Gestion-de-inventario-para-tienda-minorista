@@ -1,7 +1,8 @@
 .principal {
-    background-color: #212121;
+    background-color: transparent;
     padding-left: 8%;
     padding-right: 8%;
+    height: 68.3vh;
 }
 
 .encabezado {

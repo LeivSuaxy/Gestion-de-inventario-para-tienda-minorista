@@ -13,6 +13,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTable } from '@angular/material/table';
 import { forkJoin, Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { Router, RouterLink } from '@angular/router';
+import { StyleManagerService } from '../../../styleManager.service';
+
 
 export interface Employee {
   ci: string;
@@ -37,15 +40,31 @@ export interface Employee {
     ButtonsComponent,
     MatFormFieldModule,
     MatInputModule,
-    CommonModule
+    CommonModule,
+    RouterLink
   ],
 })
 export class Employee_tableComponent implements OnInit {
   showConfirmDialog = false; // Controla la visibilidad del diálogo
 
-  // Otros métodos y propiedades...
   openConfirmDialog() {
     this.showConfirmDialog = true;
+    const body = document.getElementById("contain");
+  
+    if (body instanceof HTMLElement) {
+      body.classList.add('blur-background');
+    }
+    this.styleManager.setBlurBackground(true);
+  }
+  
+  closeConfirmDialog() {
+    this.showConfirmDialog = false;
+    const body = document.getElementById("contain");
+  
+    if (body instanceof HTMLElement) {
+      body.classList.remove('blur-background');
+    }
+    this.styleManager.setBlurBackground(false);
   }
 
   deleteConfirmed() {
@@ -75,13 +94,11 @@ export class Employee_tableComponent implements OnInit {
   data: any;
   employees: Employee[] = []
   dataSource: MatTableDataSource<Employee> = new MatTableDataSource<Employee>(this.employees);
-  displayedColumns: string[] = ['select', 'carnet_identidad', 'nombre', 'salario', 'id_jefe'];
+  displayedColumns: string[] = ['select', 'ci', 'nombre', 'salario', 'id_jefe'];
   selection = new SelectionModel<Employee>(true, []);
   apiUrl: string = 'http://localhost:8000/api/admin/employees/'
 
-  constructor(private http: HttpClient) {
-
-  }
+  constructor(private http: HttpClient, private router: Router, private styleManager: StyleManagerService) {}
 
   // Llamada a la API para extraer los datos y guardarlos en dataSource
   async ngOnInit() {
@@ -105,7 +122,7 @@ export class Employee_tableComponent implements OnInit {
   // Traducción de los datos obtenidos de la API
   traslate(): void {
     this.employees.push(...this.data['elements'].map((element: any) => ({
-      carnet_identidad: element.ci,
+      ci: element.ci,
       nombre: element.name,
       salario: element.salary,
       id_jefe: element.id_boss ? element.id_boss : "-"
@@ -120,6 +137,7 @@ export class Employee_tableComponent implements OnInit {
 
   // Devuelve si estan todas las filas seleccionadas
   isAllSelected() {
+    console.log(this.getSelectedRowsData());
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length;
     return numSelected === numRows;
@@ -148,7 +166,7 @@ export class Employee_tableComponent implements OnInit {
 
   eliminarEmpleados(carnetIds: string[]) {
     const observables = carnetIds.map(id =>
-      this.http.post('http://localhost:8000/api/admin/delete_inventory/', { ci: id }),
+      this.http.post('http://localhost:8000/api/admin/delete_employee/', { ci: id }),
     );
     return forkJoin(observables);
   }

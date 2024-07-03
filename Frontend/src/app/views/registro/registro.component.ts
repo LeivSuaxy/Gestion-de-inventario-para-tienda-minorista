@@ -35,7 +35,6 @@ export class RegistroComponent {
   });
 
   createAccount(): void {
-    console.log(this.registerForm.value);
   
     const account = {
       ci: this.registerForm.value.ci,
@@ -49,9 +48,9 @@ export class RegistroComponent {
         // Asumiendo que el token viene en un campo llamado 'token' en la respuesta
         const token = response.token;
         // Almacenar el token en el almacenamiento local
-        localStorage.setItem('authToken', token);
+        localStorage.setItem('auth_token', token);
         // Navegar a la página de inicio
-        this.router.navigate(['/home']);
+        this.router.navigate(['/main']);
       },
       error => console.error('Error', error)
     );

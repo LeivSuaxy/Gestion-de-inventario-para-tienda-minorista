@@ -12,7 +12,7 @@
     display: flex;
     flex-direction: column;
     align-items: start;
-    background-color: #212121;
+    background-color: transparent;
     box-shadow: 0px 1vh 2vh 0 rgba(0,0,0,0.2);
     border-radius: 10px;
     padding: 4vh;
@@ -72,7 +72,7 @@
     color: white;
     font-size: 2.5em;
     margin: auto;
-    margin-bottom: 4vh;
+    margin-bottom: 6vh;
   }
   
   .header-form {
@@ -100,7 +100,7 @@
   }
 
 .formulario {
-    height: 60vh;
+    height: 71.3vh;
     display: flex;
     flex-direction: column;
     justify-content: center;

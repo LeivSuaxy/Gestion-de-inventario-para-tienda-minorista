@@ -10,37 +10,37 @@
     padding-left: 5vh;
     font-family: Nunito;
   }
-  
+
   #about h2, #about h3 {
     color: white;
   }
-  
+
   #about p, #about ul {
     line-height: 1.6;
   }
-  
+
   #about ul {
     list-style-type: none;
     padding: 0;
   }
-  
+
   #about ul li::before {
     content: "• ";
     color: #007bff;
     font-weight: bold;
   }
-  
+
   #about blockquote {
     border-left: 3px solid #007bff;
     padding-left: 15px;
     font-style: italic;
   }
-  
+
   #about a {
     color: #007bff;
     text-decoration: none;
   }
-  
+
   #about a:hover {
     text-decoration: underline;
     cursor: pointer;
@@ -65,6 +65,7 @@
 
   .info {
     width: 90vh;
+    font-size: 3vh;
   }
 
   img {
@@ -73,10 +74,8 @@
   }
 
   .div-img-profile {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     margin-top: 5vh;
+    width: fit-content;
     margin-left: 5vh;
     display: inline-block;
     background: transparent; /* Color del borde */
@@ -96,12 +95,11 @@
     position: absolute;
     right: 5vh;
     bottom: 5vh;
-    z-index: 1;
   }
 
   .about-images {
-    width: 80vh;
-    height: 80vh;
+    min-width: 78vh;
+    min-height: 80vh;
     position: relative;
   }
 
@@ -120,13 +118,6 @@
     color: khaki;
   }
 
-  /*.about-content {
-    border-radius: 0 0 0 30px;
-    border-left: 2px solid rgba(255, 255, 255, 0.1);
-    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
-    padding-left: 5vh;
-    padding-bottom: 5vh;
-  }*/
-
-  
-
+  .about-content {
+    border-radius: 0;
+  }

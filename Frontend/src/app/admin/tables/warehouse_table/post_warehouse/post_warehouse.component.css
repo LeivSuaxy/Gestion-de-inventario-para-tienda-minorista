@@ -1,0 +1,105 @@
+.post_employee {
+    color: white;
+    background-color: black;
+    border-radius: 20px;
+    width: 40%;
+    height: 60%;
+    left: 30%;
+    margin-top: 4.6%;
+  }
+  
+  .post_employee-inter {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: transparent;
+    box-shadow: 0px 1vh 2vh 0 rgba(0,0,0,0.2);
+    border-radius: 10px;
+    padding: 4vh;
+  }
+  
+  .post_employee-bars {
+    color: rgb(214, 214, 214);
+    background-color: #505050;
+    border-radius: 5px 5px 0 0;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+  }
+  
+  ::placeholder {
+    color: rgb(178, 178, 178);
+  }
+  
+
+  
+  input[type="text"]:focus {
+    border-bottom: 1px solid white !important;
+    width: 400px;
+  }
+  
+  .example-container mat-form-field + mat-form-field {
+    margin-left: 8px;
+  }
+  
+  .example-right-align {
+    text-align: right;
+  }
+  
+  input.example-right-align::-webkit-outer-spin-button,
+  input.example-right-align::-webkit-inner-spin-button {
+    display: none;
+  }
+  
+  input.example-right-align {
+    -moz-appearance: textfield;
+  }
+  
+  .form-data {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: auto;
+  }
+  
+  .encabezado {
+    color: white;
+    font-size: 2.5em;
+    margin: auto;
+    margin-bottom: 6vh;
+  }
+  
+  .header-form {
+    text-align: center;
+    width: 100%;
+  }
+  
+  .form-label {
+    color: white;
+  }
+  
+  .category {
+    margin-right: 2vh; 
+  }
+  
+  .botones {
+    width: 100%;
+    display: flex !important;
+    justify-content: flex-end !important;
+  
+  }
+  
+  .boton {
+    margin-left: 1vh;
+  }
+
+.formulario {
+    height: 71.3vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.name {
+    margin-right: 2vh;
+}

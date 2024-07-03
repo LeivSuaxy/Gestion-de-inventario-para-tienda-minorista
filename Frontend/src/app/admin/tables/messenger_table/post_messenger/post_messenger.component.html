@@ -1,0 +1,43 @@
+<div class="formulario">
+  <form action="POST" class="post_employee" enctype="multipart/form-data" class="form-data">
+    <div class="post_employee-inter">
+      <div class="header-form">
+        <h3 class="encabezado">
+          Add Messenger
+        </h3>
+      </div>
+
+      <div>
+      <!-- Carnet de Identidad del Empleado -->
+      <mat-form-field class="ci">
+        <mat-label>Identity Card</mat-label>
+        <input matInput id="ciForm" [(ngModel)]="employee_ci" [ngModelOptions]="{standalone: true}">
+      </mat-form-field>
+    </div>
+
+    <div>
+      <!-- Vehiculo del mensajero -->
+      <mat-form-field class="vehicle">
+        <mat-label>Messenger Vehicle</mat-label>
+        <input matInput id="vehicle_form" [(ngModel)]="vehicle" [ngModelOptions]="{standalone: true}">
+      </mat-form-field>
+
+        <!-- Salario del Empleado -->
+        <mat-form-field floatLabel="always" class="salary">
+          <mat-label>Salary</mat-label>
+          <input matInput type="number" class="example-right-align" placeholder="0" id="salarioForm" [(ngModel)]="salary_per_km" [ngModelOptions]="{standalone: true}"/>
+          <span matTextPrefix>$&nbsp;</span>
+          <span matTextSuffix>.00</span>
+        </mat-form-field>
+
+
+    </div>
+      <div class="botones">
+        <button mat-stroked-button (click)="cancel()" class="boton">Cancel</button>
+        <button mat-stroked-button (click)="posMethod(true)" class="boton">Save and add another</button>
+        <button mat-stroked-button (click)="posMethod(false)" class="boton">Save</button>
+      </div>
+
+      </div>
+      </form>
+    </div>

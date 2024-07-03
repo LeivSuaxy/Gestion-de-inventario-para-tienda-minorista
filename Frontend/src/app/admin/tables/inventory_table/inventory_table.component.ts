@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, ChangeDetectionStrategy, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {SelectionModel} from '@angular/cdk/collections';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatCheckboxModule} from '@angular/material/checkbox';
@@ -11,12 +11,13 @@ import { ButtonsComponent } from '../buttons/buttons.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatTable } from '@angular/material/table';
-import { forkJoin, Observable } from 'rxjs';
+import { forkJoin } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { StyleManagerService } from '../../../styleManager.service';
 
 export interface Inventario {
-  id: number;
+  id_inventario: number;
   categoria: string;
   id_almacen: string;
 }
@@ -45,9 +46,24 @@ export interface Inventario {
 export class Inventory_tableComponent implements OnInit {
   showConfirmDialog = false; // Controla la visibilidad del diálogo
 
-  // Otros métodos y propiedades...
   openConfirmDialog() {
     this.showConfirmDialog = true;
+    const body = document.getElementById("contain");
+  
+    if (body instanceof HTMLElement) {
+      body.classList.add('blur-background');
+    }
+    this.styleManager.setBlurBackground(true);
+  }
+  
+  closeConfirmDialog() {
+    this.showConfirmDialog = false;
+    const body = document.getElementById("contain");
+  
+    if (body instanceof HTMLElement) {
+      body.classList.remove('blur-background');
+    }
+    this.styleManager.setBlurBackground(false);
   }
 
   deleteConfirmed() {
@@ -63,7 +79,7 @@ export class Inventory_tableComponent implements OnInit {
 
   eliminarElemento(id: number) {
     // Eliminar el elemento de la fuente de datos
-    const index = this.dataSource.data.findIndex(item => item.id === id);
+    const index = this.dataSource.data.findIndex(item => item.id_inventario === id);
     if (index > -1) {
       this.dataSource.data.splice(index, 1);
       // Actualizar el dataSource
@@ -76,16 +92,16 @@ export class Inventory_tableComponent implements OnInit {
   data: any;
   inventarios: Inventario[] = []
   dataSource: MatTableDataSource<Inventario> = new MatTableDataSource<Inventario>(this.inventarios);
-  displayedColumns: string[] = ['select', 'id_producto', 'nombre', 'categoria', 'stock', 'precio'];
+  displayedColumns: string[] = ['select', 'id_inventario', 'categoria', 'id_almacen'];
   selection = new SelectionModel<Inventario>(true, []);
   apiUrl: string = 'http://localhost:8000/api/admin/inventories/'
 
-  constructor(private http: HttpClient, private router: Router) { 
+  constructor(private http: HttpClient, private router: Router, private styleManager: StyleManagerService) { 
     
   }
 
   async ngOnInit() {
-    //await this.apicall();
+    await this.apicall();
     this.dataSource = new MatTableDataSource<Inventario>(this.inventarios);
   }
 
@@ -103,9 +119,9 @@ export class Inventory_tableComponent implements OnInit {
   
   traslate(): void {
     this.inventarios.push(...this.data['elements'].map((element: any) => ({
-      id: element.id,
-      categoria: element.categoria,
-      id_almacen: element.id_almacen
+      id_inventario: element.id_inventory,
+      categoria: element.category,
+      id_almacen: element.id_warehouse
     })));
   }
 
@@ -113,7 +129,7 @@ export class Inventory_tableComponent implements OnInit {
     let ids: any[] = [];
 
     this.selection.selected.forEach((element) => {
-      ids.push(element.id);
+      ids.push(element.id_inventario);
     });
   
     return ids;
@@ -140,6 +156,7 @@ export class Inventory_tableComponent implements OnInit {
 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
+    console.log(this.getSelectedRowsData());
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length;
     return numSelected === numRows;
@@ -160,7 +177,7 @@ export class Inventory_tableComponent implements OnInit {
     if (!row) {
       return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
     }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id_inventario + 1}`;
   }
 
 }

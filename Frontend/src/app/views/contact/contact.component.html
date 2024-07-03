@@ -1,26 +1,86 @@
+
 <section id="contact">
   <div class="container">
-    <h2>Contacto</h2>
-    <p>Si tienes alguna pregunta o deseas trabajar con nosotros, no dudes en enviarnos un mensaje.</p>
+    <div class="todo">
+      <div class="texto">
+        <h2 class="encabezado">Contacto</h2>
+        <p class="pregunta">Si tienes alguna pregunta o deseas trabajar con nosotros, no dudes en enviarnos un mensaje.</p>
+      </div>
     
-    <!-- Formulario de contacto -->
-    <form action="procesar-formulario.php" method="post">
-      <div class="form-group">
-        <label for="name">Nombre:</label>
-        <input type="text" id="name" name="name" required>
+        <div class="sol">
+        <div class="contenedor">
+          <div class="cloud front">
+            <span class="left-front"></span>
+            <span class="right-front"></span>
+          </div>
+          <span class="sun sunshine"></span>
+          <span class="sun"></span>
+          <div class="cloud back">
+            <span class="left-back"></span>
+            <span class="right-back"></span>
+          </div>
+        </div>
       </div>
-      
-      <div class="form-group">
-        <label for="email">Correo Electrónico:</label>
-        <input type="email" id="email" name="email" required>
-      </div>
-      
-      <div class="form-group">
-        <label for="message">Mensaje:</label>
-        <textarea id="message" name="message" rows="4" required></textarea>
-      </div>
-      
-      <button type="submit">Enviar Mensaje</button>
-    </form>
+    
+        <!-- Formulario de contacto -->
+        <form method="POST" enctype="multipart/form-data" class="form">
+    
+    
+          <div class="row">
+            <div class="contain">
+              <input required="" type="text" name="text" class="input" [(ngModel)]="name" [ngModelOptions]="{standalone: true}">
+              <label class="label">Name</label>
+            </div>
+            <div class="contain">
+              <input required="" type="text" name="text" class="input" [(ngModel)]="email" [ngModelOptions]="{standalone: true}">
+              <label class="label">Email</label>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <div class="contain">
+              <textarea required="" name="text" class="input" rows="6" [(ngModel)]="content" [ngModelOptions]="{standalone: true}"></textarea>
+              <label class="label">Message</label>
+            </div>
+          </div>
+          
+          <div class="boton">
+            <button (click)="openConfirmDialog()" class="btn-xd">
+              <div class="svg-wrapper-1">
+                <div class="svg-wrapper">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    height="24"
+                  >
+                    <path fill="none" d="M0 0h24v24H0z"></path>
+                    <path
+                      fill="currentColor"
+                      d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z"
+                    ></path>
+                  </svg>
+                </div>
+              </div>
+              <span>Send</span>
+            </button>
+          </div>
+    
+        </form>
+    </div>
+    
   </div>
 </section>
+
+<div *ngIf="showConfirmDialog" class="dialog-overlay">
+  <div class="dialog">
+    <h3>Confirm message</h3>
+    <p>Are you sure you want to send the message?</p>
+    <div class="dialog-actions">
+      <button (click)="closeConfirmDialog()" class="cancel">Cancel</button>
+      <button (click)="posMethod()" class="accept">Send</button>
+    </div>
+  </div>
+</div>
+
+<div id="notification" class="notification">Notificación</div>
