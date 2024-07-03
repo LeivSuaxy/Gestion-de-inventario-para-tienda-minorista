@@ -62,3 +62,6 @@ body /* o .main-container si estás usando un div como contenedor principal */ {
 }
 
 
+.blur-background {
+  filter: blur(5px);
+}
