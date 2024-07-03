@@ -1,7 +1,7 @@
-<div class="tabla-productos">
-  <div style="min-width: 25%;">
-    <app-tables></app-tables>
-  </div>
+<div id="contain">
+  <div class="tabla-productos">
+    <div style="min-width: 25%;">
+      <app-tables></app-tables>
 
 <div class=" tab">
   <mat-form-field class="busqueda">
@@ -62,22 +62,17 @@
         <mat-icon>add</mat-icon>
       </button>
     </div>
-
-    <div class="example-button-container">
-      <button mat-mini-fab aria-label="Example icon button with a delete icon" class="boton" (click)="openConfirmDialog()" [disabled]="selection.isEmpty()">
-        <mat-icon>delete</mat-icon>
-      </button>
-    </div>
   </div>
 </div>
-
+</div>
+  
 <div *ngIf="showConfirmDialog" class="dialog-overlay">
   <div class="dialog">
-    <h3>Confirmar eliminación</h3>
-    <p>¿Estás seguro de que quieres eliminar los productos seleccionados?</p>
+    <h3>Confirm deletion</h3>
+    <p>Are you sure you want to delete the selected messengers?</p>
     <div class="dialog-actions">
-      <button (click)="deleteConfirmed()">Eliminar</button>
-      <button (click)="showConfirmDialog = false">Cancelar</button>
+      <button (click)="closeConfirmDialog()" class="cancel">Cancel</button>
+      <button (click)="deleteConfirmed()" class="accept">Delete</button>
     </div>
   </div>
 </div>

@@ -45,7 +45,7 @@ export class Product_tableComponent implements OnInit {
 
   openConfirmDialog() {
     this.showConfirmDialog = true;
-    const body = document.getElementById("contact");
+    const body = document.getElementById("contain");
   
     if (body instanceof HTMLElement) {
       body.classList.add('blur-background');
@@ -55,7 +55,7 @@ export class Product_tableComponent implements OnInit {
   
   closeConfirmDialog() {
     this.showConfirmDialog = false;
-    const body = document.getElementById("contact");
+    const body = document.getElementById("contain");
   
     if (body instanceof HTMLElement) {
       body.classList.remove('blur-background');

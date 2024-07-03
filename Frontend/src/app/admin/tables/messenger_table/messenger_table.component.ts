@@ -14,6 +14,7 @@ import { MatTable } from '@angular/material/table';
 import { forkJoin, Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
+import { StyleManagerService } from '../../../styleManager.service';
 
 export interface Messenger {
   ci: string;
@@ -44,9 +45,24 @@ export interface Messenger {
 export class Messenger_tableComponent implements OnInit{
   showConfirmDialog = false; // Controla la visibilidad del diálogo
 
-  // Otros métodos y propiedades...
   openConfirmDialog() {
     this.showConfirmDialog = true;
+    const body = document.getElementById("contain");
+  
+    if (body instanceof HTMLElement) {
+      body.classList.add('blur-background');
+    }
+    this.styleManager.setBlurBackground(true);
+  }
+  
+  closeConfirmDialog() {
+    this.showConfirmDialog = false;
+    const body = document.getElementById("contain");
+  
+    if (body instanceof HTMLElement) {
+      body.classList.remove('blur-background');
+    }
+    this.styleManager.setBlurBackground(false);
   }
 
   deleteConfirmed() {
@@ -80,7 +96,7 @@ export class Messenger_tableComponent implements OnInit{
   selection = new SelectionModel<Messenger>(true, []);
   apiUrl: string = 'http://localhost:8000/api/admin/messengers/'
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router, private styleManager: StyleManagerService) {}
 
   // Llamada a la API para extraer los datos y guardarlos en dataSource
   async ngOnInit() {
