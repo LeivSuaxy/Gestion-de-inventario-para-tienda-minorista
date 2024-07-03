@@ -4,7 +4,7 @@ table {
 }
 
 .mat-mdc-table {
-    background-color: #212121;
+    background-color: transparent;
     border-radius: 10px;
 }
 
@@ -17,7 +17,7 @@ table {
     padding: 4px; /* Reducido desde 8px */
 }
 
-.tabla-productos {
+.tabla-almacenes {
     display: flex;
     width: 100%;
 }
