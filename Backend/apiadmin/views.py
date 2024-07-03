@@ -38,14 +38,8 @@ def update_product_in_database(request):
 def delete_product_in_database(request):
     data = request.data
     if not data:
-        return Response({'error': 'Please provide a product'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({'error': 'Please provide products'}, status=status.HTTP_400_BAD_REQUEST)
     return crudAdmin.delete_product(data)
-
-
-# DELETE MORE THAN ONE PRODUCT
-@api_view(['POST'])
-def delete_products_in_database(request):
-    return crudAdmin.delete_more_than_one_product(request.data)
 
 
 # <--Employees CRUD ENDPOINTS-->
@@ -77,9 +71,9 @@ def update_employee_in_database(request):
 @api_view(['POST'])
 def delete_employee_in_database(request):
     data = request.data
-    if not data.get('ci'):
-        return Response({'error': 'Please prove a ci to delete'}, status.HTTP_400_BAD_REQUEST)
-    return crudAdmin.delete_employee_in_database(data.get('ci'))
+    if not data:
+        return Response({'error': 'Please prove almost a ci to delete'}, status.HTTP_400_BAD_REQUEST)
+    return crudAdmin.delete_employee_in_database(data)
 
 
 # <--INVENTORIES CRUD ENDPOINTS-->
@@ -99,10 +93,10 @@ def insert_inventory_in_database(request):
 # DELETE INVENTORY
 @api_view(['POST'])
 def delete_inventory_from_database(request):
-    id_inventory = request.data.get('id')
-    if not id_inventory:
-        return Response({'error': 'Please provide an id'}, status.HTTP_400_BAD_REQUEST)
-    return crudAdmin.delete_inventory(id_inventory)
+    data = request.data
+    if not data:
+        return Response({'error': 'Please provide almost an id'}, status.HTTP_400_BAD_REQUEST)
+    return crudAdmin.delete_inventory(data)
 
 
 # <--REPORTS CRUD ENDPOINTS-->
@@ -146,9 +140,9 @@ def update_warehouse(request):
 # DELETE
 @api_view(['POST'])
 def delete_warehouse(request):
-    if not request.data.get('id_warehouse'):
-        return Response({'error': 'Please provide an id_warehouse'}, status.HTTP_400_BAD_REQUEST)
-    return crudAdmin.delete_warehouse(request.data.get('id_warehouse'))
+    if not request.data:
+        return Response({'error': 'Please provide almost an id_warehouse'}, status.HTTP_400_BAD_REQUEST)
+    return crudAdmin.delete_warehouse(request.data)
 
 
 # <--MESSENGER CRUD ENDPOINTS-->
@@ -173,9 +167,9 @@ def update_messenger(request):
 # DELETE
 @api_view(['POST'])
 def delete_messenger(request):
-    if not request.data.get('ci'):
-        return Response({'error': 'Please provide a ci of the messenger'}, status.HTTP_400_BAD_REQUEST)
-    return crudAdmin.delete_messenger(request.data.get('ci'))
+    if not request.data:
+        return Response({'error': 'Please provide almost a ci of the messenger'}, status.HTTP_400_BAD_REQUEST)
+    return crudAdmin.delete_messenger(request.data)
 
 
 # <--COMPLEMENTARY ENDPOINTS-->
