@@ -10,37 +10,37 @@
     padding-left: 5vh;
     font-family: Nunito;
   }
-  
+
   #about h2, #about h3 {
     color: white;
   }
-  
+
   #about p, #about ul {
     line-height: 1.6;
   }
-  
+
   #about ul {
     list-style-type: none;
     padding: 0;
   }
-  
+
   #about ul li::before {
     content: "• ";
     color: #007bff;
     font-weight: bold;
   }
-  
+
   #about blockquote {
     border-left: 3px solid #007bff;
     padding-left: 15px;
     font-style: italic;
   }
-  
+
   #about a {
     color: #007bff;
     text-decoration: none;
   }
-  
+
   #about a:hover {
     text-decoration: underline;
     cursor: pointer;
@@ -100,8 +100,8 @@
   }
 
   .about-images {
-    width: 80vh;
-    height: 80vh;
+    min-width: 78vh;
+    min-height: 80vh;
     position: relative;
   }
 
@@ -124,5 +124,5 @@
     border-radius: 0;
   }
 
-  
+
 
