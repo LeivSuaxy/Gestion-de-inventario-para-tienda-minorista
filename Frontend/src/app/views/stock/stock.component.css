@@ -1,18 +1,21 @@
 .columnas {
   margin-bottom: 3px !important;
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .stock-cards {
   padding-bottom: 4vh;
   padding-top: 2vh;
   border-radius: 10px;
-  width: fit-content;
+  width: 100%;
   background-color: transparent;
   position: relative;
   margin-bottom: 4vh;
-  padding-left: 15vh;
-  padding-right: 15vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .my-btn {
@@ -212,7 +215,7 @@ button::after {
   left: 3%;
   width: 95%;
   height: 40%;
-  background-color: #212121;
+  background-color: transparent;
   transition: 0.5s;
   transform-origin: center;
 }
@@ -225,7 +228,7 @@ button::before {
   left: 3%;
   width: 95%;
   height: 40%;
-  background-color: #212121;
+  background-color: transparent;
   transition: 0.5s;
 }
 

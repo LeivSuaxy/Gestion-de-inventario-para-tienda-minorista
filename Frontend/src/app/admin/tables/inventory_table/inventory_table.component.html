@@ -31,33 +31,21 @@
   </ng-container>
 
   <!-- ID Column -->
-  <ng-container matColumnDef="id_producto">
+  <ng-container matColumnDef="id_inventario">
     <th mat-header-cell *matHeaderCellDef> ID </th>
-    <td mat-cell *matCellDef="let element"> {{element.id_producto}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.id_inventario}} </td>
   </ng-container>
 
   <!-- Nombre Column -->
-  <ng-container matColumnDef="nombre">
-    <th mat-header-cell *matHeaderCellDef> Nombre </th>
-    <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
-  </ng-container>
-
-  <!-- Categoria Column -->
   <ng-container matColumnDef="categoria">
     <th mat-header-cell *matHeaderCellDef> Categoria </th>
     <td mat-cell *matCellDef="let element"> {{element.categoria}} </td>
   </ng-container>
 
-  <!-- Stock Column -->
-  <ng-container matColumnDef="stock">
-    <th mat-header-cell *matHeaderCellDef> Stock </th>
-    <td mat-cell *matCellDef="let element"> {{element.stock}} </td>
-  </ng-container>
-
-  <!-- Precio Column -->
-  <ng-container matColumnDef="precio">
-    <th mat-header-cell *matHeaderCellDef> Precio </th>
-    <td mat-cell *matCellDef="let element"> {{element.precio}} </td>
+  <!-- Categoria Column -->
+  <ng-container matColumnDef="id_almacen">
+    <th mat-header-cell *matHeaderCellDef> ID Almacen </th>
+    <td mat-cell *matCellDef="let element"> {{element.id_almacen}} </td>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
