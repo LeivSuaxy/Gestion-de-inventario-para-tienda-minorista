@@ -125,7 +125,7 @@ export class Product_tableComponent implements OnInit {
   eliminarProductos(ids: string[]): Observable<any[]> {
     // Mapea cada id a una petición HTTP individual
     const observables = ids.map(id =>
-      this.http.post('http://localhost:8000/api/admin/delete_product', { id: id }),
+      this.http.post('http://localhost:8000/api/admin/delete_product/', { id: id }),
     );
 
     // forkJoin espera a que todos los observables se completen y luego emite los valores de todos ellos
@@ -146,6 +146,7 @@ export class Product_tableComponent implements OnInit {
 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
+    console.log(this.getSelectedRowsData());
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length;
     return numSelected === numRows;

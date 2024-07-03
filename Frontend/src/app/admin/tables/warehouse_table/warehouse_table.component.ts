@@ -122,7 +122,7 @@ export class Warehouse_tableComponent implements OnInit {
 
   eliminarAlmacen(ids: string[]) {
     const observables = ids.map(id => 
-      this.http.post('http://localhost:8000/api/admin/delete_inventory/', { id: id }),
+      this.http.post('http://localhost:8000/api/admin/delete_warehouse/', { id_warehouse: id }),
     );
     return forkJoin(observables);
   }
