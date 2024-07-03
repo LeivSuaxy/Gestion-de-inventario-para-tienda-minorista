@@ -65,6 +65,7 @@
 
   .info {
     width: 90vh;
+    font-size: 3vh;
   }
 
   img {
@@ -73,10 +74,8 @@
   }
 
   .div-img-profile {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     margin-top: 5vh;
+    width: fit-content;
     margin-left: 5vh;
     display: inline-block;
     background: transparent; /* Color del borde */
@@ -96,12 +95,11 @@
     position: absolute;
     right: 5vh;
     bottom: 5vh;
-    z-index: 1;
   }
 
   .about-images {
-    width: 80vh;
-    height: 80vh;
+    min-width: 78vh;
+    min-height: 80vh;
     position: relative;
   }
 
@@ -122,6 +120,10 @@
 
   .about-content {
     border-radius: 0;
+  }
+
+  .interest {
+    font-size: 3vh;
   }
 
   
