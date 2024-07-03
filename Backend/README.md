@@ -25,7 +25,7 @@
         - [insert_inventory](#insert_inventory-post)
         - [delete_inventory](#delete_inventory-post)
         - [insert_warehouse](#insert_warehouse-post)
-        - [delete_warehousue](#delete_warehouse-post)
+        - [delete_warehouse](#delete_warehouse-post)
         - [insert_messenger](#insert_messenger-post)
         - [update_messenger](#update_messenger-post)
         - [delete_messenger](#delete_messenger-post)
@@ -436,6 +436,16 @@ This endpoint is responsible for returning all the warehouses stored in the data
 
 <strong>URL: http://localhost:8000/api/admin/warehouses/</strong>
 
+In case there is no warehouse, a JSON will be returned expressing the following:
+
+```json
+{
+  "status": "not_found"
+}
+```
+
+`HTTP_404_NOT_FOUND`<br/>
+
 <strong>Return JSON Example: </strong>
 
 ```json
@@ -449,6 +459,8 @@ This endpoint is responsible for returning all the warehouses stored in the data
   ]
 }
 ```
+
+`HTTP_200_OK`<br/>
 
 `Returns a JSON with an array of elements that corresponds to warehouses` `HTTP_200_OK`
 

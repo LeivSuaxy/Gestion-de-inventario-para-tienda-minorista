@@ -33,4 +33,6 @@ urlpatterns = [
                   path('insert_messenger/', views.insert_messenger, name='insert_messenger'),
                   path('update_messenger/', views.update_messenger, name='update_messenger'),
                   path('delete_messenger/', views.delete_messenger, name='delete_messenger'),
+                  # <--COMPLEMENTARY URLS-->
+                  path('reports_repeated/', views.verify_reports_repeated, name='reports_repeated'),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
