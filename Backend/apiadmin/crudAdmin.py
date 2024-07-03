@@ -134,7 +134,6 @@ def update_product(product_data: QueryDict) -> Response:
 
 
 # DELETE PRODUCT
-# TODO UPDATE DOCS
 def delete_product(data: QueryDict) -> Response:
     if not data.get('elements'):
         return Response({'error': 'Please provide elements to delete'}, status.HTTP_400_BAD_REQUEST)
@@ -223,7 +222,6 @@ def update_employee_in_database(data: QueryDict) -> Response:
 
 
 # DELETE
-# TODO UPDATE DOCS
 def delete_employee_in_database(data: QueryDict) -> Response:
     if not data.get('employees'):
         return Response({'error': 'Please provide employees to delete'}, status.HTTP_400_BAD_REQUEST)
@@ -286,7 +284,6 @@ def insert_inventory(request_data: QueryDict) -> Response:
 
 
 # DELETE
-# TODO UPDATE DOCS
 def delete_inventory(data: QueryDict) -> Response:
     if not data.get('inventories'):
         return Response({'error': 'Please provide inventories to delete'}, status.HTTP_400_BAD_REQUEST)
@@ -457,7 +454,6 @@ def update_warehouse(data: QueryDict) -> Response:
 
 
 # DELETE
-# TODO UPDATE DOCS
 def delete_warehouse(data: QueryDict) -> Response:
     if not data.get('warehouses'):
         return Response({'error': 'Please provide warehouses to delete'}, status.HTTP_400_BAD_REQUEST)
@@ -535,7 +531,6 @@ def update_messenger(data: QueryDict) -> Response:
 
 
 # DELETE
-# TODO UPDATE DOCS AND ENDPOINTS
 def delete_messenger(data: QueryDict) -> Response:
     if not data.get('messengers'):
         return Response({'error': 'Please provide messengers to delete'}, status.HTTP_400_BAD_REQUEST)
