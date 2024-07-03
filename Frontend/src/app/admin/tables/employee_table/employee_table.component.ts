@@ -14,6 +14,8 @@ import { MatTable } from '@angular/material/table';
 import { forkJoin, Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
+import { StyleManagerService } from '../../../styleManager.service';
+
 
 export interface Employee {
   ci: string;
@@ -45,9 +47,24 @@ export interface Employee {
 export class Employee_tableComponent implements OnInit {
   showConfirmDialog = false; // Controla la visibilidad del diálogo
 
-  // Otros métodos y propiedades...
   openConfirmDialog() {
     this.showConfirmDialog = true;
+    const body = document.getElementById("contact");
+  
+    if (body instanceof HTMLElement) {
+      body.classList.add('blur-background');
+    }
+    this.styleManager.setBlurBackground(true);
+  }
+  
+  closeConfirmDialog() {
+    this.showConfirmDialog = false;
+    const body = document.getElementById("contact");
+  
+    if (body instanceof HTMLElement) {
+      body.classList.remove('blur-background');
+    }
+    this.styleManager.setBlurBackground(false);
   }
 
   deleteConfirmed() {
@@ -81,7 +98,7 @@ export class Employee_tableComponent implements OnInit {
   selection = new SelectionModel<Employee>(true, []);
   apiUrl: string = 'http://localhost:8000/api/admin/employees/'
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router, private styleManager: StyleManagerService) {}
 
   // Llamada a la API para extraer los datos y guardarlos en dataSource
   async ngOnInit() {

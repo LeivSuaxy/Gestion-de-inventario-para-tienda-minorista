@@ -14,6 +14,7 @@ import { MatTable } from '@angular/material/table';
 import { forkJoin } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { StyleManagerService } from '../../../styleManager.service';
 
 export interface Almacen {
   id_warehouse: number;
@@ -46,9 +47,24 @@ export class Warehouse_tableComponent implements OnInit {
 
   showConfirmDialog = false; // Controla la visibilidad del diálogo
 
-  // Otros métodos y propiedades...
   openConfirmDialog() {
     this.showConfirmDialog = true;
+    const body = document.getElementById("contact");
+  
+    if (body instanceof HTMLElement) {
+      body.classList.add('blur-background');
+    }
+    this.styleManager.setBlurBackground(true);
+  }
+  
+  closeConfirmDialog() {
+    this.showConfirmDialog = false;
+    const body = document.getElementById("contact");
+  
+    if (body instanceof HTMLElement) {
+      body.classList.remove('blur-background');
+    }
+    this.styleManager.setBlurBackground(false);
   }
 
   deleteConfirmed() {
@@ -81,7 +97,7 @@ export class Warehouse_tableComponent implements OnInit {
   selection = new SelectionModel<Almacen>(true, []);
   apiUrl: string = 'http://localhost:8000/api/admin/warehouses/'
 
-  constructor(private http: HttpClient, private router: Router) { 
+  constructor(private http: HttpClient, private router: Router, private styleManager: StyleManagerService) { 
     
   }
 

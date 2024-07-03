@@ -75,35 +75,84 @@ button {
 }
 
 .dialog-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-  }
-  
-  .dialog {
-    background: white;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    width: 300px;
-  }
-  
-  .dialog h3 {
-    margin-top: 0;
-  }
-  
-  .dialog-actions {
-    text-align: right;
-    margin-top: 20px;
-  }
-  
-  .dialog-actions button {
-    margin-left: 10px;
-  }
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  transition: all 0.5s;
+}
+
+.dialog {
+  background: #212121;
+  color: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 70vh;
+  border: 1px solid rgba(255, 255, 255, 0.308);
+}
+
+.dialog h3 {
+  margin-top: 0;
+}
+
+.dialog-actions {
+  text-align: right;
+  margin-top: 4vh;
+}
+
+.dialog-actions button {
+  margin-left: 10px;
+}
+
+.cancel {
+  background-color: transparent;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 0.3em 0.6em;
+  transition: all 0.3s;
+}
+
+.cancel:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.accept {
+  background-color: transparent;
+  border: 1px solid chartreuse;
+  border-radius: 10px;
+  color: white;
+  padding: 0.3em 0.6em;
+  transition: all 0.3s;
+}
+
+.accept:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.notification {
+  display: none; /* Oculta inicialmente */
+  background-color: chartreuse; /* Fondo verde */
+  color: black; /* Texto blanco */
+  padding: 10px; /* Espaciado interno */
+  z-index: 1000; /* Asegura que esté sobre otros elementos */
+  border-radius: 5px; /* Bordes redondeados */
+  opacity: 0; /* Inicia transparente */
+  transition: opacity 2s ease; /* Transición suave para desaparecer */
+  height: fit-content;
+}
+
+.notification-transition {
+  transition: opacity 0.5s ease-in-out;
+}
+
+.blur-background {
+  filter: blur(5px) !important;
+}

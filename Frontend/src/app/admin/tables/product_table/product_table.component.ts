@@ -15,6 +15,7 @@ import { Venta } from '../../../views/stock/cartservice.service'
 import { CommonModule } from '@angular/common';
 import { forkJoin, Observable } from 'rxjs';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { StyleManagerService } from '../../../styleManager.service';
 
 @Component({
   selector: 'app-product_table',
@@ -42,9 +43,24 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 export class Product_tableComponent implements OnInit {
   showConfirmDialog = false; // Controla la visibilidad del diálogo
 
-  // Otros métodos y propiedades...
   openConfirmDialog() {
     this.showConfirmDialog = true;
+    const body = document.getElementById("contact");
+  
+    if (body instanceof HTMLElement) {
+      body.classList.add('blur-background');
+    }
+    this.styleManager.setBlurBackground(true);
+  }
+  
+  closeConfirmDialog() {
+    this.showConfirmDialog = false;
+    const body = document.getElementById("contact");
+  
+    if (body instanceof HTMLElement) {
+      body.classList.remove('blur-background');
+    }
+    this.styleManager.setBlurBackground(false);
   }
 
   deleteConfirmed() {
@@ -79,7 +95,7 @@ export class Product_tableComponent implements OnInit {
   selection = new SelectionModel<Venta>(true, []);
   apiUrl: string = 'http://localhost:8000/api/admin/products/'
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private styleManager: StyleManagerService) {
 
   }
 
