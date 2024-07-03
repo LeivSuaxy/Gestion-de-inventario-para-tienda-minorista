@@ -16,6 +16,7 @@ import { AuthGuardService } from './authGuard.service';
 import { Post_employeeComponent } from './admin/tables/employee_table/post_employee/post_employee.component';
 import { Warehouse_tableComponent } from './admin/tables/warehouse_table/warehouse_table.component';
 import { Post_warehouseComponent } from './admin/tables/warehouse_table/post_warehouse/post_warehouse.component';
+import {Messenger_tableComponent} from "./admin/tables/messenger_table/messenger_table.component";
 
 export const routes: Routes = [
   { path: '', component: ViewsComponent, canActivate: [AuthGuardService] },
@@ -35,4 +36,5 @@ export const routes: Routes = [
   { path: 'employee_add', component: Post_employeeComponent, canActivate: [AuthGuardService]},
   { path: 'tables/warehouse_table', component: Warehouse_tableComponent, canActivate: [AuthGuardService]},
   { path: 'warehouse_add', component: Post_warehouseComponent, canActivate: [AuthGuardService]},
+  { path: 'tables/messengers_table', component: Messenger_tableComponent, canActivate: [AuthGuardService]},
 ];
