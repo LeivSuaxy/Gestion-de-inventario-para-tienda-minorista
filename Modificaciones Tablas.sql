@@ -63,3 +63,8 @@ ALTER TABLE sales_report
 ALTER TABLE account
     ADD token_expiration TIMESTAMP NULL;
 
+-- 7/2/2024 Necesaria
+ALTER TABLE sales_report ALTER COLUMN date_time_delivery DROP NOT NULL;
+
+ALTER TABLE sales_report ALTER COLUMN messenger DROP NOT NULL;
+

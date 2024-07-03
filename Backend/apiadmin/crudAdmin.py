@@ -2,6 +2,8 @@ import psycopg2.errors
 from Backend.crudDB import CrudDB, ResponseType
 from api.models import Product, Employee, Inventory, Warehouse, SalesReport, Messenger
 from api.serializer import EmployeeSerializer, InventorySerializer
+from django.db.models.query import RawQuerySet
+
 from .serializer import (ProductSerializerAdmin,
                          WarehouseSerializerAdmin,
                          SalesReportSerializerAdmin,
@@ -46,8 +48,8 @@ def insert_product(product_data: QueryDict) -> Response:
                          'optional_fields': 'image, category, id_inventory'},
                         status=status.HTTP_400_BAD_REQUEST)
 
-    connection = CrudDB.connect_to_db()
-    cursor = connection.cursor()
+    connection: cnt = CrudDB.connect_to_db()
+    cursor: crs = connection.cursor()
     if product_data.get('category') is not None and product_data.get('id_inventory') is not None:
         pass
     elif product_data.get('category') is None:
@@ -119,8 +121,8 @@ def update_product(product_data: QueryDict) -> Response:
         print(type(image))
         url_image = process_image(image)
 
-    connection = CrudDB.connect_to_db()
-    cursor = connection.cursor()
+    connection: cnt = CrudDB.connect_to_db()
+    cursor: crs = connection.cursor()
 
     cursor.execute(f"""
         UPDATE product SET name='{name}', price={price}, stock={int(stock)}, category='{category}', 
@@ -134,27 +136,13 @@ def update_product(product_data: QueryDict) -> Response:
 
 
 # DELETE PRODUCT
-
-def delete_product(data_id: QueryDict) -> Response:
-    id_product = data_id.get('id')
-    if not id_product:
-        return Response({'error': 'Please provide an id of product you will delete'},
-                        status=status.HTTP_400_BAD_REQUEST)
-    connection = CrudDB.connect_to_db()
-    cursor = connection.cursor()
-    cursor.execute(f"DELETE FROM product WHERE id_product={id_product}")
-    __close_connections__(connect=connection, cursor_send=cursor, commited=True)
-    return ResponseType.SUCCESS.value
-
-
-# DELETE PRODUCTS
-def delete_more_than_one_product(data: QueryDict) -> Response:
+def delete_product(data: QueryDict) -> Response:
     if not data.get('elements'):
         return Response({'error': 'Please provide elements to delete'}, status.HTTP_400_BAD_REQUEST)
     datas: list = data.get('elements')
 
-    connection = CrudDB.connect_to_db()
-    cursor = connection.cursor()
+    connection: cnt = CrudDB.connect_to_db()
+    cursor: crs = connection.cursor()
     for data in datas:
         if type(data) is int:
             cursor.execute(f"DELETE FROM product WHERE id_product={data}")
@@ -165,6 +153,7 @@ def delete_more_than_one_product(data: QueryDict) -> Response:
 
 # <--EMPLOYEES - CRUD-->
 # READ
+# TODO Update serializer to messengers & employees or do view
 def get_all_employees() -> Response:
     query = "SELECT * FROM employee"
     elements = Employee.objects.raw(query)
@@ -187,8 +176,8 @@ def insert_employee_in_database(data: QueryDict) -> Response:
 
     query = f"""INSERT INTO employee ({columns}) VALUES ({placeholders})"""
 
-    connection = CrudDB.connect_to_db()
-    cursor = connection.cursor()
+    connection: cnt = CrudDB.connect_to_db()
+    cursor: crs = connection.cursor()
 
     try:
         cursor.execute(query, tuple(data.values()))
@@ -222,8 +211,8 @@ def update_employee_in_database(data: QueryDict) -> Response:
         return Response({'error': 'Please provide all the required fields',
                          'mandatory_fields': 'CI, name, salary, boss'}, status=status.HTTP_400_BAD_REQUEST)
 
-    connection = CrudDB.connect_to_db()
-    cursor = connection.cursor()
+    connection: cnt = CrudDB.connect_to_db()
+    cursor: crs = connection.cursor()
 
     cursor.execute(f"""
         UPDATE employee SET name='{name}', salary={salary}, id_boss='{boss}'
@@ -236,13 +225,20 @@ def update_employee_in_database(data: QueryDict) -> Response:
 
 
 # DELETE
-def delete_employee_in_database(ci: str) -> Response:
-    connection = CrudDB.connect_to_db()
-    cursor = connection.cursor()
+def delete_employee_in_database(data: QueryDict) -> Response:
+    if not data.get('employees'):
+        return Response({'error': 'Please provide employees to delete'}, status.HTTP_400_BAD_REQUEST)
 
-    cursor.execute(f"""
-        DELETE FROM employee WHERE ci='{ci}'
-    """)
+    employees: list = data.get('employees')
+
+    connection: cnt = CrudDB.connect_to_db()
+    cursor: crs = connection.cursor()
+
+    for employee in employees:
+        if type(employee) is str:
+            cursor.execute(f"""
+                DELETE FROM employee WHERE ci='{employee}'
+            """)
 
     __close_connections__(connect=connection, cursor_send=cursor, commited=True)
 
@@ -269,8 +265,8 @@ def insert_inventory(request_data: QueryDict) -> Response:
         return Response({'error': 'Please provide a category and a storage_id'}, status.HTTP_400_BAD_REQUEST)
 
     # Check if storage exists
-    connection = CrudDB.connect_to_db()
-    cursor = connection.cursor()
+    connection: cnt = CrudDB.connect_to_db()
+    cursor: crs = connection.cursor()
 
     cursor.execute(f"""
         SELECT 1 FROM warehouse WHERE id_warehouse='{storage_id}' 
@@ -291,13 +287,20 @@ def insert_inventory(request_data: QueryDict) -> Response:
 
 
 # DELETE
-def delete_inventory(id_inventory: int) -> Response:
-    connection = CrudDB.connect_to_db()
-    cursor = connection.cursor()
+def delete_inventory(data: QueryDict) -> Response:
+    if not data.get('inventories'):
+        return Response({'error': 'Please provide inventories to delete'}, status.HTTP_400_BAD_REQUEST)
 
-    cursor.execute(f"""
-        DELETE FROM inventory WHERE id_inventory={id_inventory}
-    """)
+    inventories: list = data.get('inventories')
+
+    connection: cnt = CrudDB.connect_to_db()
+    cursor: crs = connection.cursor()
+
+    for inventory in inventories:
+        if type(inventory) is int:
+            cursor.execute(f"""
+                    DELETE FROM inventory WHERE id_inventory={inventory}
+            """)
 
     __close_connections__(connect=connection, cursor_send=cursor, commited=True)
     return ResponseType.SUCCESS.value
@@ -326,7 +329,6 @@ def get_all_inventory_reports() -> Response:
 
 # Generate inventories Reports
 def generate_inventories_reports(data: QueryDict) -> Response:
-    # Primero, se realiza la llamada al methods
     if not data.get('ci_employee'):
         return Response({'error': 'Please provide an ci_employee'}, status.HTTP_400_BAD_REQUEST)
 
@@ -387,6 +389,18 @@ def generate_inventories_reports(data: QueryDict) -> Response:
     return ResponseType.SUCCESS.value
 
 
+# TODO implements generations of sales_reports.
+def generate_sales_reports(data: QueryDict) -> Response:
+    if not data.get('ci_employee') or not data.get('products'):
+        return Response({'error': 'Please provide an ci_employee and a JSON with products'},
+                        status.HTTP_400_BAD_REQUEST)
+
+    id_employee = data.get('ci_employee')
+    products = data.get('products')
+    # Report id_report, report_date, id_employee
+    # Sales_report id, date_time_delivery, total_amount, id_purchase_order, messenger
+
+
 # <--Warehouses - CRUD-->
 # READ
 def get_all_warehouses() -> Response:
@@ -404,11 +418,11 @@ def insert_warehouse(data: QueryDict) -> Response:
         return Response({'error': 'Please provide all the required fields',
                          'mandatory_fields': 'name, location'}, status.HTTP_400_BAD_REQUEST)
 
-    connection = CrudDB.connect_to_db()
-    cursor = connection.cursor()
+    connection: cnt = CrudDB.connect_to_db()
+    cursor: crs = connection.cursor()
 
     cursor.execute(f"SELECT EXISTS(SELECT 1 FROM warehouse WHERE name='{data.get('name')}')")
-    exist_storage = cursor.fetchone()[0]
+    exist_storage = cursor.fetchone()
 
     if exist_storage:
         __close_connections__(connect=connection, cursor_send=cursor)
@@ -429,8 +443,8 @@ def update_warehouse(data: QueryDict) -> Response:
         return Response({'error': 'Please provide all the required fields',
                          'mandatory_fields': 'id_warehouse, name, location'}, status.HTTP_400_BAD_REQUEST)
 
-    connection = CrudDB.connect_to_db()
-    cursor = connection.cursor()
+    connection: cnt = CrudDB.connect_to_db()
+    cursor: crs = connection.cursor()
 
     cursor.execute(f"""
         UPDATE warehouse SET name='{data.get("name")}', location='{data.get("location")}'
@@ -443,14 +457,18 @@ def update_warehouse(data: QueryDict) -> Response:
 
 
 # DELETE
-def delete_warehouse(id_warehouse: int) -> Response:
-    if not id_warehouse:
-        return Response({'error': 'Please provide an id to delete warehouse'}, status.HTTP_400_BAD_REQUEST)
+def delete_warehouse(data: QueryDict) -> Response:
+    if not data.get('warehouses'):
+        return Response({'error': 'Please provide warehouses to delete'}, status.HTTP_400_BAD_REQUEST)
 
-    connection = CrudDB.connect_to_db()
-    cursor = connection.cursor()
+    warehouses: list = data.get('warehouses')
 
-    cursor.execute(f'DELETE FROM warehouse WHERE id_warehouse={id_warehouse}')
+    connection: cnt = CrudDB.connect_to_db()
+    cursor: crs = connection.cursor()
+
+    for warehouse in warehouses:
+        if type(warehouse) is int:
+            cursor.execute(f'DELETE FROM warehouse WHERE id_warehouse={warehouse}')
 
     __close_connections__(connect=connection, cursor_send=cursor, commited=True)
 
@@ -474,8 +492,8 @@ def insert_messenger(data: QueryDict) -> Response:
         return Response({'error': 'Please provide all the required fields',
                          'mandatory_fields': 'employee_id, vehicle, salary_per_km'}, status.HTTP_400_BAD_REQUEST)
 
-    connection = CrudDB.connect_to_db()
-    cursor = connection.cursor()
+    connection: cnt = CrudDB.connect_to_db()
+    cursor: crs = connection.cursor()
 
     cursor.execute(f"""
         SELECT ci FROM employee WHERE ci='{data.get('employee_ci')}'
@@ -502,8 +520,8 @@ def update_messenger(data: QueryDict) -> Response:
         return Response({'error': 'Please provide all the required fields',
                          'mandatory_fields': 'employee_id, vehicle, salary_per_km'}, status.HTTP_400_BAD_REQUEST)
 
-    connection = CrudDB.connect_to_db()
-    cursor = connection.cursor()
+    connection: cnt = CrudDB.connect_to_db()
+    cursor: crs = connection.cursor()
 
     cursor.execute(f"""
         UPDATE messenger SET vehicle='{data.get('vehicle')}', salary_per_km={data.get('salary_per_km')}
@@ -516,14 +534,18 @@ def update_messenger(data: QueryDict) -> Response:
 
 
 # DELETE
-def delete_messenger(ci: str) -> Response:
-    if not ci:
-        return Response({'error': 'Please prove a ci to delete messenger'}, status.HTTP_400_BAD_REQUEST)
+def delete_messenger(data: QueryDict) -> Response:
+    if not data.get('messengers'):
+        return Response({'error': 'Please provide messengers to delete'}, status.HTTP_400_BAD_REQUEST)
 
-    connection = CrudDB.connect_to_db()
-    cursor = connection.cursor()
+    messengers: list = data.get('messengers')
 
-    cursor.execute(f"DELETE FROM messenger WHERE ci='{ci}'")
+    connection: cnt = CrudDB.connect_to_db()
+    cursor: crs = connection.cursor()
+
+    for messenger in messengers:
+        if type(messenger) is str:
+            cursor.execute(f"DELETE FROM messenger WHERE ci='{messenger}'")
 
     __close_connections__(connect=connection, cursor_send=cursor, commited=True)
 
