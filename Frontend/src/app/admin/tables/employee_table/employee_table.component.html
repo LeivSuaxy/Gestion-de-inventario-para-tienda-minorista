@@ -79,11 +79,11 @@
 
 <div *ngIf="showConfirmDialog" class="dialog-overlay">
   <div class="dialog">
-    <h3>Confirmar eliminación</h3>
-    <p>¿Estás seguro de que quieres eliminar los productos seleccionados?</p>
+    <h3>Confirm deletion</h3>
+    <p>Are you sure you want to delete the selected employees?</p>
     <div class="dialog-actions">
-      <button (click)="deleteConfirmed()">Eliminar</button>
-      <button (click)="showConfirmDialog = false">Cancelar</button>
+      <button (click)="showConfirmDialog = false"  class="cancel">Cancel</button>
+      <button (click)="deleteConfirmed()" class="accept">Delete</button>
     </div>
   </div>
 </div>

@@ -18,25 +18,24 @@ export class ContactComponent {
 
   constructor(private http : HttpClient, private styleManager: StyleManagerService) {}
 
-  showConfirmDialog = false; // Controla la visibilidad del diálogo
+  showConfirmDialog = false;
 
-  // Otros métodos y propiedades...
   openConfirmDialog() {
     this.showConfirmDialog = true;
     const body = document.getElementById("contact");
-
-    if (body instanceof HTMLElement){
-        body.classList.add('blur-background');
+  
+    if (body instanceof HTMLElement) {
+      body.classList.add('blur-background');
     }
     this.styleManager.setBlurBackground(true);
   }
-
+  
   closeConfirmDialog() {
     this.showConfirmDialog = false;
     const body = document.getElementById("contact");
-
-    if (body instanceof HTMLElement){
-        body.classList.remove('blur-background');
+  
+    if (body instanceof HTMLElement) {
+      body.classList.remove('blur-background');
     }
     this.styleManager.setBlurBackground(false);
   }
