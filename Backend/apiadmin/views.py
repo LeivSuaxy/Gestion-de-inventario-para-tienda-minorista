@@ -172,7 +172,14 @@ def update_messenger(request):
 
 
 # DELETE
+@api_view(['POST'])
 def delete_messenger(request):
     if not request.data.get('ci'):
         return Response({'error': 'Please provide a ci of the messenger'}, status.HTTP_400_BAD_REQUEST)
     return crudAdmin.delete_messenger(request.data.get('ci'))
+
+
+# <--COMPLEMENTARY ENDPOINTS-->
+@api_view(['GET'])
+def verify_reports_repeated(request):
+    return crudAdmin.verify_reports_repeated()

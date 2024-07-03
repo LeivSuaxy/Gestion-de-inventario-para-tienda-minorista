@@ -337,7 +337,10 @@ def generate_inventories_reports(data: QueryDict) -> Response:
     connection: cnt = CrudDB.connect_to_db()
     cursor: crs = connection.cursor()
 
-    cursor.execute("SELECT report_date FROM report ORDER BY id_report DESC LIMIT 1")
+    cursor.execute("""
+        SELECT report_date FROM report 
+        WHERE id_report=(SELECT id FROM inventory_report ORDER BY id DESC LIMIT 1)
+    """)
 
     last_date = cursor.fetchone()
 
@@ -523,5 +526,28 @@ def delete_messenger(ci: str) -> Response:
     cursor.execute(f"DELETE FROM messenger WHERE ci='{ci}'")
 
     __close_connections__(connect=connection, cursor_send=cursor, commited=True)
+
+    return ResponseType.SUCCESS.value
+
+
+# <--Complementary Methods-->
+# Method to verify if it's possible to make an inventory report
+def verify_reports_repeated() -> Response:
+    connection: cnt = CrudDB.connect_to_db()
+    cursor: crs = connection.cursor()
+
+    cursor.execute("""
+        SELECT report_date FROM report 
+        WHERE id_report=(SELECT id FROM inventory_report ORDER BY id DESC LIMIT 1)
+    """)
+
+    last_date = cursor.fetchone()
+
+    if last_date is not None:
+        last_date = last_date[0]
+
+        if last_date == datetime.now().date():
+            __close_connections__(connect=connection, cursor_send=cursor)
+            return Response({'status': 'denied'}, status.HTTP_401_UNAUTHORIZED)
 
     return ResponseType.SUCCESS.value
