@@ -156,3 +156,9 @@ button {
 .blur-background {
   filter: blur(5px) !important;
 }
+
+#contain {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
