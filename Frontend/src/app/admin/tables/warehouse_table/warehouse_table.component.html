@@ -1,4 +1,4 @@
-<div class="tabla-productos">
+<div class="tabla-almacenes">
   <div style="min-width: 25%;">
     <app-tables></app-tables>
   </div>
@@ -31,33 +31,21 @@
   </ng-container>
 
   <!-- ID Column -->
-  <ng-container matColumnDef="id_producto">
+  <ng-container matColumnDef="id_warehouse">
     <th mat-header-cell *matHeaderCellDef> ID </th>
-    <td mat-cell *matCellDef="let element"> {{element.id_producto}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.id_warehouse}} </td>
   </ng-container>
 
   <!-- Nombre Column -->
-  <ng-container matColumnDef="nombre">
+  <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef> Nombre </th>
-    <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
   </ng-container>
 
   <!-- Categoria Column -->
-  <ng-container matColumnDef="categoria">
-    <th mat-header-cell *matHeaderCellDef> Categoria </th>
-    <td mat-cell *matCellDef="let element"> {{element.categoria}} </td>
-  </ng-container>
-
-  <!-- Stock Column -->
-  <ng-container matColumnDef="stock">
-    <th mat-header-cell *matHeaderCellDef> Stock </th>
-    <td mat-cell *matCellDef="let element"> {{element.stock}} </td>
-  </ng-container>
-
-  <!-- Precio Column -->
-  <ng-container matColumnDef="precio">
-    <th mat-header-cell *matHeaderCellDef> Precio </th>
-    <td mat-cell *matCellDef="let element"> {{element.precio}} </td>
+  <ng-container matColumnDef="location">
+    <th mat-header-cell *matHeaderCellDef> Ubicación </th>
+    <td mat-cell *matCellDef="let element"> {{element.location}}</td>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -70,7 +58,7 @@
 
   <div class="div-botones">
     <div class="example-button-container">
-      <button mat-mini-fab aria-label="Example icon button with a add icon" routerLink="/inventory_add">
+      <button mat-mini-fab aria-label="Example icon button with a add icon" routerLink="/warehouse_add">
         <mat-icon>add</mat-icon>
       </button>
     </div>

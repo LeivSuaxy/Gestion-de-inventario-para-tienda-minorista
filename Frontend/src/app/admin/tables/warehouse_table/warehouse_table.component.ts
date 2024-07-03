@@ -16,7 +16,7 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
 export interface Almacen {
-  id: number;
+  id_warehouse: number;
   name: string;
   location: string;
 }
@@ -64,7 +64,7 @@ export class Warehouse_tableComponent implements OnInit {
 
   eliminarElemento(id: number) {
     // Eliminar el elemento de la fuente de datos
-    const index = this.dataSource.data.findIndex(item => item.id === id);
+    const index = this.dataSource.data.findIndex(item => item.id_warehouse === id);
     if (index > -1) {
       this.dataSource.data.splice(index, 1);
       // Actualizar el dataSource
@@ -77,7 +77,7 @@ export class Warehouse_tableComponent implements OnInit {
   data: any;
   almacenes: Almacen[] = []
   dataSource: MatTableDataSource<Almacen> = new MatTableDataSource<Almacen>(this.almacenes);
-  displayedColumns: string[] = ['select', 'id', 'name', 'location'];
+  displayedColumns: string[] = ['select', 'id_warehouse', 'name', 'location'];
   selection = new SelectionModel<Almacen>(true, []);
   apiUrl: string = 'http://localhost:8000/api/admin/warehouses/'
 
@@ -104,7 +104,7 @@ export class Warehouse_tableComponent implements OnInit {
   
   traslate(): void {
     this.almacenes.push(...this.data['elements'].map((element: any) => ({
-      id: element.id,
+      id_warehouse: element.id_warehouse,
       name: element.name,
       location: element.location
     })));
@@ -114,7 +114,7 @@ export class Warehouse_tableComponent implements OnInit {
     let ids: any[] = [];
 
     this.selection.selected.forEach((element) => {
-      ids.push(element.id);
+      ids.push(element.id_warehouse);
     });
   
     return ids;
@@ -161,7 +161,7 @@ export class Warehouse_tableComponent implements OnInit {
     if (!row) {
       return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
     }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id_warehouse + 1}`;
   }
 
 }

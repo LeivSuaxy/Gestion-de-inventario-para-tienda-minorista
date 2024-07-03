@@ -1,4 +1,4 @@
-import { Routes, RouterModule } from '@angular/router';
+import { Routes } from '@angular/router';
 import {ViewsComponent} from "./views/views.component";
 import {StockComponent} from "./views/stock/stock.component";
 import {FormComponent} from "./views/form/form.component";
@@ -14,6 +14,8 @@ import { AboutComponent } from './views/about/about.component';
 import { ContactComponent } from './views/contact/contact.component';
 import { AuthGuardService } from './authGuard.service';
 import { Post_employeeComponent } from './admin/tables/employee_table/post_employee/post_employee.component';
+import { Warehouse_tableComponent } from './admin/tables/warehouse_table/warehouse_table.component';
+import { Post_warehouseComponent } from './admin/tables/warehouse_table/post_warehouse/post_warehouse.component';
 
 export const routes: Routes = [
   { path: '', component: ViewsComponent, canActivate: [AuthGuardService] },
@@ -30,5 +32,7 @@ export const routes: Routes = [
   { path: 'inventory_add', component: Post_inventoryComponent, canActivate: [AuthGuardService] },
   { path: 'about', component: AboutComponent, canActivate: [AuthGuardService] },
   { path: 'contact', component: ContactComponent, canActivate: [AuthGuardService] },
-  { path: 'employee_add', component: Post_employeeComponent, canActivate: [AuthGuardService]}
+  { path: 'employee_add', component: Post_employeeComponent, canActivate: [AuthGuardService]},
+  { path: 'tables/warehouse_table', component: Warehouse_tableComponent, canActivate: [AuthGuardService]},
+  { path: 'warehouse_add', component: Post_warehouseComponent, canActivate: [AuthGuardService]},
 ];
