@@ -24,4 +24,13 @@ Sin embargo, a este repositorio se le dará soporte solamente hasta la fecha de 
 clonará hacia otro repositorio privado en donde se le brindará nuevas actualizaciones y mayor soporte en vista al desarrollo
 de software profesional y con las mejores prácticas de programación.
 
+## Tecnologías utilizadas:
+### Front - End:
+Angular -> AGR55
+
+### Back - End:
+Django -> LeivSuaxy
+Django-Rest-Framework -> LeivSuaxy
+PostgreSQL -> LeviSuaxy & AGR55
+
 **¡Esperamos les sea de utilidad!**
