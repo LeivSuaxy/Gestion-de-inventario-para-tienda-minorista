@@ -29,8 +29,8 @@ de software profesional y con las mejores prácticas de programación.
 Angular -> AGR55
 
 ### Back - End:
-Django -> LeivSuaxy
-Django-Rest-Framework -> LeivSuaxy
+Django -> LeivSuaxy <br/>
+Django-Rest-Framework -> LeivSuaxy <br/>
 PostgreSQL -> LeviSuaxy & AGR55
 
 **¡Esperamos les sea de utilidad!**
