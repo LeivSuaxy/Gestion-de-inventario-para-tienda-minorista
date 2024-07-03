@@ -5,7 +5,7 @@ Universidad: UCI
 Integrantes:
 
 LeivSuaxy<br/>
-https://github.com/LeivSuaxy
+https://github.com/LeivSuaxy <br/>
 AGR55<br/>
 https://github.com/AGR55
 
