@@ -401,7 +401,7 @@ def generate_inventories_reports(data: QueryDict) -> Response:
 
 
 def generate_sales_reports(data: QueryDict) -> Response:
-    if not data.get('id_purchase') or not data.get('ci_employee'):
+    if not data.get('id_purchase_order') or not data.get('ci_employee'):
         return Response({'error': 'Please provide an id_purchase and a ci_employee'},
                         status.HTTP_400_BAD_REQUEST)
 
@@ -410,15 +410,15 @@ def generate_sales_reports(data: QueryDict) -> Response:
     # REVIEW require test
     cursor.execute(f"""
         SELECT total_amount, productos_comprados FROM purchase_order
-        WHERE id_purchase_order={data.get('id_purchase')}
+        WHERE id_purchase_order={data.get('id_purchase_order')}
     """)
 
     data_self = data.copy()
 
-    total_amount, purchase_products = cursor.fetchone() is not None
+    total_amount, purchase_products = cursor.fetchone()
 
     data_self['total_amount'] = total_amount
-    data_self['purchase_products'] = purchase_products
+    data_self['productos_comprados'] = json.dumps(purchase_products)
 
     cursor.execute(f"""
         INSERT INTO report (report_date, id_employee)
@@ -426,7 +426,9 @@ def generate_sales_reports(data: QueryDict) -> Response:
         RETURNING id_report
     """)
 
-    data_self['id_report'] = cursor.fetchone()[0]
+    data_self['id'] = cursor.fetchone()[0]
+
+    del data_self['ci_employee']
 
     columns = ', '.join(data_self.keys())
     placeholders = ', '.join(['%s'] * len(data_self))
