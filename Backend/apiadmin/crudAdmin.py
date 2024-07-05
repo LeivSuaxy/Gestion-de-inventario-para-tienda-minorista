@@ -16,6 +16,7 @@ from django.core.files.images import ImageFile
 from Backend.image_process import process_image
 from psycopg2.extensions import connection as cnt, cursor as crs
 from datetime import datetime
+from django.core.files.uploadedfile import InMemoryUploadedFile
 
 
 # Private functions
@@ -79,10 +80,12 @@ def insert_product(product_data: QueryDict) -> Response:
         else:
             product_data['category'] = 'Others'
 
-    if product_data.get('image') is not None:
+    if product_data.get('image') is not None and type(product_data.get('image')) is InMemoryUploadedFile:
         image: ImageFile = product_data.get('image')
         url_imagen = process_image(image)
         product_data['image'] = url_imagen
+    else:
+        del product_data['image']
 
     columns = ', '.join(product_data.keys())
     placeholders = ', '.join(['%s'] * len(product_data))
@@ -96,6 +99,12 @@ def insert_product(product_data: QueryDict) -> Response:
         print(f'Error {e.pgerror}')
         __close_connections__(connect=connection, cursor_send=cursor)
         return Response({'error': 'The inventory you are entering does not exist',
+                         'code': e.pgcode},
+                        status.HTTP_409_CONFLICT)
+    except psycopg2.errors.InvalidTextRepresentation as e:
+        print(f'Error {e.pgerror}')
+        __close_connections__(connect=connection, cursor_send=cursor)
+        return Response({'error': 'Please introduce correct values',
                          'code': e.pgcode},
                         status.HTTP_409_CONFLICT)
 
