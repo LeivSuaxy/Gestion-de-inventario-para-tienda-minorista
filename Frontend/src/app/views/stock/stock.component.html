@@ -1,6 +1,7 @@
 <app-carousel></app-carousel>
 
-<!-- Muestra la barra de carga cuando loading$ es true -->
+<div class="load-xd">
+  <!-- Muestra la barra de carga cuando loading$ es true -->
 <div *ngIf="load | async; else content" class="overlay">
   <div class="loader">
     <div class="loader-square"></div>
@@ -12,6 +13,8 @@
     <div class="loader-square"></div>
     </div>
 </div>
+</div>
+
 
 <!-- Contenido que se muestra después de la carga -->
 <ng-template #content>

@@ -13,7 +13,7 @@ class Client(models.Model):
 
 
 class Account(models.Model):
-    user = models.CharField(primary_key=True, max_length=100, db_column='username')
+    username = models.CharField(primary_key=True, max_length=100, db_column='username') 
     password = models.CharField(max_length=100)
     auth_token = models.CharField(max_length=500)
     ci = models.OneToOneField('Employee', on_delete=models.CASCADE, db_column='ci')

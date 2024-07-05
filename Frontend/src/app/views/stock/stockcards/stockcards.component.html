@@ -2,7 +2,7 @@
   <div class="card mb-3 backCard card-ventas">
     <div class="row g-0">
       <div class="col-md-4">
-        <ng-container *ngIf="venta.imagen == null; else foto">
+        <ng-container *ngIf="venta.imagen == null; else foto" class="foto-xd">
           <a href="../../../../assets/img/nophoto.jpeg" target="_blank">
             <img src="../../../../assets/img/nophoto.jpeg" class="img-fluid rounded-start img-card" alt="{{venta.nombre}}"/>
           </a>
@@ -34,7 +34,7 @@
   
   <ng-template #foto>
     <a href="http://localhost:8000{{venta.imagen}}" target="_blank">
-      <img src="http://localhost:8000{{venta.imagen}}" class="img-fluid rounded-start" alt="{{venta.nombre}}"/>
+      <img src="http://localhost:8000{{venta.imagen}}" class="rounded-start img-card" alt="{{venta.nombre}}"/>
     </a>
   </ng-template>
 </div>

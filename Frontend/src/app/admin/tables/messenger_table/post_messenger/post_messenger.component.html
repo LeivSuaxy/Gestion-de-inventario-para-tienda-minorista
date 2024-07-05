@@ -13,15 +13,14 @@
         <mat-label>Identity Card</mat-label>
         <input matInput id="ciForm" [(ngModel)]="employee_ci" [ngModelOptions]="{standalone: true}">
       </mat-form-field>
-    </div>
-
-    <div>
+      
       <!-- Vehiculo del mensajero -->
       <mat-form-field class="vehicle">
         <mat-label>Messenger Vehicle</mat-label>
         <input matInput id="vehicle_form" [(ngModel)]="vehicle" [ngModelOptions]="{standalone: true}">
       </mat-form-field>
 
+    </div>
         <!-- Salario del Empleado -->
         <mat-form-field floatLabel="always" class="salary">
           <mat-label>Salary</mat-label>
@@ -31,7 +30,7 @@
         </mat-form-field>
 
 
-    </div>
+    
       <div class="botones">
         <button mat-stroked-button (click)="cancel()" class="boton">Cancel</button>
         <button mat-stroked-button (click)="posMethod(true)" class="boton">Save and add another</button>

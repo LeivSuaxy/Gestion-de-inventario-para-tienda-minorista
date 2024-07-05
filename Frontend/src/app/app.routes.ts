@@ -37,6 +37,6 @@ export const routes: Routes = [
   { path: 'employee_add', component: Post_employeeComponent, canActivate: [AuthGuardService]},
   { path: 'tables/warehouse_table', component: Warehouse_tableComponent, canActivate: [AuthGuardService]},
   { path: 'warehouse_add', component: Post_warehouseComponent, canActivate: [AuthGuardService]},
-  { path: 'tables/messengers_table', component: Messenger_tableComponent, canActivate: [AuthGuardService]},
-  { path: 'messengers_add', component: Post_messengerComponent, canActivate: [AuthGuardService]},
+  { path: 'tables/messenger_table', component: Messenger_tableComponent, canActivate: [AuthGuardService]},
+  { path: 'messenger_add', component: Post_messengerComponent, canActivate: [AuthGuardService]},
 ];
