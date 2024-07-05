@@ -40,6 +40,9 @@ def get_all_products() -> Response:
 # CREATE PRODUCT
 # CHECKED
 def insert_product(product_data: QueryDict) -> Response:
+    # Save
+    product_data = product_data.copy()
+
     # Obligatory columns
     if not product_data.get('name') or not product_data.get('price') or not product_data.get(
             'stock') or not product_data.get('description'):
@@ -502,6 +505,7 @@ def insert_messenger(data: QueryDict) -> Response:
     employee_exists = cursor.fetchone()
 
     if not employee_exists:
+        __close_connections__(connect=connection, cursor_send=cursor)
         return Response({'error': 'Please provide a CI that belongs to an employee'}, status.HTTP_400_BAD_REQUEST)
 
     cursor.execute(f"""
