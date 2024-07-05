@@ -1,5 +1,8 @@
 {
   "devDependencies": {
     "concurrently": "^8.2.2"
+  },
+  "dependencies": {
+    "axios": "^1.7.2"
   }
 }

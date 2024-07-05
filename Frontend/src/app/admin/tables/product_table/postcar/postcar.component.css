@@ -108,4 +108,9 @@ input.example-right-align {
   margin-right: 2vh;
   display: flex;
   align-items: flex-start;
+  width: 100%;
+}
+
+.category {
+  margin-right: 2vh;
 }

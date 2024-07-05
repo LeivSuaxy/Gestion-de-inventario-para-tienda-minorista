@@ -38,12 +38,19 @@
         <textarea matInput id="DescripcionArea" [(ngModel)]="description" [ngModelOptions]="{standalone: true}"></textarea>
       </mat-form-field>
 
+      <div>
+        <!--Categoria de Producto-->
+        <mat-form-field class="category">
+          <mat-label>Category</mat-label>
+          <input matInput id="categoriaForm" [(ngModel)]="category" [ngModelOptions]="{standalone: true}">
+        </mat-form-field>
 
           <!-- Cantidad de Stock -->
       <mat-form-field class="stock">
         <mat-label>Stock</mat-label>
         <input matInput id="stockForm" [(ngModel)]="stock" [ngModelOptions]="{standalone: true}">
       </mat-form-field>
+    </div>
 
       
       </div>

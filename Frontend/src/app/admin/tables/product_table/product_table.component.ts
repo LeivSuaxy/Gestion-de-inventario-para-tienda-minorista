@@ -140,9 +140,7 @@ export class Product_tableComponent implements OnInit {
 
   eliminarProductos(ids: string[]): Observable<any[]> {
     // Mapea cada id a una petición HTTP individual
-    const observables = ids.map(id =>
-      this.http.post('http://localhost:8000/api/admin/delete_product/', { id: id }),
-    );
+    const observables = this.http.post('http://localhost:8000/api/admin/delete_product/', { elements: ids })
 
     // forkJoin espera a que todos los observables se completen y luego emite los valores de todos ellos
     return forkJoin(observables);
@@ -153,6 +151,7 @@ export class Product_tableComponent implements OnInit {
       next: (response) => console.log('Productos eliminados', response),
       error: (error) => console.error('Error al eliminar productos', error)
     });
+    this.closeConfirmDialog();
   }
 
   applyFilter(event: Event) {

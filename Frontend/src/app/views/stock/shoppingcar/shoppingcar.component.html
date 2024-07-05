@@ -1,18 +1,28 @@
 <div>
-    <ng-container *ngIf="ventas.length != 0; then Ventas else Noventas"/>
+  <h3 class="cart">Cart</h3>
+  <hr>
+
+    <ng-container *ngIf="cartService.getCart().length != 0; then Ventas else Noventas"/>
 
     <ng-template #Ventas>
       <ol class="list-group list-group-numbered lista-compras">
-        <ng-container *ngFor="let list of cartService.cart">
-          <li class="list-group-item listhelp">{{list.nombre}} <span class="lista-precios">{{list.precio}}$</span>
-            <a class="btn btn-sm btn-success menos">-</a> <a class="btn btn-sm btn-success mas">+</a> </li>
+        <ng-container *ngFor="let list of cartService.cart; let i = index">
+          <li class="list-group-item listhelp">
+            {{list.nombre}} <span class="lista-precios">{{list.precio * list.cantidad}}$</span>
+            <a class="btn btn-sm btn-success menos" (click)="decrementarCantidad(i)">-</a>
+            <a class="btn btn-sm btn-success mas" (click)="incrementarCantidad(i)">+</a>
+            <span class="quantity">{{list.cantidad}}</span>
+          </li>
         </ng-container>
       </ol>
-      <hr/>
-      <p class="total">Total: {{cartService.preciototal}}$</p>
+      
     </ng-template>
+    <div class="total">
+      <p>Total: {{cartService.preciototal}}$</p>
+    </div>
+   
 
     <ng-template #Noventas>
-      <p> Aun no has comprado ningún elemento. Visita el stock para que compres algo. </p>
+      <p class="empty"> Empty </p>
     </ng-template>
 </div>
