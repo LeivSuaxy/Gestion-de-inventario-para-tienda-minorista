@@ -1,3 +1,5 @@
+import json
+
 import psycopg2
 from django.utils.timezone import now
 from api.models import Product
@@ -63,6 +65,17 @@ class CrudDB:
         if commited is not False:
             connect.commit()
         connect.close()
+
+    @staticmethod
+    def update_purchased_products(products: QueryDict, cursor: crs) -> Response:
+
+        for product in products:
+            product_id = product['id']
+            quantity = product['quantity']
+
+            cursor.execute(f"UPDATE product SET stock=stock-{quantity} WHERE id_product={product_id}")
+
+        return ResponseType.SUCCESS.value
 
     # Function to register users
     def register_user(self, ci: str, username: str, password: str) -> Response:
@@ -281,20 +294,7 @@ class CrudDB:
         else:
             return ResponseType.ERROR.value
 
-    def update_purchased_products(self, products: QueryDict) -> Response:
-        connection: cnt = self.connect_to_db()
-        cursor: crs = connection.cursor()
-
-        for product in products:
-            product_id = product['id']
-            quantity = product['quantity']
-
-            cursor.execute(f"UPDATE product SET stock=stock-{quantity} WHERE id_product={product_id}")
-
-        self.__close_connections__(connect=connection, cursor_send=cursor, commited=True)
-
-        return ResponseType.SUCCESS.value
-
+    # TODO make changes
     def process_purchases(self, data: QueryDict) -> Response:
         client = data.get('client')
         products = data.get('products')
@@ -307,15 +307,14 @@ class CrudDB:
             return Response({'error': 'Please provide the products to purchase',
                              'required_fields': '[id, quantity]'}, status=status.HTTP_400_BAD_REQUEST)
 
-        # Reporte de venta: id, fecha, total, id_orden_compra
         # Orden de compra: id, fecha, total, id_cliente
         # Cliente: CI, nombre, email, telefono
 
         # Price_all_products
         price_all_products_calct = self.__process_total_price_products_purchased__(products).data['total_price']
 
-        connection = self.connect_to_db()
-        cursor = connection.cursor()
+        connection: cnt = self.connect_to_db()
+        cursor: crs = connection.cursor()
 
         # Agnadir cliente if not exists
 
@@ -325,19 +324,13 @@ class CrudDB:
                        f"ci='{client['ci']}')")
 
         # Orden de compra:
-        cursor.execute(f"INSERT INTO purchase_order (date_done, total_amount, id_client)"
-                       f"VALUES ('{now()}', {price_all_products_calct}, '{client['ci']}') RETURNING id_purchase_order")
+        products = json.dumps(products)
+        cursor.execute(f"""
+            INSERT INTO purchase_order (date_done, total_amount, id_client, productos_comprados) 
+            VALUES ('{now()}', {price_all_products_calct}, '{client['ci']}', '{products}')
+        """)
 
-        id_order = cursor.fetchone()[0]
-
-        # Reporte
-        cursor.execute(f"INSERT INTO report (report_date, id_employee) VALUES  ('{now()}', 1) RETURNING id_report")
-        id_reporte = cursor.fetchone()[0]
-
-        # REVIEW This method should go somewhere else.
-        # Reporte de venta el cual tiene que hacer un reporte
-        cursor.execute(f"INSERT INTO sales_report (id, date_time_delivery, total_amount, id_purchase_order)"
-                       f" VALUES ({id_reporte}, '{now()}', {price_all_products_calct}, {id_order})")
+        self.update_purchased_products(data.get('products'), cursor)
 
         self.__close_connections__(connect=connection, cursor_send=cursor, commited=True)
         return Response({'total_price': price_all_products_calct}, status=status.HTTP_200_OK)

@@ -18,7 +18,6 @@
         - [insert_product](#insert_product-post)
         - [update_product](#update_product-post)
         - [delete_product](#delete_product-post)
-        - [delete_products](#delete_products-post)
         - [insert_employee](#insert_employee-post)
         - [update_employee](#update_employee-post)
         - [delete_employee](#delete_employee-post)
