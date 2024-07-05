@@ -8,6 +8,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import axios from 'axios';
 
 @Component({
   selector: 'app-postcar',
@@ -33,6 +34,7 @@ export class PostcarComponent {
   description? : string;
   image? : File;
   stock? : number;
+  category? : string;
 
   constructor(private http : HttpClient, private router: Router) {
   }
@@ -40,26 +42,26 @@ export class PostcarComponent {
   async posMethod(again: boolean): Promise<void> {
     let url = 'http://localhost:8000/api/admin/insert_product/';
     const formData = new FormData();
-    formData.append('image', this.image ? this.image : '');
-    formData.append('name', this.name?.toString() ?? '');
+    formData.append('name', this.name ? this.name : '');
     formData.append('price', this.price?.toString() ?? '');
-    formData.append('description', this.description?.toString() ?? '');
     formData.append('stock', this.stock?.toString() ?? '');
-
+    formData.append('description', this.description ? this.description : '');
+    formData.append('category', this.category ? this.category : '');
+    if (this.image) {
+      formData.append('image', this.image ? this.image : '');
+    }
+  
+    console.log(formData.get('name'), formData.get('category'), formData.get('image'), formData.get('price'), formData.get('description'), formData.get('stock'));
     try {
-      const response = await fetch(url, {
-        method: 'POST',
-        body: formData
+      const response = await axios.post(url, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
       });
-
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-
-      const data = await response.json();
-      console.log(data);
-      this.name = this.price = this.description = this.image = this.stock = undefined;
-
+  
+      console.log(response.data);
+      this.name = this.price = this.description = this.image = this.stock = this.category = undefined;
+  
       if (!again) {
         this.router.navigate(['/tables/product_table']);
       } else {
@@ -70,7 +72,7 @@ export class PostcarComponent {
         this.image = undefined;
       }
     } catch (error) {
-      console.error('There was a problem with your fetch operation:', error);
+      console.error('There was a problem with your axios operation:', error);
     }
   }
 

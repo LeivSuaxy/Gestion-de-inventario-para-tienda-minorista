@@ -18,24 +18,33 @@
 
 <!-- Contenido que se muestra después de la carga -->
 <ng-template #content>
-  <div class="stock-cards">
-    <div class="container text-dark sombreado">
-      <div class="row align-items-start">
-        <ng-container *ngFor="let venta of ventas">
-          <div class="col columnas">
-            <app-stockcards [venta]="venta"></app-stockcards>
-          </div>
-        </ng-container>
+  <div class="screen">
+    <div class="stock-cards">
+      <div class="text-dark sombreado">
+        <div>
+          <ng-container *ngFor="let venta of ventas">
+            <div class="col columnas">
+              <app-stockcards [venta]="venta"></app-stockcards>
+            </div>
+          </ng-container>
+        </div>
+        <div class="my-btn">
+          <button *ngIf="apiurlprev" (click)="prev()" class="boton-prev">
+            Previous
+          </button>
+          <button *ngIf="apiurlnext" (click)="next()" class="boton-next">
+            Next
+          </button>
+        </div>
+        
       </div>
-      <div class="my-btn">
-        <button *ngIf="apiurlprev" (click)="prev()" class="boton-prev">
-          Previous
-        </button>
-        <button *ngIf="apiurlnext" (click)="next()" class="boton-next">
-          Next
-        </button>
-      </div>
-      
+    </div>
+  
+    <div class="cart">
+      <app-shoppingcar></app-shoppingcar>
     </div>
   </div>
+  
 </ng-template>
+
+

@@ -1,7 +1,6 @@
 import { Component, HostListener } from '@angular/core';
 import {RouterLink, RouterLinkActive, RouterOutlet} from "@angular/router";
 import {CommonModule, NgOptimizedImage} from "@angular/common";
-import {ModalwithshopComponent} from "../views/stock/modalwithshop/modalwithshop.component";
 import {Router} from "@angular/router";
 import { ViewChild, ElementRef } from '@angular/core';
 import { AuthService } from '../auth.service';
@@ -15,7 +14,6 @@ import { AuthService } from '../auth.service';
     RouterLinkActive,
     RouterOutlet,
     CommonModule,
-    ModalwithshopComponent
   ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',

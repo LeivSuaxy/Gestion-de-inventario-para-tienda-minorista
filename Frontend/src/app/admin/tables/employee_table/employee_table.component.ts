@@ -165,9 +165,8 @@ export class Employee_tableComponent implements OnInit {
   }
 
   eliminarEmpleados(carnetIds: string[]) {
-    const observables = carnetIds.map(id =>
-      this.http.post('http://localhost:8000/api/admin/delete_employee/', { ci: id }),
-    );
+    const observables = this.http.post('http://localhost:8000/api/admin/delete_employee/', { employee: carnetIds })
+
     return forkJoin(observables);
   }
 
@@ -176,6 +175,7 @@ export class Employee_tableComponent implements OnInit {
       next: (response) => console.log('Empleados eliminados', response),
       error: (error) => console.error('Error al eliminar empleados', error)
     });
+    this.closeConfirmDialog();
   }
 
   // Muestra en consola las filas seleccionadas

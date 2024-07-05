@@ -2,21 +2,26 @@
   margin-bottom: 3px !important;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  width: 100%;
 }
 
 .stock-cards {
   padding-bottom: 4vh;
-  padding-top: 2vh;
   border-radius: 10px;
-  width: 100%;
+  width: fit-content;
   min-height: 71.3vh;
   background-color: transparent;
   position: relative;
   margin-bottom: 4vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
+  position: relatve;
+}
+
+.screen {
+  display: flex;
+  margin-right: 8%;
 }
 
 .my-btn {
@@ -25,14 +30,13 @@
 }
 
 .boton-prev {
-  position: relative;
-  margin-left: 20vh;
+  position: absolute;
+  left: 10%;
 }
 
 .boton-next {
-  position: relative;
-  float: right;
-  margin-right: 20vh;
+  position: absolute;
+  right: 10%;
 }
 
 .title {
@@ -243,4 +247,13 @@ button:hover::before, button:hover::after {
 
 button:hover {
   box-shadow: inset 0px 0px 25px #1479EA;
+}
+
+.cart {
+  width: 50%;
+  height: fit-content;
+  background-color: #212121;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  border-radius: 10px;
+  margin-left: 5vh;
 }

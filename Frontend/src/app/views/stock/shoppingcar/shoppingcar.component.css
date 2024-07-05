@@ -1,19 +1,33 @@
 .listhelp {
-  background-color: black;
+  background-color: transparent;
   font-weight: bold;
   font-size: 25px;
   color: white;
-  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3) !important;
+  border-radius: 0 !important;
 }
 
 .total {
   font-weight: bold;
   font-size: 3.5vh;
   color: green;
+  position: relative;
+  margin-left: 2vh;
+  margin-bottom: 2vh;
+  margin-top: 2vh;
 }
 
 .lista-precios {
   color: green
+}
+
+.lista-compras {
+  margin-top: 0;
+}
+
+.quantity {
+  margin-left: 2vh;
 }
 
 .mas {
@@ -62,4 +76,22 @@
 
 .lista-compras {
   border: none;
+}
+
+.cart {
+  text-align: center;
+  color: white;
+  padding: 2vh 0 0 0;
+}
+
+hr {
+  color: white;
+  margin-bottom: 0;
+}
+
+.empty {
+  color: white;
+  font-size: 2.4vh;
+  margin-left: 2vh;
+  margin-top: 2vh;
 }

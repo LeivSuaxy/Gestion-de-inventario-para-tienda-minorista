@@ -137,9 +137,8 @@ export class Warehouse_tableComponent implements OnInit {
   }
 
   eliminarAlmacen(ids: string[]) {
-    const observables = ids.map(id => 
-      this.http.post('http://localhost:8000/api/admin/delete_warehouse/', { id_warehouse: id }),
-    );
+    const observables = this.http.post('http://localhost:8000/api/admin/delete_warehouse/', { warehouses: ids })
+
     return forkJoin(observables);
   }
 
@@ -148,6 +147,7 @@ export class Warehouse_tableComponent implements OnInit {
       next: (response) => console.log('Inventarios eliminados', response),
       error: (error) => console.error('Error al eliminar inventarios', error)
     });
+    this.closeConfirmDialog();
   }
 
   applyFilter(event: Event) {

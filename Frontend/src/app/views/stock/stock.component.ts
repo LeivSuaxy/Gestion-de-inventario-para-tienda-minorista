@@ -3,7 +3,6 @@ import {CarouselComponent} from "./carousel/carousel.component";
 import {StockcardsComponent} from "./stockcards/stockcards.component";
 import {CommonModule, NgForOf, NgIf} from "@angular/common";
 import {ShoppingcarComponent} from "./shoppingcar/shoppingcar.component";
-import {ModalwithshopComponent} from "./modalwithshop/modalwithshop.component";
 import {Venta} from "./cartservice.service";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {RouterLink, RouterLinkActive} from "@angular/router";
@@ -18,13 +17,13 @@ import {StockService} from "./stock.service";
     StockcardsComponent,
     NgForOf,
     ShoppingcarComponent,
-    ModalwithshopComponent,
     HttpClientModule,
     RouterLink,
     RouterLinkActive,
     PaginationComponent,
     NgIf,
     CommonModule,
+    ShoppingcarComponent
   ],
   templateUrl: './stock.component.html',
   styleUrl: './stock.component.css',

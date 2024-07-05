@@ -14,14 +14,32 @@ import {NgForOf, NgIf} from "@angular/common";
   styleUrl: './shoppingcar.component.css'
 })
 export class ShoppingcarComponent {
-  ventas: Venta[] = []
   constructor(protected cartService: CartService) {
-    this.ventas = this.cartService.getCart();
+    //this.ventas = this.cartService.getCart();
   }
 
   ngOnInit(){
-    this.ventas = this.cartService.getCart();
   }
 
+  // Incrementa la cantidad de un elemento específico
+incrementarCantidad(index: number): void {
+  this.cartService.getCart()[index].cantidad += 1;
+  this.cartService.preciototal += Number(this.cartService.getCart()[index].precio);
+}
+
+// Decrementa la cantidad de un elemento específico
+decrementarCantidad(index: number): void {
+  this.cartService.preciototal -= Number(this.cartService.getCart()[index].precio);
+  if (this.cartService.getCart()[index].cantidad > 1) {
+    this.cartService.getCart()[index].cantidad -= 1;
+  } else {
+    this.removerDelCarrito(index);
+  }
+}
+
+// Remueve un elemento del carrito
+removerDelCarrito(index: number): void {
+  this.cartService.getCart().splice(index, 1);
+}
 
 }

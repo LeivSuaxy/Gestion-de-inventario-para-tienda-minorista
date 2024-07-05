@@ -136,9 +136,8 @@ export class Inventory_tableComponent implements OnInit {
   }
 
   eliminarInventario(ids: string[]) {
-    const observables = ids.map(id => 
-      this.http.post('http://localhost:8000/api/admin/delete_inventory/', { id: id }),
-    );
+    const observables = this.http.post('http://localhost:8000/api/admin/delete_inventory/', { inventories: ids })
+
     return forkJoin(observables);
   }
 
@@ -147,6 +146,7 @@ export class Inventory_tableComponent implements OnInit {
       next: (response) => console.log('Inventarios eliminados', response),
       error: (error) => console.error('Error al eliminar inventarios', error)
     });
+    this.closeConfirmDialog();
   }
 
   applyFilter(event: Event) {

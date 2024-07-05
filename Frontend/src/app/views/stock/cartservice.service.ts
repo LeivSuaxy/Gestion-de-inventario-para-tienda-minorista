@@ -10,6 +10,7 @@ export interface Venta{
   stock: number;
   categoria: string;
   fecha_entrada: string;
+  cantidad: number;
 }
 
 @Injectable({
@@ -29,8 +30,9 @@ export class CartService {
   addToCart(product: Venta) {
     if(!this.cart.includes(product)) this.cart.push(product);
     this.preciototal = 0;
+    product.cantidad = 1;
     for (let i = 0; i < this.cart.length; i++) {
-      this.preciototal += Number(this.cart[i].precio);
+      this.preciototal += Number(this.cart[i].precio) * Number(this.cart[i].cantidad);
     }
   }
 
@@ -39,7 +41,7 @@ export class CartService {
 
     this.preciototal = 0;
     for (let i = 0; i < this.cart.length; i++) {
-      this.preciototal += Number(this.cart[i].precio);
+      this.preciototal += Number(this.cart[i].precio) * Number(this.cart[i].cantidad);
     }
   }
 
