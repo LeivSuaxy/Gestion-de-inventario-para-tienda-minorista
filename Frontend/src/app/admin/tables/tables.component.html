@@ -22,4 +22,8 @@
         <a routerLink="/tables/messenger_table">Messengers</a>
         <button class="boton">+</button>
     </div>
+    <div class="tables" [ngStyle]="tablaActiva === 'purchase' ? {'background-color': '#6489af'} : {}">
+        <a routerLink="/tables/purchase_orders_table">Purchase Order</a>
+        <button class="boton">+</button>
+    </div>
 </div>

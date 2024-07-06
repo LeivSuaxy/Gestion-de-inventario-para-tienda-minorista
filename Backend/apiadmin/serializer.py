@@ -4,7 +4,8 @@ from api.models import (Product,
                         Report,
                         SalesReport,
                         InventoryReport,
-                        Messenger)
+                        Messenger,
+                        PurchaseOrder)
 
 
 class ProductSerializerAdmin(serializers.ModelSerializer):
@@ -41,3 +42,9 @@ class MessengerSerializerAdmin(serializers.ModelSerializer):
     class Meta:
         model = Messenger
         fields = ['ci', 'vehicle', 'salary_per_km']
+
+
+class PurchaseOrderSerializerAdmin(serializers.ModelSerializer):
+    class Meta:
+        model = PurchaseOrder
+        fields = ['id_purchase_order', 'date_done', 'total_amount', 'id_client', 'processed']

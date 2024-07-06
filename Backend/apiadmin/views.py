@@ -118,9 +118,16 @@ def generate_inventories_reports(request):
     return crudAdmin.generate_inventories_reports(request.data)
 
 
+# Generate sales reports
 @api_view(['POST'])
 def generate_sales_reports(request):
     return crudAdmin.generate_sales_reports(request.data)
+
+
+# Get all Purchase Orders
+@api_view(['GET'])
+def get_all_purchase_orders(request):
+    return crudAdmin.get_all_purchase_orders()
 
 
 # <--WAREHOUSES CRUD ENDPOINTS-->
