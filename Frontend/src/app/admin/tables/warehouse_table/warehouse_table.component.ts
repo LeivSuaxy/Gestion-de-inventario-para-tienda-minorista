@@ -73,7 +73,7 @@ export class Warehouse_tableComponent implements OnInit {
     filas.forEach((element) => {
       this.eliminarElemento(parseInt(element));
     });
-    this.deleteInventory();
+    this.deleteWarehouse();
   }
 
   @ViewChild(MatTable) table!: MatTable<any>;
@@ -142,10 +142,10 @@ export class Warehouse_tableComponent implements OnInit {
     return forkJoin(observables);
   }
 
-  deleteInventory() {
+  deleteWarehouse() {
     this.eliminarAlmacen(this.getSelectedRowsData()).subscribe({
-      next: (response) => console.log('Inventarios eliminados', response),
-      error: (error) => console.error('Error al eliminar inventarios', error)
+      next: (response) => this.notification('success'),
+      error: (error) => this.notification('error')
     });
     this.closeConfirmDialog();
   }
@@ -178,6 +178,41 @@ export class Warehouse_tableComponent implements OnInit {
       return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id_warehouse + 1}`;
+  }
+
+  notification(type: 'error' | 'success'): void {
+    const notification = document.getElementById('notification');
+    if (notification instanceof HTMLElement) {
+      notification.classList.add('notification-transition'); // Asegura que la transición esté aplicada
+      notification.style.position = 'fixed';
+      notification.style.right = '2vh';
+      notification.style.bottom = '2vh';
+      notification.style.display = 'block';
+      notification.style.opacity = '0'; // Inicia invisible para la animación
+  
+      
+      if (type === 'error') {
+        notification.style.backgroundColor = 'red';
+        notification.textContent = 'Warehouse could not be deleted';
+      } else if (type === 'success') {
+        notification.style.backgroundColor = 'chartreuse';
+        notification.textContent = 'Warehouse has been removed';
+      }
+  
+      // Inicia visible para la animación
+      setTimeout(() => {
+        notification.style.opacity = '0.7';
+      }, 10); // Un pequeño retraso asegura que el navegador aplique la transición
+  
+      // Inicia la desaparición después de 2 segundos
+      setTimeout(() => {
+        notification.style.opacity = '0';
+        // Oculta completamente después de que la transición de opacidad termine
+        setTimeout(() => {
+          notification.style.display = 'none';
+        }, 500); // Coincide con la duración de la transición de opacidad
+      }, 2000);
+    }
   }
 
 }

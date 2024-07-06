@@ -162,3 +162,19 @@ button {
   padding: 0;
   margin: 0;
 }
+
+.notification {
+  display: none; /* Oculta inicialmente */
+  background-color: chartreuse; /* Fondo verde */
+  color: black; /* Texto blanco */
+  padding: 10px; /* Espaciado interno */
+  z-index: 1000; /* Asegura que esté sobre otros elementos */
+  border-radius: 5px; /* Bordes redondeados */
+  opacity: 0; /* Inicia transparente */
+  transition: opacity 2s ease; /* Transición suave para desaparecer */
+  height: fit-content;
+}
+
+.notification-transition {
+  transition: opacity 0.5s ease-in-out;
+}

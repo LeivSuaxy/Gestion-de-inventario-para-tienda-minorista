@@ -1,20 +1,21 @@
 table {
-    overflow: auto; /* Añade desplazamiento si es necesario */
+    overflow: auto;
     border-radius: 10px;
 }
 
 .mat-mdc-table {
     background-color: transparent;
+    /*backdrop-filter: blur(1000px);*/
     border-radius: 10px;
 }
 
 .mat-elevation-z8 {
-    font-size: 12px; /* Ya reducido */
-    line-height: 1.2; /* Reduce el espaciado entre líneas */
+    font-size: 12px;
+    line-height: 1.2;
 }
 
 .mat-header-cell, .mat-cell {
-    padding: 4px; /* Reducido desde 8px */
+    padding: 4px;
 }
 
 .tabla-productos {
@@ -41,17 +42,15 @@ table {
     background-color: #212121 !important;
 }
 
-/*mat-mdc-form-field-subscript-wrapper mat-mdc-form-field-bottom-align*/
 
-/* Ajusta el div que Angular Material agrega automáticamente */
 ::ng-deep .mat-mdc-form-field-subscript-wrapper,
 ::ng-deep .mat-mdc-form-field-bottom-align {
-  display: none; /* O cualquier otro ajuste necesario */
+  display: none;
 }
 
-/* Asegúrate de que la tabla y el filtro estén visualmente juntos */
+
 ::ng-deep .tabla {
-  margin-top: -20px; /* Ajusta según sea necesario */
+  margin-top: -20px;
 }
 
 .div-botones {
@@ -138,14 +137,14 @@ table {
   }
 
   .notification {
-    display: none; /* Oculta inicialmente */
-    background-color: chartreuse; /* Fondo verde */
-    color: black; /* Texto blanco */
-    padding: 10px; /* Espaciado interno */
-    z-index: 1000; /* Asegura que esté sobre otros elementos */
-    border-radius: 5px; /* Bordes redondeados */
-    opacity: 0; /* Inicia transparente */
-    transition: opacity 2s ease; /* Transición suave para desaparecer */
+    display: none;
+    background-color: chartreuse;
+    color: black;
+    padding: 10px;
+    z-index: 1000;
+    border-radius: 5px;
+    opacity: 0;
+    transition: opacity 2s ease;
     height: fit-content;
   }
   
@@ -161,4 +160,20 @@ table {
     width: 100%;
     padding: 0;
     margin: 0;
+  }
+
+  .notification {
+    display: none;
+    background-color: chartreuse;
+    color: black;
+    padding: 10px; 
+    z-index: 1000; 
+    border-radius: 5px; 
+    opacity: 0; 
+    transition: opacity 2s ease; 
+    height: fit-content;
+  }
+  
+  .notification-transition {
+    transition: opacity 0.5s ease-in-out;
   }
