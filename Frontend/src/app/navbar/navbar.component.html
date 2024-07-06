@@ -26,11 +26,11 @@
 
 <div *ngIf="showConfirmDialog" class="dialog-overlay">
   <div class="dialog">
-    <h3>Confirmar cierre de cuenta</h3>
-    <p>¿Estás seguro de que desea cerrar su cuenta?</p>
+    <h3>Confirm account closure</h3>
+    <p>Are you sure you want to close your account?</p>
     <div class="dialog-actions">
-      <button (click)="showConfirmDialog = false">Cancelar</button>
-      <button (click)="this.authService.logout()">Cerrar</button>
+      <button (click)="showConfirmDialog = false">Cancel</button>
+      <button (click)="this.authService.logout()">OK</button>
     </div>
   </div>
 </div>
