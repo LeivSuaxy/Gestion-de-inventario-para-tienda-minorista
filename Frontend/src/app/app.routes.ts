@@ -18,6 +18,7 @@ import { Warehouse_tableComponent } from './admin/tables/warehouse_table/warehou
 import { Post_warehouseComponent } from './admin/tables/warehouse_table/post_warehouse/post_warehouse.component';
 import {Messenger_tableComponent} from "./admin/tables/messenger_table/messenger_table.component";
 import {Post_messengerComponent} from "./admin/tables/messenger_table/post_messenger/post_messenger.component";
+import {Purchase_tableComponent} from "./admin/tables/purchase_table/purchase_table.component";
 
 export const routes: Routes = [
   { path: '', component: ViewsComponent, canActivate: [AuthGuardService] },
@@ -39,4 +40,5 @@ export const routes: Routes = [
   { path: 'warehouse_add', component: Post_warehouseComponent, canActivate: [AuthGuardService]},
   { path: 'tables/messenger_table', component: Messenger_tableComponent, canActivate: [AuthGuardService]},
   { path: 'messenger_add', component: Post_messengerComponent, canActivate: [AuthGuardService]},
+  { path: 'tables/purchase_orders_table', component: Purchase_tableComponent, canActivate: [AuthGuardService]},
 ];

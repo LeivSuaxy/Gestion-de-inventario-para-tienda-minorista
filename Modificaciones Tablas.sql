@@ -63,8 +63,12 @@ ALTER TABLE sales_report
 ALTER TABLE account
     ADD token_expiration TIMESTAMP NULL;
 
--- 7/2/2024 Necesaria
+-- 2/7/2024 Necesaria
 ALTER TABLE sales_report ALTER COLUMN date_time_delivery DROP NOT NULL;
 
 ALTER TABLE sales_report ALTER COLUMN messenger DROP NOT NULL;
+
+-- 6/7/2024 Obligatoria
+ALTER TABLE purchase_order ADD COLUMN processed BOOLEAN DEFAULT FALSE;
+
 

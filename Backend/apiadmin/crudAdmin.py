@@ -1,6 +1,6 @@
 import psycopg2.errors
 from Backend.crudDB import CrudDB, ResponseType
-from api.models import Product, Employee, Inventory, Warehouse, SalesReport, Messenger
+from api.models import Product, Employee, Inventory, Warehouse, SalesReport, Messenger, PurchaseOrder
 from api.serializer import EmployeeSerializer, InventorySerializer
 import json
 
@@ -8,7 +8,8 @@ from .serializer import (ProductSerializerAdmin,
                          WarehouseSerializerAdmin,
                          SalesReportSerializerAdmin,
                          InventoryReportSerializerAdmin,
-                         MessengerSerializerAdmin)
+                         MessengerSerializerAdmin,
+                         PurchaseOrderSerializerAdmin)
 from django.http import QueryDict
 from rest_framework.response import Response
 from rest_framework import status
@@ -400,6 +401,7 @@ def generate_inventories_reports(data: QueryDict) -> Response:
     return ResponseType.SUCCESS.value
 
 
+# Generate sales reports
 def generate_sales_reports(data: QueryDict) -> Response:
     if not data.get('id_purchase_order') or not data.get('ci_employee'):
         return Response({'error': 'Please provide an id_purchase and a ci_employee'},
@@ -445,8 +447,23 @@ def generate_sales_reports(data: QueryDict) -> Response:
                          'code': e.pgcode},
                         status.HTTP_409_CONFLICT)
 
-    __close_connections__(connect=connection, cursor_send=cursor)
+    cursor.execute(f"""
+        UPDATE purchase_order SET processed=TRUE
+        WHERE id_purchase_order={data.get('id_purchase_order')}
+    """)
+
+    __close_connections__(connect=connection, cursor_send=cursor, commited=True)
     return ResponseType.SUCCESS.value
+
+
+# Purchase orders
+def get_all_purchase_orders() -> Response:
+    query = "SELECT * FROM purchase_order ORDER BY processed ASC"
+    elements = PurchaseOrder.objects.raw(query)
+    if not elements:
+        return ResponseType.NOT_FOUND.value
+    serializer = PurchaseOrderSerializerAdmin(elements, many=True)
+    return Response({'elements': serializer.data}, status.HTTP_200_OK)
 
 
 # <--Warehouses - CRUD-->

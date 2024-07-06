@@ -67,6 +67,7 @@ class PurchaseOrder(models.Model):
     date_done = models.DateField()
     total_amount = models.DecimalField(max_digits=10, decimal_places=2)
     id_client = models.ForeignKey(Client, models.DO_NOTHING, db_column='id_client')
+    processed = models.BooleanField(default=False)
 
     class Meta:
         db_table = 'purchase_order'
