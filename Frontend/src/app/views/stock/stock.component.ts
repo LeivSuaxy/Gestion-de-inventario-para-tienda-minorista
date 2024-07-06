@@ -1,26 +1,22 @@
-import { Component, OnInit } from '@angular/core';
-import {CarouselComponent} from "./carousel/carousel.component";
+import { Component } from '@angular/core';
 import {StockcardsComponent} from "./stockcards/stockcards.component";
 import {CommonModule, NgForOf, NgIf} from "@angular/common";
 import {ShoppingcarComponent} from "./shoppingcar/shoppingcar.component";
 import {Venta} from "./cartservice.service";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {RouterLink, RouterLinkActive} from "@angular/router";
-import {PaginationComponent} from "./pagination/pagination.component";
 import {StockService} from "./stock.service";
 
 @Component({
   selector: 'app-stock',
   standalone: true,
   imports: [
-    CarouselComponent,
     StockcardsComponent,
     NgForOf,
     ShoppingcarComponent,
     HttpClientModule,
     RouterLink,
     RouterLinkActive,
-    PaginationComponent,
     NgIf,
     CommonModule,
     ShoppingcarComponent
