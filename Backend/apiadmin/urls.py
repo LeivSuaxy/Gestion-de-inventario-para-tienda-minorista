@@ -23,6 +23,7 @@ urlpatterns = [
   path('inventory_reports/', views.get_all_inventory_reports, name='get_all_inventory_reports'),
   path('generate_invetories_reports/', views.generate_inventories_reports, name='generate_inventories_reports'),
   path('generate_sales_reports/', views.generate_sales_reports, name='generate_sales_reports'),
+  path('get_all_purchase_orders/', views.get_all_purchase_orders, name='get_all_purchase_orders'),
   # <--Warehouses CRUD URLS-->
   path('warehouses/', views.get_all_warehouses, name='get_all_warehouses'),
   path('insert_warehouse/', views.insert_warehouse, name='insert_warehouse'),

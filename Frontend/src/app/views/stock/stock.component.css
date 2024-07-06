@@ -22,6 +22,7 @@
 .screen {
   display: flex;
   margin-right: 8%;
+  min-height: 71.3vh;
 }
 
 .my-btn {

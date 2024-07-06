@@ -48,8 +48,9 @@ export class ContactComponent {
         content: this.content ? this.content : '',
     };
   
+    this.closeConfirmDialog();
+
     try {
-      this.showConfirmDialog = false;
       this.name = this.email = this.content = undefined;
       const response = await fetch(url, {
         method: 'POST',
@@ -59,10 +60,7 @@ export class ContactComponent {
         body: JSON.stringify(contentData)
       });
   
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-        this.notification('error');
-      } else {
+      if (response.ok) {
         console.log('Network response was ok');
         this.notification('success');
       }
@@ -73,6 +71,7 @@ export class ContactComponent {
 
     } catch (error) {
       console.error('There was a problem with your fetch operation:', error);
+      this.notification('error');
     }
   }
 

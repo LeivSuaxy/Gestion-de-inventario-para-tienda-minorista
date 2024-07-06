@@ -19,7 +19,6 @@ import {StockService} from "./stock.service";
     RouterLinkActive,
     NgIf,
     CommonModule,
-    ShoppingcarComponent
   ],
   templateUrl: './stock.component.html',
   styleUrl: './stock.component.css',

@@ -22,4 +22,5 @@ jsontest.json
 /Backend/login/migrations/__pycache__
 /Backend/messageApp/__pycache__
 /Backend/messageApp/migrations/__pycache__
+/Backend/errors.log
 

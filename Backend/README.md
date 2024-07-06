@@ -1,38 +1,41 @@
 # Index
 
-- [Presentation](#elitestore-api)
+- [Index](#index)
+- [EliteStore API](#elitestore-api)
 - [Authentication](#authentication)
-    - [Register](#register-endpoint-post)
-    - [Login](#login-endpoint-post)
-    - [Validating](#validate-token-post)
+  - [Register Endpoint (POST)](#register-endpoint-post)
+  - [Login Endpoint (POST)](#login-endpoint-post)
+  - [Validate Token (POST)](#validate-token-post)
 - [Endpoints](#endpoints)
 - [Administrative Endpoints](#administrative-endpoints)
-    - [(GET) Endpoints](#get-endpoints)
-        - [get_all_products](#get_all_products-get)
-        - [get_all_employees](#get_all_employees-get)
-        - [get_all_sales_reports](#get_all_sales_reports-get)
-        - [get_all_inventories](#get_all_inventories-get)
-        - [get_all_warehouse](#get_all_warehouses-get)
-        - [get_all_messengers](#get_all_messengers-get)
-    - [(POST) Endpoints](#post-endpoints)
-        - [insert_product](#insert_product-post)
-        - [update_product](#update_product-post)
-        - [delete_product](#delete_product-post)
-        - [insert_employee](#insert_employee-post)
-        - [update_employee](#update_employee-post)
-        - [delete_employee](#delete_employee-post)
-        - [insert_inventory](#insert_inventory-post)
-        - [delete_inventory](#delete_inventory-post)
-        - [insert_warehouse](#insert_warehouse-post)
-        - [delete_warehouse](#delete_warehouse-post)
-        - [insert_messenger](#insert_messenger-post)
-        - [update_messenger](#update_messenger-post)
-        - [delete_messenger](#delete_messenger-post)
-        - [generate_inventories_reports](#generate_inventories_reports-post)
+  - [(GET) Endpoints](#get-endpoints)
+    - [get\_all\_products (GET)](#get_all_products-get)
+    - [get\_all\_employees (GET)](#get_all_employees-get)
+    - [get\_all\_inventories (GET)](#get_all_inventories-get)
+    - [get\_all\_sales\_reports (GET)](#get_all_sales_reports-get)
+    - [get\_all\_inventory\_reports (GET)](#get_all_inventory_reports-get)
+    - [get\_all\_warehouses (GET)](#get_all_warehouses-get)
+    - [get\_all\_messengers (GET)](#get_all_messengers-get)
+  - [(POST) Endpoints](#post-endpoints)
+    - [insert\_product (POST)](#insert_product-post)
+    - [update\_product (POST)](#update_product-post)
+    - [delete\_product (POST)](#delete_product-post)
+    - [insert\_employee (POST)](#insert_employee-post)
+    - [update\_employee (POST)](#update_employee-post)
+    - [delete\_employee (POST)](#delete_employee-post)
+    - [insert\_inventory (POST)](#insert_inventory-post)
+    - [delete\_inventory (POST)](#delete_inventory-post)
+    - [insert\_warehouse (POST)](#insert_warehouse-post)
+    - [delete\_warehouse (POST)](#delete_warehouse-post)
+    - [insert\_messenger (POST)](#insert_messenger-post)
+    - [update\_messenger (POST)](#update_messenger-post)
+    - [delete\_messenger (POST)](#delete_messenger-post)
+    - [generate\_inventories\_reports (POST)](#generate_inventories_reports-post)
 - [Public/General Endpoints](#publicgeneral-endpoints)
-    - [(GET) Endpoints](#get-endpoints-1)
-        - [get_objects](#get_objects-get)
-    - [(POST) Endpoints](#post-endpoints-1)
+  - [(GET) Endpoints](#get-endpoints-1)
+    - [get\_objects (GET)](#get_objects-get)
+  - [(POST) Endpoints](#post-endpoints-1)
+    - [](#)
 
 # EliteStore API
 
@@ -46,7 +49,7 @@ future programmers.
 
 # Authentication
 
-All endpoints in authentication start with the URL: http://localhost:8000/api/auth/.
+All endpoints in authentication start with the URL: <http://localhost:8000/api/auth/>.
 
 ## Register Endpoint (POST)
 
@@ -275,7 +278,7 @@ If the token is expired, a JSON will be returned expressing the following:
 
 # Endpoints
 
-All endpoints in this API start with the URL: http://localhost:8000/api/.
+All endpoints in this API start with the URL: <http://localhost:8000/api/>.
 
 There are two types of endpoints at the moment, those that respond to administrative requests and those that respond to
 requests
@@ -286,7 +289,7 @@ general purpose or public purpose.
 The administrative endpoints are for managing the system databases. Offers tools for managing
 CRUD actions in the database. <br/>
 Administrative endpoints continue with the principle of the general URL, adding an /admin/.<br/>
-Example: http://localhost:8000/api/admin/.
+Example: <http://localhost:8000/api/admin/>.
 
 ## (GET) Endpoints
 
@@ -1100,7 +1103,7 @@ In case you have already made a report on the day, a JSON will be returned expre
 
 Public/General endpoints are mainly used to display information to the user.<br/>
 Public/General endpoints continue with the principle of the general URL, adding an /public/.<br/>
-Example: http://localhost:8000/api/public/.
+Example: <http://localhost:8000/api/public/>.
 
 ## (GET) Endpoints
 

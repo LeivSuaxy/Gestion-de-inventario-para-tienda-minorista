@@ -1,0 +1,95 @@
+<div id="contain">
+
+  <div class="tabla-productos">
+    <div style="min-width: 25%;">
+      <app-tables></app-tables>
+    </div>
+
+  <div class=" tab">
+    <mat-form-field class="busqueda">
+      <mat-label>Filter</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+    </mat-form-field>
+
+    <div class="tabla">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <!-- Checkbox Column -->
+    <ng-container matColumnDef="select">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-checkbox (change)="$event ? toggleAllRows() : null"
+                      [checked]="selection.hasValue() && isAllSelected()"
+                      [indeterminate]="selection.hasValue() && !isAllSelected()"
+                      [aria-label]="checkboxLabel()">
+        </mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let row">
+        <mat-checkbox (click)="$event.stopPropagation()"
+                      (change)="$event ? selection.toggle(row) : null"
+                      [checked]="selection.isSelected(row)"
+                      [aria-label]="checkboxLabel(row)">
+        </mat-checkbox>
+      </td>
+    </ng-container>
+
+    <!-- ID Column -->
+    <ng-container matColumnDef="id_purchase_order">
+      <th mat-header-cell *matHeaderCellDef> ID </th>
+      <td mat-cell *matCellDef="let element"> {{element.id_purchase_order}} </td>
+    </ng-container>
+
+    <!-- Nombre Column -->
+    <ng-container matColumnDef="date_done">
+      <th mat-header-cell *matHeaderCellDef> Date </th>
+      <td mat-cell *matCellDef="let element"> {{element.date_done}} </td>
+    </ng-container>
+
+    <!-- Categoria Column -->
+    <ng-container matColumnDef="total_amount">
+      <th mat-header-cell *matHeaderCellDef> Total </th>
+      <td mat-cell *matCellDef="let element"> {{element.total_amount}} $</td>
+    </ng-container>
+
+    <!-- Stock Column -->
+    <ng-container matColumnDef="id_client">
+      <th mat-header-cell *matHeaderCellDef> ID Client </th>
+      <td mat-cell *matCellDef="let element"> {{element.id_client}} </td>
+    </ng-container>
+
+    <!-- Processed Column -->
+    <ng-container matColumnDef="processed">
+      <th mat-header-cell *matHeaderCellDef> Processed </th>
+      <td mat-cell *matCellDef="let element"> {{element.processed}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+        (click)="selection.toggle(row)">
+    </tr>
+  </table>
+  </div>
+  </div>
+
+    <div class="div-botones">
+      <div class="example-button-container">
+        <button mat-mini-fab aria-label="Example icon button with a delete icon" class="boton" (click)="openConfirmDialog()" [disabled]="selection.isEmpty()">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div *ngIf="showConfirmDialog" class="dialog-overlay">
+  <div class="dialog">
+    <h3>Confirm deletion</h3>
+    <p>Are you sure you want to delete the selected purchase orders?</p>
+    <div class="dialog-actions">
+      <button (click)="closeConfirmDialog()"  class="cancel">Cancel</button>
+      <button (click)="deleteConfirmed()" class="accept">Delete</button>
+    </div>
+  </div>
+</div>
+
+<div id="notification" class="notification">notification</div>
