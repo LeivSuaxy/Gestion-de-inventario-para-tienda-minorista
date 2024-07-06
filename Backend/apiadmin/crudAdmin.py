@@ -466,6 +466,24 @@ def get_all_purchase_orders() -> Response:
     return Response({'elements': serializer.data}, status.HTTP_200_OK)
 
 
+# Delete purchase orders
+def delete_purchase_orders(data: QueryDict) -> Response:
+    if not data.get('purchases'):
+        return Response({'error': 'Please provide purchases to delete'}, status.HTTP_400_BAD_REQUEST)
+
+    purchases: list = data.get('purchases')
+
+    connection, cursor = __get_connections__()
+
+    for id_purchase in purchases:
+        if type(id_purchase) is int:
+            cursor.execute(f'DELETE FROM purchase_order WHERE id_purchase_order={id_purchase}')
+
+    __close_connections__(connect=connection, cursor_send=cursor, commited=True)
+
+    return ResponseType.SUCCESS.value
+
+
 # <--Warehouses - CRUD-->
 # READ
 def get_all_warehouses() -> Response:

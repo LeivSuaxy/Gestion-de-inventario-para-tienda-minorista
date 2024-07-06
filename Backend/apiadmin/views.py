@@ -130,6 +130,12 @@ def get_all_purchase_orders(request):
     return crudAdmin.get_all_purchase_orders()
 
 
+# Delete purchase orders
+@api_view(['POST'])
+def delete_purchase_orders(request):
+    return crudAdmin.delete_purchase_orders(request.data)
+
+
 # <--WAREHOUSES CRUD ENDPOINTS-->
 # READ
 @api_view(['GET'])
