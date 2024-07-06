@@ -40,5 +40,5 @@ export const routes: Routes = [
   { path: 'warehouse_add', component: Post_warehouseComponent, canActivate: [AuthGuardService]},
   { path: 'tables/messenger_table', component: Messenger_tableComponent, canActivate: [AuthGuardService]},
   { path: 'messenger_add', component: Post_messengerComponent, canActivate: [AuthGuardService]},
-  { path: 'tables/purchase_orders_table', component: Purchase_tableComponent, canActivate: [AuthGuardService]},
+  { path: 'tables/purchase_order_table', component: Purchase_tableComponent, canActivate: [AuthGuardService]},
 ];

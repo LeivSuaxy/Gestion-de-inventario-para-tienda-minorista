@@ -11,7 +11,7 @@ import { ButtonsComponent } from '../buttons/buttons.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatTable } from '@angular/material/table';
-import { forkJoin, Observable } from 'rxjs';
+import { forkJoin } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { StyleManagerService } from '../../../styleManager.service';
@@ -73,7 +73,7 @@ export class Purchase_tableComponent implements OnInit{
     filas.forEach((element) => {
       this.eliminarElemento(element);
     });
-    this.deleteEmployees();
+    this.deletePurachaseOrders();
   }
 
   @ViewChild(MatTable) table!: MatTable<any>;
@@ -167,14 +167,14 @@ export class Purchase_tableComponent implements OnInit{
   }
 
   // TODO REVIEW Make function to delete purchase :l
-  eliminarEmpleados(carnetIds: string[]) {
-    const observables = this.http.post('http://localhost:8000/api/admin/delete_employee/', { employee: carnetIds })
+  eliminarOrdenesCompra(carnetIds: string[]) {
+    const observables = this.http.post('http://localhost:8000/api/admin/delete_purchase_order/', { employee: carnetIds })
 
     return forkJoin(observables);
   }
 
-  deleteEmployees() {
-    this.eliminarEmpleados(this.getSelectedRowsData()).subscribe({
+  deletePurachaseOrders() {
+    this.eliminarOrdenesCompra(this.getSelectedRowsData()).subscribe({
       next: (response) => this.notification('success'),
       error: (error) => this.notification('error')
     });
