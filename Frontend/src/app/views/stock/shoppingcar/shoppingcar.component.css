@@ -11,15 +11,19 @@
 .total {
   font-weight: bold;
   font-size: 3.5vh;
-  color: green;
+  color: white;
   position: relative;
   margin-left: 2vh;
-  margin-bottom: 2vh;
+  margin-bottom: 0;
   margin-top: 2vh;
 }
 
+.verde {
+  color: chartreuse;
+}
+
 .lista-precios {
-  color: green
+  color: chartreuse
 }
 
 .lista-compras {
@@ -41,15 +45,18 @@
   position: absolute;
   right: 10px;
   top: 12px;
-  transition: background-color 0.2s, border-color 0.2s;
+  transition: all 0.2s;
+  font-weight: bold;
 }
 
 .mas:hover {
-  border-color: green;
+  border-color: chartreuse;
+  color: chartreuse;
 }
 
 .mas:active {
-  background-color: green;
+  background-color: chartreuse;
+  color: black;
 }
 
 .menos {
@@ -63,15 +70,18 @@
   position: absolute;
   right: 45px;
   top: 12px;
-  transition: background-color 0.2s, border-color 0.2s;
+  transition: all 0.2s;
+  font-weight: bold;
 }
 
 .menos:hover {
   border-color: red;
+  color: red;
 }
 
 .menos:active {
   background-color: red;
+  color: white;
 }
 
 .lista-compras {
@@ -91,7 +101,47 @@ hr {
 
 .empty {
   color: white;
-  font-size: 2.4vh;
+  font-size: 3.5vh;
   margin-left: 2vh;
   margin-top: 2vh;
+  font-weight: bold;
+}
+
+.card-btn {
+  height: 35px;
+  background: var(--bg-color);
+  border: 1px solid white;
+  border-radius: 10px;
+  padding: 0 15px;
+  transition: all 0.3s;
+  position: absolute;
+  bottom: 2vh;
+  right: 2vh;
+  margin-top: 2vh;
+}
+
+.card-btn svg {
+  width: 100%;
+  height: 100%;
+  fill: white;
+  transition: all 0.3s;
+}
+
+.card-btn:hover {
+  border: 1px solid chartreuse;
+}
+
+.card-btn:hover svg {
+  fill: chartreuse;
+}
+
+.card-btn:active {
+  transform: translateY(3px);
+}
+
+.columna {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  position: relative;
 }
