@@ -2,7 +2,7 @@
     background-color: transparent;
     padding-left: 8%;
     padding-right: 8%;
-    height: 68.3vh;
+    min-height: 68.3vh;
 }
 
 .encabezado {
@@ -14,18 +14,20 @@
 }
 
 .table {
-    width: 70%;
+    min-width: 60%;
+    max-width: 70%;
     table-layout: fixed; /* Esto hace que las columnas tengan anchos fijos */
     color: black;
     overflow: hidden;
     border-collapse: collapse; /* Esto elimina los espacios entre las celdas */
     border-radius: 10px;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    height: 60vh;
 }
 
 .table th {
     text-align: left; /* Esto alinea el texto a la izquierda */
-    padding: 10px;
+    padding: 10px 10px 10px 2vh;
 }
 
 .table td {
@@ -59,7 +61,7 @@
 .superior {
     background-color: #34495e; /* Un azul oscuro */
     color: #ffffff; /* Texto blanco para contrastar con el fondo oscuro */
-    font-size: 20px;
+    font-size: 3.5vh;
 }
 
 .derecha {
@@ -79,4 +81,43 @@ a {
 
 a:hover {
     color: #34495e;
+}
+
+.flex {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex: 1;
+}
+
+.tabla {
+    background-color: #212121;
+    border-radius: 10px;
+    overflow: hidden;
+    min-width: 10%;
+    max-width: 28%;
+    height: 60vh;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    margin-left: 5vh
+}
+
+.header {
+    color: white;
+    font-size: 3.5vh;
+    font-weight: bold;
+}
+
+.header-tabla {
+    background-color: #34495e;
+    padding: 10px 10px 10px 2vh;
+}
+
+.botones-tabla {
+    margin: 2vh;
+    width: fit-content;
+}
+
+.botones {
+    margin-bottom: 1vh;
+    width: 100%;
 }
