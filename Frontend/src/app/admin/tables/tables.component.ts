@@ -2,6 +2,10 @@ import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, Renderer2, ElementRef } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, NavigationEnd } from '@angular/router';
 
+interface TableMap {
+  [key: string]: string;
+}
+
 @Component({
   selector: 'app-tables',
   standalone: true,
@@ -25,21 +29,22 @@ export class TablesComponent implements AfterViewInit{
   }
 
   updateActiveTable() {
-    // Asegúrate de que la lógica de ruta a tablaActiva esté actualizada
-    if (this.router.url.includes('/product_table')) {
-      this.tablaActiva = 'product';
-    } else if (this.router.url.includes('/inventory_table')) {
-      this.tablaActiva = 'inventory';
-    } else if (this.router.url.includes('/employee_table')) {
-      this.tablaActiva = 'employee';
-    } else if (this.router.url.includes('/warehouse_table')) {
-      this.tablaActiva = 'warehouse'
-    } else if (this.router.url.includes('/messenger_table')){
-      this.tablaActiva = 'messenger'
-    } else if (this.router.url.includes('/purchase_order_table')){
-      this.tablaActiva = 'purchase'
+    const tableMap: TableMap = {
+      '/product_table': 'product',
+      '/inventory_table': 'inventory',
+      '/employee_table': 'employee',
+      '/warehouse_table': 'warehouse',
+      '/messenger_table': 'messenger',
+      '/purchase_order_table': 'purchase_order'
+    };
+  
+    // Encuentra la primera coincidencia en el mapa
+    const foundKey = Object.keys(tableMap).find(key => this.router.url.includes(key));
+    if (foundKey) {
+      console.log(tableMap[foundKey]);
+      this.tablaActiva = tableMap[foundKey];
     }
-
+  
     // Aplica el estilo
     this.applyStyles();
   }

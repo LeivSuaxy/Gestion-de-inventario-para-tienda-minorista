@@ -29,8 +29,8 @@
     <h3>Confirm account closure</h3>
     <p>Are you sure you want to close your account?</p>
     <div class="dialog-actions">
-      <button (click)="showConfirmDialog = false">Cancel</button>
-      <button (click)="this.authService.logout()">OK</button>
+      <button (click)="closeConfirmDialog(false)" class="cancel">Cancel</button>
+      <button (click)="closeConfirmDialog(true)" class="accept">OK</button>
     </div>
   </div>
 </div>

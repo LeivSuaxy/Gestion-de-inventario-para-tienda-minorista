@@ -168,7 +168,7 @@ export class Purchase_tableComponent implements OnInit{
 
   // TODO REVIEW Make function to delete purchase :l
   eliminarOrdenesCompra(carnetIds: string[]) {
-    const observables = this.http.post('http://localhost:8000/api/admin/delete_purchase_order/', { employee: carnetIds })
+    const observables = this.http.post('http://localhost:8000/api/admin/delete_purchases_orders/', { employee: carnetIds })
 
     return forkJoin(observables);
   }

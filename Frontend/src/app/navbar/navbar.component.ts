@@ -4,6 +4,7 @@ import {CommonModule, NgOptimizedImage} from "@angular/common";
 import {Router} from "@angular/router";
 import { ViewChild, ElementRef } from '@angular/core';
 import { AuthService } from '../auth.service';
+import { StyleManagerService } from '../styleManager.service';
 
 @Component({
   selector: 'app-navbar',
@@ -21,7 +22,31 @@ import { AuthService } from '../auth.service';
 export class NavbarComponent {
   showConfirmDialog = false;
 
-  constructor(public router: Router, public authService: AuthService) { }
+  openConfirmDialog() {
+    this.showConfirmDialog = true;
+    const body = document.getElementById("contain");
+  
+    if (body instanceof HTMLElement) {
+      body.classList.add('blur-background');
+    }
+    this.styleManager.setBlurBackground(true);
+  }
+  
+  closeConfirmDialog(out: boolean) {
+    this.showConfirmDialog = false;
+    const body = document.getElementById("contain");
+  
+    if (body instanceof HTMLElement) {
+      body.classList.remove('blur-background');
+    }
+    this.styleManager.setBlurBackground(false);
+    if (out) {
+      this.authService.logout();
+    }
+  }
+
+
+  constructor(public router: Router, public authService: AuthService, private styleManager: StyleManagerService) { }
 
   @ViewChild('menuButton', { static: true }) menuButton!: ElementRef;
   @ViewChild('menu', { static: true }) menu!: ElementRef;

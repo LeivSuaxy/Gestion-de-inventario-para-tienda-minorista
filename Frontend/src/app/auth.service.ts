@@ -12,20 +12,24 @@ export class AuthService {
   constructor(private http: HttpClient, private router: Router) {}
 
   login(username: string, password: string) {
-    this.http.post<{token: string}>('http://localhost:8000/api/auth/login/', {username, password})
+    this.http.post<{token: string, expiresIn: number}>('http://localhost:8000/api/auth/login/', {username, password})
       .subscribe(response => {
         this.token = response.token;
-        localStorage.setItem('auth_token', this.token);
+        sessionStorage.setItem('auth_token', this.token); // Cambiado a sessionStorage
         this.router.navigate(['/main']);
       });
   }
 
   isLoggedIn(): boolean {
-    return !!localStorage.getItem('auth_token');
+    const token = sessionStorage.getItem('auth_token'); // Cambiado a sessionStorage
+    if (!token) {
+      return false;
+    }
+    return true;
   }
 
   logout() {
-    localStorage.removeItem('auth_token');
+    sessionStorage.removeItem('auth_token');
     this.router.navigate(['/login']);
   }
 }
