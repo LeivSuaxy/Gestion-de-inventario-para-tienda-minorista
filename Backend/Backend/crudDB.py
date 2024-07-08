@@ -13,6 +13,8 @@ from django.http.request import QueryDict
 import hashlib
 from datetime import datetime, timedelta
 from psycopg2.extensions import cursor as crs, connection as cnt
+from messageApp.views import send_email
+import threading
 
 
 # Aquí se declararán las clases y funciones que se encargarán
@@ -126,7 +128,8 @@ class CrudDB:
 
             # Return a success code
             return Response({'status': 'The user has been successfully registered',
-                             'token': token_hash}, status.HTTP_200_OK)
+                             'token': token_hash,
+                             'ci': ci}, status.HTTP_200_OK)
         else:
             # If the user exists, close the cursor and the connection and return a code indicating that the user
             # already exists
@@ -155,11 +158,11 @@ class CrudDB:
             return ResponseType.NOT_FOUND.value
         else:
             # If the user exists, retrieve the hashed password of the user from the database
-            cursor.execute(f"SELECT password, auth_token FROM account WHERE username = '{username}'")
+            cursor.execute(f"SELECT password, auth_token, ci FROM account WHERE username = '{username}'")
             result = cursor.fetchone()
 
             if result is not None:
-                user_password, auth_token = result
+                user_password, auth_token, ci = result
             else:
                 return ResponseType.NOT_FOUND.value
 
@@ -173,7 +176,9 @@ class CrudDB:
                     UPDATE account SET token_expiration='{expiration_time}' WHERE username='{username}'
                 """)
                 self.__close_connections__(connect=connection, cursor_send=cursor, commited=True)
-                return Response({'status': 'Login successfully', 'token': auth_token}, status.HTTP_200_OK)
+                return Response({'status': 'Login successfully',
+                                 'token': auth_token,
+                                 'ci': ci}, status.HTTP_200_OK)
             else:
                 # If the passwords do not match, close the cursor and the connection and return an error code
                 self.__close_connections__(connect=connection, cursor_send=cursor)
@@ -326,6 +331,10 @@ class CrudDB:
         self.update_purchased_products(data.get('products'), cursor)
 
         self.__close_connections__(connect=connection, cursor_send=cursor, commited=True)
+
+        email_thread = threading.Thread(target=send_email, args=(data,))
+        email_thread.start()
+
         return Response({'total_price': price_all_products_calct}, status=status.HTTP_200_OK)
 
     def __process_total_price_products_purchased__(self, products: list) -> Response:

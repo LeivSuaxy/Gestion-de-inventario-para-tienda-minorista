@@ -390,6 +390,12 @@ def generate_inventories_reports(data: QueryDict) -> Response:
             """)
             stock_sum, total_value = cursor.fetchone()
 
+            if stock_sum is None:
+                stock_sum = 0
+
+            if total_value is None:
+                total_value = 0
+
             cursor.execute(f"""
                 INSERT INTO inventory_report (id, stock_amount, total_value, id_inventory)
                 VALUES ({id_report}, {stock_sum}, {total_value}, {id_inventory})

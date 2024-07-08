@@ -6,13 +6,15 @@ from django.core.validators import validate_email
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
+from django.http.request import QueryDict
+import psycopg2
+from Backend.settings import DATABASES
 
 
 # Create your views here.
-@api_view(['POST'])
-def send_email(request):
-    info_client = request.data.get('client')
-    data = request.data.get('products')
+def send_email(data_send: QueryDict):
+    info_client = data_send.get('client')
+    data = data_send.get('products')
 
     if not info_client or not data:
         return Response({'error': 'Please provide client and products data'}, status.HTTP_400_BAD_REQUEST)
@@ -24,8 +26,32 @@ def send_email(request):
     if not __is_valid_email__(email):
         return Response({'error': 'Please provide a correct email'}, status.HTTP_400_BAD_REQUEST)
 
+    connection = psycopg2.connect(
+        host=DATABASES['default']['HOST'],
+        database=DATABASES['default']['NAME'],
+        user=DATABASES['default']['USER'],
+        password=DATABASES['default']['PASSWORD']
+    )
+
+    cursor = connection.cursor()
+
+    new_data: list = []
+
+    for dat in data:
+        cursor.execute(f"""
+            SELECT price, name FROM product
+            WHERE id_product={dat['id']}
+        """)
+        result = cursor.fetchone()
+        if result is not None:
+            dat.update({'price': result[0], 'name': result[1]})
+            new_data.append(dat)
+
+    cursor.close()
+    connection.close()
+
     # Get Products
-    productos = [ProductoTemp(dat['name'], dat['price'], dat['quantity']) for dat in data]
+    productos = [ProductoTemp(dat['name'], dat['price'], dat['quantity']) for dat in new_data]
     html_content = render_to_string('correo.html', context={'nombre': name, 'productos': productos})
 
     email_message: EmailMessage = EmailMessage('Hola, aqui esta tu pedido', body=html_content, to=[f'{email}'],
@@ -33,8 +59,8 @@ def send_email(request):
 
     email_message.content_subtype = 'html'
 
+    print('Procede a enviarse el correo')
     email_message.send()
-    return render(request, 'correo.html', context={'nombre': name, 'productos': productos})
 
 
 # New Method to send email to owners
