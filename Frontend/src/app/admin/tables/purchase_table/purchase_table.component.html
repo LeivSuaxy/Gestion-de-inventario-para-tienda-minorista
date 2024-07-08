@@ -78,7 +78,7 @@
       </div>
 
       <div class="example-button-container">
-        <button mat-mini-fab [disabled]="selection.isEmpty() || selection.selected.length > 1">
+        <button mat-mini-fab [disabled]="selection.isEmpty() || selection.selected.length > 1" (click)="posMethod()">
           <mat-icon>shopping_bag</mat-icon>
         </button>
     </div>

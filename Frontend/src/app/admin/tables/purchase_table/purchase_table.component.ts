@@ -15,6 +15,7 @@ import { forkJoin } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { StyleManagerService } from '../../../styleManager.service';
+import { ChangeDetectorRef } from '@angular/core';
 
 export interface Purchase_order {
   id_purchase_order: number;
@@ -99,12 +100,16 @@ export class Purchase_tableComponent implements OnInit{
   selection = new SelectionModel<Purchase_order>(true, []);
   apiUrl: string = 'http://localhost:8000/api/admin/get_all_purchase_orders/'
 
-  constructor(private http: HttpClient, private router: Router, private styleManager: StyleManagerService) {}
+  constructor(private http: HttpClient, private router: Router, private styleManager: StyleManagerService, private cdr: ChangeDetectorRef) {}
 
   // Llamada a la API para extraer los datos y guardarlos en dataSource
   async ngOnInit() {
     await this.apicall();
     this.dataSource = new MatTableDataSource<Purchase_order>(this.purchases);
+  }
+
+  updateDataSource(): void {
+    this.dataSource.data = [...this.dataSource.data];
   }
 
   // Extracción de datos de la API
@@ -113,7 +118,9 @@ export class Purchase_tableComponent implements OnInit{
       try {
         const response = await this.http.get(this.apiUrl).toPromise();
         this.data = response;
-        this.traslate();
+        this.traslate(); // Suponiendo que esto actualiza `this.purchases`
+        this.dataSource.data = [...this.purchases];
+        this.cdr.detectChanges(); // Forzar la detección de cambios
       } catch (error) {
         console.error(error);
       }
@@ -227,6 +234,36 @@ export class Purchase_tableComponent implements OnInit{
           notification.style.display = 'none';
         }, 500); // Coincide con la duración de la transición de opacidad
       }, 2000);
+    }
+  }
+
+  async posMethod(): Promise<void> {
+    let url = 'http://localhost:8000/api/admin/generate_sales_reports/';
+    let ci = sessionStorage.getItem('ci');
+
+    const purchaseData = {
+        ci_employee: ci ? ci : "",
+        id_purchase_order: this.selection.selected[0].id_purchase_order
+    };
+
+    console.log(JSON.stringify(purchaseData));
+  
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(purchaseData)
+      });
+      this.updateDataSource();
+      this.notification('success');
+  
+      const data = await response.json();
+      console.log(data);
+ 
+    } catch (error) {
+      console.error('There was a problem with your fetch operation:', error);
     }
   }
 }
