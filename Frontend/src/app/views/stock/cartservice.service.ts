@@ -63,6 +63,17 @@ export class CartService {
     return false;
   }
 
+  // Método para convertir el carrito a JSON con id y cantidad
+  cartJson() {
+    const cartMapeado = this.cart.map(producto => ({
+      id: producto.id_producto,
+      quantity: producto.cantidad
+    }));
+
+    const cartJson = JSON.stringify(cartMapeado);
+    return cartJson;
+  }
+
   clearCart() {
     this.cart = [];
     return this.cart;

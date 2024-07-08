@@ -1,22 +1,21 @@
 <div class="load-xd">
   <!-- Muestra la barra de carga cuando loading$ es true -->
-<div *ngIf="load | async; else content" class="overlay">
-  <div class="loader">
-    <div class="loader-square"></div>
-    <div class="loader-square"></div>
-    <div class="loader-square"></div>
-    <div class="loader-square"></div>
-    <div class="loader-square"></div>
-    <div class="loader-square"></div>
-    <div class="loader-square"></div>
+  <div *ngIf="load | async; else content" class="overlay">
+    <div class="loader">
+      <div class="loader-square"></div>
+      <div class="loader-square"></div>
+      <div class="loader-square"></div>
+      <div class="loader-square"></div>
+      <div class="loader-square"></div>
+      <div class="loader-square"></div>
+      <div class="loader-square"></div>
     </div>
+  </div>
 </div>
-</div>
-
 
 <!-- Contenido que se muestra después de la carga -->
 <ng-template #content>
-  <div class="screen">
+  <div class="screen" id="screen">
     <div class="stock-cards">
       <div class="text-dark sombreado">
         <div>
@@ -41,8 +40,13 @@
     <div class="cart">
       <app-shoppingcar></app-shoppingcar>
     </div>
+
   </div>
-  
+
+  <div class="buy-contain" *ngIf="showConfirmDialog">
+    <div class="buy">
+      <app-post_client></app-post_client>
+    </div>
+  </div>
+
 </ng-template>
-
-

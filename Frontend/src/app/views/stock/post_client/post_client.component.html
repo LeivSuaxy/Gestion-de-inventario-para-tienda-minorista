@@ -1,0 +1,47 @@
+<div class="formulario">
+  <form action="POST" class="post_client" enctype="multipart/form-data" class="form-data">
+    <div class="post_client-inter">
+      <div class="header-form">
+        <h3 class="encabezado">
+          Client
+        </h3>
+      </div>
+
+      <div>
+        <!-- Nombre del Cliente -->
+      <mat-form-field class="name">
+        <mat-label>Name</mat-label>
+        <input matInput id="nombreForm" [(ngModel)]="name" [ngModelOptions]="{standalone: true}" required>
+      </mat-form-field>
+
+      <!-- Carnet de Identidad del Cliente -->
+      <mat-form-field class="ci">
+        <mat-label>Identity Card</mat-label>
+        <input matInput id="ciForm" [(ngModel)]="ci" [ngModelOptions]="{standalone: true}" required>
+      </mat-form-field>
+    </div>
+
+    <div>
+      <!-- Correo del Cliente -->
+      <mat-form-field class="email">
+        <mat-label>Email</mat-label>
+        <input matInput id="correoForm" [(ngModel)]="email" [ngModelOptions]="{standalone: true}" required>
+      </mat-form-field>
+
+        <!-- Telefono del Cliente -->
+      <mat-form-field class="phone">
+        <mat-label>Phone</mat-label>
+        <input matInput id="telefonoForm" [(ngModel)]="phone" [ngModelOptions]="{standalone: true}" required>
+      </mat-form-field>
+        
+        
+    </div>
+
+      <div class="botones">
+        <button mat-stroked-button (click)="cancel()" class="boton">Cancel</button>
+        <button mat-stroked-button (click)="posMethod()" class="boton" [disabled]="!camposLlenos()">Buy</button>
+      </div>
+      
+      </div>
+      </form>
+    </div>
