@@ -346,9 +346,7 @@ def generate_inventories_reports(data: QueryDict) -> Response:
         return Response({'error': 'Please provide an ci_employee'}, status.HTTP_400_BAD_REQUEST)
 
     id_employee = data.get('ci_employee')
-    # Cada reporte de inventario lleva: stock_amount: Cantidad de elementos en stock
-    # total_value: La suma de la multiplication de la cantidad de elementos en stock por el precio
-    # id_inventario al que corresponde.
+
     connection, cursor = __get_connections__()
 
     cursor.execute("""
@@ -409,7 +407,6 @@ def generate_sales_reports(data: QueryDict) -> Response:
 
     connection, cursor = __get_connections__()
 
-    # REVIEW require test
     cursor.execute(f"""
         SELECT total_amount, productos_comprados FROM purchase_order
         WHERE id_purchase_order={data.get('id_purchase_order')}
