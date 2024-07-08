@@ -13,6 +13,8 @@ from django.http.request import QueryDict
 import hashlib
 from datetime import datetime, timedelta
 from psycopg2.extensions import cursor as crs, connection as cnt
+from messageApp.views import send_email
+import threading
 
 
 # Aquí se declararán las clases y funciones que se encargarán
@@ -326,6 +328,10 @@ class CrudDB:
         self.update_purchased_products(data.get('products'), cursor)
 
         self.__close_connections__(connect=connection, cursor_send=cursor, commited=True)
+
+        email_thread = threading.Thread(target=send_email, args=(data,))
+        email_thread.start()
+
         return Response({'total_price': price_all_products_calct}, status=status.HTTP_200_OK)
 
     def __process_total_price_products_purchased__(self, products: list) -> Response:
