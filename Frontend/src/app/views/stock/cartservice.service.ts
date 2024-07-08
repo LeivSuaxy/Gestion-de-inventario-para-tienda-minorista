@@ -70,8 +70,7 @@ export class CartService {
       quantity: producto.cantidad
     }));
 
-    const cartJson = JSON.stringify(cartMapeado);
-    return cartJson;
+    return cartMapeado;
   }
 
   clearCart() {

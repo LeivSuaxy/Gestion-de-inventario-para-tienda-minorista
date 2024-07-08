@@ -24,8 +24,10 @@ export class ShoppingcarComponent {
 
   // Incrementa la cantidad de un elemento específico
   incrementarCantidad(index: number): void {
-    this.cartService.getCart()[index].cantidad += 1;
-    this.cartService.preciototal += Number(this.cartService.getCart()[index].precio);
+    if (this.cartService.getCart()[index].stock > this.cartService.getCart()[index].cantidad){
+      this.cartService.getCart()[index].cantidad += 1;
+      this.cartService.preciototal += Number(this.cartService.getCart()[index].precio);
+    }
   }
 
   // Decrementa la cantidad de un elemento específico

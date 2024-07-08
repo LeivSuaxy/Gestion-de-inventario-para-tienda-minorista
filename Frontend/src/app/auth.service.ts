@@ -7,15 +7,18 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
   private token: string | null = null;
+  private ci: string | null = null;
   //isLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(private http: HttpClient, private router: Router) {}
 
   login(username: string, password: string) {
-    this.http.post<{token: string, expiresIn: number}>('http://localhost:8000/api/auth/login/', {username, password})
+    this.http.post<{token: string, ci: string}>('http://localhost:8000/api/auth/login/', {username, password})
       .subscribe(response => {
         this.token = response.token;
+        this.ci = response.ci;
         sessionStorage.setItem('auth_token', this.token); // Cambiado a sessionStorage
+        sessionStorage.setItem('ci', this.ci)
         this.router.navigate(['/main']);
       });
   }

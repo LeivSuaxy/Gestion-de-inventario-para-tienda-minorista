@@ -193,10 +193,10 @@ export class Inventory_tableComponent implements OnInit {
       
       if (type === 'error') {
         notification.style.backgroundColor = 'red';
-        notification.textContent = 'Inventory could not be deleted';
+        notification.textContent = 'Failed process';
       } else if (type === 'success') {
         notification.style.backgroundColor = 'chartreuse';
-        notification.textContent = 'Inventory has been removed';
+        notification.textContent = 'Process carried out with success';
       }
   
       // Inicia visible para la animación
@@ -212,6 +212,35 @@ export class Inventory_tableComponent implements OnInit {
           notification.style.display = 'none';
         }, 500); // Coincide con la duración de la transición de opacidad
       }, 2000);
+    }
+  }
+
+  async posMethod(): Promise<void> {
+    let url = 'http://localhost:8000/api/admin/generate_inventories_reports/';
+    let ci = sessionStorage.getItem('ci');
+
+    const clientData = {
+        ci_employee: ci ? ci : ""
+    };
+
+    console.log(JSON.stringify(clientData));
+  
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(clientData)
+      });
+
+      this.notification('success');
+  
+      const data = await response.json();
+      console.log(data);
+ 
+    } catch (error) {
+      console.error('There was a problem with your fetch operation:', error);
     }
   }
 

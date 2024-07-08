@@ -76,6 +76,12 @@
           <mat-icon>delete</mat-icon>
         </button>
       </div>
+
+      <div class="example-button-container">
+        <button mat-mini-fab [disabled]="selection.isEmpty() || selection.selected.length > 1">
+          <mat-icon>shopping_bag</mat-icon>
+        </button>
+    </div>
     </div>
   </div>
 
