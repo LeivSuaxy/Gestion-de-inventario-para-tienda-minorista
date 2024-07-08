@@ -307,23 +307,16 @@ class CrudDB:
             return Response({'error': 'Please provide the products to purchase',
                              'required_fields': '[id, quantity]'}, status=status.HTTP_400_BAD_REQUEST)
 
-        # Orden de compra: id, fecha, total, id_cliente
-        # Cliente: CI, nombre, email, telefono
-
-        # Price_all_products
         price_all_products_calct = self.__process_total_price_products_purchased__(products).data['total_price']
 
         connection: cnt = self.connect_to_db()
         cursor: crs = connection.cursor()
-
-        # Agnadir cliente if not exists
 
         cursor.execute(f"INSERT INTO client (ci, name, email, phone) SELECT '{client['ci']}', "
                        f"'{client['name']}',"
                        f"'{client['email']}', '{client['phone']}' WHERE NOT EXISTS (SELECT 1 FROM client WHERE "
                        f"ci='{client['ci']}')")
 
-        # Orden de compra:
         products = json.dumps(products)
         cursor.execute(f"""
             INSERT INTO purchase_order (date_done, total_amount, id_client, productos_comprados) 
@@ -346,9 +339,10 @@ class CrudDB:
             quantity = product['quantity']
 
             cursor.execute(f"SELECT price FROM product WHERE id_product={product_id}")
-            price = cursor.fetchone()[0]
+            price = cursor.fetchone()
 
-            total_price += price * quantity
+            if price is not None:
+                total_price += price[0] * quantity
 
         self.__close_connections__(connect=connection, cursor_send=cursor)
 
