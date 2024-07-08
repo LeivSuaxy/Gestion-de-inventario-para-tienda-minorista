@@ -21,7 +21,7 @@ urlpatterns = [
   # <-- Reports CRUD URLS-->
   path('sales_reports/', views.get_all_sales_reports, name='get_all_sales_reports'),
   path('inventory_reports/', views.get_all_inventory_reports, name='get_all_inventory_reports'),
-  path('generate_invetories_reports/', views.generate_inventories_reports, name='generate_inventories_reports'),
+  path('generate_inventories_reports/', views.generate_inventories_reports, name='generate_inventories_reports'),
   path('generate_sales_reports/', views.generate_sales_reports, name='generate_sales_reports'),
   path('get_all_purchase_orders/', views.get_all_purchase_orders, name='get_all_purchase_orders'),
   path('delete_purchases_orders/', views.delete_purchase_orders, name='delete_purchase_orders'),
