@@ -6,6 +6,10 @@ import {Venta} from "./cartservice.service";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {RouterLink, RouterLinkActive} from "@angular/router";
 import {StockService} from "./stock.service";
+import { Post_clientComponent } from './post_client/post_client.component';
+import { StyleManagerService } from '../../styleManager.service';
+import { SharedService } from './shared.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-stock',
@@ -19,6 +23,7 @@ import {StockService} from "./stock.service";
     RouterLinkActive,
     NgIf,
     CommonModule,
+    Post_clientComponent
   ],
   templateUrl: './stock.component.html',
   styleUrl: './stock.component.css',
@@ -31,14 +36,54 @@ export class StockComponent {
   apiurlnext? : string;
   apiurlprev? : string;
   load: any;
+  showConfirmDialog = false;
+  private subscription?: Subscription;
 
 
-  constructor(private http: HttpClient, private StockService: StockService) {
+  constructor(private http: HttpClient, private StockService: StockService, private styleManager: StyleManagerService, private sharedService: SharedService) {
     this.load = this.StockService.loading$;
   }
 
   ngOnInit() {
+    this.sharedService.currentBooleanValue.subscribe(value => {
+      console.log(value);
+      this.showConfirmDialog = value;
+    });
+    this.subscription = this.sharedService.triggerFunction$.subscribe((functionName) => {
+      if (functionName === 'closeDialog') {
+        this.closeConfirmDialog();
+      } else if (functionName === 'openDialog') {
+        this.openConfirmDialog();
+      }
+    });
     this.apicall();
+  }
+
+  ngOnDestroy() {
+    if (this.subscription){
+      this.subscription.unsubscribe();
+    }
+  }
+
+
+  openConfirmDialog() {
+    this.showConfirmDialog = true;
+    const body = document.getElementById("screen");
+  
+    if (body instanceof HTMLElement) {
+      body.classList.add('blur-background');
+    }
+    this.styleManager.setBlurBackground(true);
+  }
+  
+  closeConfirmDialog() {
+    this.showConfirmDialog = false;
+    const body = document.getElementById("screen");
+  
+    if (body instanceof HTMLElement) {
+      body.classList.remove('blur-background');
+    }
+    this.styleManager.setBlurBackground(false);
   }
 
 

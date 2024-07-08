@@ -258,3 +258,26 @@ button:hover {
   border-radius: 10px;
   margin-left: 5vh;
 }
+
+.blur-background {
+  filter: blur(5px) !important;
+}
+
+.buy {
+  color: white;
+  border-radius: 10px;
+}
+
+.buy-contain {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  transition: all 0.5s;
+}
