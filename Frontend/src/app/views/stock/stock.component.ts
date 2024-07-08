@@ -54,6 +54,8 @@ export class StockComponent {
         this.closeConfirmDialog();
       } else if (functionName === 'openDialog') {
         this.openConfirmDialog();
+      } else if (functionName === 'notification') {
+        this.notification();
       }
     });
     this.apicall();
@@ -137,5 +139,36 @@ export class StockComponent {
       this.apiurl = this.apiurlprev;
       this.apicall();
     });
+  }
+
+
+  notification(): void {
+    const notification = document.getElementById('notification');
+    if (notification instanceof HTMLElement) {
+      notification.classList.add('notification-transition'); // Asegura que la transición esté aplicada
+      notification.style.position = 'fixed';
+      notification.style.right = '2vh';
+      notification.style.bottom = '2vh';
+      notification.style.display = 'block';
+      notification.style.opacity = '0'; // Inicia invisible para la animación
+
+      notification.style.backgroundColor = 'chartreuse';
+      notification.textContent = 'Purchase request successfully';
+
+  
+      // Inicia visible para la animación
+      setTimeout(() => {
+        notification.style.opacity = '0.7';
+      }, 10); // Un pequeño retraso asegura que el navegador aplique la transición
+  
+      // Inicia la desaparición después de 2 segundos
+      setTimeout(() => {
+        notification.style.opacity = '0';
+        // Oculta completamente después de que la transición de opacidad termine
+        setTimeout(() => {
+          notification.style.display = 'none';
+        }, 500); // Coincide con la duración de la transición de opacidad
+      }, 2000);
+    }
   }
 }

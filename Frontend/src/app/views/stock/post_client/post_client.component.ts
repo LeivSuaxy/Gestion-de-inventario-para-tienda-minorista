@@ -43,11 +43,13 @@ export class Post_clientComponent {
       client: { // Añadir este nivel para encapsular los datos del empleado
         ci: this.ci ? this.ci : '',
         name: this.name ? this.name : '',
-        email: this.email ? this.name : '',
+        email: this.email ? this.email : '',
         phone: this.phone?.toString() ?? '',
       },
       products: this.cartService.cartJson()
     };
+
+    console.log(JSON.stringify(clientData));
   
     try {
       const response = await fetch(url, {
@@ -58,8 +60,8 @@ export class Post_clientComponent {
         body: JSON.stringify(clientData)
       });
   
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
+      if (response.ok) {
+        this.sharedService.triggerFunction('notification');
       }
   
       const data = await response.json();
