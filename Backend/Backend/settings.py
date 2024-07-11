@@ -87,9 +87,9 @@ WSGI_APPLICATION = 'Backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'Proyecto_elitestore',
-        'USER': 'postgres',
-        'PASSWORD': '018900149913',
+        'NAME': 'DATABASE_NAME',
+        'USER': 'DATABASE_USER',
+        'PASSWORD': 'DATABASE_PASSWORD',
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -150,8 +150,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'elitestock970430@gmail.com'
-EMAIL_HOST_PASSWORD = 'wngq ivqs rirf ccfy'
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
 
 LOGGING = {
     'version': 1,
