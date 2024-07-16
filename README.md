@@ -34,3 +34,9 @@ Django-Rest-Framework -> LeivSuaxy <br/>
 PostgreSQL -> LeviSuaxy & AGR55
 
 **¡Esperamos les sea de utilidad!**
+
+# CERRADO: 8/7/2024
+
+# ACTUALIZACIONES PENDIENTE DESPUES DE CERRADO:
+- ACTUALIZAR API-DOC
+- ACTUALIZAR COMENTARIOS BACKEND.

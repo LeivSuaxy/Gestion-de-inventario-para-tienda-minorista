@@ -55,7 +55,7 @@ def send_email(data_send: QueryDict):
     html_content = render_to_string('correo.html', context={'nombre': name, 'productos': productos})
 
     email_message: EmailMessage = EmailMessage('Hola, aqui esta tu pedido', body=html_content, to=[f'{email}'],
-                                               from_email='elitestock970430@gmail.com')
+                                               from_email='email_from')
 
     email_message.content_subtype = 'html'
 
@@ -73,7 +73,7 @@ def send_contact_email(request):
     if not __is_valid_email__(request.data.get('email')):
         return Response({'error': 'Please provide a correct email'}, status.HTTP_400_BAD_REQUEST)
 
-    targets = ['starterledfull@gmail.com']
+    targets = ['List of emails you will send the message']
 
     send_mail(subject=f'Un cliente {request.data.get("name")} le ha enviado un mensaje',
               message=request.data.get('content'),
