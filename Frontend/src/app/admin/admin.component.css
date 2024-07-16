@@ -89,35 +89,3 @@ a:hover {
     justify-content: space-between;
     flex: 1;
 }
-
-.tabla {
-    background-color: #212121;
-    border-radius: 10px;
-    overflow: hidden;
-    min-width: 10%;
-    max-width: 28%;
-    height: 60vh;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-    margin-left: 5vh
-}
-
-.header {
-    color: white;
-    font-size: 3.5vh;
-    font-weight: bold;
-}
-
-.header-tabla {
-    background-color: #34495e;
-    padding: 10px 10px 10px 2vh;
-}
-
-.botones-tabla {
-    margin: 2vh;
-    width: fit-content;
-}
-
-.botones {
-    margin-bottom: 1vh;
-    width: 100%;
-}
